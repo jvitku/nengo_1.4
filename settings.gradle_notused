@@ -1,0 +1,6 @@
+// @author Jaroslav Vitku [vitkujar@fel.cvut.cz]
+// 
+// sub-projects to be included in Nengo simulator
+//
+// note: in order to use this as stand-alone Nengo, rename this file to settings.gradle
+include ':simulator', ':simualtor-ui'

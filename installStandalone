@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# by Jaroslav Vitku [vitkujar@fel.cvut.cz]
+
+# This script installs standalone Nengo by means of Gradle. 
+# Note that this compilation requires rosjava_core installed in ~/.m2/repository , e.g.:
+#   cd ../ && git clone https://github.com/rosjava/rosjava_core.git && git checkout hydro-devel && ./gradlew install
+#   see: https://github.com/rosjava/rosjava_core
+#
+# 
+# After downloading the project into your computer, run this script to install Nengo
+#
+# This script does:
+#   -compiles Nengo and installs it into local maven repository (~/.m2/repository/)
+#   -creates eclipse projects
+
+
+echo "\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "
+echo "   XXXXXXXX Building the Nengo, generating eclipse projects.. "
+echo "      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n"
+
+# bug in gradle generates duplicate entries if .classpath file exist:
+rm simulator/.classpath
+rm simulator-ui/.classpath
+
+cp build.gradle_notused build.gradle
+cp settings.gradle_notused settings.gradle
+
+# run tests?
+TEST=0
+if [ "$TEST" -eq "1" ]; then
+    ./gradlew clean build install eclipse --continue
+    echo 'Authors: \" If you see "BUILD FAILED" above and you are worried... relax!' "It's normal.\""
+    echo "\"Moving right along...\""
+else
+    ./gradlew clean build install eclipse --continue -x test 
+fi
+
+
+echo "\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "
+echo "   XXXXXXXX All done "
+echo "      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n"

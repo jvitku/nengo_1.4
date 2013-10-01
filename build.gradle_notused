@@ -1,0 +1,51 @@
+// @author Jaroslav Vitku [vitkujar@fel.cvut.cz]
+//
+// Defines properties of Nengo(ros) projects
+// 
+// note that this file contains redundant information with nengo-ros/build.gradle ~ possible to use independently
+
+allprojects{
+    
+    // Define the version and name of this multi-project
+    version = '0.0.0-SNAPSHOT'
+    group = 'nengoros'
+    
+
+    /*
+    // already defined in the main project nengo-ros (if used)
+    task wrapper(type: Wrapper) {
+        gradleVersion = '1.5'
+    }
+    */
+    // This configures the project to search for Maven libraries (rosjava: bootstrap, messages, core)
+    repositories {
+      mavenLocal()
+      maven {
+    	//        url 'http://robotbrains.hideho.org/nexus/content/groups/ros-public'
+    			url 'https://maven-us.nuxeo.org/nexus/content/repositories/public'
+      }
+    }
+   
+}
+
+subprojects{
+    if (name != 'docs') {
+        
+        // java support for gradle [no command]
+        apply plugin: 'java'
+
+        // Create the Java (jar) library from this project. [./gradlew install]
+        apply plugin: 'maven'
+
+        // create the Eclipse project [./gradlew eclipse]
+        apply plugin: 'eclipse'
+
+        sourceCompatibility = 1.6
+        targetCompatibility = 1.6
+    }    
+}
+
+defaultTasks 'install', 'eclipse'
+
+
+// examples at: http://www.gradle.org/docs/current/userguide/multi_project_builds.html
