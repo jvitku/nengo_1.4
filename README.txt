@@ -24,3 +24,6 @@ Original build system is moved from maven to Gragle.
 Standalone installation is handled by the script: ./installStandalone .
 
 This generates eclipse projects into the folders simulator and simulator-ui.
+
+In eclipse, import (2) projects from nengo folder. 
+Launch Nengo by calling main method in class: NengoLauncher.  
