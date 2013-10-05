@@ -6,7 +6,13 @@ nengo-*
 nengo-latest.zip
 NengoModels
 
+#### eclipse
+.classpath
+.settings/*
 .metadata/*
+
+
+#### configs
 simulator-ui/commandhistory.dat
 
 simulator-ui/quick/*
@@ -15,3 +21,9 @@ simulator-ui/python/timeview/layout.db.bak
 
 
 simulator-ui/delimited_file_exporter_test.txt
+
+
+#### build
+simulator/build/tmp/*
+simulator-ui/build/tmp/*
+simulator/build/libs/*.jar
