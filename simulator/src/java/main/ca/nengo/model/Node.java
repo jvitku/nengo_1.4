@@ -113,4 +113,19 @@ public interface Node extends Serializable, Resettable, SimulationMode.ModeConfi
 	 * @throws CloneNotSupportedException if clone can't be made
 	 */
 	public Node clone() throws CloneNotSupportedException;
+	
+
+	/**
+	 * This method tells the Node (network) that is being deleted from Nengo, 
+	 * Node can inform its children (child Nodes) that are being deleted, 
+	 * these nodes can e.g. stop their ROS backends, their ROS nodes etc..	 
+	 * 
+	 * Note that it is expected that node returns from this method when 
+	 * everything that should be done before his deletion is done. 
+	 * 
+	 * Also, Node does not have to react to this (as in pure Nengo version).
+	 * 
+	 * ///my @author Jaroslav Vitku
+	 */
+	public void notifyAboutDeletion();	
 }

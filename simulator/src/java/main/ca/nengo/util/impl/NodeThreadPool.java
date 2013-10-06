@@ -7,10 +7,11 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import nengoros.util.sync.impl.SyncedUnit;
+
 import ca.nengo.model.Network;
 import ca.nengo.model.Node;
 import ca.nengo.model.Projection;
-import ca.nengo.model.SimulationException;
 import ca.nengo.model.impl.NetworkArrayImpl;
 import ca.nengo.util.TaskSpawner;
 import ca.nengo.util.ThreadTask;
@@ -25,15 +26,16 @@ public class NodeThreadPool {
 	protected static final int maxNumJavaThreads = 100;
 	protected static final int defaultNumJavaThreads = 8;
 
+
 	// numThreads can change throughout a simulation run. Therefore, it should not be used during a run,
 	// only at the beginning of a run to create the threads.
 	protected static int myNumJavaThreads = defaultNumJavaThreads;
-	protected int myCurrentNumJavaThreads;
 	protected int myNumThreads;
 	protected NodeThread[] myThreads;
 	protected Object myLock;
 
 	protected Node[] myNodes;
+	protected SyncedUnit[] myUnits;	//list of all syncedUnits - note that SyncedUnit is also a node! 
 	protected Projection[] myProjections;
     protected ThreadTask[] myTasks;
 
@@ -96,8 +98,8 @@ public class NodeThreadPool {
 	protected NodeThreadPool(){
 	}
 	
-	public NodeThreadPool(Network network, List<ThreadTask> threadTasks, boolean interactive){
-		initialize(network, threadTasks, interactive);
+	public NodeThreadPool(Network network, List<ThreadTask> threadTasks){
+		initialize(network, threadTasks);
 	}
 	
 	/**
@@ -113,7 +115,7 @@ public class NodeThreadPool {
 	 * 
 	 * @author Eric Crawford
 	 */
-	protected void initialize(Network network, List<ThreadTask> threadTasks, boolean interactive){
+	protected void initialize(Network network, List<ThreadTask> threadTasks){
 		
 		myLock = new Object();
 		
@@ -121,10 +123,12 @@ public class NodeThreadPool {
 		Projection[] projections = network.getProjections();
 		
 		List<Node> nodeList = collectNodes(nodes, false);
+		List<SyncedUnit> unitList = collectSyncedNodes(nodes);///my
 		List<Projection> projList = collectProjections(nodes, projections);
 		List<ThreadTask> taskList = collectTasks(nodes);
 		taskList.addAll(threadTasks);
 		
+		myUnits = unitList.toArray(new SyncedUnit[0]);///my
 		myNodes = nodeList.toArray(new Node[0]);
 		myProjections = projList.toArray(new Projection[0]);
 		myTasks = taskList.toArray(new ThreadTask[0]);
@@ -136,60 +140,50 @@ public class NodeThreadPool {
 		
 		boolean useGPU = NEFGPUInterface.getUseGPU();
 		
-		int numNonJavaThreads = 0;
-		GPUThread gpuThread = null;
+		if(useGPU){
+			myNumThreads = myNumJavaThreads + 1;
+	    }else{
+	    	myNumThreads = myNumJavaThreads;
+	    }
+		
+		
+		myThreads = new NodeThread[myNumThreads];
+		
 		if(useGPU){ 
-			gpuThread = new GPUThread(this, interactive);
+			GPUThread gpuThread = new GPUThread(this);
 			
-			int myNodeslength = myNodes.length;
 			// The NEFGPUInterface removes from myNodes ensembles that are to be run on the GPU and returns the rest.
 			myNodes = gpuThread.getNEFGPUInterface().takeGPUNodes(myNodes);
 			
-			if(myNodes.length == myNodeslength){
-				//don't create a GPU thread if there are no nodes to run on the GPU.
-				gpuThread = null;
-				useGPU = false;
-			}else{
-				// The NEFGPUInterface removes from myProjections projections that are to be run on the GPU and returns the rest.
-				myProjections = gpuThread.getNEFGPUInterface().takeGPUProjections(myProjections);
-
-				gpuThread.getNEFGPUInterface().initialize();
-
-				gpuThread.setCollectTimings(myCollectTimings);
-				gpuThread.setName("GPUThread0");
-
-				gpuThread.setPriority(Thread.MAX_PRIORITY);
-				gpuThread.start();
-
-				numNonJavaThreads += 1;
-			}
+			// The NEFGPUInterface removes from myProjections projections that are to be run on the GPU and returns the rest.
+			myProjections = gpuThread.getNEFGPUInterface().takeGPUProjections(myProjections);
+			
+			gpuThread.getNEFGPUInterface().initialize();
+			
+			
+			gpuThread.setCollectTimings(myCollectTimings);
+			gpuThread.setName("GPUThread0");
+			
+			myThreads[myNumJavaThreads] = gpuThread;
+			
+			gpuThread.setPriority(Thread.MAX_PRIORITY);
+			gpuThread.start();
 		}
-
-		myCurrentNumJavaThreads = Math.min(myNodes.length, myNumJavaThreads);
-		myCurrentNumJavaThreads = Math.max(myCurrentNumJavaThreads, 1);
-
-		myNumThreads = myCurrentNumJavaThreads + numNonJavaThreads;
-
-		myThreads = new NodeThread[myNumThreads];
-
-		if(useGPU){
-			myThreads[myNumThreads-1] = gpuThread;
-		}
-
+		
 		//In the remaining nodes (non-GPU nodes), DO break down the NetworkArrays, we don't want to call the 
 		// "run" method of nodes which are members of classes which derive from the NetworkImpl class since 
 		// NetworkImpls create their own LocalSimulators when run.
 		myNodes = collectNodes(myNodes, true).toArray(new Node[0]);
 
-		int nodesPerJavaThread = (int) Math.ceil((float) myNodes.length / (float) myCurrentNumJavaThreads);
-		int projectionsPerJavaThread = (int) Math.ceil((float) myProjections.length / (float) myCurrentNumJavaThreads);
-        int tasksPerJavaThread = (int) Math.ceil((float) myTasks.length / (float) myCurrentNumJavaThreads);
-        
+		int nodesPerJavaThread = (int) Math.ceil((float) myNodes.length / (float) myNumJavaThreads);
+		int projectionsPerJavaThread = (int) Math.ceil((float) myProjections.length / (float) myNumJavaThreads);
+        int tasksPerJavaThread = (int) Math.ceil((float) myTasks.length / (float) myNumJavaThreads);
+
 		int nodeOffset = 0, projectionOffset = 0, taskOffset = 0;
 		int nodeStartIndex, nodeEndIndex, projectionStartIndex, projectionEndIndex, taskStartIndex, taskEndIndex;
-		
+
 		// Evenly distribute projections, nodes and tasks to the java threads.
-		for(int i = 0; i < myCurrentNumJavaThreads; i++){
+		for(int i = 0; i < myNumJavaThreads; i++){
 
 			nodeStartIndex = nodeOffset;
 			nodeEndIndex = myNodes.length - nodeOffset >= nodesPerJavaThread ?
@@ -233,7 +227,7 @@ public class NodeThreadPool {
 	 * 
 	 * @author Eric Crawford
 	 */
-	public void step(float startTime, float endTime) throws SimulationException {
+	public void step(float startTime, float endTime){
 		myStartTime = startTime;
 		myEndTime = endTime;
 		
@@ -250,14 +244,33 @@ public class NodeThreadPool {
 
 			// start the node processing, wait for it to finish
 			startThreads();
-			
+
 			// start the task processing, wait for it to finish
 			startThreads();
-
+			
+			///my - after finishing all jobs, wait for SyncedUnits to be ready (their origins set)
+			int sleeptime=1;
+			int attempts = 100;
+			int poc=0;
+			for(SyncedUnit u : myUnits){
+	            while(!u.isReady()){
+	            	if(this.shouldGiveUp(poc-attempts, sleeptime, ((Node)u).getName()))
+            			break;
+	            	if(poc++ < attempts)
+	            		continue;
+	            	try {
+						Thread.sleep(sleeptime);
+						if((poc-attempts) % 40 == 0){
+							System.out.println("Simulator: waiting for: "+((Node)u).getName()+ " for "+
+									sleeptime*(poc-attempts)+" ms");
+						}
+					} catch (InterruptedException e) { e.printStackTrace(); }
+	            }
+			}
 			Thread.currentThread().setPriority(oldPriority);
 		}
 		catch(Exception e) {
-			throw new SimulationException(e);
+			System.err.println(e);
 		}
 		
 		if(myCollectTimings){
@@ -267,6 +280,18 @@ public class NodeThreadPool {
             myNumSteps++;
 		}
 	}
+	
+	///my
+	private boolean shouldGiveUp(int attempts,int sleeptime, String nodename){
+		if(attempts*sleeptime > maxWait){
+			System.out.println("Giving up waiting for node named: "+nodename);
+			return true;
+		}
+		return false;
+	}
+	
+	// ROS communication can break down for some messages
+	private final int maxWait = 500;
 
 	/**
 	 * Tells the threads to run for one phase (projections, nodes or tasks). 
@@ -276,8 +301,6 @@ public class NodeThreadPool {
 	 */
 	private void startThreads() throws InterruptedException {
 		synchronized(myLock){
-			if(runFinished)
-				throw new InterruptedException();
 			
 			numThreadsComplete = 0;
 			threadsRunning = true;
@@ -363,10 +386,48 @@ public class NodeThreadPool {
 		
 	}
 	
+	/**
+	 * ///my
+	 * This method should find all Nodes which extend SyncedUnit class. These are typically neural modules
+	 * which implement synchronous communication with ROS: sendMessage->waitForResponse->continueSimulation.
+	 * 
+	 * @param startingNodes
+	 * @return list of syncedUnits - nodes which are ready/notReady for continuing the simulation
+	 * 
+	 * @author Jaroslav Vitku
+	 */
+    public static List<SyncedUnit> collectSyncedNodes(Node[] startingNodes){
+    	///my
+        ArrayList<SyncedUnit> nodes = new ArrayList<SyncedUnit>();
+        List<Node> nodesToProcess = new LinkedList<Node>();
+        
+        nodesToProcess.addAll(Arrays.asList(startingNodes));
+
+        Node workingNode;
+
+        while(nodesToProcess.size() != 0)
+        {
+            workingNode = nodesToProcess.remove(0);
+            
+            // go down into sub-networks and collect all nodes
+            if(workingNode instanceof Network){
+            	List<Node> nodeList = new LinkedList<Node>(Arrays.asList(((Network) workingNode).getNodes()));
+
+                nodeList.addAll(nodesToProcess);
+                nodesToProcess = nodeList;
+            }
+            else if(workingNode instanceof SyncedUnit){
+            	//System.out.println("synced unit found, its name is: "+workingNode.getName());
+            	nodes.add((SyncedUnit)workingNode);
+            } 
+        }
+        return nodes;
+    }
+	
     /**
      * Return all the nodes in the network except subnetworks. Essentially returns a "flattened"
      * version of the network. The breakDownNetworkArrays param lets the caller choose whether to include
-     * Network Arrays in the returned list (=false) or to return the NEFEnsembles in the network array (=true).
+     * Network Arrays in the returned list (=false) or to return the NEFEnsemble in the network array (=true).
      * This facility is provided because sometimes Network Arrays should be treated like Networks, which is what
      * they are as far as java is concerned (they extend the NetworkImpl class), and sometimes it is better to 
      * treat them like NEFEnsembles, which they are designed to emulate (they're supposed to be an 
@@ -407,7 +468,6 @@ public class NodeThreadPool {
                 isNetwork = false;
             }
             
-            
             if(isNetwork){
             	List<Node> nodeList = new LinkedList<Node>(Arrays.asList(((Network) workingNode).getNodes()));
 
@@ -418,13 +478,13 @@ public class NodeThreadPool {
             	nodes.add(workingNode);
             } 
         }
-
         return nodes;
     }
     
 
     /**
-     * Returns all the projections that would be in a "flattened" version of the network.
+     * Return all the projections in the network. Essentially returns all the projections that
+     * would be in a "flattened" version of the network.
      * 
      * @author Eric Crawford
      */
@@ -455,7 +515,8 @@ public class NodeThreadPool {
     }
 
     /**
-     * Returns all the tasks that would be in a "flattened" version of the network.
+     * Return all the tasks in the network. Essentially returns all the tasks that
+     * would be in a "flattened" version of the network.
      * 
      * @author Eric Crawford
      */

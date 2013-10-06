@@ -36,7 +36,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -115,9 +114,6 @@ public class NetworkImpl implements Network, VisiblyMutable, VisiblyMutable.List
 
     private transient Collection<StepListener> myStepListeners;
 
-	private transient Map<String, Object> myMetadata;
-	
-    
 
 	/**
 	 * Sets up a network's data structures
@@ -141,7 +137,18 @@ public class NetworkImpl implements Network, VisiblyMutable, VisiblyMutable.List
 		OrderedExposedOrigins = new LinkedList <Origin> ();
 		OrderedExposedTerminations = new LinkedList <Termination> ();
 		
-		myStepListeners = new ArrayList<StepListener>(1);		
+		myStepListeners = new ArrayList<StepListener>(1);
+	}
+	
+	/**
+	 * Recursively inform all sub-Nodes that they will be deleted soon.
+	 * ///my @author Jaroslav Vitku 
+	 */
+	public void notifyAboutDeletion(){
+		Node[] myNodes = getNodes();
+		for( int i=0; i<myNodes.length; i++){
+			myNodes[i].notifyAboutDeletion();
+		}
 	}
 
 	/**
@@ -1634,14 +1641,5 @@ public class NetworkImpl implements Network, VisiblyMutable, VisiblyMutable.List
         }    
 
 		return py.toString();
-	}
-	
-	public Object getMetadata(String key) {
-		if (myMetadata==null) myMetadata = new LinkedHashMap<String, Object>(2);
-		return myMetadata.get(key);
-	}
-	public void setMetadata(String key, Object value) {
-		if (myMetadata==null) myMetadata = new LinkedHashMap<String, Object>(2);		
-		myMetadata.put(key, value);
 	}
 }

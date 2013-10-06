@@ -303,4 +303,10 @@ public class SkeletalMuscleImpl implements SkeletalMuscle {
 		return "";
 	}
 
+	@Override
+	public void notifyAboutDeletion() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

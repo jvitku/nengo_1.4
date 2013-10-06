@@ -63,8 +63,6 @@ public class NodeThread extends Thread {
 		myAverageTimeOnNodesPerStep = 0;
 		myAverageTimeOnTasksPerStep = 0;
 	}
-	
-	
 
 	public void waitForPool() {
 		try {
@@ -88,7 +86,6 @@ public class NodeThread extends Thread {
 			InstantaneousOutput values = myProjections[i].getOrigin().getValues();
 			myProjections[i].getTermination().setValues(values);
 		}
-		
 	}
 	
 	protected void runNodes(float startTime, float endTime) throws SimulationException{
@@ -105,7 +102,7 @@ public class NodeThread extends Thread {
 		
 		for (int i = myStartIndexInTasks; i < myEndIndexInTasks; i++) {
             myTasks[i].run(startTime, endTime);
-        }
+        }	
 	}
 	
 	public void run() {
@@ -159,10 +156,8 @@ public class NodeThread extends Thread {
 					return;
 				}
 			}
-		} catch (Exception e) {
+		} catch (SimulationException e) {
 			System.err.println(e);
-			myNodeThreadPool.kill();
-			finished();
 		}
 	}
 	

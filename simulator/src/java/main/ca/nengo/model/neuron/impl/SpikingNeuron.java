@@ -411,4 +411,10 @@ public class SpikingNeuron implements Neuron, Probeable, NEFNode {
 	public String toScript(HashMap<String, Object> scriptData) throws ScriptGenException {
 		return "";
 	}
+
+	@Override
+	public void notifyAboutDeletion() {
+		// TODO Auto-generated method stub
+		
+	}
 }

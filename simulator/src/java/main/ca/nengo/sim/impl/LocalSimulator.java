@@ -37,6 +37,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import nengoros.util.sync.impl.SyncedUnit;
+
 import ca.nengo.model.Ensemble;
 import ca.nengo.model.InstantaneousOutput;
 import ca.nengo.model.Network;
@@ -83,6 +85,7 @@ public class LocalSimulator implements Simulator, java.io.Serializable {
     private final Collection<SimulatorListener> mySimulatorListeners;
 
     public LocalSimulator() {
+    	
         mySimulatorListeners = new ArrayList<SimulatorListener>(1);
         myChangeListeners = new ArrayList<Listener>(1);
         myDisplayProgress = true;
@@ -133,15 +136,6 @@ public class LocalSimulator implements Simulator, java.io.Serializable {
     }
 
     /**
-     * Setup the run. Interactive specifies whether it is an interactive run or not. 
-     */
-    public void initRun(boolean interactive){
-        if(NodeThreadPool.isMultithreading()){
-            makeNodeThreadPool(interactive);
-        }
-    }
-
-    /**
      * @see ca.nengo.sim.Simulator#run(float, float, float)
      */
     public synchronized void run(float startTime, float endTime, float stepSize)
@@ -154,6 +148,9 @@ public class LocalSimulator implements Simulator, java.io.Serializable {
      */
     public synchronized void run(float startTime, float endTime, float stepSize, boolean topLevel)
             throws SimulationException {
+    	
+    	 myNodeThreadPool = null;
+         myNodeThreadPool = new NodeThreadPool(myNetwork, myProbeTasks);
 
         //		float pre_time = System.nanoTime();
 
@@ -162,7 +159,6 @@ public class LocalSimulator implements Simulator, java.io.Serializable {
 
         if(topLevel)
         {
-            initRun(false);
             resetProbes();
         }
 
@@ -215,18 +211,20 @@ public class LocalSimulator implements Simulator, java.io.Serializable {
 
         fireSimulatorEvent(new SimulatorEvent(1f, SimulatorEvent.Type.FINISHED));
 
-        if(topLevel)
-        {
-            endRun();
+
+        if(myNodeThreadPool != null){
+            myNodeThreadPool.kill();
+            myNodeThreadPool = null;
         }
+
     }
 
     public void step(float startTime, float endTime)
             throws SimulationException {
-
-    	myNetwork.fireStepListeners(startTime);
     	
-        if(myNodeThreadPool != null){
+    	myNetwork.fireStepListeners(startTime);
+
+        if(NodeThreadPool.isMultithreading() && myNodeThreadPool != null){
             myNodeThreadPool.step(startTime, endTime);
         }else{
             for (Projection myProjection : myProjections) {
@@ -242,21 +240,33 @@ public class LocalSimulator implements Simulator, java.io.Serializable {
                 }
             }
 
+            
             for (ThreadTask myTask : myTasks) {
                 myTask.run(startTime, endTime);
             }
+            
+            ///my @author Jaroslav Vitku
+            // here wait until all (ROS) units are ready
+            // TODO
+            System.out.println("hi, simulator here..");
+            int sleeptime = 5;
+            for (Node myNode : myNodes) {
+                if(myNode instanceof SyncedUnit) {
+                	System.out.println("hey, found this one: "+myNode.getName()+" and is ready? "+((SyncedUnit)myNode).isReady());
+                    while(!((SyncedUnit)myNode).isReady()){
+                    	try {
+                    		System.out.println("simulator sleep: waiting for: "+myNode.getName());
+							Thread.sleep(sleeptime);
+						} catch (InterruptedException e) { e.printStackTrace(); }
+                    }
+                } 
+            }
+            
             
             Iterator<Probe> it = myProbes.iterator();
             while (it.hasNext()) {
                 it.next().collect(endTime);
             }
-        }
-    }
-
-    public void endRun(){
-        if(myNodeThreadPool != null){
-            myNodeThreadPool.kill();
-            myNodeThreadPool = null;
         }
     }
 
@@ -391,14 +401,6 @@ public class LocalSimulator implements Simulator, java.io.Serializable {
      */
     public Probe[] getProbes() {
         return myProbes.toArray(new Probe[0]);
-    }
-    
-    public void makeNodeThreadPool(boolean interactive) {
-        myNodeThreadPool = new NodeThreadPool(myNetwork, myProbeTasks, interactive);
-    }
-    
-    public NodeThreadPool getNodeThreadPool() {
-    	return myNodeThreadPool;
     }
 
     public void setDisplayProgress(boolean display)

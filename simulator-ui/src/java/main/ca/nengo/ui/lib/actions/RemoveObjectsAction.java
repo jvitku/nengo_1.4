@@ -27,6 +27,9 @@ public class RemoveObjectsAction extends StandardAction {
 
 		if (response == JOptionPane.YES_OPTION) {
 
+			///my
+			System.out.println("......................... xx");
+			
 			for (WorldObject wo : objectsToRemove) {
 				if (wo instanceof ModelObject) {
 					/*

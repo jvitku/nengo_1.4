@@ -45,6 +45,9 @@ public class ScriptWorldWrapper {
 	}
 
 	public void remove(Node node) {
+		///my @author Jaroslav Vitku
+		node.notifyAboutDeletion();
+		
 		nengoGraphics.removeNodeModel(node);
 	}
 

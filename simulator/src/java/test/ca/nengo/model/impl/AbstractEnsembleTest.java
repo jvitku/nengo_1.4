@@ -59,6 +59,12 @@ public class AbstractEnsembleTest extends TestCase {
 
 			public String toScript(HashMap<String, Object> scriptData) throws ScriptGenException {
 				return "";
+			}
+
+			@Override
+			public void notifyAboutDeletion() {
+				// TODO Auto-generated method stub
+				
 			}};		
 		nodes[1] = new AbstractNode("b", shared, new ArrayList<Termination>(1)) {
 			private static final long serialVersionUID = 1L;
@@ -76,6 +82,12 @@ public class AbstractEnsembleTest extends TestCase {
 
 			public String toScript(HashMap<String, Object> scriptData) throws ScriptGenException {
 				return "";
+			}
+
+			@Override
+			public void notifyAboutDeletion() {
+				// TODO Auto-generated method stub
+				
 			}};		
 		nodes[2] = new AbstractNode("c", notshared, new ArrayList<Termination>(1)) {
 			private static final long serialVersionUID = 1L;
@@ -93,6 +105,12 @@ public class AbstractEnsembleTest extends TestCase {
 
 			public String toScript(HashMap<String, Object> scriptData) throws ScriptGenException {
 				return "";
+			}
+
+			@Override
+			public void notifyAboutDeletion() {
+				// TODO Auto-generated method stub
+				
 			}};
 		
 		List<String> origins = AbstractEnsemble.findCommon1DOrigins(nodes);

@@ -127,7 +127,15 @@ public class hPESTermination extends PESTermination  {
         	return;
         }
 
-        //update omega
+        // update omega
+//        float[][] transform = this.getTransform();
+//        for (int postIx = start; postIx < end; postIx++) {
+//            for (int preIx = 0; preIx < transform[postIx].length; preIx++) {
+//                transform[postIx][preIx] += deltaOmega(postIx, preIx, transform[postIx][preIx]);
+//            }
+//        }
+//        this.setTransform(transform, false);
+        
         float[][] delta = deltaOmega(start, end);
         modifyTransform(delta, false, start, end);
         
@@ -147,13 +155,11 @@ public class hPESTermination extends PESTermination  {
     	
     	float[][] unsupervised = new float[supervised.length][supervised[0].length];
     	for(int postIx=start; postIx < end; postIx++) //this should be able to be matrix-ified as well
-    		for(int preIx=0; preIx < unsupervised[postIx-start].length; preIx++) {
+    		for(int preIx=0; preIx < unsupervised[postIx].length; preIx++)
     			unsupervised[postIx-start][preIx] = myFilteredInput[preIx] * myFilteredOutput[postIx] * 
     			(myFilteredOutput[postIx] - myTheta[postIx]) * myGain[postIx] * myLearningRate * SCALING_FACTOR;
-    		}
     	
     	return MU.sum(MU.prod(supervised,mySupervisionRatio), MU.prod(unsupervised, 1-mySupervisionRatio));
-    	
     }
     
     @Override

@@ -399,4 +399,10 @@ public class FunctionInput implements Node, Probeable {
 	public Node[] getChildren() {
 		return new Node[0];
 	}
+
+	@Override
+	public void notifyAboutDeletion() {
+		// TODO Auto-generated method stub
+		
+	}
 }

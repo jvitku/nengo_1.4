@@ -47,7 +47,6 @@ import ca.nengo.ui.models.constructors.ModelFactory;
 import ca.nengo.ui.models.nodes.widgets.UIOrigin;
 import ca.nengo.ui.models.nodes.widgets.UITermination;
 import ca.nengo.ui.models.tooltips.TooltipBuilder;
-import ca.nengo.ui.models.viewers.NodeViewer;
 //import ca.shu.ui.lib.util.UserMessages;
 
 /**
@@ -161,16 +160,6 @@ public class UINEFEnsemble extends UIEnsemble {
 	public NEFEnsemble getModel() {
 		return (NEFEnsemble) super.getModel();
 	}
-	
-	 @Override
-	protected void modelUpdated() {
-        super.modelUpdated();
-        NodeViewer viewer = getViewer();
-
-        if (viewer != null && !getViewer().isDestroyed()) {
-            viewer.updateViewFromModel();
-        }
-    }
 
 	@Override
 	public int getDimensionality() {

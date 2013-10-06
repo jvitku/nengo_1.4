@@ -428,4 +428,10 @@ public class PassthroughNode implements Node {
 		return "";
 	}
 
+	@Override
+	public void notifyAboutDeletion() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import ca.nengo.model.Node;
 import ca.nengo.ui.lib.actions.UserCancelledException;
 import ca.nengo.ui.lib.actions.StandardAction;
 import ca.nengo.ui.lib.objects.models.ModelObject;
@@ -62,6 +63,10 @@ public class RemoveModelAction extends StandardAction {
                 "Are you sure?", JOptionPane.YES_NO_OPTION);
         if (response == 0) {
         	for (ModelObject modelToRemove : modelsToRemove) {
+        		///my @author Jaroslav Vitku
+        		if(modelToRemove.getModel() instanceof Node){
+        			((Node)modelToRemove.getModel()).notifyAboutDeletion();
+        		}
         		modelToRemove.destroyModel();
         	}
         	modelsToRemove = null;
@@ -69,5 +74,4 @@ public class RemoveModelAction extends StandardAction {
             throw new UserCancelledException();
         }
     }
-
 }

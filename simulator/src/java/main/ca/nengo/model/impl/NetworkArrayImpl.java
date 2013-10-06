@@ -29,7 +29,6 @@ package ca.nengo.model.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -74,7 +73,6 @@ public class NetworkArrayImpl extends NetworkImpl {
 	private Map<String, Origin> myOrigins;
 	private int myNeurons;
 
-	
 	/**
 	 * Create a network holding an array of nodes.  An 'X' Origin
 	 * is automatically created which concatenates the values of each
@@ -121,7 +119,6 @@ public class NetworkArrayImpl extends NetworkImpl {
 		}
 		createEnsembleOrigin("X");
 		this.setUseGPU(true);
-		
 	}
 	
 	/** 
@@ -147,8 +144,6 @@ public class NetworkArrayImpl extends NetworkImpl {
 	public int getNeurons() {
 		return myNeurons;
 	}
-	
-	
 		
 	
 	/**

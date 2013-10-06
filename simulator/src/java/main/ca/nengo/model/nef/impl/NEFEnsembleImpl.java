@@ -1078,7 +1078,7 @@ public class NEFEnsembleImpl extends DecodableEnsembleImpl implements NEFEnsembl
 		return getNodes().length;
 	}
 
-    public synchronized void setNodeCount(int n) throws StructuralException {
+    public void setNodeCount(int n) throws StructuralException {
 		if (myEnsembleFactory==null) {
 			throw new StructuralException("Error changing node count: EnsembleFactory has not been set");
 		}
