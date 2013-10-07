@@ -5,7 +5,8 @@ import java.util.List;
 import org.ros.node.DefaultNodeMainExecutor;
 import org.ros.node.NodeMainExecutor;
 
-import resender.Mess;
+import nengoros.comm.rosutils.Mess;
+
 import nengoros.comm.nodeFactory.NodeGroup.MyNodeConfig;
 import nengoros.comm.nodeFactory.javanode.JavaNodeContainer;
 import nengoros.comm.nodeFactory.javanode.JavaNodeLauncher;

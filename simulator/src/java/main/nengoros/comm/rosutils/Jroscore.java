@@ -1,6 +1,6 @@
 package nengoros.comm.rosutils;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import java.util.concurrent.TimeUnit;
 import java.net.URI;
 import java.net.URISyntaxException;

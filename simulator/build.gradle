@@ -28,6 +28,7 @@ dependencies {
 	testCompile 'ros.rosjava_core:rosjava:0.0.0-SNAPSHOT'
 	testCompile fileTree(dir: 'lib', include: '**/*.jar')
 	// newer junit than is in the lib directory
+	compile 'junit:junit:4.10'
 	testCompile 'junit:junit:4.10'
 	
 }
