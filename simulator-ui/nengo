@@ -3,6 +3,9 @@
 
 cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+ROS=build/install/simulator-ui/lib/*
+
+
 MY_PATH=../rosjava/lib/*:../rosjava/include/*:../simulator/lib/swingx-all-1.6.4.jar/
 
 PROJECTS=../testnodes/bin/:../../../simulators/vivae/bin/:../../../simulators/vivae/lib/*:../../../simulators/vivae/
@@ -26,4 +29,4 @@ LOG=../simulator/src/resources/
 # new one: (new main class)
 #java -Xms100m -Xmx800m -cp $THEIR_PATH:$MY_PATH:$MODLELS_PATH:$LOG:$PROJECTS ca.nengo.ui.NengoLauncher
 # more memoryyy
-java -Xms300m -Xmx1600m -cp $THEIR_PATH:$MY_PATH:$MODLELS_PATH:$LOG:$PROJECTS ca.nengo.ui.NengoLauncher
+java -Xms300m -Xmx1600m -cp $ROS:$THEIR_PATH:$MY_PATH:$MODLELS_PATH:$LOG:$PROJECTS ca.nengo.ui.NengoLauncher
