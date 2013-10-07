@@ -152,6 +152,14 @@ class SimpleNode(Node,Probeable):
             if name.startswith('origin_'):
                 self.create_origin(name[7:],method)
 
+    def notifyAboutDeletion(self):
+        """
+        ///my @author Jaroslav Vitku
+        Modification of Node interface by Jaroslav Vitku, each node is notified
+        before will be deleted. Note that this method has to be here, if not, the following 
+        error is thrown: RuntimeException: Maximum recurtion depth exceeded."""
+
+
     def create_origin(self,name,func):
         """Adds an origin to the SimpleNode.
         

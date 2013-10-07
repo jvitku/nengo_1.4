@@ -23,5 +23,5 @@ templates=[
     thalamus,
     gate,
     learned_termination,
-    interneuron,
+    interneuron
     ]

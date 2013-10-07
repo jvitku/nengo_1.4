@@ -1,5 +1,6 @@
 """Commands to run when starting nengo-cl (the command-line version)"""
-
+# ///my modifications all the way, also in the nengo-cl script @author Jaroslav Vitku
+# based on oriignal nengo script
 execfile('python/startup_common.py')
 
 __nengo_cl__ = True
@@ -7,8 +8,16 @@ __nengo_cl__ = True
 import sys
 sys.argv=sys.argv[1:]   # strip out the "python/startup_cl.py" from the list
 if len(sys.argv)>0:
+    print 'Nengo here: starting script named: '+repr(sys.argv)
     # run the script indicated on the command line
     execfile(sys.argv[0])
+
+    # start an interactive console
+    sys.argv=['-i']
+    import org.python.util
+    interp=org.python.util.JLineConsole(locals())
+    print '-------------------------------------'
+    interp.interact()
 else:
     print """
 Welcome to Nengo!  <http://nengo.ca>
