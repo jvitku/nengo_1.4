@@ -331,4 +331,10 @@ public class LinkSegmentModelImpl implements LinkSegmentModel {
 		return "";
 	}
 
+	@Override
+	public void notifyAboutDeletion() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -151,4 +151,10 @@ public class MockNode implements Node, Cloneable {
 
 		return "";
 	}
+
+	@Override
+	public void notifyAboutDeletion() {
+		// TODO Auto-generated method stub
+		
+	}
 }

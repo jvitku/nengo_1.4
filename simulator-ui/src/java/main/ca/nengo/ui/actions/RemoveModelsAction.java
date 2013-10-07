@@ -30,6 +30,7 @@ import java.util.Collection;
 
 import javax.swing.JOptionPane;
 
+import ca.nengo.model.Node;
 import ca.nengo.ui.lib.actions.ActionException;
 import ca.nengo.ui.lib.actions.StandardAction;
 import ca.nengo.ui.lib.objects.models.ModelObject;
@@ -82,6 +83,10 @@ public class RemoveModelsAction extends StandardAction {
         if (remove) {
             try {
                 for (ModelObject model : objectsToRemove) {
+                	///my @author Jaroslav Vitku
+                	if(model.getModel() instanceof Node)
+                		((Node)model.getModel()).notifyAboutDeletion();
+                	
                     model.destroyModel();
                 }
             } catch (Exception e) {

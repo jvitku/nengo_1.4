@@ -50,6 +50,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import nengoros.comm.rosutils.RosUtils;
+
 import org.python.util.PythonInterpreter;
 import org.simplericity.macify.eawt.Application;
 
@@ -752,7 +754,9 @@ public class NengoGraphics extends AppFrame implements NodeContainer {
                 return;
             }
         }
-
+		///my
+		RosUtils.utilsShallStop();	// tell to roscore and rxgraph to shutdown
+		
         saveUserConfig();
         super.exitAppFrame();
     }

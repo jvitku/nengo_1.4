@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import nengoros.util.sync.impl.SyncedUnit;
+
 import ca.nengo.model.Network;
 import ca.nengo.model.Node;
 import ca.nengo.model.Projection;
@@ -34,6 +36,7 @@ public class NodeThreadPool {
 	protected Object myLock;
 
 	protected Node[] myNodes;
+	protected SyncedUnit[] myUnits;	//list of all syncedUnits - note that SyncedUnit is also a node! 
 	protected Projection[] myProjections;
     protected ThreadTask[] myTasks;
 
@@ -121,10 +124,12 @@ public class NodeThreadPool {
 		Projection[] projections = network.getProjections();
 		
 		List<Node> nodeList = collectNodes(nodes, false);
+		List<SyncedUnit> unitList = collectSyncedNodes(nodes);///my
 		List<Projection> projList = collectProjections(nodes, projections);
 		List<ThreadTask> taskList = collectTasks(nodes);
 		taskList.addAll(threadTasks);
 		
+		myUnits = unitList.toArray(new SyncedUnit[0]);///my
 		myNodes = nodeList.toArray(new Node[0]);
 		myProjections = projList.toArray(new Projection[0]);
 		myTasks = taskList.toArray(new ThreadTask[0]);
@@ -253,7 +258,26 @@ public class NodeThreadPool {
 			
 			// start the task processing, wait for it to finish
 			startThreads();
-
+			
+			///my - after finishing all jobs, wait for SyncedUnits to be ready (their origins set)
+			int sleeptime=1;
+			int attempts = 100;
+			int poc=0;
+			for(SyncedUnit u : myUnits){
+	            while(!u.isReady()){
+	            	if(this.shouldGiveUp(poc-attempts, sleeptime, ((Node)u).getName()))
+            			break;
+	            	if(poc++ < attempts)
+	            		continue;
+	            	try {
+						Thread.sleep(sleeptime);
+						if((poc-attempts) % 40 == 0){
+							System.out.println("Simulator: waiting for: "+((Node)u).getName()+ " for "+
+									sleeptime*(poc-attempts)+" ms");
+						}
+					} catch (InterruptedException e) { e.printStackTrace(); }
+	            }
+			}
 			Thread.currentThread().setPriority(oldPriority);
 		}
 		catch(Exception e) {
@@ -267,6 +291,21 @@ public class NodeThreadPool {
             myNumSteps++;
 		}
 	}
+	
+	///my
+	/**
+	 * @author Jaroslav Vitku
+	 */
+	private boolean shouldGiveUp(int attempts,int sleeptime, String nodename){
+		if(attempts*sleeptime > maxWait){
+			System.out.println("Giving up waiting for node named: "+nodename);
+			return true;
+		}
+		return false;
+	}
+	
+	// ROS communication can break down for some messages
+	private final int maxWait = 500;
 
 	/**
 	 * Tells the threads to run for one phase (projections, nodes or tasks). 
@@ -362,6 +401,44 @@ public class NodeThreadPool {
 		
 		
 	}
+	
+	/**
+	 * ///my
+	 * This method should find all Nodes which extend SyncedUnit class. These are typically neural modules
+	 * which implement synchronous communication with ROS: sendMessage->waitForResponse->continueSimulation.
+	 * 
+	 * @param startingNodes
+	 * @return list of syncedUnits - nodes which are ready/notReady for continuing the simulation
+	 * 
+	 * @author Jaroslav Vitku
+	 */
+    public static List<SyncedUnit> collectSyncedNodes(Node[] startingNodes){
+    	///my
+        ArrayList<SyncedUnit> nodes = new ArrayList<SyncedUnit>();
+        List<Node> nodesToProcess = new LinkedList<Node>();
+        
+        nodesToProcess.addAll(Arrays.asList(startingNodes));
+
+        Node workingNode;
+
+        while(nodesToProcess.size() != 0)
+        {
+            workingNode = nodesToProcess.remove(0);
+            
+            // go down into sub-networks and collect all nodes
+            if(workingNode instanceof Network){
+            	List<Node> nodeList = new LinkedList<Node>(Arrays.asList(((Network) workingNode).getNodes()));
+
+                nodeList.addAll(nodesToProcess);
+                nodesToProcess = nodeList;
+            }
+            else if(workingNode instanceof SyncedUnit){
+            	//System.out.println("synced unit found, its name is: "+workingNode.getName());
+            	nodes.add((SyncedUnit)workingNode);
+            } 
+        }
+        return nodes;
+    }
 	
     /**
      * Return all the nodes in the network except subnetworks. Essentially returns a "flattened"

@@ -123,6 +123,12 @@ public class EnsembleImplTest extends TestCase {
 			return (MockExpandableNode) super.clone();
 		}
 
+		@Override
+		public void notifyAboutDeletion() {
+			// TODO Auto-generated method stub
+			
+		}
+
 	}
 
 }

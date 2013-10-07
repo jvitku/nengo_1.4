@@ -258,4 +258,10 @@ public class EnsembleImpl extends AbstractEnsemble implements ExpandableNode {
 	public String toScript(HashMap<String, Object> scriptData) throws ScriptGenException {
 		return "";
 	}
+
+	@Override
+	public void notifyAboutDeletion() {
+		// TODO Auto-generated method stub
+		
+	}
 }

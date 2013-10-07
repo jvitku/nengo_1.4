@@ -141,7 +141,18 @@ public class NetworkImpl implements Network, VisiblyMutable, VisiblyMutable.List
 		OrderedExposedOrigins = new LinkedList <Origin> ();
 		OrderedExposedTerminations = new LinkedList <Termination> ();
 		
-		myStepListeners = new ArrayList<StepListener>(1);		
+		myStepListeners = new ArrayList<StepListener>(1);
+	}
+	
+	/**
+	 * Recursively inform all sub-Nodes that they will be deleted soon.
+	 * ///my @author Jaroslav Vitku 
+	 */
+	public void notifyAboutDeletion(){
+		Node[] myNodes = getNodes();
+		for( int i=0; i<myNodes.length; i++){
+			myNodes[i].notifyAboutDeletion();
+		}
 	}
 
 	/**
