@@ -37,5 +37,7 @@ simulator-ui/.settings/org.eclipse.jdt.core.prefs
 simulator-ui/build/poms/pom-default.xml
 
 simulator/build/resources/main/log4j.xml
- simulator/build/resources/main/ca/nengo/config/*.txt
+simulator/build/resources/main/ca/nengo/config/*.txt
 
+
+simulator-ui/build/install/*

@@ -20,6 +20,11 @@ sourceSets {
     }
 }
 
+// Create the runnable application from this project into build/lib/bin.. ? [./gradlew installApp]
+apply plugin: 'application'
+mainClassName = 'ca.nengo.ui.NengoLauncher'
+
+
 dependencies {
     
     compile project(':nengo:simulator')
