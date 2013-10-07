@@ -41,6 +41,3 @@ simulator/build/resources/main/ca/nengo/config/*.txt
 
 
 simulator-ui/build/install/*
-simulator-ui/build/scripts/simulator-ui
-simulator-ui/build/scripts/simulator-ui.bat
-
