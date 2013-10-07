@@ -5,23 +5,24 @@ import static org.junit.Assert.*;
 import nengoros.comm.rosutils.Mess;
 
 import org.junit.Test;
-import org.ros.MyRoscore;
+//import org.ros.MyRoscore;
+import nengoros.comm.rosutils.Jroscore;
 
 public class RoscoreTest {
 	
 	@Test
 	public void startStop(){
-		assertFalse(MyRoscore.running());
+		assertFalse(Jroscore.running());
 		
-		MyRoscore.start();
+		Jroscore.start();
 		
 		Mess.wait(1);
-		assertTrue(MyRoscore.running());
+		assertTrue(Jroscore.running());
 		
-		MyRoscore.stop();
+		Jroscore.stop();
 		Mess.wait(1);
 		
-		assertFalse(MyRoscore.running());
+		assertFalse(Jroscore.running());
 	}
 
 }
