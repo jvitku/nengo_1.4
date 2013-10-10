@@ -44,3 +44,5 @@ simulator-ui/build/install/*
 simulator-ui/build/scripts/simulator-ui
 simulator-ui/build/scripts/simulator-ui.bat
 
+# linix
+*~
