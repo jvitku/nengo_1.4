@@ -38,3 +38,6 @@ task list(dependsOn: configurations.compile) << {
     println "classpath = ${configurations.compile.collect {File file -> file.name}}"
 }
 
+// we use install by default on the entire multiproject, 
+// but we wish to create also an application here..
+install.dependsOn installApp
