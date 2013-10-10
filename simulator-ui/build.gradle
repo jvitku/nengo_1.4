@@ -13,17 +13,26 @@ sourceSets {
     main {
         java {
             srcDir 'src/java/main'
+            // add this directory to installApp?
+            //runtimeClasspath = fileTree(dir: '../dist-files', include: '**/*')
         }
         resources {
+            // this adds resources into build/resources if found something in the folder
             srcDir 'src/resources'
         }
     }
 }
 
+
+
 // Create the runnable application from this project into build/lib/bin.. ? [./gradlew installApp]
 apply plugin: 'application'
 mainClassName = 'ca.nengo.ui.NengoLauncher'
 
+
+
+//distsDirName= 'teeest'
+//destinationDir = 'afdf'
 
 dependencies {
     
@@ -38,6 +47,59 @@ task list(dependsOn: configurations.compile) << {
     println "classpath = ${configurations.compile.collect {File file -> file.name}}"
 }
 
-// we use install by default on the entire multiproject, 
-// but we wish to create also an application here..
+//confDir = new File("$buildDir/dist-files")
+//confDir = new File("$buildDir/install/"+project.name+'/bin')
+
+
+
+
+//installApp.dependsOn copyfiles
+
+
+installApp.doLast {
+    // see: http://www.gradle.org/docs/current/javadoc/org/gradle/api/tasks/Copy.html
+    println 'Copying dist-files (and others) into build/install/simulator-ui/bin/'
+    copy {
+       from 'dist-files'
+       into "$buildDir/install/"+project.name+'/bin/'
+       include('**/*') 
+       exclude('nengo','nengo-cl','nengo.bat','nengo-cl.bat')
+       }
+       copy {
+          from 'python'
+          into "$buildDir/install/"+project.name+'/bin/python'
+      }
+       copy {
+          from 'images'
+          into "$buildDir/install/"+project.name+'/bin/images'
+      }
+       copy {
+          from 'external'
+          into "$buildDir/install/"+project.name+'/bin/external'
+      }
+       copy {
+          from 'nr-demo'
+          into "$buildDir/install/"+project.name+'/bin/nr-demo'
+      }
+    copy {
+      from 'lib/Lib'
+      into "$buildDir/install/"+project.name+'/lib/Lib'
+      include('**/*')
+      }
+}
+
+
+
+/*
+task installApplication(dependsOn: ':simulator-ui:installApp'){
+    print 'fuck'
+    copyfiles
+    print 'you'
+}
+*/
+//copyfiles.dependsOn installApp
+
+
+// note that this can be used in order to create complete nengo application
+// TODO: copy lib/Lib demo/ and other folders into build/install/simulator-ui in the installApp task
 install.dependsOn installApp
