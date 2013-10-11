@@ -23,16 +23,10 @@ sourceSets {
     }
 }
 
-
-
 // Create the runnable application from this project into build/lib/bin.. ? [./gradlew installApp]
 apply plugin: 'application'
 mainClassName = 'ca.nengo.ui.NengoLauncher'
 
-
-
-//distsDirName= 'teeest'
-//destinationDir = 'afdf'
 
 dependencies {
     
@@ -47,15 +41,8 @@ task list(dependsOn: configurations.compile) << {
     println "classpath = ${configurations.compile.collect {File file -> file.name}}"
 }
 
-//confDir = new File("$buildDir/dist-files")
-//confDir = new File("$buildDir/install/"+project.name+'/bin')
 
-
-
-
-//installApp.dependsOn copyfiles
-
-
+// after installingApp (everything into simulator-ui/build/install/simulator-ui/) copy all dist-files there
 installApp.doLast {
     // see: http://www.gradle.org/docs/current/javadoc/org/gradle/api/tasks/Copy.html
     println 'Copying dist-files (and others) into build/install/simulator-ui/bin/'
@@ -87,19 +74,3 @@ installApp.doLast {
       include('**/*')
       }
 }
-
-
-
-/*
-task installApplication(dependsOn: ':simulator-ui:installApp'){
-    print 'fuck'
-    copyfiles
-    print 'you'
-}
-*/
-//copyfiles.dependsOn installApp
-
-
-// note that this can be used in order to create complete nengo application
-// TODO: copy lib/Lib demo/ and other folders into build/install/simulator-ui in the installApp task
-install.dependsOn installApp
