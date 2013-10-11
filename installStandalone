@@ -20,9 +20,12 @@ echo "   XXXXXXXX Building the Nengo, generating eclipse projects.. "
 echo "      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n"
 
 # bug in gradle generates duplicate entries if .classpath file exist:
-rm simulator/.classpath
-rm simulator-ui/.classpath
+if [ -f simulator/.classpath ]; then rm simulator/.classpath
+fi
+if [ -f simulator-ui/.classpath ]; then rm simulator-ui/.classpath
+fi
 
+# set this as parent multi-project for gradle
 cp build.gradle_notused build.gradle
 cp settings.gradle_notused settings.gradle
 

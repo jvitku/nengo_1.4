@@ -25,5 +25,6 @@ Standalone installation is handled by the script: ./installStandalone .
 
 This generates eclipse projects into the folders simulator and simulator-ui.
 
-In eclipse, import (2) projects from nengo folder. 
-Launch Nengo by calling main method in class: NengoLauncher.  
+In eclipse, import (simulator and simulator-ui) projects from nengo folder, clean/build. 
+
+Launch Nengo by calling main method in class: NengoLauncher or by runnign scripts either simulator-ui/nengo or simulator-ui/nengo-cl.  
