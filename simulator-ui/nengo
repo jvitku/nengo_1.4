@@ -14,7 +14,8 @@ LL=$HO/build/lib
 RJ=$HOME/../lib-rosjava
 
 # TODO: GPU does not work so far
-GPU=$HOME/../simulator/src/c/NengoGPU:$HOME/../simulator/src/c/NengoUtilsGPU
+#GPU=$HOME/../simulator/src/c/NengoGPU:$HOME/../simulator/src/c/NengoUtilsGPU
+GPU=$HOME/dist-files/NengoGPU:$HOME/dist-files/NengoUtilsGPU
 
 # Copmared to gradle build (build/*) this links *.class files compiled by Eclipse into bin/ directory. 
 # Note that projects MUST BE BUILT with Eclipse in order to this to run
@@ -35,6 +36,6 @@ ROSJAVA=$RJ/rosjava-0.0.0-SNAPSHOT.jar:$RJ/rosjava_bootstrap-0.0.0-SNAPSHOT.jar:
 
 #FROMJARS=$HO/simulator-ui-0.0.0-SNAPSHOT.jar:$HO/simulator-0.0.0-SNAPSHOT.jar
 
-java -classpath $CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO ca.nengo.ui.NengoLauncher
+java -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO ca.nengo.ui.NengoLauncher
 
 
