@@ -37,7 +37,7 @@ cp simulator/build.gradle.standalone simulator/build.gradle
 TEST=0
 if [ "$TEST" -eq "1" ]; then
     ./gradlew clean build install eclipse --continue
-    echo 'Authors of Nengo: \" If you see "BUILD FAILED" above and you are worried... relax!' "It's normal.\""
+    echo "Authors of Nengo: \" If you see \"BUILD FAILED\" above and you are worried... relax!\" \"Its normal.\""
     echo "\"Moving right along...\""
 else
     ./gradlew clean build install eclipse --continue -x test 
