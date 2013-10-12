@@ -22,16 +22,16 @@ sourceSets {
 
 dependencies {
     //compile project(':testnodes')
-	//compile 'ros.rosjava_core:rosjava:0.0.0-SNAPSHOT'
-	compile fileTree(dir: '../lib-rosjava', include: '**/*.jar')
+    //compile 'ros.rosjava_core:rosjava:0.0.0-SNAPSHOT'
+    compile fileTree(dir: '../lib-rosjava', include: '**/*.jar')
     compile fileTree(dir: 'lib', include: '**/*.jar')
 
-	//testCompile 'ros.rosjava_core:rosjava:0.0.0-SNAPSHOT'
-	testCompile fileTree(dir: '../lib-rosjava', include: '**/*.jar')
-	testCompile fileTree(dir: 'lib', include: '**/*.jar')
-	// newer junit than is in the lib directory
-	compile 'junit:junit:4.10'
-	testCompile 'junit:junit:4.10'
+    //testCompile 'ros.rosjava_core:rosjava:0.0.0-SNAPSHOT'
+    testCompile fileTree(dir: '../lib-rosjava', include: '**/*.jar')
+    testCompile fileTree(dir: 'lib', include: '**/*.jar')
+    // newer junit than is in the lib directory
+    compile 'junit:junit:4.10'
+    testCompile 'junit:junit:4.10'
 }
 
 // prints out dependencies... 

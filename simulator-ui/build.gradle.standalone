@@ -35,7 +35,7 @@ mainClassName = 'ca.nengo.ui.NengoLauncher'
 install.dependsOn installApp
 
 dependencies {
-    
+
     compile project(':simulator')
     compile fileTree(dir: 'lib', include: '**/*.jar')
     compile fileTree(dir: '../lib-rosjava', include: '**/*.jar')
@@ -54,30 +54,52 @@ installApp.doLast {
     // see: http://www.gradle.org/docs/current/javadoc/org/gradle/api/tasks/Copy.html
     println 'Copying dist-files (and others) into build/install/simulator-ui/bin/'
     copy {
-       from 'dist-files'
-       into "$buildDir/install/"+project.name+'/bin/'
-       include('**/*') 
-       exclude('nengo','nengo-cl','nengo.bat','nengo-cl.bat')
-       }
-       copy {
-          from 'python'
-          into "$buildDir/install/"+project.name+'/bin/python'
-      }
-       copy {
-          from 'images'
-          into "$buildDir/install/"+project.name+'/bin/images'
-      }
-       copy {
-          from 'external'
-          into "$buildDir/install/"+project.name+'/bin/external'
-      }
-       copy {
-          from 'nr-demo'
-          into "$buildDir/install/"+project.name+'/bin/nr-demo'
-      }
+        from 'dist-files'
+        into "$buildDir/install/"+project.name+'/bin/'
+        include('**/*') 
+        exclude('nengo','nengo-cl','nengo.bat','nengo-cl.bat')
+    }
     copy {
-      from 'lib/Lib'
-      into "$buildDir/install/"+project.name+'/lib/Lib'
-      include('**/*')
-      }
+        from 'python'
+        into "$buildDir/install/"+project.name+'/bin/python'
+    }
+    // OK, overwrite files from dist-files with these, potentially newer
+    copy {
+        from 'images'
+        into "$buildDir/install/"+project.name+'/bin/images'
+    }
+    // pseudo-inverse
+    copy {
+        from 'external'
+        into "$buildDir/install/"+project.name+'/bin/external'
+    }
+    // nengoros demo files
+    copy {
+        from 'nr-demo'
+        into "$buildDir/install/"+project.name+'/bin/nr-demo'
+    }
+    // original demo files
+    copy {
+        from 'demo'
+        into "$buildDir/install/"+project.name+'/bin/demo'
+    }
+    // layout files
+    copy {
+        from 'layouts'
+        into "$buildDir/install/"+project.name+'/bin/layouts'
+    }
+    // GUI files
+    copy {
+        from 'UIFiles'
+        into "$buildDir/install/"+project.name+'/bin/UIFiles'
+    }
+    copy {
+        from 'commandhistory.dat'
+        into "$buildDir/install/"+project.name+'/bin/'
+    }
+    copy {
+        from 'lib/Lib'
+        into "$buildDir/install/"+project.name+'/lib/Lib'
+        include('**/*')
+    }
 }
