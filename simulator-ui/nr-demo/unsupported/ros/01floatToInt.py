@@ -1,10 +1,10 @@
-# Create the NeuralModule which receives 4 float values, finds min and max, converts them to int and passes to the output.
-#
+# Create the NeuralModule which receives 4 float values, finds min and max, converts them to int and passes to output.
+
 # starts: 
-#   -ROS-java node (class extending the org.ros.Node) which does exactly the thing described above
-#   -NeuralModule with modem that communicates with the ROS node 
-#
-# by Jaroslav Vitku [vitkujar@fel.cvut.cz]
+#   -Java class which does exactly the thing described above
+#   -NeuralModule with modem that communicates with the node 
+
+# by Jaroslav Vitku
 
 import nef
 from ca.nengo.math.impl import FourierFunction
