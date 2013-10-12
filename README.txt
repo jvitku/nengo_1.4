@@ -29,3 +29,8 @@ This generates eclipse projects into the folders simulator and simulator-ui.
 In eclipse, import (simulator and simulator-ui) projects from nengo folder, clean/build. 
 
 Launch Nengo by calling main method in class: NengoLauncher or by runnign scripts either simulator-ui/nengo or simulator-ui/nengo-cl.  
+
+
+--------------------------- NOTES
+
+In order to distinguish between standalone and rosjava-based project settings, build.gradle and settings.gradle files under nengo and nengo/simulator-ui are appended with either *.rosjava or *.standalone, please, edit these files.

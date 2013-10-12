@@ -2,7 +2,6 @@
 *.pyc
 *.pkc
 *.idx
-* .bin 
 .DS_Store
 nengo-*
 nengo-latest.zip
