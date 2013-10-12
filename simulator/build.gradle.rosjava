@@ -30,7 +30,6 @@ dependencies {
 	// newer junit than is in the lib directory
 	compile 'junit:junit:4.10'
 	testCompile 'junit:junit:4.10'
-	
 }
 
 // prints out dependencies... 

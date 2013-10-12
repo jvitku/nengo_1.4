@@ -26,19 +26,29 @@ if [ -f simulator-ui/.classpath ]; then rm simulator-ui/.classpath
 fi
 
 # set this as parent multi-project for gradle
-cp build.gradle_notused build.gradle
-cp settings.gradle_notused settings.gradle
+cp build.gradle.standalone build.gradle
+cp settings.gradle.standalone settings.gradle
+
+# note that you should edit these files build.gradle.* in order to change the settings!
+cp simulator-ui/build.gradle.standalone simulator-ui/build.gradle
+cp simulator/build.gradle.standalone simulator/build.gradle
 
 # run tests?
 TEST=0
 if [ "$TEST" -eq "1" ]; then
     ./gradlew clean build install eclipse --continue
-    echo 'Authors: \" If you see "BUILD FAILED" above and you are worried... relax!' "It's normal.\""
+    echo 'Authors of Nengo: \" If you see "BUILD FAILED" above and you are worried... relax!' "It's normal.\""
     echo "\"Moving right along...\""
 else
     ./gradlew clean build install eclipse --continue -x test 
 fi
 
+rm build.gradle
+rm settings.gradle
+
+# removed so the user won't edit it..
+rm simulator-ui/build.gradle
+rm simulator/build.gradle
 
 echo "\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "
 echo "   XXXXXXXX All done "

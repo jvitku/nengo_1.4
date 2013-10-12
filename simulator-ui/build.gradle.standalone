@@ -1,4 +1,8 @@
 // @author Jaroslav Vitku [vitkujar@fel.cvut.cz]
+// 
+//
+// Version of build configuration which depends on locally stored rosjava libraries under: nengo/lib-rosjava
+//
 
 // Gradle uses different default folders for source files => remap them
 sourceSets {
@@ -27,12 +31,15 @@ sourceSets {
 apply plugin: 'application'
 mainClassName = 'ca.nengo.ui.NengoLauncher'
 
+// this ensures that there is also made a complete application under simulator-ui/build/install/simulator-ui/bin
+install.dependsOn installApp
 
 dependencies {
     
-    compile project(':nengo:simulator')
+    compile project(':simulator')
     compile fileTree(dir: 'lib', include: '**/*.jar')
-    compile 'ros.rosjava_core:rosjava:0.0.0-SNAPSHOT'
+    compile fileTree(dir: '../lib-rosjava', include: '**/*.jar')
+    //compile 'ros.rosjava_core:rosjava:0.0.0-SNAPSHOT'
     //compile 'simulators:vivae:0.0.0-SNAPSHOT'
 }
 

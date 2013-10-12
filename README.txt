@@ -11,15 +11,16 @@ This modification is used in the "nengo-ros" package, which integrates:
 
 Together, these two packages provide platform-independent tool for simulating hybrid neural systems usable e.g. for robotic applications.
 
+
 --------------------------- PREREQUISITES
 
-If you want to install entire Nengo-ros multiproject, see http://nengoros.wordpress.com/ or https://github.com/jvitku/nengoros
+If you want to install the entire Nengo-ros multiproject (recommended), see http://nengoros.wordpress.com/ or clone the repository on https://github.com/jvitku/nengoros
 
-If you want to install just the modified Nengo simulator, see the next chapter.
+If you want to install just the modified Nengoros simulator (with precompiled rosjava libraries), see the next chapter.
 
 --------------------------- INSTALLATION
 
-Original build system is moved from maven to Gragle. 
+Original build system is moved from maven to Gradle. 
 
 Standalone installation is handled by the script: ./installStandalone .
 
