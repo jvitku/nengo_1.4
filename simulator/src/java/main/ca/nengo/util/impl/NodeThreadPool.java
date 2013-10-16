@@ -7,8 +7,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import nengoros.util.sync.impl.SyncedUnit;
-
+import ctu.nengoros.util.sync.impl.SyncedUnit;
 import ca.nengo.model.Network;
 import ca.nengo.model.Node;
 import ca.nengo.model.Projection;

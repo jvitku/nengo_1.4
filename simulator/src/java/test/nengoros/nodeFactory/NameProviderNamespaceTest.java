@@ -1,11 +1,12 @@
 package nengoros.nodeFactory;
 
 import static org.junit.Assert.assertEquals;
-import nengoros.comm.nodeFactory.NodeGroup;
-import nengoros.comm.rosutils.Mess;
-import nengoros.comm.rosutils.RosUtils;
 
 import org.junit.Test;
+
+import ctu.nengoros.comm.nodeFactory.NodeGroup;
+import ctu.nengoros.comm.rosutils.Mess;
+import ctu.nengoros.comm.rosutils.RosUtils;
 
 public class NameProviderNamespaceTest {
 

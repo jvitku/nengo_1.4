@@ -1,9 +1,10 @@
 package tools.utils;
 
 import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
-import tools.utils.LU;
+import ctu.nengoros.tools.utils.LU;
 
 public class LoggerUtilsTest {
 

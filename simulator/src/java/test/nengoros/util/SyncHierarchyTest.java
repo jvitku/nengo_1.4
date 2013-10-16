@@ -1,6 +1,6 @@
 package nengoros.util;
 
-import nengoros.util.sync.impl.SyncedUnit;
+import ctu.nengoros.util.sync.impl.SyncedUnit;
 import static org.junit.Assert.*;
 public class SyncHierarchyTest {
 

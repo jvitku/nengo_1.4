@@ -29,7 +29,6 @@ a recipient may use your version of this file under either the MPL or the GPL Li
 package ca.nengo.sim.impl;
 
 import java.lang.System;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -37,8 +36,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import nengoros.util.sync.impl.SyncedUnit;
-
+import ctu.nengoros.util.sync.impl.SyncedUnit;
 import ca.nengo.model.Ensemble;
 import ca.nengo.model.InstantaneousOutput;
 import ca.nengo.model.Network;

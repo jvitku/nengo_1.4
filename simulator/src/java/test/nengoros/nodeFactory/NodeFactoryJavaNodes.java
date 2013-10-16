@@ -1,12 +1,13 @@
 package nengoros.nodeFactory;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
-import nengoros.comm.nodeFactory.NodeFactory;
-import nengoros.comm.nodeFactory.NodeGroup;
-import nengoros.comm.rosutils.Mess;
-import nengoros.comm.rosutils.RosUtils;
+import ctu.nengoros.comm.nodeFactory.NodeFactory;
+import ctu.nengoros.comm.nodeFactory.NodeGroup;
+import ctu.nengoros.comm.rosutils.Mess;
+import ctu.nengoros.comm.rosutils.RosUtils;
 
 /**
  * Test basic properties of launching of Java nodes

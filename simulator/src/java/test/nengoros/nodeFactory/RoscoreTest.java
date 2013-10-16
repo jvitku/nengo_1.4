@@ -2,11 +2,11 @@ package nengoros.nodeFactory;
 
 import static org.junit.Assert.*;
 
-import nengoros.comm.rosutils.Mess;
-
 import org.junit.Test;
 //import org.ros.MyRoscore;
-import nengoros.comm.rosutils.Jroscore;
+
+import ctu.nengoros.comm.rosutils.Jroscore;
+import ctu.nengoros.comm.rosutils.Mess;
 
 public class RoscoreTest {
 	

@@ -10,12 +10,12 @@ import nef
 from ca.nengo.math.impl import FourierFunction
 from ca.nengo.model.impl import FunctionInput
 from ca.nengo.model import Units
-from nengoros.modules.impl import DefaultNeuralModule as NeuralModule
-from nengoros.comm.nodeFactory import NodeGroup as NodeGroup
-from nengoros.comm.rosutils import RosUtils as RosUtils
+from ctu.nengoros.modules.impl import DefaultNeuralModule as NeuralModule
+from ctu.nengoros.comm.nodeFactory import NodeGroup as NodeGroup
+from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
 
 # creates nef network and adds it to nengo (this must be first in the script) 
-net=nef.Network('Smart neuron which finds (int)min and (int)max')
+net=nef.Network('Neural module - find min and max and round to integer')
 net.add_to_nengo()  # here: delete old (toplevel) network and replace it with the newly CREATED one
 
 ################################## 
@@ -25,8 +25,8 @@ net.add_to_nengo()  # here: delete old (toplevel) network and replace it with th
 
 ################################## 
 ################# define the group and start it
-finder = "resender.mpt.F2IPubSub";      # Jva (ROS) node that does this job
-modem  = "nengoros.comm.nodeFactory.modem.impl.DefaultModem"; # custom modem here
+finder = "resender.mpt.F2IPubSub";      # Java (ROS) node that does this job
+modem  = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem"; # custom modem here
 
 # create group with a name
 g = NodeGroup("MinMaxFinder", True);    # create independent group called..

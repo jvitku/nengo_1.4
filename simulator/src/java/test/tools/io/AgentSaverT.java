@@ -1,5 +1,8 @@
 package tools.io;
 
+import ctu.nengoros.tools.io.AgentConfig;
+import ctu.nengoros.tools.io.AgentSaver;
+
 public class AgentSaverT {
 	
 	public static void main(String[] none){

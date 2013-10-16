@@ -2,9 +2,9 @@ package nengoros.nodeFactory;
 
 import static org.junit.Assert.*;
 
-import nengoros.comm.nodeFactory.NameProvider;
-
 import org.junit.Test;
+
+import ctu.nengoros.comm.nodeFactory.NameProvider;
 
 /**
  * My first attempt to write unit test.. and it found at least 5 bugs actually..

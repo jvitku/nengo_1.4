@@ -50,11 +50,10 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import nengoros.comm.rosutils.RosUtils;
-
 import org.python.util.PythonInterpreter;
 import org.simplericity.macify.eawt.Application;
 
+import ctu.nengoros.comm.rosutils.RosUtils;
 import ca.nengo.config.ConfigUtil;
 import ca.nengo.config.JavaSourceParser;
 import ca.nengo.model.Network;
