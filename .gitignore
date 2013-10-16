@@ -16,9 +16,9 @@ NengoModels
 #### configs
 simulator-ui/commandhistory.dat
 
-simulator-ui/quick/*
+#simulator-ui/quick/*
 
-simulator-ui/python/timeview/layout.db.bak
+#simulator-ui/python/timeview/layout.db.bak
 
 
 simulator-ui/delimited_file_exporter_test.txt
@@ -45,5 +45,5 @@ simulator-ui/build/install/*
 simulator-ui/build/scripts/simulator-ui
 simulator-ui/build/scripts/simulator-ui.bat
 
-# linix
+# linux
 *~
