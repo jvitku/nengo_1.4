@@ -4,10 +4,10 @@ Nengo+ROS = NengoRos
 This is modification of original Nengo simulator for integration with ROS infrastructure.
 For more information about Nengo-ros integration see: http://nengoros.wordpress.com/ .
 
-Author of this fork: Jaroslav Vitku [vitkujar@fel.cvut.cz]
+Author: Jaroslav Vitku [vitkujar@fel.cvut.cz]
 Address of this repository: https://github.com/jvitku/nengo_1.4/
 
-This modification is used in the "nengo-ros" package, which integrates:
+This modification is used in the "nengo-ros" package, which integrates (all credits to authors) :
 * Nengo simulator 	(large scale neural simulations, see: http://nengo.ca/ , original readme renamed to README_origNengo.rst )
 * rosjava_core  		(java-based implementation of ROS core, see: http://wiki.ros.org/rosjava )
 	-potentially with some neccessary ROS-components
