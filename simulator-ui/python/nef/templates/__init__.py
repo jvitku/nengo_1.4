@@ -12,6 +12,12 @@ import bcm_termination
 import thalamus
 import interneuron
 import floattoint
+import log_gate_or
+import log_gate_xor
+import log_gate_nand
+import log_gate_and
+import log_gate_not
+
 
 templates=[
     networkarray,
@@ -25,5 +31,10 @@ templates=[
     gate,
     learned_termination,
     interneuron,
-    floattoint
+    floattoint,
+    log_gate_or,
+    log_gate_xor,
+    log_gate_nand,
+    log_gate_and,
+    log_gate_not
     ]

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.ros.node.ConnectedNode;
 
+import ctu.nengoros.comm.rosBackend.backend.impl.BooleanBackend;
 import ctu.nengoros.comm.rosBackend.backend.impl.FloatBackend;
 import ctu.nengoros.comm.rosBackend.backend.impl.IntBackend;
 import ctu.nengoros.comm.rosBackend.backend.impl.turtle.ColorBackend;
@@ -42,6 +43,9 @@ public class BackendUtils {
 		
 		if(type.equalsIgnoreCase(IntBackend.MYTYPE))
 			return new IntBackend(topic, type, dimensionSizes, myRosNode, publish);
+		
+		if(type.equalsIgnoreCase(BooleanBackend.MYTYPE))
+			return new BooleanBackend(topic, type, dimensionSizes, myRosNode, publish);
 		
 		throw new MessageFormatException("BackendUtils "+topic, 
 				"Could not find corresponding Backend for this type of message "+type);
