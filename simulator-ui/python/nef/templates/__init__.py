@@ -11,6 +11,7 @@ import hpes_termination
 import bcm_termination
 import thalamus
 import interneuron
+import floattoint
 
 templates=[
     networkarray,
@@ -23,5 +24,6 @@ templates=[
     thalamus,
     gate,
     learned_termination,
-    interneuron
+    interneuron,
+    floattoint
     ]
