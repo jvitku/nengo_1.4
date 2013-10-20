@@ -20,7 +20,7 @@ public class DefaultAsynNeuralModule extends AbsAsynNeuralModule{
 	
 
 	private static final long serialVersionUID = 1L;
-	public static final String me = "[DefaultSmartNeuron] ";
+	public static final String me = "[DefaultAsynchNeuralModule] ";
 
 	/**
 	 * Initialize complete smart neuron, that means 

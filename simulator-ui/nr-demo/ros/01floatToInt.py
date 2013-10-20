@@ -37,7 +37,7 @@ g.startGroup()
 ################################## 
 ################# setup the smart neuron and add it to the Nengo network
 modem = g.getModem()
-neuron = NeuralModule('MinMaxFinder', modem) # construct the smart neuron 
+neuron = NeuralModule('MinMaxFinder', modem) # construct the Neural Module
 
 neuron.createEncoder("ann2rosFloatArr", "float",4)  # termination = input of neuron (4xfloat)
 neuron.createDecoder("ros2annFloatArr", "int",2)    # origin = output of neuron (min and max)

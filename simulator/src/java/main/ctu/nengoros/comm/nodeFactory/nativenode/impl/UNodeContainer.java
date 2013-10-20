@@ -13,7 +13,7 @@ import ctu.nengoros.comm.nodeFactory.NodeFactory;
  *
  */
 public class UNodeContainer extends RunnableNode {
-
+	
 	// do not use this by default (all nodes belong somewhere, so they are stopped)
 	private boolean useAutokiller = false;
 	
