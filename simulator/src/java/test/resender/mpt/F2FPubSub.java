@@ -29,7 +29,7 @@ public class F2FPubSub extends AbstractNodeMain {
 	@Override
 	public void onStart(final ConnectedNode connectedNode) {
 
-		System.out.println("haaaaaaaaaaaaaaaaaaaa");
+		System.out.println("Node started, initializing!");
 		final Log log = connectedNode.getLog();
 
 		// define the publisher

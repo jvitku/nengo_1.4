@@ -17,6 +17,8 @@ import log_gate_xor
 import log_gate_nand
 import log_gate_and
 import log_gate_not
+import demoSubscriber
+import demoPublisher
 
 
 templates=[
@@ -36,5 +38,7 @@ templates=[
     log_gate_xor,
     log_gate_nand,
     log_gate_and,
-    log_gate_not
+    log_gate_not,
+    demoSubscriber,
+    demoPublisher
     ]
