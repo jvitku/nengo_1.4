@@ -23,10 +23,10 @@ public class NameProviderNamespaceTest {
 		
 		// group called pubsub which is independent?
 		NodeGroup g = new NodeGroup("pubsub",false);
-		g.addNC(talker, "talker", "java");
+		g.addNode(talker, "talker", "java");
 		assertEquals(1,g.getNames().length);
 		
-		g.addNC(receiveer, "receiver", "java");		
+		g.addNode(receiveer, "receiver", "java");		
 		assertEquals(2,g.getNames().length);
 		
 		g.startGroup();
@@ -53,10 +53,10 @@ public class NameProviderNamespaceTest {
 		
 		// group called pubsub which is independent?
 		NodeGroup g = new NodeGroup("pubsub",true);
-		g.addNC(talker, "talker", "java");
+		g.addNode(talker, "talker", "java");
 		assertEquals(1,g.getNames().length);
 		
-		g.addNC(receiveer, "receiver", "java");		
+		g.addNode(receiveer, "receiver", "java");		
 		assertEquals(2,g.getNames().length);
 		
 		g.startGroup();
@@ -83,10 +83,10 @@ public class NameProviderNamespaceTest {
 		
 		// group called pubsub which is independent?
 		NodeGroup g = new NodeGroup("pubsub","namespaceString");
-		g.addNC(talker, "talker", "java");
+		g.addNode(talker, "talker", "java");
 		assertEquals(1,g.getNames().length);
 		
-		g.addNC(receiveer, "receiver", "java");		
+		g.addNode(receiveer, "receiver", "java");		
 		assertEquals(2,g.getNames().length);
 		
 		g.startGroup();

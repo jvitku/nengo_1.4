@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Properties;
 
+import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.comm.rosBackend.backend.BackendUtils;
@@ -73,7 +74,13 @@ public abstract class AbsAsynNeuralModule implements AsynNeuralModule{
 	 * 
 	 * @param name name of neural module
 	 */
-	public AbsAsynNeuralModule(String name, ModemContainer modContainer){
+	public AbsAsynNeuralModule(String name, NodeGroup group){
+		
+		if(! group.isRunning()){
+			group.startGroup();
+		}
+		// get modem of the group
+		ModemContainer modContainer = group.getModem();
 		if(modContainer == null){
 			System.err.println(me+"modem probably not initialized!!!! I am not ready!");
 		}

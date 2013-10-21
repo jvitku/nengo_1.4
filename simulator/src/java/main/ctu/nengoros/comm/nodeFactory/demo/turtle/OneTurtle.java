@@ -47,9 +47,9 @@ public class OneTurtle {
 		NodeGroup g = new NodeGroup("zelvicka", true);
 		
 		// add node configurations to the group
-		g.addNC(turtlesim, "zelva", "native");
-		g.addNC(className, "actuators", "java");
-		g.addNC(clName, "sensors", "java");
+		g.addNode(turtlesim, "zelva", "native");
+		g.addNode(className, "actuators", "java");
+		g.addNode(clName, "sensors", "java");
 		
 		// start all nodes in the group
 		g.startGroup();

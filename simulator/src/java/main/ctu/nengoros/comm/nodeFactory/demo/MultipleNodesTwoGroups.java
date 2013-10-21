@@ -51,8 +51,8 @@ public class MultipleNodesTwoGroups {
 		// if make conflict, groups are not independent (preserve no namespace) and will 
 		// be conflict there..
 		NodeGroup g1 = new NodeGroup("group1",!makeConflict);
-		g1.addNC(talkerClass, "talker", "java");
-		g1.addNC(listenerClass, "listener", "java");
+		g1.addNode(talkerClass, "talker", "java");
+		g1.addNode(listenerClass, "listener", "java");
 		
 		g1.startGroup();
 		
@@ -61,8 +61,8 @@ public class MultipleNodesTwoGroups {
 		System.out.println("starting it now");
 		
 		NodeGroup g2 = new NodeGroup("group1",!makeConflict);
-		g2.addNC(talkerClass, "talker", "java");
-		g2.addNC(listenerClass, "listener", "java");
+		g2.addNode(talkerClass, "talker", "java");
+		g2.addNode(listenerClass, "listener", "java");
 		g2.startGroup();
 		
 		System.out.println("observe conflict resolving ...");
@@ -85,8 +85,8 @@ public class MultipleNodesTwoGroups {
 		String listenerClass = "resender.mt.IntReceiver";
 		
 		NodeGroup n = new NodeGroup("demo",false);
-		n.addNC(talkerClass, "talker", "java");
-		n.addNC(listenerClass, "listener", "java");
+		n.addNode(talkerClass, "talker", "java");
+		n.addNode(listenerClass, "listener", "java");
 		
 		System.out.println("Launching two nodes.. waiting several seconds and " +
 				"launching another (but independent) talker (identical to the one already running)");
@@ -95,7 +95,7 @@ public class MultipleNodesTwoGroups {
 		Mess.wait(10);
 		
 		NodeGroup n2 = new NodeGroup("demo", true);
-		n2.addNC(talkerClass, "talker", "java");
+		n2.addNode(talkerClass, "talker", "java");
 		n2.startGroup();
 		
 		System.out.println("observe conflict resolving.. ");

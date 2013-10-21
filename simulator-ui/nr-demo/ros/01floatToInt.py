@@ -18,31 +18,23 @@ from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
 net=nef.Network('Neural module - find min and max and round to integer')
 net.add_to_nengo()  # here: delete old (toplevel) network and replace it with the newly CREATED one
 
-################################## 
+
 ################# setup the ROS utils (optional) 
 #RosUtils.setAutorun(False)     # Do we want to autorun roscore and rxgraph? (tru by default)
 #RosUtils.prefferJroscore(True)  # preffer jroscore before the roscore? 
 
-################################## 
-################# define the group and start it
-finder = "resender.mpt.F2IPubSub";      # Java (ROS) node that does this job
-modem  = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem"; # custom modem here
 
-# create group with a name
-g = NodeGroup("MinMaxFinder", True);    # create independent group called..
-g.addNC(finder, "Finder", "java");      # start java node and name it finder
-g.addNC(modem,"Modem","modem")     	# add modem to the group
-g.startGroup()
+################# Define the Group of nodes
+finder = "resender.mpt.F2IPubSub";          # Java (ROS) node that does this job
+g = NodeGroup("MinMaxFinder", True);        # create independent (True) group called..
+g.addNode(finder, "Finder", "java");        # start java node and name it finder
 
-################################## 
-################# setup the smart neuron and add it to the Nengo network
-modem = g.getModem()
-neuron = NeuralModule('MinMaxFinder', modem) # construct the Neural Module
-
+################# Setup the Neural Module and add it to the Nengo network
+neuron = NeuralModule('MinMaxFinder', g)    # construct the Neural Module
 neuron.createEncoder("ann2rosFloatArr", "float",4)  # termination = input of neuron (4xfloat)
 neuron.createDecoder("ros2annFloatArr", "int",2)    # origin = output of neuron (min and max)
 
-many=net.add(neuron)                    # add it into the network
+many=net.add(neuron)                        # add it into the network
 
 #Create a white noise input function with params: baseFreq, maxFreq [rad/s], RMS, seed
 input=FunctionInput('Randomized input', [FourierFunction(.1, 10,1, 12),

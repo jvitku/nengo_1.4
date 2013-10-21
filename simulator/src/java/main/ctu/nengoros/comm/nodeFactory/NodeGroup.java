@@ -1,7 +1,6 @@
 package ctu.nengoros.comm.nodeFactory;
 
 import java.util.ArrayList;
-
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosutils.RosUtils;
 
@@ -27,12 +26,14 @@ import ctu.nengoros.comm.rosutils.RosUtils;
 public class NodeGroup{
 
 	// Every group of nodes can contain up to one modem 
-	// The modem can be empty, but should belong to some smartNeuron, 
+	// The modem can be empty, but should belong to some Neural Module, 
 	// in order to add possibility of deleting this group from GUI
+	// If user tries to start group without modem, the default one is added. 
 	private ModemContainer myModem;
 	private MyNodeConfig modemConfig;
-	private boolean modemSet = false;
-
+	private boolean modemIsSet = false;
+	private final String defaultModem = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
+	
 	// Array of prepared external nodes created by the NodeFactory
 	public ExternalNodeContainer[] nodes;
 
@@ -51,6 +52,8 @@ public class NodeGroup{
 	public String namespace="";
 
 	private boolean groupRunning = false;
+	
+	
 
 	/**
 	 * Setup of non-independent group with predefned namespace.
@@ -114,7 +117,7 @@ public class NodeGroup{
 		}
 	}
 
-	public boolean groupIsRunning(){ return this.groupRunning; }
+	public boolean isRunning(){ return this.groupRunning; }
 	
 	public void stopGroup(){
 		// mymodem should know where from was called his method stop()
@@ -127,6 +130,9 @@ public class NodeGroup{
 	}
 
 	public void startGroup(){
+		if(!modemIsSet){
+			this.addNode(defaultModem, "defaultModem", "modem");
+		}
 		if(nodes == null){
 			// OK, user probably forgot to init this group, so do it now..
 			NodeFactory.initGroupOfNodes(this);
@@ -145,53 +151,53 @@ public class NodeGroup{
 		}
 	}
 
-	public void addNC(String command, String name, String what){
+	public void addNode(String command, String name, String what){
 		if(what.equalsIgnoreCase("native")){
-			this.addNC(command, name, true, false);
+			this.addNode(command, name, true, false);
 		}else if(what.equalsIgnoreCase("java")){
-			this.addNC(command, name, false, false);
+			this.addNode(command, name, false, false);
 		}else if(what.equalsIgnoreCase("modem")){
-			this.addNC(command, name, false, true);
+			this.addNode(command, name, false, true);
 		}else{
 			System.err.println(groupName+" : addNC() node of unknown type, "+
 					"supported possibilities are so far: 'native','java' and 'modem'");
 		}
 	}
 	
-	public void addNC(String[] command, String name, String what){
+	public void addNode(String[] command, String name, String what){
 		if(what.equalsIgnoreCase("native")){
-			this.addNC(command, name, true, false);
+			this.addNode(command, name, true, false);
 		}else if(what.equalsIgnoreCase("java")){
-			this.addNC(command, name, false, false);
+			this.addNode(command, name, false, false);
 		}else if(what.equalsIgnoreCase("modem")){
-			this.addNC(command, name, false, true);
+			this.addNode(command, name, false, true);
 		}else{
 			System.err.println(groupName+" : addNC() node of unknown type, "+
 					"supported possibilities are so far: 'native','java' and 'modem'");
 		}
 	}
 		
-	public boolean modemSet(){ return modemSet; }
+	public boolean modemSet(){ return modemIsSet; }
 	
-	public void addNC(String command, String name, boolean isNative, boolean modem){
+	public void addNode(String command, String name, boolean isNative, boolean modem){
 		if(modem){
-			if(modemSet){
+			if(modemIsSet){
 				System.err.println(groupName+" group can contain max one modem!!");
 				return;
 			}
-			modemSet = true;
+			modemIsSet = true;
 		}
 		nodeConfigs.add(new MyNodeConfig(command.split(" "), name, isNative, modem));
 	}
 
-	public void addNC(String[] command, String name, boolean isNative, boolean modem){
+	public void addNode(String[] command, String name, boolean isNative, boolean modem){
 		
 		if(modem){
-			if(modemSet){
+			if(modemIsSet){
 				System.err.println(groupName+" group can contain max one modem!!");
 				return;
 			}
-			modemSet = true;
+			modemIsSet = true;
 		}
 		nodeConfigs.add(new MyNodeConfig(command, name, isNative, modem));
 	}
@@ -207,12 +213,12 @@ public class NodeGroup{
 					"one modem!!!, you are trying to add second one: "+mc.getName());
 			return;
 		}
-		modemSet = true;
+		modemIsSet = true;
 		myModem = mc;
 	}
 	
 	public ModemContainer getModem(){
-		if(!modemSet){
+		if(!modemIsSet){
 			System.err.println("["+groupName+"] getModem(): this group does not seem "
 					+"to contain any modem !!");
 			return null;

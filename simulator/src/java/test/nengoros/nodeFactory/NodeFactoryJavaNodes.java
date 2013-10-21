@@ -24,7 +24,7 @@ public class NodeFactoryJavaNodes {
 
 		String className = "resender.onoff.Talker";
 		NodeGroup n = new NodeGroup("test", true);
-		n.addNC(className, "testNode", "java");
+		n.addNode(className, "testNode", "java");
 		n.startGroup();
 		
 		assertEquals(NodeFactory.numOfRunningNodes(),1);
@@ -45,13 +45,13 @@ public class NodeFactoryJavaNodes {
 		String className = "resender.onoff.Talker";
 
 		NodeGroup n = new NodeGroup("test", false);
-		n.addNC(className, "testNode", "java");
+		n.addNode(className, "testNode", "java");
 		n.startGroup();
 
 		assertEquals(NodeFactory.numOfRunningNodes(),1);
 		
 		NodeGroup n2 = new NodeGroup("test", false);
-		n2.addNC(className, "testNode", "java");
+		n2.addNode(className, "testNode", "java");
 		n2.startGroup();
 		
 		assertEquals(NodeFactory.numOfRunningNodes(),2);

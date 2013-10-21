@@ -54,8 +54,8 @@ public class ModemF2I {
 
 		NodeGroup g = new NodeGroup("pubsub",false);
 
-		g.addNC(minimax,"minimaxNode","java");
-		g.addNC(modem,"modemNode","modem");
+		g.addNode(minimax,"minimaxNode","java");
+		g.addNode(modem,"modemNode","modem");
 
 		g.startGroup();
 

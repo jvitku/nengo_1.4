@@ -74,9 +74,11 @@ public class NodeFactory{
 				g.nodes[i] = createUnixNode(mnc, g);
 			else
 				g.nodes[i] = createJavaNode(mnc, g);
-		}		
+		}
 		RosUtils.addGroup(g);
 	}
+	
+	
 	
 	private static ModemContainer createModem(MyNodeConfig mnc, NodeGroup g){
 		command.clear();

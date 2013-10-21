@@ -1,8 +1,7 @@
 package ctu.nengoros.modules.impl;
 
 import java.util.HashMap;
-
-import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
+import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.modules.AbsNeuralModule;
 import ca.nengo.model.Node;
 import ca.nengo.util.ScriptGenException;
@@ -26,8 +25,8 @@ public class DefaultNeuralModule extends AbsNeuralModule{
 	 * 
 	 * @param name name of smart neuron
 	 */
-	public DefaultNeuralModule(String name, ModemContainer modContainer){
-		super(name, modContainer);
+	public DefaultNeuralModule(String name, NodeGroup group){
+		super(name, group);
 	}
 
 	@Override

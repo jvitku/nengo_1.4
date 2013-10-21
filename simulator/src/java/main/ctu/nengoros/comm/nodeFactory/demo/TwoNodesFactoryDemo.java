@@ -50,8 +50,8 @@ public class TwoNodesFactoryDemo {
 		
 		// group called pubsub which is independent?
 		NodeGroup g = new NodeGroup("pubsub",indep);
-		g.addNC(talker, "talker", "java");
-		g.addNC(receiveer, "receiver", "java");		
+		g.addNode(talker, "talker", "java");
+		g.addNode(receiveer, "receiver", "java");		
 		
 		g.startGroup();
 		
@@ -77,8 +77,8 @@ public class TwoNodesFactoryDemo {
 		
 		// group called pubsub which is independent?
 		NodeGroup g = new NodeGroup("pubsub",namespace);
-		g.addNC(talker, "talker", "java");
-		g.addNC(receiveer, "receiver", "java");		
+		g.addNode(talker, "talker", "java");
+		g.addNode(receiveer, "receiver", "java");		
 		
 		g.startGroup();
 		

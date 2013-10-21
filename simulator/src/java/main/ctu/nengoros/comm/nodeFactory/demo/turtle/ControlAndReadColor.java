@@ -37,8 +37,8 @@ public class ControlAndReadColor {
 		// non-independent means that name-space will not be changed
 		NodeGroup g = new NodeGroup("senseAct", false);
 		
-		g.addNC(actuator, "actuator", "java");	// add actuator class
-		g.addNC(colorSensor, "sensor", "java");	// add sensor class
+		g.addNode(actuator, "actuator", "java");	// add actuator class
+		g.addNode(colorSensor, "sensor", "java");	// add sensor class
 		
 		g.startGroup();
 		

@@ -26,17 +26,17 @@ public class TwoTurtles {
 		NodeGroup g = new NodeGroup("zelvicka", true);
 		
 		// add node configurations to the group
-		g.addNC(turtlesim, "zelva", "native");
-		g.addNC(className, "actuators", "java");
-		g.addNC(clName, "sensors", "java");
+		g.addNode(turtlesim, "zelva", "native");
+		g.addNode(className, "actuators", "java");
+		g.addNode(clName, "sensors", "java");
 		
 		// create group with a name
 		NodeGroup gg = new NodeGroup("zelvicka", true);
 		
 		// add node configurations to the group
-		gg.addNC(turtlesim, "zelva", "native");
-		gg.addNC(className, "actuators", "java");
-		gg.addNC(clName, "sensors", "java");
+		gg.addNode(turtlesim, "zelva", "native");
+		gg.addNode(className, "actuators", "java");
+		gg.addNode(clName, "sensors", "java");
 		
 		// start all nodes in the group
 		g.startGroup();

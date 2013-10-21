@@ -56,7 +56,7 @@ public class ModContainer implements ModemContainer {
 			NodeFactory.killModem(this);
 			running = false;
 		}
-		if(myGroup.groupIsRunning()){
+		if(myGroup.isRunning()){
 			System.out.println(name+" also shutting down my group");
 			myGroup.stopGroup();
 		}

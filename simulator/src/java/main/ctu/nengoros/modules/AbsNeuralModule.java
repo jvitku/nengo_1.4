@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Properties;
 
+import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.comm.rosBackend.backend.BackendUtils;
@@ -86,8 +87,13 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	 * 
 	 * @param name name of neural module
 	 */
-	public AbsNeuralModule(String name, ModemContainer modContainer){
+	public AbsNeuralModule(String name, NodeGroup group){
 		super(name);
+
+		if(! group.isRunning()){
+			group.startGroup();
+		}
+		ModemContainer modContainer = group.getModem();
 		if(modContainer == null){
 			System.err.println(me+"modem probably not initialized!!!! I am not ready!");
 			this.setReady(false); // stop the simulation..
@@ -96,8 +102,9 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 		this.init(name);
 	}
 	
-	public AbsNeuralModule(String name, ModemContainer modContainer, boolean synchronous){
+	public AbsNeuralModule(String name, NodeGroup group, boolean synchronous){
 		super(name);
+		ModemContainer modContainer = group.getModem();
 		
 		if(modContainer == null){
 			System.err.println(me+"modem probably not initialized!!!! I am not ready!");
