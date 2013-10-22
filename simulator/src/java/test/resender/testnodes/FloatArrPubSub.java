@@ -62,12 +62,6 @@ public class FloatArrPubSub extends AbstractNodeMain {
 		log.info("HEY! Node ready now!");
 	}
 
-	private String toAr(float[] f){
-		String out = "";
-		for(int i=0;i<f.length; i++)
-			out = out+"  "+f[i];
-		return out;		
-	}
 	
 	private float max(float[] vals){
 		float mx = Float.MIN_VALUE;

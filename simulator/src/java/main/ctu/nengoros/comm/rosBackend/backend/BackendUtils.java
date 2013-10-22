@@ -1,9 +1,7 @@
 package ctu.nengoros.comm.rosBackend.backend;
 
 import java.util.List;
-
 import org.ros.node.ConnectedNode;
-
 import ctu.nengoros.comm.rosBackend.backend.impl.BooleanBackend;
 import ctu.nengoros.comm.rosBackend.backend.impl.FloatBackend;
 import ctu.nengoros.comm.rosBackend.backend.impl.IntBackend;

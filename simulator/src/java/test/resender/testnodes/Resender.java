@@ -1,7 +1,6 @@
 package resender.testnodes;
 
 import java.util.Random;
-
 import org.apache.commons.logging.Log;
 import org.ros.message.MessageListener;
 import org.ros.namespace.GraphName;
@@ -9,7 +8,6 @@ import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Publisher;
 import org.ros.node.topic.Subscriber;
-
 import std_msgs.String;
 
 /**
@@ -25,7 +23,7 @@ public class Resender extends AbstractNodeMain {
 	protected final java.lang.String ros2ann = "ros2ann";
 
 	@Override
-	public GraphName getDefaultNodeName() { return GraphName.of("resender"); }
+	public GraphName getDefaultNodeName() { return GraphName.of("Resender"); }
 
 	@Override
 	public void onStart(final ConnectedNode connectedNode) {

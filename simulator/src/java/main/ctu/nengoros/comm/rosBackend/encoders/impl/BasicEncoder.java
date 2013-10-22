@@ -2,7 +2,6 @@ package ctu.nengoros.comm.rosBackend.encoders.impl;
 
 import org.apache.log4j.Logger;
 import org.ros.node.ConnectedNode;
-
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.comm.rosBackend.encoders.Encoder;
@@ -21,7 +20,6 @@ import ca.nengo.model.StructuralException;
 import ca.nengo.model.Termination;
 import ca.nengo.model.Units;
 import ca.nengo.model.impl.BasicTermination;
-import ca.nengo.util.MU;
 import ca.nengo.util.TimeSeries;
 import ca.nengo.util.impl.TimeSeriesImpl;
 

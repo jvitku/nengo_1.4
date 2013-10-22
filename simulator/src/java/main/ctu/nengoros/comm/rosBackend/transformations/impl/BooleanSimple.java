@@ -17,7 +17,4 @@ public class BooleanSimple implements BooleanTransform {
 			return 1;
 		return 0;
 	}
-
-	
-	
 }

@@ -5,9 +5,7 @@ import org.ros.message.MessageListener;
 import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Publisher;
 import org.ros.node.topic.Subscriber;
-
 import ctu.nengoros.comm.rosBackend.backend.Backend;
-import ctu.nengoros.comm.rosBackend.backend.BackendUtils;
 import ctu.nengoros.comm.rosBackend.backend.newMessageEvent.OnNewRosMessageSource;
 import ctu.nengoros.comm.rosBackend.transformations.BooleanTransform;
 import ctu.nengoros.comm.rosBackend.transformations.impl.BooleanSimple;

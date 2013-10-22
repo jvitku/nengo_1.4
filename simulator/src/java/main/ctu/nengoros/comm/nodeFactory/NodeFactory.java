@@ -2,10 +2,8 @@ package ctu.nengoros.comm.nodeFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.ros.node.DefaultNodeMainExecutor;
 import org.ros.node.NodeMainExecutor;
-
 import ctu.nengoros.comm.nodeFactory.NodeGroup.MyNodeConfig;
 import ctu.nengoros.comm.nodeFactory.javanode.JavaNodeContainer;
 import ctu.nengoros.comm.nodeFactory.javanode.JavaNodeLauncher;
@@ -77,8 +75,6 @@ public class NodeFactory{
 		}
 		RosUtils.addGroup(g);
 	}
-	
-	
 	
 	private static ModemContainer createModem(MyNodeConfig mnc, NodeGroup g){
 		command.clear();
