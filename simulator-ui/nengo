@@ -43,6 +43,7 @@ ROSJAVA=$RJ/rosjava-0.0.0-SNAPSHOT.jar:$RJ/rosjava_bootstrap-0.0.0-SNAPSHOT.jar:
 # dependencies for complete installation (with external rosjava nodes)
 NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.1-SNAPSHOT.jar 
 NODES=$NODES:$HOME/.m2/repository/org/hanns/projectTemplate/0.0.1-SNAPSHOT/projectTemplate-0.0.1-SNAPSHOT.jar 
+NODES=$NODES:$HOME/.m2/repository/org/hanns/demoNodes/pubSub/0.0.1-SNAPSHOT/pubSub-0.0.1-SNAPSHOT.jar
 
 #java -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO ca.nengo.ui.NengoLauncher
 
