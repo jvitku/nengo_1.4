@@ -37,17 +37,13 @@ def test_params(net,p):
 def make(net,name='NeuralModule which implements logical NAND operation', 
 independent=True, useQuick=True):
 
-    finder = "ctu.hanns.logic.gates.impl.NAND";
-    modemClass = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
+    finder = "org.hanns.logic.gates.impl.NAND";
 
     # create group with a name
     g = NodeGroup(name, independent);    	# create independent group called..
-    g.addNC(finder, "LogicNAND", "java");      # start java node and name it finder
-    g.addNC(modemClass,"Modem","modem")     # add modem to the group
-    g.startGroup()
+    g.addNode(finder, "LogicNAND", "java");      # start java node and name it finder
 
-    modem = g.getModem()
-    neuron = NeuralModule('XOR_'+name, modem) # construct the neural module 
+    neuron = NeuralModule('XOR_'+name, g) # construct the neural module 
     neuron.createEncoder("logic/gates/ina", "bool",1)   # termination = input of neuron (4xfloat)
     neuron.createEncoder("logic/gates/inb", "bool",1)   # termination = input of neuron (4xfloat)
     neuron.createDecoder("logic/gates/outa", "bool",1)  # origin = output of neuron (min and max)
