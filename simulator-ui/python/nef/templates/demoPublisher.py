@@ -1,1 +1,1 @@
-/Users/j/Dropbox/workspace/nengoros/demonodes/pubsub//python/nef/templates/demoPublisher.py
+/Users/j/Dropbox/workspace/nengoros/demonodes/basic//python/nef/templates/demoPublisher.py
