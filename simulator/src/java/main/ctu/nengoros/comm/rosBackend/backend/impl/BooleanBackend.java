@@ -8,7 +8,7 @@ import org.ros.node.topic.Subscriber;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.comm.rosBackend.backend.newMessageEvent.OnNewRosMessageSource;
 import ctu.nengoros.comm.rosBackend.transformations.BooleanTransform;
-import ctu.nengoros.comm.rosBackend.transformations.impl.BooleanSimple;
+import ctu.nengoros.comm.rosBackend.transformations.impl.BooleanSimpleRounding;
 import ctu.nengoros.exceptions.MessageFormatException;
 
 public class BooleanBackend extends OnNewRosMessageSource implements Backend{
@@ -50,7 +50,7 @@ public class BooleanBackend extends OnNewRosMessageSource implements Backend{
 		this.pub = publish;
 		this.myTopic = topic;
 
-		this.btr = new BooleanSimple();
+		this.btr = new BooleanSimpleRounding();
 
 		// This backend can be used either for publishing or listening to incoming messages
 		if(pub){

@@ -2,7 +2,7 @@ package ctu.nengoros.comm.rosBackend.transformations.impl;
 
 import ctu.nengoros.comm.rosBackend.transformations.BooleanTransform;
 
-public class BooleanSimple implements BooleanTransform {
+public class BooleanSimpleRounding implements BooleanTransform {
 
 	@Override
 	public boolean float2bool(float data) {
