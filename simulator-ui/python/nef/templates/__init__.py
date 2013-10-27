@@ -12,11 +12,11 @@ import bcm_termination
 import thalamus
 import interneuron
 import floattoint
-import log_gate_or
-import log_gate_xor
-import log_gate_nand
-import log_gate_and
-import log_gate_not
+import logic_gates_or
+import logic_gates_xor
+import logic_gates_nand
+import logic_gates_and
+import logic_gates_not
 import demoSubscriber
 import demoPublisher
 
@@ -34,11 +34,11 @@ templates=[
     learned_termination,
     interneuron,
     floattoint,
-    log_gate_or,
-    log_gate_xor,
-    log_gate_nand,
-    log_gate_and,
-    log_gate_not,
+    logic_gates_or,
+    logic_gates_xor,
+    logic_gates_nand,
+    logic_gates_and,
+    logic_gates_not,
     demoSubscriber,
     demoPublisher
     ]

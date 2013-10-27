@@ -1,1 +1,0 @@
-/Users/j/Dropbox/workspace/nengoros/demonodes/../logic/gates//python/nef/templates/log_gate_not.py
