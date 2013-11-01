@@ -1,0 +1,1 @@
+/Users/j/Dropbox/workspace/nengoros/demonodes/../logic/gates//python/nef/templates/logic_crisp_gates_not.py

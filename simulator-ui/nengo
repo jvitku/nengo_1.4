@@ -39,6 +39,9 @@ ROSJAVA=$RJ/rosjava-0.0.0-SNAPSHOT.jar:$RJ/rosjava_bootstrap-0.0.0-SNAPSHOT.jar:
 
 #FROMJARS=$HO/simulator-ui-0.0.0-SNAPSHOT.jar:$HO/simulator-0.0.0-SNAPSHOT.jar
 
+# jroscore
+Jroscore=$N_HOME/../../jroscore/build/libs/jroscore-0.0.1-SNAPSHOT.jar 
+echo $Jroscore
 
 # dependencies for complete installation (with external rosjava nodes)
 NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.1-SNAPSHOT.jar 
@@ -47,5 +50,5 @@ NODES=$NODES:$HOME/.m2/repository/org/hanns/demoNodes/pubSub/0.0.1-SNAPSHOT/pubS
 
 #java -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO ca.nengo.ui.NengoLauncher
 
-java -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES ca.nengo.ui.NengoLauncher
+java -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore ca.nengo.ui.NengoLauncher
 

@@ -35,6 +35,7 @@ mainClassName = 'ca.nengo.ui.NengoLauncher'
 dependencies {
 
     compile project(':nengo:simulator')
+	compile 'ctu.nengoros:jroscore:0.0.1-SNAPSHOT'	
     compile fileTree(dir: 'lib', include: '**/*.jar')
     compile 'ros.rosjava_core:rosjava:0.0.0-SNAPSHOT'
     //compile 'simulators:vivae:0.0.0-SNAPSHOT'
