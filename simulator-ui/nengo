@@ -41,7 +41,6 @@ ROSJAVA=$RJ/rosjava-0.0.0-SNAPSHOT.jar:$RJ/rosjava_bootstrap-0.0.0-SNAPSHOT.jar:
 
 # jroscore
 Jroscore=$N_HOME/../../jroscore/build/libs/jroscore-0.0.1-SNAPSHOT.jar 
-echo $Jroscore
 
 # dependencies for complete installation (with external rosjava nodes)
 NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.1-SNAPSHOT.jar 
