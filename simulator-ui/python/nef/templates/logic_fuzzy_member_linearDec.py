@@ -15,13 +15,13 @@ from ctu.nengoros.comm.nodeFactory import NodeGroup as NodeGroup
 from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
 
 # node utils..
-title='LogicOR'
-label='LogicOR'
-icon='logic_crisp_gates_or.png'
+title='FuzzyMemberLinearDec'
+label='FuzzyMemberLinearDec'
+icon='logic_fuzzy_member_linearDec.png'
 
 # parameters for initializing the node
 params=[
-('name','Select name for NeuralModule OR',str),
+('name','Select name for NeuralModule Fuzzy Membership function linear decreasing',str),
 ('independent','Can be group pndependent? (pushed into namespace?) select true',bool)
 ]
 
@@ -34,18 +34,21 @@ def test_params(net,p):
         pass
 
 
-def make(net,name='NeuralModule which implements logical OR operation', 
+def make(net,name='NeuralModule which implements FuzzyMembership function - Decreasing Linear', 
 independent=True, useQuick=True):
 
-    finder = "org.hanns.logic.crisp.gates.impl.OR";
+    finder = "org.hanns.logic.fuzzy.membership.impl.DecreasingLinear";
 
     # create group with a name
-    g = NodeGroup(name, independent);    	# create independent group called..
-    g.addNode(finder, "logic_crisp_gates_OR", "java");      # start java node and name it finder
+    g = NodeGroup(name, independent);   
+    g.addNode(finder, "logic_fuzzy_member_linDec", "java");     
 
-    neuron = NeuralModule(name+"_logic_crisp_gates_or", g) # construct the neural module 
-    neuron.createEncoder("logic/gates/ina", "bool",1)   # termination = input of neuron (4xfloat)
-    neuron.createEncoder("logic/gates/inb", "bool",1)   # termination = input of neuron (4xfloat)
-    neuron.createDecoder("logic/gates/outa", "bool",1)  # origin = output of neuron (min and max)
+    neuron = NeuralModule(name+"_logic_fuzzy_member_linDec", g) 
+    neuron.createEncoder("logic/gates/ina", "float",1)   # termination = data input x 
+    neuron.createEncoder("logic/gates/confa", "float",1)	# termination - config input alpha
+    neuron.createEncoder("logic/gates/confb", "float",1)	# termination - config input beta
+    neuron.createDecoder("logic/gates/outa", "float",1)  # origin = output of neuron = data output y
+
 
     many=net.add(neuron)                    # add it into the network
+

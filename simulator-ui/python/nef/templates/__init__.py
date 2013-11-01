@@ -20,6 +20,7 @@ import logic_crisp_gates_not
 import logic_fuzzy_gates_not
 import logic_fuzzy_gates_or
 import logic_fuzzy_gates_and
+import logic_fuzzy_member_linearDec
 import demoSubscriber
 import demoPublisher
 
@@ -46,5 +47,6 @@ templates=[
     logic_crisp_gates_not,
 	logic_fuzzy_gates_not,
 	logic_fuzzy_gates_or,
-	logic_fuzzy_gates_and
+	logic_fuzzy_gates_and,
+	logic_fuzzy_member_linearDec
     ]
