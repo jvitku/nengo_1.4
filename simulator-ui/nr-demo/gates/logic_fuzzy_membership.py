@@ -34,11 +34,11 @@ net.make_input('delta3',[1])
 
 
 # Add nodes
-incl = logic_gates.fuzzyMemIncLin("IncLin")
-net.add(incl)
+inclinn = logic_gates.fuzzyMemIncLin("IncLin")
+net.add(inclinn)
 
-declin = logic_gates.fuzzyMemDecLin("DecLin")
-net.add(declin)
+declinn = logic_gates.fuzzyMemDecLin("DecLin")
+net.add(declinn)
 
 triangle = logic_gates.fuzzyMemTriangle("Triangle")
 net.add(triangle)
@@ -47,16 +47,16 @@ trapezoid = logic_gates.fuzzyMemTrapezoid("Trapezoid")
 net.add(trapezoid)
 
 # Wire inputs
-net.connect(gen1, incl.getTermination('logic/gates/ina'))
-net.connect(gen1, declin.getTermination('logic/gates/ina'))
+net.connect(gen1, inclinn.getTermination('logic/gates/ina'))
+net.connect(gen1, declinn.getTermination('logic/gates/ina'))
 net.connect(gen1, triangle.getTermination('logic/gates/ina'))
 net.connect(gen1, trapezoid.getTermination('logic/gates/ina'))
 
-net.connect('alpha1', incl.getTermination('logic/gates/confa'))
-net.connect('beta1', incl.getTermination('logic/gates/confb'))
+net.connect('alpha1', inclinn.getTermination('logic/gates/confa'))
+net.connect('beta1', inclinn.getTermination('logic/gates/confb'))
 
-net.connect('alpha1', declin.getTermination('logic/gates/confa'))
-net.connect('beta1', declin.getTermination('logic/gates/confb'))
+net.connect('alpha1', declinn.getTermination('logic/gates/confa'))
+net.connect('beta1', declinn.getTermination('logic/gates/confb'))
 
 net.connect('alpha2', triangle.getTermination('logic/gates/confa'))
 net.connect('beta2', triangle.getTermination('logic/gates/confb'))
@@ -67,7 +67,5 @@ net.connect('beta3', trapezoid.getTermination('logic/gates/confb'))
 net.connect('gamma3', trapezoid.getTermination('logic/gates/confc'))
 net.connect('delta3', trapezoid.getTermination('logic/gates/confd'))
 
-
 print 'Configuration complete.'
-
 

@@ -14,7 +14,7 @@ NengoModels
 
 
 #### configs
-simulator-ui/commandhistory.dat
+#simulator-ui/commandhistory.dat
 
 #simulator-ui/quick/*
 
