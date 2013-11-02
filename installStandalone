@@ -26,12 +26,12 @@ if [ -f simulator-ui/.classpath ]; then rm simulator-ui/.classpath
 fi
 
 # set this as parent multi-project for gradle
-cp standalone.build.gradle build.gradle
-cp standalone.settings.gradle settings.gradle
+cp .versions/standalone.build.gradle build.gradle
+cp .versions/standalone.settings.gradle settings.gradle
 
 # note that you should edit these files build.gradle.* in order to change the settings!
-cp simulator-ui/standalone.build.gradle simulator-ui/build.gradle
-cp simulator/standalone.build.gradle simulator/build.gradle
+cp simulator-ui/.versions/standalone.build.gradle simulator-ui/build.gradle
+cp simulator/.versions/standalone.build.gradle simulator/build.gradle
 
 # run tests?
 TEST=0
