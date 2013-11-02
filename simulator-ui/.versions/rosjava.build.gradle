@@ -41,9 +41,12 @@ dependencies {
     //compile 'simulators:vivae:0.0.0-SNAPSHOT'
 
 	// howto: 'entire.package.name:projectName:version' (no folder involved here)
-    compile 'ctu.hanns.logic:gates:0.0.1-SNAPSHOT'
-    compile 'org.hanns.demo:pubsub:0.0.1-SNAPSHOT'
+    //compile 'ctu.hanns.logic:gates:0.0.1-SNAPSHOT'
+    //compile 'org.hanns.demo:pubsub:0.0.1-SNAPSHOT'
 
+	// in fact, it is better for now to add the projects as a sub-projects of nengoros, so:  (TODO: maven repository)
+	compile project(':logic:gates')
+	compile project(':demoNodes:pubsub')
 }
 
 // prints out dependencies... 
