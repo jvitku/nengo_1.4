@@ -7,23 +7,30 @@ import nef
 from ctu.nengoros.comm.nodeFactory import NodeGroup as NodeGroup
 from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
 # Note that modules without outputs (Nengo-decoder) cannot use synchronous mode (DefaultNeuralModule).
-from ctu.nengoros.modules.impl import DefaultAsynNeuralModule as NeuralModule
+#from ctu.nengoros.modules.impl import DefaultAsynNeuralModule as NeuralModule
 # The simulator waits each simulation step for the output in the synchronous mode, this case:
-#from ctu.nengoros.modules.impl import DefaultNeuralModule as NeuralModule
+from ctu.nengoros.modules.impl import DefaultNeuralModule as NeuralModule
 
 ################# Create Neural Modules containing the ROS nodes
 
 # crisp gates
-AND = "org.hanns.logic.crisp.gates.impl.AND";
-XOR = "org.hanns.logic.crisp.gates.impl.XOR";
-OR = "org.hanns.logic.crisp.gates.impl.OR";
-NAND = "org.hanns.logic.crisp.gates.impl.NAND";
-NOT = "org.hanns.logic.crisp.gates.impl.NOT";
+AND 		= "org.hanns.logic.crisp.gates.impl.AND";
+XOR 		= "org.hanns.logic.crisp.gates.impl.XOR";
+OR 			= "org.hanns.logic.crisp.gates.impl.OR";
+NAND 		= "org.hanns.logic.crisp.gates.impl.NAND";
+NOT 		= "org.hanns.logic.crisp.gates.impl.NOT";
 
 # fuzzy gates
-fAND = "org.hanns.logic.fuzzy.gates.impl.AND";
-fOR = "org.hanns.logic.fuzzy.gates.impl.OR";
-fNOT = "org.hanns.logic.fuzzy.gates.impl.NOT";
+fAND 		= "org.hanns.logic.fuzzy.gates.impl.AND";
+fOR 		= "org.hanns.logic.fuzzy.gates.impl.OR";
+fNOT 		= "org.hanns.logic.fuzzy.gates.impl.NOT";
+
+# fuzzy membership functions
+fmincl 		= "org.hanns.logic.fuzzy.membership.impl.IncreasingLinear";
+fdecl 		= "org.hanns.logic.fuzzy.membership.impl.DecreasingLinear";
+ftrap 		= "org.hanns.logic.fuzzy.membership.impl.Trapezoid";
+ftriangle 	= "org.hanns.logic.fuzzy.membership.impl.Triangle";
+
 
 # Initialize ROS(java) node implementning AND function.
 #
@@ -105,6 +112,52 @@ def fuzzynot_node(name):
 	module = NeuralModule(name+'_FuzzyNOT', g)
 	module.createEncoder("logic/gates/ina", "float", 1)
 	module.createDecoder("logic/gates/outa", "float", 1)
+	return module
+
+
+############################################################ fuzzy membership functions
+
+def fuzzyMemIncLin(name):									# ____|----
+	g = NodeGroup("FuzzyMemLinInc", True);
+	g.addNode(fmincl, "FuzzyMemLinInc", "java");
+	module = NeuralModule(name+'_FuzzyMemLinInc', g)
+	module.createEncoder("logic/gates/ina", "float", 1)		# x
+	module.createEncoder("logic/gates/confa", "float", 1) 	# alpha
+	module.createEncoder("logic/gates/confb", "float", 1) 	# beta
+	module.createDecoder("logic/gates/outa", "float", 1)	# y
+	return module
+	
+def fuzzyMemDecLin(name):									# ----\____
+	g = NodeGroup("FuzzyMemLinDec", True);
+	g.addNode(fdecl,"FuzzyMemLinDec","java");
+	module = NeuralModule(name+'_FuzzyMemLinDec', g)
+	module.createEncoder("logic/gates/ina", "float", 1)		# x
+	module.createEncoder("logic/gates/confa", "float", 1) 	# alpha
+	module.createEncoder("logic/gates/confb", "float", 1) 	# beta
+	module.createDecoder("logic/gates/outa", "float", 1)	# y
+	return module
+
+def fuzzyMemTriangle(name):									# ____|\____
+	g = NodeGroup("FuzzyMemTriangle", True);
+	g.addNode(ftriangle,"FuzzyMemTriangle","java");
+	module = NeuralModule(name+'_FuzzyMemTriangle', g)
+	module.createEncoder("logic/gates/ina", "float", 1)		# x
+	module.createEncoder("logic/gates/confa", "float", 1) 	# alpha
+	module.createEncoder("logic/gates/confb", "float", 1) 	# beta
+	module.createEncoder("logic/gates/confc", "float", 1) 	# gamma
+	module.createDecoder("logic/gates/outa", "float", 1)	# y
+	return module
+
+def fuzzyMemTrapezoid(name):								# ___|---\___
+	g = NodeGroup("FuzzyMemTrapezoid", True);
+	g.addNode(ftrap,"FuzzyMemTrapezoid", "java");
+	module = NeuralModule(name+'_FuzzyMemTrapezoid', g)
+	module.createEncoder("logic/gates/ina", "float", 1)		# x
+	module.createEncoder("logic/gates/confa", "float", 1) 	# alpha
+	module.createEncoder("logic/gates/confb", "float", 1) 	# beta
+	module.createEncoder("logic/gates/confc", "float", 1) 	# gamma
+	module.createEncoder("logic/gates/confd", "float", 1) 	# delta
+	module.createDecoder("logic/gates/outa", "float", 1)	# y
 	return module
 
 

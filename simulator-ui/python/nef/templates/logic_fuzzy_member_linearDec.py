@@ -15,8 +15,8 @@ from ctu.nengoros.comm.nodeFactory import NodeGroup as NodeGroup
 from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
 
 # node utils..
-title='FuzzyMemberLinearDec'
-label='FuzzyMemberLinearDec'
+title='FuzzyMemLinDec'
+label='FuzzyMemLinDec'
 icon='logic_fuzzy_member_linearDec.png'
 
 # parameters for initializing the node
@@ -41,13 +41,13 @@ independent=True, useQuick=True):
 
     # create group with a name
     g = NodeGroup(name, independent);   
-    g.addNode(finder, "logic_fuzzy_member_linDec", "java");     
+    g.addNode(finder, "FuzzyMemLinDec", "java");     
 
-    neuron = NeuralModule(name+"_logic_fuzzy_member_linDec", g) 
-    neuron.createEncoder("logic/gates/ina", "float",1)   # termination = data input x 
+    neuron = NeuralModule(name+"_FuzzyMemLinDec", g) 
+    neuron.createEncoder("logic/gates/ina", "float",1)   	# termination = data input x 
     neuron.createEncoder("logic/gates/confa", "float",1)	# termination - config input alpha
     neuron.createEncoder("logic/gates/confb", "float",1)	# termination - config input beta
-    neuron.createDecoder("logic/gates/outa", "float",1)  # origin = output of neuron = data output y
+    neuron.createDecoder("logic/gates/outa", "float",1)  	# origin = output of neuron = data output y
 
 
     many=net.add(neuron)                    # add it into the network
