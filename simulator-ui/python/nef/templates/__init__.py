@@ -21,6 +21,9 @@ import logic_fuzzy_gates_not
 import logic_fuzzy_gates_or
 import logic_fuzzy_gates_and
 import logic_fuzzy_member_linearDec
+import logic_fuzzy_member_linearInc
+import logic_fuzzy_member_triangular
+import logic_fuzzy_member_trapezoid
 import demoSubscriber
 import demoPublisher
 
@@ -48,5 +51,8 @@ templates=[
 	logic_fuzzy_gates_not,
 	logic_fuzzy_gates_or,
 	logic_fuzzy_gates_and,
-	logic_fuzzy_member_linearDec
+	#logic_fuzzy_member_linearDec,# TODO: these two do not work in the GUI 
+	#logic_fuzzy_member_linearInc,
+	logic_fuzzy_member_triangular,
+	logic_fuzzy_member_trapezoid	
     ]
