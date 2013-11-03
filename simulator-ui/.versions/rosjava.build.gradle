@@ -4,6 +4,9 @@
 // Version of build configuration which depends on local maven repository of rosjava
 //
 
+version     = '0.0.2-SNAPSHOT'
+group       = 'ctu.nengoros'
+
 // Gradle uses different default folders for source files => remap them
 sourceSets {
     test {
