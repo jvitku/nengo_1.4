@@ -1,1 +1,115 @@
-.versions/rosjava.build.gradle
+// @author Jaroslav Vitku [vitkujar@fel.cvut.cz]
+// 
+//
+// Version of build configuration which depends on local maven repository of rosjava
+//
+
+version     = '0.0.2-SNAPSHOT'
+group       = 'ctu.nengoros'
+
+// Gradle uses different default folders for source files => remap them
+sourceSets {
+    test {
+        java {
+            srcDir 'src/java/test'
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+    main {
+        java {
+            srcDir 'src/java/main'
+            // add this directory to installApp?
+            //runtimeClasspath = fileTree(dir: '../dist-files', include: '**/*')
+        }
+        resources {
+            // this adds resources into build/resources if found something in the folder
+            srcDir 'src/resources'
+        }
+    }
+}
+
+// Create the runnable application from this project into build/lib/bin.. ? [./gradlew installApp]
+apply plugin: 'application'
+mainClassName = 'ca.nengo.ui.NengoLauncher'
+
+
+dependencies {
+
+    compile project(':nengo:simulator')
+    compile project(':jroscore')
+	//compile 'ctu.nengoros:jroscore:0.0.1-SNAPSHOT'	
+    compile fileTree(dir: 'lib', include: '**/*.jar')
+    compile 'ros.rosjava_core:rosjava:0.0.0-SNAPSHOT'
+    //compile 'simulators:vivae:0.0.0-SNAPSHOT'
+
+	// howto: 'entire.package.name:projectName:version' (no folder involved here)
+    //compile 'ctu.hanns.logic:gates:0.0.1-SNAPSHOT'
+    //compile 'org.hanns.demo:pubsub:0.0.1-SNAPSHOT'
+
+	// in fact, it is better for now to add the projects as a sub-projects of nengoros, so:  (TODO: maven repository)
+	compile project(':logic:gates')
+	compile project(':demonodes:basic')
+}
+
+// prints out dependencies... 
+task list(dependsOn: configurations.compile) << {
+    println "classpath = ${configurations.compile.collect {File file -> file.name}}"
+}
+
+
+// after installingApp (everything into simulator-ui/build/install/simulator-ui/) copy all dist-files there
+installApp.doLast {
+    // see: http://www.gradle.org/docs/current/javadoc/org/gradle/api/tasks/Copy.html
+    println 'Copying dist-files (and others) into build/install/simulator-ui/bin/'
+    copy {
+        from 'dist-files'
+        into "$buildDir/install/"+project.name+'/bin/'
+        include('**/*') 
+        exclude('nengo','nengo-cl','nengo.bat','nengo-cl.bat')
+    }
+    copy {
+        from 'python'
+        into "$buildDir/install/"+project.name+'/bin/python'
+    }
+    // OK, overwrite files from dist-files with these, potentially newer
+    copy {
+        from 'images'
+        into "$buildDir/install/"+project.name+'/bin/images'
+    }
+    // pseudo-inverse
+    copy {
+        from 'external'
+        into "$buildDir/install/"+project.name+'/bin/external'
+    }
+    // nengoros demo files
+    copy {
+        from 'nr-demo'
+        into "$buildDir/install/"+project.name+'/bin/nr-demo'
+    }
+    // original demo files
+    copy {
+        from 'demo'
+        into "$buildDir/install/"+project.name+'/bin/demo'
+    }
+    // layout files
+    copy {
+        from 'layouts'
+        into "$buildDir/install/"+project.name+'/bin/layouts'
+    }
+    // GUI files
+    copy {
+        from 'UIFiles'
+        into "$buildDir/install/"+project.name+'/bin/UIFiles'
+    }
+    copy {
+        from 'commandhistory.dat'
+        into "$buildDir/install/"+project.name+'/bin/'
+    }
+    copy {
+        from 'lib/Lib'
+        into "$buildDir/install/"+project.name+'/lib/Lib'
+        include('**/*')
+    }
+}
