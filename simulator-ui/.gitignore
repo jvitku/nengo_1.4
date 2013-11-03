@@ -7,3 +7,5 @@ nengo.log
 UIFiles
 User.config
 external
+
+commandhistory.dat
