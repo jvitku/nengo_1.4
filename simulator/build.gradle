@@ -1,7 +1,7 @@
 // @author Jaroslav Vitku [vitkujar@fel.cvut.cz]
 
 
-version    = '0.0.2-SNAPSHOT'
+version    = '0.0.1-SNAPSHOT'
 group      = 'ctu.nengoros'
 
 // Gradle uses different default folders for source files => remap them
