@@ -47,8 +47,6 @@ Technical Notes:
 	* Does not include any demos (or those included may not work correctly).
 	* User cannot define [custom messages](http://wiki.ros.org/ROS/Tutorials/DefiningCustomMessages) (interfaces for messages are generated during rosjava_core compilation)
 
-	* 
-	* 
 
 2. Compared to Nengo, the build system is changed from Maven to Gradle (which is used by rosjava_core). 
 
