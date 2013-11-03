@@ -3,7 +3,6 @@
 *.pkc
 *.idx
 .DS_Store
-nengo-*
 nengo-latest.zip
 NengoModels
 
@@ -12,6 +11,7 @@ NengoModels
 .settings/*
 .metadata/*
 
+build/libs/*
 
 #### configs
 #simulator-ui/commandhistory.dat
