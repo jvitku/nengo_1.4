@@ -1,1 +1,0 @@
-/Users/j/Dropbox/workspace/nengoros/demonodes/basic//python/nef/templates/demoSubscriber.py
