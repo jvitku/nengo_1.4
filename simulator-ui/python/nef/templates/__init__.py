@@ -11,7 +11,6 @@ import hpes_termination
 import bcm_termination
 import thalamus
 import interneuron
-import floattoint
 import logic_crisp_gates_or
 import logic_crisp_gates_xor
 import logic_crisp_gates_nand
@@ -40,7 +39,6 @@ templates=[
     gate,
     learned_termination,
     interneuron,
-    floattoint,
     demoSubscriber,
     demoPublisher,
     logic_crisp_gates_or,

@@ -1,0 +1,34 @@
+({'x': 0, 'height': 479, 'width': 834, 'state': 0, 'y': 25},
+ [('refX', None, {'height': 32, 'x': 51, 'label': 0, 'width': 47, 'y': 148}),
+  ('F', None, {'height': 32, 'x': 367, 'label': 0, 'width': 22, 'y': 96}),
+  ('Room', None, {'height': 32, 'x': 260, 'label': 0, 'width': 63, 'y': 149}),
+  ('funcT', None, {'height': 32, 'x': 364, 'label': 0, 'width': 60, 'y': 1}),
+  ('control signal u', None, {'height': 32, 'x': 389, 'label': 0, 'width': 144, 'y': 59}),
+  ('refY', None, {'height': 32, 'x': 131, 'label': 0, 'width': 47, 'y': 144}),
+  ('control signal v', None, {'height': 32, 'x': 43, 'label': 0, 'width': 143, 'y': 90}),
+  ('FX', None, {'height': 32, 'x': 390, 'label': 0, 'width': 35, 'y': 152}),
+  ('T matrix', None, {'height': 32, 'x': 101, 'label': 0, 'width': 83, 'y': 5}),
+  ('convert Angles', None, {'height': 32, 'x': 194, 'label': 0, 'width': 142, 'y': 46}),
+  ('convert XY', None, {'height': 32, 'x': 2, 'label': 0, 'width': 108, 'y': 43}),
+  ('refX', 'control', {'height': 162, 'x': 54, 'range': 1.0, 'limits': 1, 'label': 0, 'width': 59, 'limits_w': 0, 'y': 188}),
+  ('refY', 'control', {'height': 162, 'x': 131, 'range': 1.0, 'limits': 1, 'label': 0, 'width': 59, 'limits_w': 0, 'y': 192}),
+  ('control signal u', 'firing rate', {'height': 117, 'x': 577, 'auto_improve': 0, 'label': 0, 'width': 117, 'rows': None, 'y': 15}),
+  ('control signal u', 'value|X', {'height': 162, 'x': 519, 'sel_dim': [0, 1], 'label': 0, 'autozoom': 0, 'width': 243, 'last_maxy': 20.000000000000014, 'y': 159}),
+  ('Room', '3D view', {'height': 148, 'x': 284, 'label': 0, 'width': 164, 'y': 196})],
+ {'sim_spd': 4, 'rcd_time': 4.0, 'filter': 0.03, 'dt': 0, 'show_time': 0.5})
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=-282.3030454301188,y=82.23450607436287,width=1318.3042247069238,height=816.1984210014343]
+# F (Function Input)=Point2D.Double[214.25797590941252, 723.5174883026756]
+# control signal v (NEFEnsemble)=Point2D.Double[129.06872150442453, 350.9516979555286]
+# convert Angles (NEFEnsemble)=Point2D.Double[11.521663314047231, 491.56330365786]
+# convert XY (NEFEnsemble)=Point2D.Double[291.6114935195476, 350.9516979555288]
+# control signal u (NEFEnsemble)=Point2D.Double[795.2737767917555, 446.56758983311363]
+# refY (Function Input)=Point2D.Double[-121.885823778949, 395.96414674190675]
+# funcT (NEFEnsemble)=Point2D.Double[541.333430552539, 440.2820018309655]
+# Room (Network)=Point2D.Double[-143.9905284159594, 658.8911144436345]
+# refX (Function Input)=Point2D.Double[-122.03503758193285, 295.22831859294376]
+# FX (NEFEnsemble)=Point2D.Double[492.1193685567227, 689.080705932758]
+# T matrix (Function Input)=Point2D.Double[439.9774655017457, 160.2008346371681]

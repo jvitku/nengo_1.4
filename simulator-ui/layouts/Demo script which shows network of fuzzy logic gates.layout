@@ -1,0 +1,36 @@
+({'state': 0, 'height': 641, 'width': 1392, 'x': 54, 'y': 22},
+ [(u'myAND_FuzzyAND', None, {'label': False, 'height': 32, 'width': 183, 'x': 460, 'y': 180}),
+  (u'Randomized input 2', None, {'label': False, 'height': 32, 'width': 187, 'x': 106, 'y': 267}),
+  (u'OR_net', None, {'label': False, 'height': 32, 'width': 79, 'x': 971, 'y': 355}),
+  (u'AND_net', None, {'label': False, 'height': 32, 'width': 90, 'x': 963, 'y': 191}),
+  (u'NOT_net', None, {'label': False, 'height': 32, 'width': 91, 'x': 960, 'y': 9}),
+  (u'myNOT_FuzzyNOT', None, {'label': False, 'height': 32, 'width': 185, 'x': 463, 'y': 19}),
+  (u'Randomized input 1', None, {'label': False, 'height': 32, 'width': 187, 'x': 99, 'y': 6}),
+  (u'myOR_FuzzyOR', None, {'label': False, 'height': 32, 'width': 161, 'x': 461, 'y': 345}),
+  (u'Randomized input 1', 'value|origin', {'label': True, 'sel_dim': [0], 'last_maxy': 7.357341766357422, 'sel_all': True, 'height': 200, 'width': 300, 'x': 87, 'fixed_y': None, 'autozoom': False, 'y': 53}),
+  (u'Randomized input 1', 'control', {'label': True, 'range': 8.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 5, 'y': 55}),
+  (u'Randomized input 2', 'control', {'label': True, 'range': 4.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 12, 'y': 313}),
+  (u'Randomized input 2', 'value|origin', {'label': True, 'sel_dim': [0], 'last_maxy': 4.028903484344482, 'sel_all': True, 'height': 200, 'width': 300, 'x': 91, 'fixed_y': None, 'autozoom': False, 'y': 311}),
+  (u'myNOT_FuzzyNOT', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 128, 'width': 300, 'x': 392, 'fixed_y': None, 'autozoom': False, 'y': 57}),
+  (u'myAND_FuzzyAND', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 130, 'width': 300, 'x': 399, 'fixed_y': None, 'autozoom': False, 'y': 221}),
+  (u'myOR_FuzzyOR', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 141, 'width': 295, 'x': 403, 'fixed_y': None, 'autozoom': False, 'y': 387}),
+  (u'NOT_net', 'value|X', {'label': True, 'sel_dim': [0], 'last_maxy': 1.9642459154129028, 'sel_all': True, 'height': 138, 'width': 300, 'x': 723, 'fixed_y': None, 'autozoom': False, 'y': 54}),
+  (u'NOT_net', 'spike raster', {'label': True, 'sample': 1, 'height': 160, 'width': 300, 'x': 1033, 'y': 47}),
+  (u'AND_net', 'value|X', {'label': True, 'sel_dim': [0], 'last_maxy': 1.652807354927063, 'sel_all': True, 'height': 139, 'width': 300, 'x': 724, 'fixed_y': None, 'autozoom': False, 'y': 218}),
+  (u'AND_net', 'spike raster', {'label': True, 'sample': 1, 'height': 155, 'width': 300, 'x': 1033, 'y': 210}),
+  (u'OR_net', 'value|X', {'label': True, 'sel_dim': [0], 'last_maxy': 1.8623803853988647, 'sel_all': True, 'height': 150, 'width': 300, 'x': 720, 'fixed_y': None, 'autozoom': False, 'y': 376}),
+  (u'OR_net', 'spike raster', {'label': True, 'sample': 1, 'height': 160, 'width': 300, 'x': 1038, 'y': 371})],
+ {'dt': 0, 'show_time': 0.5, 'sim_spd': 3, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 4.0}) 
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=-82.38386480142756,y=149.99999999999991,width=1220.271219574016,height=755.5034899711609]
+# myAND_FuzzyAND (Generic Node)=Point2D.Double[500.0, 500.0]
+# Randomized input 2 (Function Input)=Point2D.Double[250.0, 666.6666870117188]
+# OR_net (NEFEnsemble)=Point2D.Double[750.0, 750.0]
+# AND_net (NEFEnsemble)=Point2D.Double[750.0, 500.0]
+# NOT_net (NEFEnsemble)=Point2D.Double[750.0, 250.0]
+# myNOT_FuzzyNOT (Generic Node)=Point2D.Double[500.0, 250.0]
+# Randomized input 1 (Function Input)=Point2D.Double[250.0, 333.3333435058594]
+# myOR_FuzzyOR (Generic Node)=Point2D.Double[500.0, 750.0]

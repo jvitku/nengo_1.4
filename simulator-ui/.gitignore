@@ -2,7 +2,7 @@
 .pydevproject
 artifacts
 bin
-layouts
+#layouts
 nengo.log
 UIFiles
 User.config

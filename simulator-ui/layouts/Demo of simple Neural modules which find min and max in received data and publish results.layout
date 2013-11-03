@@ -1,0 +1,25 @@
+({'state': 0, 'height': 578, 'width': 1439, 'x': 252, 'y': 61},
+ [(u'A', None, {'label': False, 'height': 32, 'width': 23, 'x': 1132, 'y': 240}),
+  (u'MinMax Asynchronous Integer Finder_AsynMinMaxInt', None, {'label': False, 'height': 32, 'width': 491, 'x': 420, 'y': 243}),
+  (u'Randomized input', None, {'label': False, 'height': 32, 'width': 170, 'x': 23, 'y': 11}),
+  (u'Randomized input', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2, 3], 'last_maxy': 3.3309199810028076, 'sel_all': True, 'height': 200, 'width': 300, 'x': 225, 'fixed_y': None, 'autozoom': False, 'y': 67}),
+  (u'Randomized input', 'control', {'label': True, 'range': 4.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 200, 'x': 24, 'y': 70}),
+  (u'A', 'value|X', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 5.43084192276001, 'sel_all': True, 'height': 200, 'width': 300, 'x': 821, 'fixed_y': None, 'autozoom': False, 'y': 258}),
+  (u'A', 'spike raster', {'label': True, 'sample': 1, 'height': 200, 'width': 300, 'x': 1134, 'y': 260}),
+  (u'MinMax Asynchronous Integer Finder_AsynMinMaxInt', u'value|org/hanns/demonodes/pubsub/OUT', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 2.999991429388973, 'sel_all': True, 'height': 200, 'width': 300, 'x': 507, 'fixed_y': None, 'autozoom': False, 'y': 258}),
+  (u'MinMax Synchronous Float Finder_AsynMinMaxFloat', None, {'label': False, 'height': 32, 'width': 483, 'x': 407, 'y': 7}),
+  (u'MinMax Synchronous Float Finder_AsynMinMaxFloat', u'value|org/hanns/demonodes/pubsub/OUT', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 521, 'fixed_y': None, 'autozoom': False, 'y': 42}),
+  (u'B', None, {'label': False, 'height': 32, 'width': 23, 'x': 1131, 'y': 11}),
+  (u'B', 'value|X', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 820, 'fixed_y': None, 'autozoom': False, 'y': 37}),
+  (u'B', 'spike raster', {'label': True, 'sample': 1, 'height': 200, 'width': 300, 'x': 1132, 'y': 43})],
+ {'dt': 0, 'show_time': 0.5, 'sim_spd': 2, 'update_freq': 30.303030303030305, 'filter': 0.01, 'rcd_time': 4.0}) 
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=52.214139630154925,y=233.33334350585938,width=951.075210710851,height=588.8368334770203]
+# MinMax Asynchronous Integer Finder_AsynMinMaxInt (Generic Node)=Point2D.Double[500.0, 333.3333435058594]
+# MinMax Synchronous Float Finder_AsynMinMaxFloat (Generic Node)=Point2D.Double[500.0, 666.6666870117188]
+# A (NEFEnsemble)=Point2D.Double[750.0, 333.3333435058594]
+# B (NEFEnsemble)=Point2D.Double[750.0, 666.6666870117188]
+# Randomized input (Function Input)=Point2D.Double[250.0, 500.0]

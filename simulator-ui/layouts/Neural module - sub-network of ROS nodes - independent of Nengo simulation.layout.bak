@@ -1,0 +1,3 @@
+({'state': 0, 'height': 287, 'width': 902, 'x': 54, 'y': 22},
+ [(u'Independent_PubSubDemo', None, {'label': False, 'height': 32, 'width': 255, 'x': 321, 'y': 90})],
+ {'dt': 0, 'show_time': 0.5, 'sim_spd': 4, 'update_freq': 30.303030303030305, 'filter': 0.03, 'rcd_time': 4.0}) 

@@ -1,0 +1,46 @@
+({'state': 0, 'height': 823, 'width': 1348, 'x': 54, 'y': 22},
+ [(u'Randomized input 2', None, {'label': False, 'height': 32, 'width': 187, 'x': 106, 'y': 267}),
+  (u'NOT_net', None, {'label': False, 'height': 32, 'width': 91, 'x': 960, 'y': 9}),
+  (u'Randomized input 1', None, {'label': False, 'height': 32, 'width': 187, 'x': 99, 'y': 6}),
+  (u'Randomized input 1', 'value|origin', {'label': True, 'sel_dim': [0], 'last_maxy': 7.357341766357422, 'sel_all': True, 'height': 200, 'width': 300, 'x': 87, 'fixed_y': None, 'autozoom': False, 'y': 53}),
+  (u'Randomized input 1', 'control', {'label': True, 'range': 8.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 5, 'y': 55}),
+  (u'Randomized input 2', 'control', {'label': True, 'range': 4.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 12, 'y': 313}),
+  (u'Randomized input 2', 'value|origin', {'label': True, 'sel_dim': [0], 'last_maxy': 4.028903484344482, 'sel_all': True, 'height': 200, 'width': 300, 'x': 91, 'fixed_y': None, 'autozoom': False, 'y': 311}),
+  (u'NOT_net', 'value|X', {'label': True, 'sel_dim': [0], 'last_maxy': 1.9642459154129028, 'sel_all': True, 'height': 138, 'width': 300, 'x': 723, 'fixed_y': None, 'autozoom': False, 'y': 54}),
+  (u'NOT_net', 'spike raster', {'label': True, 'sample': 1, 'height': 160, 'width': 300, 'x': 1033, 'y': 47}),
+  (u'AND_net', 'value|X', {'label': True, 'sel_dim': [0], 'last_maxy': 1.652807354927063, 'sel_all': True, 'height': 139, 'width': 300, 'x': 724, 'fixed_y': None, 'autozoom': False, 'y': 218}),
+  (u'AND_net', 'spike raster', {'label': True, 'sample': 1, 'height': 155, 'width': 300, 'x': 1033, 'y': 210}),
+  (u'OR_net', 'value|X', {'label': True, 'sel_dim': [0], 'last_maxy': 1.9103535413742065, 'sel_all': True, 'height': 150, 'width': 300, 'x': 720, 'fixed_y': None, 'autozoom': False, 'y': 376}),
+  (u'OR_net', 'spike raster', {'label': True, 'sample': 1, 'height': 160, 'width': 300, 'x': 1038, 'y': 371}),
+  (u'myNOT_NOT', None, {'label': False, 'height': 32, 'width': 132, 'x': 492, 'y': 8}),
+  (u'myNOT_NOT', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 124, 'width': 300, 'x': 405, 'fixed_y': None, 'autozoom': False, 'y': 58}),
+  (u'AND_net', None, {'label': False, 'height': 32, 'width': 90, 'x': 965, 'y': 187}),
+  (u'myAND_AND', None, {'label': False, 'height': 32, 'width': 130, 'x': 495, 'y': 185}),
+  (u'myAND_AND', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 144, 'width': 300, 'x': 407, 'fixed_y': None, 'autozoom': False, 'y': 214}),
+  (u'OR_net', None, {'label': False, 'height': 32, 'width': 79, 'x': 978, 'y': 354}),
+  (u'myOR_OR', None, {'label': False, 'height': 32, 'width': 108, 'x': 511, 'y': 356}),
+  (u'myOR_OR', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 139, 'width': 300, 'x': 407, 'fixed_y': None, 'autozoom': False, 'y': 385}),
+  (u'myXOR_XOR', None, {'label': False, 'height': 32, 'width': 134, 'x': 497, 'y': 529}),
+  (u'myNAND_NAND', None, {'label': False, 'height': 32, 'width': 158, 'x': 240, 'y': 547}),
+  (u'myXOR_XOR', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 152, 'width': 300, 'x': 407, 'fixed_y': None, 'autozoom': False, 'y': 556}),
+  (u'XOR_net', None, {'label': False, 'height': 32, 'width': 92, 'x': 990, 'y': 527}),
+  (u'XOR_net', 'value|X', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 147, 'width': 300, 'x': 720, 'fixed_y': None, 'autozoom': False, 'y': 553}),
+  (u'XOR_net', 'spike raster', {'label': True, 'sample': 1, 'height': 151, 'width': 300, 'x': 1034, 'y': 550})],
+ {'dt': 0, 'show_time': 0.5, 'sim_spd': 3, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 4.0}) 
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=-216.9818569101938,y=66.66667175292976,width=1489.4672037915486,height=922.1701312065125]
+# NOT_net (NEFEnsemble)=Point2D.Double[750.0, 166.6666717529297]
+# NAND_net (NEFEnsemble)=Point2D.Double[750.0, 833.3333129882812]
+# myAND_AND (Generic Node)=Point2D.Double[500.0, 666.6666870117188]
+# XOR_net (NEFEnsemble)=Point2D.Double[750.0, 500.0]
+# myNAND_NAND (Generic Node)=Point2D.Double[500.0, 833.3333129882812]
+# myOR_OR (Generic Node)=Point2D.Double[500.0, 333.3333435058594]
+# OR_net (NEFEnsemble)=Point2D.Double[750.0, 333.3333435058594]
+# myNOT_NOT (Generic Node)=Point2D.Double[500.0, 166.6666717529297]
+# Randomized input 2 (Function Input)=Point2D.Double[250.0, 666.6666870117188]
+# Randomized input 1 (Function Input)=Point2D.Double[250.0, 333.3333435058594]
+# AND_net (NEFEnsemble)=Point2D.Double[750.0, 666.6666870117188]
+# myXOR_XOR (Generic Node)=Point2D.Double[500.0, 500.0]

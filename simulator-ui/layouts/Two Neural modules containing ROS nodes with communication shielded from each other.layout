@@ -1,0 +1,12 @@
+({'state': 0, 'height': 465, 'width': 906, 'x': 54, 'y': 22},
+ [(u'Subscriber', None, {'label': False, 'height': 32, 'width': 105, 'x': 576, 'y': 80}),
+  (u'Publisher', None, {'label': False, 'height': 32, 'width': 92, 'x': 149, 'y': 68}),
+  (u'Publisher', u'value|org/hanns/demonodes/pubsub', {'label': True, 'sel_dim': [0, 1, 2, 3, 4, 5, 6], 'last_maxy': 1588825911.4206746, 'sel_all': True, 'height': 200, 'width': 300, 'x': 56, 'fixed_y': None, 'autozoom': True, 'y': 114})],
+ {'dt': 0, 'show_time': 0.5, 'sim_spd': 4, 'update_freq': 30.303030303030305, 'filter': 0.03, 'rcd_time': 4.0}) 
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=233.33334350585932,y=344.61157403216265,width=584.3333435058594,height=361.7768519356747]
+# Subscriber (Generic Node)=Point2D.Double[666.6666870117188, 500.0]
+# Publisher (Generic Node)=Point2D.Double[333.3333435058594, 500.0]

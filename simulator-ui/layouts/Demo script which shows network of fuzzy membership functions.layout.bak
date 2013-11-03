@@ -1,0 +1,50 @@
+({'state': 0, 'height': 627, 'width': 1584, 'x': 54, 'y': 22},
+ [(u'gamma3', None, {'label': False, 'height': 32, 'width': 88, 'x': 528, 'y': 279}),
+  (u'Triangle_FuzzyMemTriangle', None, {'label': False, 'height': 32, 'width': 261, 'x': 751, 'y': 15}),
+  (u'alpha2', None, {'label': False, 'height': 32, 'width': 69, 'x': 785, 'y': 265}),
+  (u'delta3', None, {'label': False, 'height': 32, 'width': 64, 'x': 647, 'y': 277}),
+  (u'Randomized input 1', None, {'label': False, 'height': 32, 'width': 187, 'x': 34, 'y': 29}),
+  (u'beta1', None, {'label': False, 'height': 32, 'width': 60, 'x': 1270, 'y': 250}),
+  (u'alpha3', None, {'label': False, 'height': 32, 'width': 69, 'x': 348, 'y': 285}),
+  (u'beta2', None, {'label': False, 'height': 32, 'width': 60, 'x': 859, 'y': 264}),
+  (u'gamma2', None, {'label': False, 'height': 32, 'width': 88, 'x': 941, 'y': 268}),
+  (u'beta3', None, {'label': False, 'height': 32, 'width': 60, 'x': 456, 'y': 278}),
+  (u'DecLin_FuzzyMemLinDec', None, {'label': False, 'height': 32, 'width': 241, 'x': 1291, 'y': 14}),
+  (u'alpha1', None, {'label': False, 'height': 32, 'width': 69, 'x': 1115, 'y': 254}),
+  (u'Trapezoid_FuzzyMemTrapezoid', None, {'label': False, 'height': 32, 'width': 295, 'x': 424, 'y': 13}),
+  (u'Randomized input 1', 'value|origin', {'label': True, 'sel_dim': [0], 'last_maxy': 7.999997615814209, 'sel_all': True, 'height': 200, 'width': 300, 'x': 93, 'fixed_y': None, 'autozoom': False, 'y': 93}),
+  (u'Randomized input 1', 'control', {'label': True, 'range': 8.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 14, 'y': 92}),
+  (u'beta1', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 102, 'x': 1245, 'y': 298}),
+  (u'alpha1', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 1138, 'y': 293}),
+  (u'DecLin_FuzzyMemLinDec', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 1279, 'fixed_y': None, 'autozoom': True, 'y': 49}),
+  (u'Triangle_FuzzyMemTriangle', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 720, 'fixed_y': None, 'autozoom': False, 'y': 40}),
+  (u'alpha2', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 775, 'y': 299}),
+  (u'beta2', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 859, 'y': 300}),
+  (u'gamma2', 'control', {'label': True, 'range': 1.0, 'limits_w': 22, 'limits': True, 'height': 200, 'width': 102, 'x': 934, 'y': 304}),
+  (u'Trapezoid_FuzzyMemTrapezoid', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 439, 'fixed_y': None, 'autozoom': False, 'y': 35}),
+  (u'alpha3', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 330, 'y': 322}),
+  (u'beta3', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 77, 'x': 432, 'y': 319}),
+  (u'gamma3', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 532, 'y': 321}),
+  (u'delta3', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 639, 'y': 320}),
+  (u'IncLin_FuzzyMemIncLin', None, {'label': False, 'height': 32, 'width': 225, 'x': 1024, 'y': -4}),
+  (u'IncLin_FuzzyMemIncLin', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 999, 'fixed_y': None, 'autozoom': False, 'y': 42})],
+ {'dt': 0, 'show_time': 0.5, 'sim_spd': 0, 'update_freq': 30.303030303030305, 'filter': 0.03, 'rcd_time': 4.0}) 
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=-333.112923433464,y=-9.090911865234432,width=1717.225877384506,height=1063.1817932128904]
+# delta3 (Function Input)=Point2D.Double[333.3333435058594, 272.7272644042969]
+# Trapezoid_FuzzyMemTrapezoid (Generic Node)=Point2D.Double[666.6666870117188, 200.0]
+# beta3 (Function Input)=Point2D.Double[333.3333435058594, 363.6363525390625]
+# gamma2 (Function Input)=Point2D.Double[333.3333435058594, 727.272705078125]
+# beta1 (Function Input)=Point2D.Double[333.3333435058594, 545.4545288085938]
+# alpha1 (Function Input)=Point2D.Double[333.3333435058594, 636.3636474609375]
+# Randomized input 1 (Function Input)=Point2D.Double[333.3333435058594, 454.5454406738281]
+# alpha2 (Function Input)=Point2D.Double[333.3333435058594, 818.1818237304688]
+# DecLin_FuzzyMemLinDec (Generic Node)=Point2D.Double[666.6666870117188, 600.0]
+# Triangle_FuzzyMemTriangle (Generic Node)=Point2D.Double[666.6666870117188, 800.0]
+# alpha3 (Function Input)=Point2D.Double[333.3333435058594, 181.81817626953125]
+# gamma3 (Function Input)=Point2D.Double[333.3333435058594, 90.90908813476562]
+# IncLin_FuzzyMemIncLin (Generic Node)=Point2D.Double[666.6666870117188, 400.0]
+# beta2 (Function Input)=Point2D.Double[333.3333435058594, 909.0908813476562]

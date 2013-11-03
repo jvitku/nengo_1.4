@@ -1,0 +1,26 @@
+({'x': 245, 'height': 698, 'width': 1061, 'state': 0, 'y': 66},
+ [('input', None, {'height': 32, 'x': 115, 'label': 0, 'width': 53, 'y': 311}),
+  ('error', None, {'height': 32, 'x': 317, 'label': 0, 'width': 53, 'y': 142}),
+  ('switch', None, {'height': 32, 'x': 113, 'label': 0, 'width': 65, 'y': 48}),
+  ('pre', None, {'height': 32, 'x': 321, 'label': 0, 'width': 39, 'y': 309}),
+  ('post', None, {'height': 32, 'x': 551, 'label': 0, 'width': 48, 'y': 310}),
+  ('switch', 'control', {'height': 139, 'x': 53, 'range': 1.0, 'limits': 1, 'label': 1, 'width': 41, 'limits_w': 0, 'y': 10}),
+  ('input', 'value|origin', {'height': 210, 'x': 0, 'sel_dim': [0, 1], 'label': 1, 'autozoom': 1, 'width': 300, 'last_maxy': 1.0000000000000007, 'y': 367}),
+  ('pre', 'value|X', {'height': 210, 'x': 302, 'sel_dim': [0, 1], 'label': 1, 'autozoom': 1, 'width': 300, 'last_maxy': 1.0000000000000007, 'y': 369}),
+  ('post', 'value|X', {'height': 210, 'x': 600, 'sel_dim': [0, 1], 'label': 1, 'autozoom': 1, 'width': 300, 'last_maxy': 1.0, 'y': 375}),
+  ('error', 'value|X', {'height': 188, 'x': 432, 'sel_dim': [0, 1], 'label': 1, 'autozoom': 0, 'width': 268, 'last_maxy': 1.0000000000000007, 'y': 25}),
+  ('post', 'pre_00', {'height': 336, 'x': 702, 'label': 1, 'width': 341, 'rows': None, 'y': 25}),
+  ('Gate', None, {'height': 32, 'x': 316, 'label': 0, 'width': 54, 'y': 50}),
+  ('input', 'control', {'height': 200, 'x': 21, 'range': 2.0, 'limits': 1, 'label': 1, 'width': 97, 'limits_w': 0, 'y': 160})],
+ {'sim_spd': 4, 'rcd_time': 1.0, 'filter': 0.019999999999999997, 'dt': 0, 'show_time': 0.5})
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=98.06723869669624,y=91.65321862173577,width=921.1652951152982,height=570.3187817072903]
+# post (NEFEnsemble)=Point2D.Double[799.1417118915708, 448.68371392800003]
+# Gate (NEFEnsemble)=Point2D.Double[421.5264520931842, 237.06797055484978]
+# error (NEFEnsemble)=Point2D.Double[615.5068937704381, 205.14972865057487]
+# switch (Function Input)=Point2D.Double[247.50152976003372, 239.51006978173908]
+# pre (NEFEnsemble)=Point2D.Double[463.79031755357926, 494.8271882219399]
+# input (Function Input)=Point2D.Double[250.0, 500.0]

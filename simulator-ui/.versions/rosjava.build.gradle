@@ -47,7 +47,7 @@ dependencies {
 
 	// in fact, it is better for now to add the projects as a sub-projects of nengoros, so:  (TODO: maven repository)
 	compile project(':logic:gates')
-	compile project(':demonodes:pubsub')
+	compile project(':demonodes:basic')
 }
 
 // prints out dependencies... 
