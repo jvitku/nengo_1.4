@@ -249,7 +249,7 @@ public class LocalSimulator implements Simulator, java.io.Serializable {
             ///my @author Jaroslav Vitku
             // here wait until all (ROS) units are ready
             // TODO
-            System.out.println("hi, simulator here..");
+            //System.out.println("hi, simulator here..");
             int sleeptime = 5;
             for (Node myNode : myNodes) {
                 if(myNode instanceof SyncedUnit) {
