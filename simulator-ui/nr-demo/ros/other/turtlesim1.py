@@ -25,14 +25,22 @@ net=nef.Network('Random Turtle Control Demo')
 net.add_to_nengo()  # here: delete old (toplevel) network and replace it with the newly CREATED one
 
 ################################## 
+################# setup the ROS utils (optional) 
 #RosUtils.setAutorun(False)     # Do we want to autorun roscore and rxgraph? (tru by default)
 RosUtils.prefferJroscore(False) # Turlte prefers roscore before jroscore (don't know why..) 
 
 ################################## 
+#rosnodetester = "rosnode info /Turtlesim/defaultModem"; #  experimental
+#rosnodetester2 = "rosnode info /Turtlesim/Turtlesim";   #  this provides information about ROS node - Turtlesim
+
 turtlesim = "rosrun turtlesim turtlesim_node"   # command to start turtle installed in ROS
 act = "resender.turtle.Controller";             
+
+# create group with a name
 g = NodeGroup("Turtlesim", True);        # create group of ROS nodes (equals to one neural subsystem)
 g.addNode(turtlesim, "Turtlesim", "native");  # add Node Configuration (turtle) to the group of nodes
+#g.addNode(rosnodetester,"rosnodetest","native")    # experimental
+#g.addNode(rosnodetester2,"rosnodetest","native")    #
 module = NeuralModule('TurtleController', g)  
 
 # configure modem, that is:
