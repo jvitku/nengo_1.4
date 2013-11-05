@@ -51,6 +51,8 @@ public class NodeThreadPool {
 	protected long myRunStartTime;
 	protected double myAverageTimePerStep;
 	protected int myNumSteps;
+
+	private String me = "[Simulator] "; ///my
 	
 	public static int getNumJavaThreads(){
 		return myNumJavaThreads;
@@ -258,24 +260,27 @@ public class NodeThreadPool {
 			// start the task processing, wait for it to finish
 			startThreads();
 			
-			///my - after finishing all jobs, wait for SyncedUnits to be ready (their origins set)
-			int sleeptime=1;
-			int attempts = 100;
-			int poc=0;
-			for(SyncedUnit u : myUnits){
-	            while(!u.isReady()){
-	            	if(this.shouldGiveUp(poc-attempts, sleeptime, ((Node)u).getName()))
-            			break;
-	            	if(poc++ < attempts)
-	            		continue;
-	            	try {
-						Thread.sleep(sleeptime);
-						if((poc-attempts) % 40 == 0){
-							System.out.println("Simulator: waiting for: "+((Node)u).getName()+ " for "+
-									sleeptime*(poc-attempts)+" ms");
-						}
-					} catch (InterruptedException e) { e.printStackTrace(); }
-	            }
+			///my - after finishing all jobs, wait for SyncedUnits to be ready (their origins to be set)
+			int poc=1;
+			boolean allready = false;
+			while(!allready){
+				allready=true;
+				for(SyncedUnit u : myUnits){
+					if(!u.isReady()){			///TODO: request for re-sending the message?
+						allready=false;
+						if((poc*sleeptime) % printPeriod == 0)
+							System.out.println(me+"node: "+((Node)u).getName()+ " not ready, waiting..");
+					}
+				}
+				if((poc*sleeptime) % printPeriod == 0)
+					System.out.println(me+"waiting for: "+(poc*sleeptime)+" ms already.");
+				if(allready)
+					break;
+				if(sleeptime*poc++ > maxwait){
+					System.out.println(me+"giving up waiting for nodes!");
+					break;
+				}
+				Thread.sleep(sleeptime);
 			}
 			Thread.currentThread().setPriority(oldPriority);
 		}
@@ -291,20 +296,11 @@ public class NodeThreadPool {
 		}
 	}
 	
-	///my
-	/**
-	 * @author Jaroslav Vitku
-	 */
-	private boolean shouldGiveUp(int attempts,int sleeptime, String nodename){
-		if(attempts*sleeptime > maxWait){
-			System.out.println("Giving up waiting for node named: "+nodename);
-			return true;
-		}
-		return false;
-	}
+	/// my
+	final int sleeptime=1;
+	final int printPeriod = 20;		// print out waiting warning each x ms
+	final int maxwait = 500;		// some messages can get lost in the network; 
 	
-	// ROS communication can break down for some messages
-	private final int maxWait = 500;
 
 	/**
 	 * Tells the threads to run for one phase (projections, nodes or tasks). 
