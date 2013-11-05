@@ -255,12 +255,14 @@ public class NodeThreadPool {
 			startThreads();
 
 			// start the node processing, wait for it to finish
-			startThreads();
+			///my: Here, nodes have values on inputs and node.run() sends values over the ROS network
+			startThreads();	
 			
 			// start the task processing, wait for it to finish
 			startThreads();
 			
-			///my - after finishing all jobs, wait for SyncedUnits to be ready (their origins to be set)
+			///my: Here, it is expected that nodes finished processing and have origins set, 
+			// ..so wait for ROS messages to arrive, this (asynchronous) should set values to their origins
 			int poc=1;
 			boolean allready = false;
 			while(!allready){

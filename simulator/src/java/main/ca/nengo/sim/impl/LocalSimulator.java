@@ -253,6 +253,7 @@ public class LocalSimulator implements Simulator, java.io.Serializable {
             int sleeptime = 5;
             for (Node myNode : myNodes) {
                 if(myNode instanceof SyncedUnit) {
+                	// note: nodeTHread pool is used instead of this, so the util.impl.NodeThreadPool is used ~ waits for ROS nodes
                 	System.out.println("hey, found this one: "+myNode.getName()+" and is ready? "+((SyncedUnit)myNode).isReady());
                     while(!((SyncedUnit)myNode).isReady()){
                     	try {
