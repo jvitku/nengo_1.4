@@ -54,13 +54,17 @@ module = NeuralModule('TurtleController', g)
 
 module.createDecoder("turtle1/pose", "pose")                 # origin
 module.createDecoder("turtle1/color_sensor", "color")        # origin
-module.createEncoder("turtle1/cmd_vel", "geometry/Twist") # termination
+module.createEncoder("turtle1/cmd_vel", "geometry_msgs/Twist") # termination
 subsystem=net.add(module)
 
 
 #Create a white noise input function with parameters: baseFreq, maxFreq (rad/s), RMS, Seed
 input=FunctionInput('Randomized input', [FourierFunction(.5, 10, 6, 12),
-    FourierFunction(2, 11, 5, 17)],
+    FourierFunction(1, 11, 5, 17),
+    FourierFunction(2, 11, 1, 15),
+    FourierFunction(2, 16, 5, 12),
+    FourierFunction(1, 11, 2, 11),
+    FourierFunction(2, 11, 4, 18)],
     Units.UNK) 
 
 # Add the input node to the network and connect it to the smart enuron

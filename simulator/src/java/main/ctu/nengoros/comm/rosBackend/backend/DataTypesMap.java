@@ -36,7 +36,7 @@ public class DataTypesMap {
 		"turtlesim/Pose",
 		"turtlesim/Color",
 		"std_msgs/Bool",
-		"geometry/Twist"
+		"geometry_msgs/Twist"
 	};
 	
 	

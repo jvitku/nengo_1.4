@@ -1,5 +1,6 @@
 package ctu.nengoros.comm.rosBackend.backend.impl.turtle;
 
+
 import org.ros.internal.message.Message;
 import org.ros.message.MessageListener;
 import org.ros.node.ConnectedNode;
@@ -9,7 +10,6 @@ import org.ros.node.topic.Subscriber;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.comm.rosBackend.backend.newMessageEvent.OnNewRosMessageSource;
 import ctu.nengoros.exceptions.MessageFormatException;
-//import std_msgs.MultiArrayLayout;
 
 /**
  *
@@ -55,7 +55,7 @@ import ctu.nengoros.exceptions.MessageFormatException;
 public class TwistBackend extends OnNewRosMessageSource implements Backend{
 
 	// type of messages we can process here
-	public static final String MYTYPE="geometry/Twist";
+	public static final String MYTYPE="geometry_msgs/Twist";
 	
 	private String myTopic;
 	
@@ -64,15 +64,10 @@ public class TwistBackend extends OnNewRosMessageSource implements Backend{
 	
 	final Publisher<geometry_msgs.Twist> publisher;
 	final Subscriber<geometry_msgs.Twist> subscriber;
-	
-	// This is probably not the correct way how to generate Twist message:
-	// TODO make this better?
-	final Publisher<geometry_msgs.Vector3> dummyPublisherA, dummyPublisherB;
-	private geometry_msgs.Vector3 linvel, angularvel;
-	
+
 	private boolean pub;	// whether to publish or subscribe
 	
-	private final String me = "VelocityBackend: ";
+	private final String me = "TwistBackend: ";
 	
 	public TwistBackend(String topic, String type, 
 			ConnectedNode myRosNode, boolean publish) 
@@ -82,7 +77,7 @@ public class TwistBackend extends OnNewRosMessageSource implements Backend{
 			throw new MessageFormatException(me+"constructor "+topic,
 					"Cannot parse message of this type! expected: "+MYTYPE+
 					" and found: "+type);
-		}else if(!turtlesim.Velocity._TYPE.equalsIgnoreCase(MYTYPE)){
+		}else if(!geometry_msgs.Twist._TYPE.equalsIgnoreCase(MYTYPE)){
 			throw new MessageFormatException(me+"constructor "+topic,
 					"Variable MYTYPE has to correspond to type of my message!: "
 					+MYTYPE+" != : "+geometry_msgs.Twist._TYPE);
@@ -94,14 +89,7 @@ public class TwistBackend extends OnNewRosMessageSource implements Backend{
 			subscriber = null;
 			publisher = myRosNode.newPublisher(myTopic, MYTYPE);
 			rosMessage = publisher.newMessage();
-			
-			dummyPublisherA = myRosNode.newPublisher(myTopic, MYTYPE);
-			dummyPublisherB = myRosNode.newPublisher(myTopic, MYTYPE);
-			linvel = dummyPublisherA.newMessage();
-			angularvel = dummyPublisherB.newMessage();
 		}else{
-			dummyPublisherA = null;
-			dummyPublisherB = null;
 					
 			this.publisher=null;
 			subscriber = myRosNode.newSubscriber(myTopic, MYTYPE);
@@ -126,16 +114,13 @@ public class TwistBackend extends OnNewRosMessageSource implements Backend{
 		}
 		rosMessage = publisher.newMessage();
 		
-		linvel.setX(data[0]);
-		linvel.setY(data[1]);
-		linvel.setZ(data[2]);
+		rosMessage.getAngular().setX(data[0]);
+		rosMessage.getAngular().setY(data[1]);
+		rosMessage.getAngular().setZ(data[2]);
 		
-		angularvel.setX(data[3]);
-		angularvel.setY(data[4]);
-		angularvel.setY(data[5]);
-		
-		rosMessage.setLinear(linvel); 	
-		rosMessage.setAngular(angularvel);
+		rosMessage.getLinear().setX(data[3]);
+		rosMessage.getLinear().setY(data[4]);
+		rosMessage.getLinear().setZ(data[5]);
 		
         publisher.publish(rosMessage);
 	}
