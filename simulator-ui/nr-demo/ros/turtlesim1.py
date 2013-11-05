@@ -1,13 +1,14 @@
-# Demo showing how the nengoros is able to launch group of nodes consisting of:
-#   -java node modem      = modem - class that converts data between ROS-Nengo. Add custom inputs/outputs
-#   -native node          = native application (installed turtlesim here, demo simulator shipped with ROS)
-
-# as a result, NeuralModule in nengo contains entire turtlesim:
-#   -inputs to neuron control the turtle (linear and angular speeds)
-#   -outputs from neuron correspond to turtle sensori data ( X,Y,theta, linear and angular speeds)
-
-# note: that turtle application may run probably only on Ubuntu 12.04 64bit, ROS installation recommended
- 
+# Demo showing how the nengoros is able to launch installed ROS nodes. 
+#
+# It launches NeuralModule with:
+# 	- one Java modem and 
+#	- one installed ROS node by means rosrun command
+#
+# The turtlesim demo node is launched (simulator of simple world with one turtlebot). 
+# The turtlebot is subscribed to commands about angular and linear velocities: 2x(x,y,z) 
+# 	and publishes its velocities and colors it sees. 
+# 
+#
 # by Jaroslav Vitku
 
 import nef
@@ -31,7 +32,9 @@ RosUtils.prefferJroscore(False) # Turlte prefers roscore before jroscore (don't 
 ################################## 
 ################# define the group and start it
 
-rosnodetester = "rosnode info zelvicka/zelva";   # nengoros should execute "whic rosnode", then "rosnode turt..  [some trash..]"
+rosnodetester = "rosnode info /Turtlesim/defaultModem"; #  this provides information about ROS node - Modem
+rosnodetester2 = "rosnode info /Turtlesim/Turtlesim";   #  this provides information about ROS node - Turtlesim
+
 turtlesim = "rosrun turtlesim turtlesim_node"   # command to start turtle installed in ROS
 act = "resender.turtle.Controller";             
 #modem  = "nengoros.comm.nodeFactory.modem.impl.DefaultModem"; # add a default model to the turtle
@@ -41,7 +44,8 @@ g = NodeGroup("Turtlesim", True);        # create group of ROS nodes (equals to 
 g.addNode(turtlesim, "Turtlesim", "native");  # add Node Configuration (turtle) to the group of nodes
 #g.addNode(modem,"turtlemodem","modem")    # add modem configuration to the group
 
-g.addNode(rosnodetester,"rosnodetest","native")    # teeeeeeeeeeeeeeeeest
+g.addNode(rosnodetester,"rosnodetest","native")    # TODO
+g.addNode(rosnodetester2,"rosnodetest","native")    # TODO
 
 module = NeuralModule('TurtleController', g)  
 
