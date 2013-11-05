@@ -25,12 +25,12 @@
 ### Nengo Workspace layout ###
 ##############################
 # elasticmode=false
-# viewbounds=PBounds[x=-82.38386480142756,y=149.99999999999991,width=1220.271219574016,height=755.5034899711609]
-# myAND_FuzzyAND (Generic Node)=Point2D.Double[500.0, 500.0]
-# Randomized input 2 (Function Input)=Point2D.Double[250.0, 666.6666870117188]
-# OR_net (NEFEnsemble)=Point2D.Double[750.0, 750.0]
-# AND_net (NEFEnsemble)=Point2D.Double[750.0, 500.0]
-# NOT_net (NEFEnsemble)=Point2D.Double[750.0, 250.0]
-# myNOT_FuzzyNOT (Generic Node)=Point2D.Double[500.0, 250.0]
-# Randomized input 1 (Function Input)=Point2D.Double[250.0, 333.3333435058594]
-# myOR_FuzzyOR (Generic Node)=Point2D.Double[500.0, 750.0]
+# viewbounds=PBounds[x=-271.10030588556504,y=149.99999999999994,width=1597.704101742291,height=755.5034899711609]
+# NOT_net (NEFEnsemble)=Point2D.Double[750.0, 500.0]
+# Randomized input 1 (Function Input)=Point2D.Double[250.0, 666.6666870117188]
+# AND_net (NEFEnsemble)=Point2D.Double[750.0, 750.0]
+# OR_net (NEFEnsemble)=Point2D.Double[750.0, 250.0]
+# myAND_FuzzyAND (Generic Node)=Point2D.Double[500.0, 750.0]
+# Randomized input 2 (Function Input)=Point2D.Double[250.0, 333.3333435058594]
+# myNOT_FuzzyNOT (Generic Node)=Point2D.Double[500.0, 500.0]
+# myOR_FuzzyOR (Generic Node)=Point2D.Double[500.0, 250.0]

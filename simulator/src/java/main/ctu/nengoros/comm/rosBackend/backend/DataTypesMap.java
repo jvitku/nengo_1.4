@@ -25,7 +25,8 @@ public class DataTypesMap {
 		"velocity",
 		"pose",
 		"color",
-		"bool"
+		"bool",
+		"twist"
 	};
 	
 	private static final String[] rosNames = new String[]{
@@ -34,7 +35,8 @@ public class DataTypesMap {
 		"turtlesim/Velocity",
 		"turtlesim/Pose",
 		"turtlesim/Color",
-		"std_msgs/Bool"
+		"std_msgs/Bool",
+		"geometry_msgs/Twist"
 	};
 	
 	
