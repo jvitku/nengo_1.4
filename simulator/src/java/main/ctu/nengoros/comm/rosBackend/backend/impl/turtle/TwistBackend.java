@@ -22,39 +22,59 @@ import ctu.nengoros.exceptions.MessageFormatException;
  * 
  * From rosjava/rosjava_messages:
  * 
-    package turtlesim;
+ package geometry_msgs;
 
-	public interface Velocity extends org.ros.internal.message.Message {
-  		static final java.lang.String _TYPE = "turtlesim/Velocity";
-  		static final java.lang.String _DEFINITION = "float32 linear\nfloat32 angular";
-  		float getLinear();
-  		void setLinear(float value);
-  		float getAngular();
-  		void setAngular(float value);
-	}
- * 
+
+   public interface Twist extends org.ros.internal.message.Message {
+  static final java.lang.String _TYPE = "geometry_msgs/Twist";
+  static final java.lang.String _DEFINITION = "# This expresses velocity in free space broken into it\'s linear and angular parts. \nVector3  linear\nVector3  angular\n";
+  geometry_msgs.Vector3 getLinear();
+  void setLinear(geometry_msgs.Vector3 value);
+  geometry_msgs.Vector3 getAngular();
+  void setAngular(geometry_msgs.Vector3 value);
+}
+
+ package geometry_msgs;
+ 
+ public interface Vector3 extends org.ros.internal.message.Message {
+  static final java.lang.String _TYPE = "geometry_msgs/Vector3";
+  static final java.lang.String _DEFINITION = "# This represents a vector in free space. \n\nfloat64 x\nfloat64 y\nfloat64 z";
+  double getX();
+  void setX(double value);
+  double getY();
+  void setY(double value);
+  double getZ();
+  void setZ(double value);
+}
+
+ 
  * 
  * @author Jaroslav Vitku
  *
  */
-public class VelocityBackend extends OnNewRosMessageSource implements Backend{
+public class TwistBackend extends OnNewRosMessageSource implements Backend{
 
 	// type of messages we can process here
-	public static final String MYTYPE="turtlesim/Velocity";
+	public static final String MYTYPE="geometry/Twist";
 	
 	private String myTopic;
 	
-	private final int messageLength = 2;	// 2 floats: linear and angular velocity
-	private turtlesim.Velocity rosMessage;
+	private final int messageLength = 6;	// 2x3 floats: linear and angular velocity in x,y,z
+	private geometry_msgs.Twist rosMessage;
 	
-	final Publisher<turtlesim.Velocity> publisher;
-	final Subscriber<turtlesim.Velocity> subscriber;
+	final Publisher<geometry_msgs.Twist> publisher;
+	final Subscriber<geometry_msgs.Twist> subscriber;
+	
+	// This is probably not the correct way how to generate Twist message:
+	// TODO make this better?
+	final Publisher<geometry_msgs.Vector3> dummyPublisherA, dummyPublisherB;
+	private geometry_msgs.Vector3 linvel, angularvel;
 	
 	private boolean pub;	// whether to publish or subscribe
 	
 	private final String me = "VelocityBackend: ";
 	
-	public VelocityBackend(String topic, String type, 
+	public TwistBackend(String topic, String type, 
 			ConnectedNode myRosNode, boolean publish) 
 					throws MessageFormatException{
 		
@@ -65,7 +85,7 @@ public class VelocityBackend extends OnNewRosMessageSource implements Backend{
 		}else if(!turtlesim.Velocity._TYPE.equalsIgnoreCase(MYTYPE)){
 			throw new MessageFormatException(me+"constructor "+topic,
 					"Variable MYTYPE has to correspond to type of my message!: "
-					+MYTYPE+" != : "+turtlesim.Velocity._TYPE);
+					+MYTYPE+" != : "+geometry_msgs.Twist._TYPE);
 		}
 		this.pub = publish;
 		this.myTopic = topic;
@@ -74,7 +94,15 @@ public class VelocityBackend extends OnNewRosMessageSource implements Backend{
 			subscriber = null;
 			publisher = myRosNode.newPublisher(myTopic, MYTYPE);
 			rosMessage = publisher.newMessage();
+			
+			dummyPublisherA = myRosNode.newPublisher(myTopic, MYTYPE);
+			dummyPublisherB = myRosNode.newPublisher(myTopic, MYTYPE);
+			linvel = dummyPublisherA.newMessage();
+			angularvel = dummyPublisherB.newMessage();
 		}else{
+			dummyPublisherA = null;
+			dummyPublisherB = null;
+					
 			this.publisher=null;
 			subscriber = myRosNode.newSubscriber(myTopic, MYTYPE);
 			subscriber.addMessageListener(this.buildML(this));
@@ -97,12 +125,22 @@ public class VelocityBackend extends OnNewRosMessageSource implements Backend{
 			return;
 		}
 		rosMessage = publisher.newMessage();
-		rosMessage.setLinear(data[0]);
-		rosMessage.setAngular(data[1]);
+		
+		linvel.setX(data[0]);
+		linvel.setY(data[1]);
+		linvel.setZ(data[2]);
+		
+		angularvel.setX(data[3]);
+		angularvel.setY(data[4]);
+		angularvel.setY(data[5]);
+		
+		rosMessage.setLinear(linvel); 	
+		rosMessage.setAngular(angularvel);
+		
         publisher.publish(rosMessage);
 	}
 
-	public void setReceivedRosMessage(turtlesim.Velocity mess){
+	public void setReceivedRosMessage(geometry_msgs.Twist mess){
 		this.rosMessage=mess;
 	}
 	
@@ -111,13 +149,13 @@ public class VelocityBackend extends OnNewRosMessageSource implements Backend{
 	 * @param me this class
 	 * @return ROS message listener
 	 */
-	private MessageListener<turtlesim.Velocity> buildML(final VelocityBackend thisone){
+	private MessageListener<geometry_msgs.Twist> buildML(final TwistBackend thisone){
 		
-		MessageListener<turtlesim.Velocity> ml = 
-				new MessageListener<turtlesim.Velocity>() {
+		MessageListener<geometry_msgs.Twist> ml = 
+				new MessageListener<geometry_msgs.Twist>() {
 
 			@Override
-			public void onNewMessage(turtlesim.Velocity f) {
+			public void onNewMessage(geometry_msgs.Twist f) {
 	//			thisone.checkDimensionSizes(f);
 				thisone.setReceivedRosMessage(f);		// save obtained Message
 				thisone.fireOnNewMessage(f);			// inform Nengo about new ROS message
@@ -132,9 +170,17 @@ public class VelocityBackend extends OnNewRosMessageSource implements Backend{
 	@Override
 	public float[] decodeMessage(Message mess) {
 		
-		float[] data = new float[messageLength]; 
-		data[0] = ((turtlesim.Velocity)mess).getLinear();
-		data[1] = ((turtlesim.Velocity)mess).getAngular();
+		float[] data = new float[messageLength];
+		// read linear velocity
+		data[0] = (float) (((geometry_msgs.Twist)mess).getLinear()).getX();
+		data[1] = (float) (((geometry_msgs.Twist)mess).getLinear()).getY();
+		data[2] = (float) (((geometry_msgs.Twist)mess).getLinear()).getZ();
+		
+		// read angular velocity
+		data[3] = (float) (((geometry_msgs.Twist)mess).getAngular()).getX();
+		data[4] = (float) (((geometry_msgs.Twist)mess).getAngular()).getY();
+		data[5] = (float) (((geometry_msgs.Twist)mess).getAngular()).getZ();
+		
 		return data;
 	}
 	

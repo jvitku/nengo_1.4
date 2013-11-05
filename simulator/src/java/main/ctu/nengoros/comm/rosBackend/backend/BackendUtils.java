@@ -1,12 +1,15 @@
 package ctu.nengoros.comm.rosBackend.backend;
 
 import java.util.List;
+
 import org.ros.node.ConnectedNode;
+
 import ctu.nengoros.comm.rosBackend.backend.impl.BooleanBackend;
 import ctu.nengoros.comm.rosBackend.backend.impl.FloatBackend;
 import ctu.nengoros.comm.rosBackend.backend.impl.IntBackend;
 import ctu.nengoros.comm.rosBackend.backend.impl.turtle.ColorBackend;
 import ctu.nengoros.comm.rosBackend.backend.impl.turtle.PoseBackend;
+import ctu.nengoros.comm.rosBackend.backend.impl.turtle.TwistBackend;
 import ctu.nengoros.comm.rosBackend.backend.impl.turtle.VelocityBackend;
 import ctu.nengoros.exceptions.MessageFormatException;
 import ctu.nengoros.exceptions.UnsupportedMessageFormatExc;
@@ -74,6 +77,8 @@ public class BackendUtils {
 		if(type.equalsIgnoreCase(ColorBackend.MYTYPE))
 			return new ColorBackend(topic, type, myRosNode, publish);
 		
+		if(type.equalsIgnoreCase(TwistBackend.MYTYPE))
+			return new TwistBackend(topic, type, myRosNode, publish);
 		
 		throw new MessageFormatException("BackendUtils "+topic, 
 				"Could not find corresponding Backend for this type of message "+type);

@@ -14,9 +14,10 @@ import nef
 from ca.nengo.math.impl import FourierFunction
 from ca.nengo.model.impl import FunctionInput
 from ca.nengo.model import Units
-from nengoros.modules.impl import DefaultNeuralModule as NeuralModule
-from nengoros.comm.nodeFactory import NodeGroup as NodeGroup
-from nengoros.comm.rosutils import RosUtils as RosUtils
+from ctu.nengoros.modules.impl import DefaultNeuralModule as NeuralModule
+from ctu.nengoros.modules.impl import DefaultAsynNeuralModule as AsynNeuralModule
+from ctu.nengoros.comm.nodeFactory import NodeGroup as NodeGroup
+from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
 
 # creates nef network and adds it to nengo (this must be first in the script) 
 net=nef.Network('Random Turtle Control Demo')
@@ -53,10 +54,10 @@ module = NeuralModule('TurtleController', g)
 
 module.createDecoder("turtle1/pose", "pose")                 # origin
 module.createDecoder("turtle1/color_sensor", "color")        # origin
-module.createEncoder("turtle1/command_velocity", "velocity") # termination
+module.createEncoder("turtle1/cmd_vel", "geometry/Twist") # termination
 subsystem=net.add(module)
 
-"""
+
 #Create a white noise input function with parameters: baseFreq, maxFreq (rad/s), RMS, Seed
 input=FunctionInput('Randomized input', [FourierFunction(.5, 10, 6, 12),
     FourierFunction(2, 11, 5, 17)],
@@ -64,20 +65,19 @@ input=FunctionInput('Randomized input', [FourierFunction(.5, 10, 6, 12),
 
 # Add the input node to the network and connect it to the smart enuron
 net.add(input)  
-net.connect(input,many.getTermination('turtle1/command_velocity'))
+net.connect(input,module.getTermination('turtle1/cmd_vel'))
 
 # make neural network and connect it to the smart neuron 
 A=net.make('PositionData',neurons=10,dimensions=5,radius=20)
-net.connect(many.getOrigin('turtle1/pose'),A)
+net.connect(module.getOrigin('turtle1/pose'),A)
 
 # make neural network and connect it to the smart neuron 
 B=net.make('ColorData',neurons=10,dimensions=3,radius=120)  # RGB values observed in range of 100
-net.connect(many.getOrigin('turtle1/color_sensor'),B)
-"""
+net.connect(module.getOrigin('turtle1/color_sensor'),B)
+
 
 # in order to stop all nodes in the group you can either:
 #   -delete the main network from nengo (roscore and graph stay running)
 #   -rerun the script  (all nodes will shutdown and start again)
 #   -close nengo (everything shuts down)
 print "OK, configuration done."
-
