@@ -1,0 +1,11 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="ca.nengo.model.nef.impl.NEFUtilTest" tests="1" failures="0" errors="0" timestamp="1970-01-01T00:00:00" hostname="b.local" time="1.383743479621E9">
+  <properties/>
+  <testcase name="testGetOutput" classname="ca.nengo.model.nef.impl.NEFUtilTest" time="0.093"/>
+  <system-out><![CDATA[INFO  [Test worker:ca.nengo.util.Memory]: Used: 906416632 Total: 1544028160 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 906416632 Total: 1544028160 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 52 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 906416632 Total: 1544028160 Max: 3817865216 (after inverse)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

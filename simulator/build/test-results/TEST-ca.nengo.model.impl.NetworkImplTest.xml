@@ -1,0 +1,78 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="ca.nengo.model.impl.NetworkImplTest" tests="12" failures="0" errors="0" timestamp="1970-01-01T00:00:00" hostname="b.local" time="1.383743408432E9">
+  <properties/>
+  <testcase name="testReset" classname="ca.nengo.model.impl.NetworkImplTest" time="0.327"/>
+  <testcase name="testGetNodes" classname="ca.nengo.model.impl.NetworkImplTest" time="0.001"/>
+  <testcase name="testGetProjections" classname="ca.nengo.model.impl.NetworkImplTest" time="0.001"/>
+  <testcase name="testNodeNameChange" classname="ca.nengo.model.impl.NetworkImplTest" time="0.001"/>
+  <testcase name="testKillNeurons" classname="ca.nengo.model.impl.NetworkImplTest" time="125.163"/>
+  <testcase name="testAddNode" classname="ca.nengo.model.impl.NetworkImplTest" time="0.0"/>
+  <testcase name="testRemoveNode" classname="ca.nengo.model.impl.NetworkImplTest" time="0.004"/>
+  <testcase name="testExposeOrigin" classname="ca.nengo.model.impl.NetworkImplTest" time="0.003"/>
+  <testcase name="testHideOrigin" classname="ca.nengo.model.impl.NetworkImplTest" time="0.004"/>
+  <testcase name="testGetNodeTerminations" classname="ca.nengo.model.impl.NetworkImplTest" time="0.003"/>
+  <testcase name="testGetNodeOrigins" classname="ca.nengo.model.impl.NetworkImplTest" time="0.003"/>
+  <testcase name="testClone" classname="ca.nengo.model.impl.NetworkImplTest" time="0.051"/>
+  <system-out><![CDATA[INFO  [Test worker:ca.nengo.util.Memory]: Used: 66533192 Total: 257425408 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 66533192 Total: 257425408 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 8 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 66533192 Total: 257425408 Max: 3817865216 (after inverse)
+Step 100 0.10000000000000007
+Step 200 0.20000000000000015
+Step 300 0.3000000000000002
+Step 400 0.4000000000000003
+Step 500 0.5000000000000003
+Step 600 0.6000000000000004
+Step 700 0.7000000000000005
+Step 800 0.8000000000000006
+Step 900 0.9000000000000007
+Step 1000 1.0
+Step 100 0.10000000000000007
+Step 200 0.20000000000000015
+Step 300 0.3000000000000002
+Step 400 0.4000000000000003
+Step 500 0.5000000000000003
+Step 600 0.6000000000000004
+Step 700 0.7000000000000005
+Step 800 0.8000000000000006
+Step 900 0.9000000000000007
+Step 1000 1.0
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 69409208 Total: 325058560 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 77543232 Total: 325058560 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 398 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 250408064 Total: 1578631168 Max: 3817865216 (after inverse)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 496969992 Total: 1578631168 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 524373752 Total: 1578631168 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 397 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (after inverse)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 1 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (after inverse)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 8 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (after inverse)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 8 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (after inverse)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 7 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (after inverse)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 9 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (after inverse)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 8 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 269735752 Total: 1564999680 Max: 3817865216 (after inverse)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 296638752 Total: 1564999680 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 296638752 Total: 1564999680 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 53 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 323542544 Total: 1564999680 Max: 3817865216 (after inverse)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

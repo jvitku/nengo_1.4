@@ -1,0 +1,53 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="ca.nengo.model.neuron.impl.ALIFSpikeGeneratorTest" tests="4" failures="0" errors="0" timestamp="1970-01-01T00:00:00" hostname="b.local" time="1.383743479829E9">
+  <properties/>
+  <testcase name="testRun" classname="ca.nengo.model.neuron.impl.ALIFSpikeGeneratorTest" time="0.017"/>
+  <testcase name="testAdaptation" classname="ca.nengo.model.neuron.impl.ALIFSpikeGeneratorTest" time="0.186"/>
+  <testcase name="testGetAdaptedRate" classname="ca.nengo.model.neuron.impl.ALIFSpikeGeneratorTest" time="0.002"/>
+  <testcase name="testGetOnsetRate" classname="ca.nengo.model.neuron.impl.ALIFSpikeGeneratorTest" time="0.0"/>
+  <system-out><![CDATA[0 spikes in simulation, 0.0 expected
+139 spikes in simulation, 134.56285 expected
+333 spikes in simulation, 366.10785 expected
+0 spikes in simulation, 0.0 expected
+138 spikes in simulation, 134.56285 expected
+333 spikes in simulation, 366.10785 expected
+0 spikes in simulation, 0.0 expected
+71 spikes in simulation, 69.62361 expected
+200 spikes in simulation, 201.49629 expected
+0 spikes in simulation, 0.0 expected
+70 spikes in simulation, 69.62361 expected
+200 spikes in simulation, 201.49629 expected
+high: 279.0947 low: 116.15342 slope: 81.47064
+Step 100 0.10000000000000007
+Step 200 0.20000000000000015
+Step 300 0.3000000000000002
+Step 400 0.4000000000000003
+Step 500 0.5000000000000003
+Step 600 0.6000000000000004
+Step 700 0.7000000000000005
+Step 800 0.8000000000000006
+Step 900 0.9000000000000007
+Step 1000 1.0000000000000007
+Step 1100 1.0999999999999897
+Step 1200 1.1999999999999786
+Step 1300 1.2999999999999676
+Step 1400 1.3999999999999566
+Step 1500 1.4999999999999456
+Step 1600 1.5999999999999346
+Step 1700 1.6999999999999236
+Step 1800 1.7999999999999126
+Step 1900 1.8999999999999015
+Step 2000 1.9999999999998905
+Step 2100 2.0999999999998797
+Step 2200 2.1999999999998687
+Step 2300 2.2999999999998577
+Step 2400 2.3999999999998467
+Step 2500 2.4999999999998357
+Step 2600 2.5999999999998247
+Step 2700 2.6999999999998137
+Step 2800 2.7999999999998026
+Step 2900 2.8999999999997916
+Step 3000 2.9999999999997806
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,11 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="ca.nengo.dynamics.impl.ImpulseIntegralTest" tests="5" failures="0" errors="0" timestamp="2013-11-06T13:08:02" hostname="b.local" time="0.015">
+  <properties/>
+  <testcase name="testIntegrate1stOrder" classname="ca.nengo.dynamics.impl.ImpulseIntegralTest" time="0.004"/>
+  <testcase name="testIntegrate2ndOrderRepeated" classname="ca.nengo.dynamics.impl.ImpulseIntegralTest" time="0.001"/>
+  <testcase name="testIntegrate2ndOrderComplex" classname="ca.nengo.dynamics.impl.ImpulseIntegralTest" time="0.001"/>
+  <testcase name="testMIMO" classname="ca.nengo.dynamics.impl.ImpulseIntegralTest" time="0.008"/>
+  <testcase name="testIntegrate2ndOrder" classname="ca.nengo.dynamics.impl.ImpulseIntegralTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,21 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="ca.nengo.math.impl.WeightedCostApproximatorTest" tests="2" failures="0" errors="0" timestamp="1970-01-01T00:00:00" hostname="b.local" time="1.383743282834E9">
+  <properties/>
+  <testcase name="testPseudoInverse" classname="ca.nengo.math.impl.WeightedCostApproximatorTest" time="0.001"/>
+  <testcase name="testFindCoefficients" classname="ca.nengo.math.impl.WeightedCostApproximatorTest" time="0.007"/>
+  <system-out><![CDATA[INFO  [Test worker:ca.nengo.util.Memory]: Used: 57056968 Total: 257425408 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 57056968 Total: 257425408 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 2 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 57056968 Total: 257425408 Max: 3817865216 (after inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 2 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 57056968 Total: 257425408 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 57056968 Total: 257425408 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 3 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 57056968 Total: 257425408 Max: 3817865216 (after inverse)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 58409648 Total: 257425408 Max: 3817865216 (before gamma)
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 58409648 Total: 257425408 Max: 3817865216 (before inverse)
+INFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 3 singular values for pseudo-inverse
+INFO  [Test worker:ca.nengo.util.Memory]: Used: 58409648 Total: 257425408 Max: 3817865216 (after inverse)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

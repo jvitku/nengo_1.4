@@ -1,0 +1,8 @@
+testGetTransforíìINFO  [Test worker:ca.nengo.util.Memory]: Used: 985032536 Total: 1544028160 Max: 3817865216 (before gamma)
+testGetTransforíîINFO  [Test worker:ca.nengo.util.Memory]: Used: 985032536 Total: 1544028160 Max: 3817865216 (before inverse)
+testGetTransforííINFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 8 singular values for pseudo-inverse
+testGetTransforííINFO  [Test worker:ca.nengo.util.Memory]: Used: 985032536 Total: 1544028160 Max: 3817865216 (after inverse)
+testSetTransforííINFO  [Test worker:ca.nengo.util.Memory]: Used: 1009961296 Total: 1544028160 Max: 3817865216 (before gamma)
+testSetTransforíïINFO  [Test worker:ca.nengo.util.Memory]: Used: 1009961296 Total: 1544028160 Max: 3817865216 (before inverse)
+testSetTransforííINFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 8 singular values for pseudo-inverse
+testSetTransforíîINFO  [Test worker:ca.nengo.util.Memory]: Used: 1009961296 Total: 1544028160 Max: 3817865216 (after inverse)
