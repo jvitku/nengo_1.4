@@ -1,0 +1,10 @@
+
+Hello World! I am C++ application from demonodes/native/! Will write to the out_helloworld.txt file! Now is: 2013-11-08.11:46:13
+ running for 1 sec
+ running for 2 sec
+ running for 3 sec
+ running for 4 sec
+ running for 5 sec
+ running for 6 sec
+ running for 7 sec
+ running for 8 sec
