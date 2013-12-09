@@ -38,12 +38,12 @@ public class RosUtils {
 
 	private static boolean inited = false;
 	private static boolean roscoreFound = false;
-	private static boolean rxgraphFound = false;
+	private static boolean rqtFound = false;
 
 	// whether to start available utilities (roscore and rxgraph now..)
 	private static boolean utilsAutorun = true;
 
-	private static RunnableNode rxgraphNode, roscoreNode;
+	private static RunnableNode rqtNode, roscoreNode;
 
 	public RosUtils(){}
 	
@@ -69,8 +69,8 @@ public class RosUtils {
 
 		Mess.wait(1);	// just to give roscore time to start..
 
-		if(!rxgraphRunning() && rxgraphFound)
-			rxgraphStart();
+		if(!rqtRunning() && rqtFound)
+			rqtStart();
 	}
 
 	public synchronized static void stopAllNodes(){
@@ -111,9 +111,9 @@ public class RosUtils {
 		// TODO this should not be necessary..?
 		RosUtils.nodesShouldStop = true;	// notify everything about stopping..
 
-		if(rxgraphNode != null && rxgraphNode.isRunning()){
-			System.out.println(me+"Stopping the rxgraph now");
-			rxgraphNode.stop();
+		if(rqtNode != null && rqtNode.isRunning()){
+			System.out.println(me+"Stopping the rqt now");
+			rqtNode.stop();
 		}
 		
 		System.out.println(me+"Stopping all "+getNumOfGroups()+" group(s) of ROS nodes");
@@ -154,8 +154,8 @@ public class RosUtils {
 		else{
 			Jroscore.start();
 		}
-		if(rxgraphFound)
-			rxgraphStart();
+		if(rqtFound)
+			rqtStart();
 	}
 
 	private static void coreStop(){
@@ -170,25 +170,25 @@ public class RosUtils {
 		}
 	}
 
-	private static void rxgraphStart(){
+	private static void rqtStart(){
 		checkInit();
 
-		if(rxgraphRunning())
+		if(rqtRunning())
 			return;
 
-		if(!rxgraphFound){
-			System.err.println(me+"rxgraph was not found on this system..");
+		if(!rqtFound){
+			System.err.println(me+"rqt was not found on this system..");
 			return;
 		}
-		rxgraphNode = new RunnableNode(new String[]{"rxgraph"}, "rxgraph");
-		rxgraphNode.start();
+		rqtNode = new RunnableNode(new String[]{"rqt"}, "rqt");
+		rqtNode.start();
 		//rxgraphNode.startAutoKiller();
 	}
 
-	public static boolean rxgraphRunning(){
-		if(rxgraphNode==null)
+	public static boolean rqtRunning(){
+		if(rqtNode==null)
 			return false;
-		return rxgraphNode.isRunning();
+		return rqtNode.isRunning();
 	}
 
 	public static boolean coreRunning(){
@@ -205,7 +205,7 @@ public class RosUtils {
 			return;
 
 		roscoreFound = ProcessLauncher.appExists("roscore");
-		rxgraphFound = ProcessLauncher.appExists("rxgraph");
+		rqtFound = ProcessLauncher.appExists("rqt");
 		
 		inited = true;
 	}
