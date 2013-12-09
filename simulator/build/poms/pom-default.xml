@@ -18,5 +18,11 @@
       <version>4.10</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>ctu.nengoros</groupId>
+      <artifactId>jrosparam</artifactId>
+      <version>0.0.2-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 </project>

@@ -34,6 +34,9 @@ dependencies {
     // newer junit than is in the lib directory
     compile 'junit:junit:4.10'
     testCompile 'junit:junit:4.10'
+    
+    compile 'ctu.nengoros:jrosparam:0.0.2-SNAPSHOT'
+    testCompile 'ctu.nengoros:jrosparam:0.0.2-SNAPSHOT'
 }
 
 // prints out dependencies... 
