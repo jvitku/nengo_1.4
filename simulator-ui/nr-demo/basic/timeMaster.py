@@ -58,4 +58,4 @@ print 'Here, the Nengo simulator is a TimeMaster, publishes time steps (endTime 
 print 'to the topic /clock.'
 print 'ParameterServer node in the Nengo set the parameter /use_sim_sime to true,'
 print 'so all launched ROS nodes will use simulated time provided by Nengo.'
-print 'This is use by default.'
+print 'This is used by default.'

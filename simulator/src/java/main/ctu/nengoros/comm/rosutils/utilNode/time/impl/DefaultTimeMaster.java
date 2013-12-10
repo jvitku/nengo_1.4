@@ -1,5 +1,6 @@
 package ctu.nengoros.comm.rosutils.utilNode.time.impl;
 
+import org.ros.concurrent.CancellableLoop;
 import org.ros.message.Time;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
@@ -22,16 +23,18 @@ import rosgraph_msgs.Clock;
  *
  */
 public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
-	
+
 	public static final String name = "NengoRosTimeMaster";
 	private final String me ="["+name+"] ";
 	Log l;
-	
+	private boolean simStarted = false;
+	private final int sleepTime = 500;
+
 	protected final java.lang.String cl = "/clock";
 
 	Publisher<rosgraph_msgs.Clock> pub;
 	int poc;
-	
+
 	/**
 	 * Default name of the ROS node
 	 */
@@ -50,8 +53,33 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 
 		l.info(me+"Node started, will publish Nengo clock!");
 
+		connectedNode.executeCancellableLoop(new CancellableLoop() {
+			@Override
+			protected void setup() { 
+			}
+
+			@Override
+			protected void loop() throws InterruptedException {
+
+				if(simStarted)
+					return;
+				
+				publishZero(connectedNode);
+
+				Thread.sleep(sleepTime);
+			}
+		});
+	}
+
+	/**
+	 * Scenario: Nengo starts, python script starts this TimeMaster, 
+	 * python script adds ROS nodes, which will not initialize (@see ctu.nengoros.time.AbstractTimeNode ), 
+	 * si before the simulation starts, this will periodically publish time = 0
+	 * @param cn ConnectedNode
+	 */
+	private void publishZero(ConnectedNode cn){
 		Clock mess = pub.newMessage();
-		mess.setClock(new Time(0));  // before starting the simulation, the time=0 should be published
+		mess.setClock(new Time(0)); 
 		pub.publish(mess);
 	}
 
@@ -60,12 +88,12 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 	 */
 	@Override
 	public float[] handleTime(float startTime, float endTime) {
-		
+
 		if(pub==null){
 			System.err.println(me+" publisher still not initialized, my ROS node launched already??");
 			return new float[]{startTime, endTime};
 		}
-		
+
 		Clock mess = pub.newMessage();
 		mess.setClock(new Time(endTime));
 		pub.publish(mess);
