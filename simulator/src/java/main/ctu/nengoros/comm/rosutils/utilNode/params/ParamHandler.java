@@ -1,5 +1,9 @@
 package ctu.nengoros.comm.rosutils.utilNode.params;
 
+import org.ros.concurrent.CancellableLoop;
+import org.ros.namespace.GraphName;
+import org.ros.node.ConnectedNode;
+
 import ctu.nengoros.rosparam.Rosparam;
 
 /**
@@ -15,6 +19,30 @@ import ctu.nengoros.rosparam.Rosparam;
  */
 public class ParamHandler extends Rosparam{
 	
+	public static final String name = "NengoParameterHandler";
+	private final String me = "["+name+"] ";
 	
+	@Override
+	public GraphName getDefaultNodeName() { return GraphName.of(name); }
+	
+	@Override
+	public void onStart(ConnectedNode connectedNode){
+		super.onStart(connectedNode);
+		l = connectedNode.getLog();
+		
+		// ROS uses these cancellable loops
+		connectedNode.executeCancellableLoop(new CancellableLoop() {
+
+			@Override
+			protected void setup() {
+				l.info(me+"launched! Waiting for commands..");
+			}
+
+			@Override
+			protected void loop() throws InterruptedException {
+				Thread.sleep(sleeptime);
+			}
+		});
+	}
 
 }

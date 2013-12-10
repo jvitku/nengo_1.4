@@ -12,6 +12,7 @@ import ctu.nengoros.comm.rosutils.Jroscore;
 import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.comm.rosutils.ProcessLauncher;
 import ctu.nengoros.comm.rosutils.RosUtils;
+import ctu.nengoros.comm.rosutils.utilNode.params.ParamHandler;
 import ctu.nengoros.comm.rosutils.utilNode.time.RosTimeUtil;
 import ctu.nengoros.comm.rosutils.utilNode.time.RosTimeUtilFactory;
 
@@ -58,7 +59,15 @@ public class RosUtils {
 	// this handles time synchronization between ROS and Nengo
 	private static RosTimeUtil timeUnit;
 
+	// enables Nengo to set parameters of ROS network
+	// these parameters can modify how the nodes are launched, e.g. use_sim_time:=true
+	private static ParamHandler paramHandler;
 	
+	/**
+	 * Start core and other utilities automatically?
+	 *  
+	 * @param autorun
+	 */
 	public static void setAutorun(boolean autorun){
 		utilsAutorun = autorun;
 	}
@@ -68,8 +77,10 @@ public class RosUtils {
 	}
 
 	/**
-	 * If autorun is true, as much utils as available
-	 * will be launched here. 
+	 * By default, if any ROS node is launched, this is called and tries
+	 * to launch ROS Core, RQT, TimeMaster and ParamServer.
+	 *
+	 * THese should be launched only once and terminated when the Nengo app exits.
 	 */
 	public static void utilsShallStart(){
 		if(!utilsAutorun)
@@ -84,7 +95,10 @@ public class RosUtils {
 		if(!rqtRunning() && rqtFound)
 			rqtStart();
 
-		// TODO start the parameter server here
+		// launch the parameter handler?
+		if(paramHandler == null){
+			paramHandler = RosTimeUtilFactory.startParamHandler(utilNodes);
+		}
 		
 		// if timeUnit is running and user selected some other one, restart
 		if(timeUnit!=null){
@@ -100,24 +114,39 @@ public class RosUtils {
 		
 	}
 	
+	/**
+	 * Select what to do with time: publish, ignore, receive.
+	 * 
+	 * @return unit which does this @see: see: ca.nengo.util.impl.NodeThreadPool.step()
+	 */
 	private static RosTimeUtil getTimeUnit(){
+		
 		RosTimeUtil tu;
 		
 		switch(selectedTimeUnit){
 		case 1:
 			tu = RosTimeUtilFactory.getTimeIgnoringUtil();
+			// do not mention simulation time here, nodes will use WallTime
 			break;
 		case 2:
 			tu = RosTimeUtilFactory.startDefaultTimeSlave(utilNodes);
 			// TODO
 			System.err.println(me+"Note that use of timeSlave mode is experimental so far!");
+			// launch all ROS nodes to listen the time by default, note that you have to 
+			// launch time provider with this set to false!
+			paramHandler.set(RosTimeUtilFactory.time, true);
 			break;
 		default:
 			tu = RosTimeUtilFactory.startDefaultTimeMaster(utilNodes);
+			// set all other launched ROS nodes to listen clock provided by Nengo 
+			paramHandler.set(RosTimeUtilFactory.time, true);
 		}
 		return tu;
 	}
 	
+	/**
+	 * Stop every ROSjava node which is launhced (timeHandler and ParamHandler).
+	 */
 	private static void stopAllUtilNodes(){
 		JavaNodeContainer tmp = null;
 		
@@ -133,6 +162,7 @@ public class RosUtils {
 	
 	/**
 	 * sets the NengoROS as a time master (selected by default).
+	 * Use these in python scripts.
 	 */
 	public static void setTimeMaster(){ selectedTimeUnit=0; }
 	public static void setTimeSlave(){  selectedTimeUnit=2; } 
@@ -172,7 +202,9 @@ public class RosUtils {
 	
 	public synchronized static int getNumOfGroups(){ return groupList.size(); }
 	
-	
+	/**
+	 * When the Nengo application stops, do this:
+	 */
 	public synchronized static void utilsShallStop(){
 
 		// TODO this should not be necessary..?
@@ -186,11 +218,11 @@ public class RosUtils {
 		System.out.println(me+"Stopping all "+getNumOfGroups()+" group(s) of ROS nodes");
 		RosUtils.stopAllNodes();			// manually stop all known node containers (all)	
 		
-		Mess.wait(timeBeforeCoreShutdown);						// give'em time..
+		Mess.wait(timeBeforeCoreShutdown);	// give'em time..
 		
-		NodeFactory.nme.shutdown();	// TODO: do this automatically, and this does not work?
+		NodeFactory.nme.shutdown();			// TODO: do this automatically, and this does not work?
 
-		stopAllUtilNodes();				// stop the parameter server and time handler
+		stopAllUtilNodes();					// stop the parameter server and time handler
 		
 		if(coreRunning()){
 			System.out.println(me+"Stopping the core now");
