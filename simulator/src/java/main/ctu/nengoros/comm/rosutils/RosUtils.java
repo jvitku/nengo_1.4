@@ -4,20 +4,23 @@ import java.util.ArrayList;
 
 import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
+import ctu.nengoros.comm.nodeFactory.javanode.JavaNodeContainer;
 import ctu.nengoros.comm.nodeFactory.nativenode.impl.RunnableNode;
 import ctu.nengoros.comm.rosutils.Jroscore;
 import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.comm.rosutils.ProcessLauncher;
 import ctu.nengoros.comm.rosutils.RosUtils;
+import ctu.nengoros.comm.rosutils.utilNode.time.RosTimeUtil;
+import ctu.nengoros.comm.rosutils.utilNode.time.RosTimeUtilFactory;
 
 /**
  * Here are utilities for simple launching and stopping (some) roscore 
- * and rxgraph, if available. 
+ * and rqt, if available. 
  * 
  * -UtilsAutorun says whether to start anything from this
  * -these situations can occur:
- * 		-rxgraph and c++ roscore found, so they will be used
- * 		-rxgprah and c++ roscore found, but jroscore is preffered: running jroscore+rxgraph
+ * 		-rqt and c++ roscore found, so they will be used
+ * 		-rqt and c++ roscore found, but jroscore is preffered: running jroscore+rqt
  * 		-ROS installation not foud, running just jroscore
  * 
  * @author Jaroslav Vitku
@@ -45,7 +48,13 @@ public class RosUtils {
 
 	private static RunnableNode rqtNode, roscoreNode;
 
-	public RosUtils(){}
+	// list of utility nodes which are shutdown after the app exits
+	private static ArrayList<JavaNodeContainer> utilNodes = new ArrayList<JavaNodeContainer>();
+	// choose the time handling: 0=TimeMaster, 1=IgnoreTime, 2=TimeSlave
+	private static int selectedTimeUnit = 0;
+	// this handles time synchronization between ROS and Nengo
+	private static RosTimeUtil timeUnit;	
+
 	
 	public static void setAutorun(boolean autorun){
 		utilsAutorun = autorun;
@@ -71,7 +80,38 @@ public class RosUtils {
 
 		if(!rqtRunning() && rqtFound)
 			rqtStart();
+
+		// TODO start the parameter server here
+		
+		switch(selectedTimeUnit){
+		case 1:
+			timeUnit = RosTimeUtilFactory.getTimeIgnoringUtil();
+			break;
+		case 2:
+			timeUnit = RosTimeUtilFactory.startDefaultTimeSlave(utilNodes);
+			break;
+		default:
+			timeUnit = RosTimeUtilFactory.startDefaultTimeMaster(utilNodes);
+		}
+		
 	}
+	
+	private static void stopAllUtilNodes(){
+		JavaNodeContainer tmp = null;
+		
+		while(!utilNodes.isEmpty()){
+			tmp = utilNodes.get(0);
+			System.out.println(me+"stopping UtilNode called: "+tmp.getName());
+			tmp.stop();
+		}
+	}
+	
+	/**
+	 * sets the NengoROS as a time master (selected by default).
+	 */
+	public static void setTimeMaster(){ selectedTimeUnit=0; }
+	public static void setTimeSlave(){  selectedTimeUnit=2; }
+	public static void setTimeIgnore(){ selectedTimeUnit=1; }
 
 	public synchronized static void stopAllNodes(){
 		// this is necessary, NodeGroup.stopGroup() removes itself from the list
@@ -123,6 +163,8 @@ public class RosUtils {
 		
 		NodeFactory.nme.shutdown();	// TODO: do this automatically, and this does not work?
 
+		stopAllUtilNodes();				// stop the parameter server and time handler
+		
 		if(coreRunning()){
 			System.out.println(me+"Stopping the core now");
 			coreStop();
@@ -198,7 +240,7 @@ public class RosUtils {
 	}
 
 	/**
-	 * try to locate C++ roscore and rxgraph
+	 * try to locate C++ roscore and rqt
 	 */
 	private static void checkInit(){
 		if(inited)
@@ -208,5 +250,12 @@ public class RosUtils {
 		rqtFound = ProcessLauncher.appExists("rqt");
 		
 		inited = true;
+	}
+	
+	public RosTimeUtil getTimeUtil(){
+		if(timeUnit==null){
+			System.err.println(me+"error! TimeUtil not initialized yet!");
+		}
+		return timeUnit; 
 	}
 }

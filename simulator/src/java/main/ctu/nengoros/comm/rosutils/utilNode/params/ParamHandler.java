@@ -7,7 +7,7 @@ import ctu.nengoros.rosparam.Rosparam;
  * 
  * This could be implemented as one ROS node, but due to problems with timeProvider
  * ( @see: ctu.nengoros.time.AbstractTimeNode , @see http://code.google.com/p/rosjava/issues/detail?id=148 )
- * both, Rosparam and TimeHandler will be implemented as separate nodes, where TimeHandler 
+ * both, Rosparam and RosTimeUtilFactory will be implemented as separate nodes, where RosTimeUtilFactory 
  * may not bee launched at all.  
  * 
  * @author Jaroslav Vitku
