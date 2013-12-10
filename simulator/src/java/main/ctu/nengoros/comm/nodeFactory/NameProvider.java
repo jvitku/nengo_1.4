@@ -3,6 +3,8 @@ package ctu.nengoros.comm.nodeFactory;
 import java.util.ArrayList;
 
 import ctu.nengoros.comm.rosutils.Mess;
+import ctu.nengoros.comm.rosutils.utilNode.time.impl.DefaultTimeMaster;
+import ctu.nengoros.comm.rosutils.utilNode.time.impl.DefaultTimeSlave;
 
 /**
  * Stores names (each name includes namespace too) of
@@ -15,6 +17,8 @@ import ctu.nengoros.comm.rosutils.Mess;
  */
 public class NameProvider{
 
+	private final String[] ignoredNames = new String[]{DefaultTimeMaster.name, DefaultTimeSlave.name};
+	
 	private ArrayList<String> nameList;
 	// note: this separator "_" does not work at all, look at screens/nameconflict.png
 	public final String separator = "__";
@@ -112,6 +116,10 @@ public class NameProvider{
 	}
 
 	private void removeName(String n){
+		
+		if(this.isIgnored(n))
+			return;
+		
 		if(!nameList.contains(n.toLowerCase())){
 			System.err.println("NameProvider: you want to remove " +
 					"this node: "+n+ " but it is not in the list! " +
@@ -122,6 +130,14 @@ public class NameProvider{
 		}
 	}
 
+	private boolean isIgnored(String n){
+		for(int i=0; i<ignoredNames.length; i++){
+			if(ignoredNames[i].equalsIgnoreCase(n))
+				return true;
+		}
+		return false;
+	}
+	
 	private String[] saveNamespaceModification(String group, String[] names, 
 			boolean modifyNames){
 		String tmp;

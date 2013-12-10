@@ -25,7 +25,6 @@ import rosgraph_msgs.Clock;
 public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 	
 	public static final String name = "NengoRosTimeMaster";
-	
 	private final String me ="["+name+"] ";
 	Log l;
 	
@@ -33,7 +32,8 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 	private final int sleeptime = 1000;
 
 	Publisher<rosgraph_msgs.Clock> pub;
-
+	int poc;
+	
 	/**
 	 * Default name of the ROS node
 	 */
@@ -51,17 +51,27 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 
 		System.out.println(me+"Node started, will publish Nengo clock!");
 
+		Clock mess = pub.newMessage();
+		mess.setClock(new Time(0));  // before starting the simulation, the time=0 should be published
+		pub.publish(mess);
+		
 		// ROS uses these cancellable loops
 		connectedNode.executeCancellableLoop(new CancellableLoop() {
 			
 			@Override
 			protected void setup() { 
+				poc = 0;
 			}
 			
 			@Override
 			protected void loop() throws InterruptedException {
+				
+				Clock mess = pub.newMessage();
+				mess.setClock(new Time(0));  // before starting the simulation, the time=0 should be published
+				pub.publish(mess);
+				
 				Thread.sleep(sleeptime);
-				System.out.println(me+"hi");
+				System.out.println(me+"hi "+poc++);
 			}
 		});
 	}

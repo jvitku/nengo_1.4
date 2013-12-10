@@ -2,6 +2,8 @@ package ctu.nengoros.comm.rosutils;
 
 import java.util.ArrayList;
 
+import org.ros.node.NodeMain;
+
 import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.nodeFactory.javanode.JavaNodeContainer;
@@ -51,9 +53,10 @@ public class RosUtils {
 	// list of utility nodes which are shutdown after the app exits
 	private static ArrayList<JavaNodeContainer> utilNodes = new ArrayList<JavaNodeContainer>();
 	// choose the time handling: 0=TimeMaster, 1=IgnoreTime, 2=TimeSlave
+	private static int previousTimeUnit = 0;
 	private static int selectedTimeUnit = 0;
 	// this handles time synchronization between ROS and Nengo
-	private static RosTimeUtil timeUnit;	
+	private static RosTimeUtil timeUnit;
 
 	
 	public static void setAutorun(boolean autorun){
@@ -72,7 +75,9 @@ public class RosUtils {
 		if(!utilsAutorun)
 			return;
 		checkInit();
-
+		
+		System.out.println("staaaaaaaaaaaaaaaaart !!!!!!!!!");
+		
 		if(!coreRunning())
 			coreStart();
 
@@ -83,27 +88,47 @@ public class RosUtils {
 
 		// TODO start the parameter server here
 		
-		switch(selectedTimeUnit){
-		case 1:
-			timeUnit = RosTimeUtilFactory.getTimeIgnoringUtil();
-			break;
-		case 2:
-			timeUnit = RosTimeUtilFactory.startDefaultTimeSlave(utilNodes);
-			break;
-		default:
-			timeUnit = RosTimeUtilFactory.startDefaultTimeMaster(utilNodes);
+		// if timeUnit is running and user selected some other one, restart
+		if(timeUnit!=null){
+			if(previousTimeUnit != selectedTimeUnit){
+				RosTimeUtilFactory.nme.shutdownNodeMain((NodeMain)timeUnit);
+				timeUnit = getTimeUnit();
+				previousTimeUnit = selectedTimeUnit;
+			}
+		}else{
+			timeUnit = getTimeUnit();
+			previousTimeUnit = selectedTimeUnit;
 		}
 		
+	}
+	
+	private static RosTimeUtil getTimeUnit(){
+		RosTimeUtil tu;
+		
+		switch(selectedTimeUnit){
+		case 1:
+			tu = RosTimeUtilFactory.getTimeIgnoringUtil();
+			break;
+		case 2:
+			tu = RosTimeUtilFactory.startDefaultTimeSlave(utilNodes);
+			break;
+		default:
+			tu = RosTimeUtilFactory.startDefaultTimeMaster(utilNodes);
+		}
+		return tu;
 	}
 	
 	private static void stopAllUtilNodes(){
 		JavaNodeContainer tmp = null;
 		
 		while(!utilNodes.isEmpty()){
-			tmp = utilNodes.get(0);
+			tmp = utilNodes.remove(0);
 			System.out.println(me+"stopping UtilNode called: "+tmp.getName());
 			tmp.stop();
 		}
+		
+		System.out.println(me+"Shutting down NodeMainExecutor for UtilNodes");
+		RosTimeUtilFactory.stopNME();
 	}
 	
 	/**
@@ -114,6 +139,7 @@ public class RosUtils {
 	public static void setTimeIgnore(){ selectedTimeUnit=1; }
 
 	public synchronized static void stopAllNodes(){
+		
 		// this is necessary, NodeGroup.stopGroup() removes itself from the list
 		NodeGroup[] tmp = groupList.toArray(new NodeGroup[groupList.size()]);
 		
@@ -148,6 +174,7 @@ public class RosUtils {
 	
 	
 	public synchronized static void utilsShallStop(){
+
 		// TODO this should not be necessary..?
 		RosUtils.nodesShouldStop = true;	// notify everything about stopping..
 
