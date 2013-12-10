@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.javanode.JavaNodeContainer;
 import ctu.nengoros.comm.nodeFactory.javanode.JavaNodeLauncher;
+import ctu.nengoros.comm.rosutils.utilNode.time.impl.DefaultTimeMaster;
+import ctu.nengoros.comm.rosutils.utilNode.time.impl.DefaultTimeSlave;
 import ctu.nengoros.comm.rosutils.utilNode.time.impl.IgnoreTime;
 
 /**
@@ -31,7 +33,7 @@ public class RosTimeUtilFactory {
 	 */
 	public static RosTimeUtil startDefaultTimeMaster(ArrayList<JavaNodeContainer> utilNodes){
 		
-		JavaNodeContainer jnc = JavaNodeLauncher.launchNode(new String[]{defaultTimeMaster,noSimTime},"NengoRosTimeMaster",NodeFactory.nme);
+		JavaNodeContainer jnc = JavaNodeLauncher.launchNode(new String[]{defaultTimeMaster,noSimTime},DefaultTimeMaster.name,NodeFactory.nme);
 		utilNodes.add(jnc);
 		jnc.start();
 		
@@ -44,7 +46,7 @@ public class RosTimeUtilFactory {
 	 * @return launched node
 	 */
 	public static RosTimeUtil startDefaultTimeSlave(ArrayList<JavaNodeContainer> utilNodes){
-		JavaNodeContainer jnc = JavaNodeLauncher.launchNode(new String[]{defaultTimeSlave, simTime},"NengoRosTimeSlave",NodeFactory.nme);
+		JavaNodeContainer jnc = JavaNodeLauncher.launchNode(new String[]{defaultTimeSlave, simTime},DefaultTimeSlave.name,NodeFactory.nme);
 		utilNodes.add(jnc);
 		jnc.start();
 		

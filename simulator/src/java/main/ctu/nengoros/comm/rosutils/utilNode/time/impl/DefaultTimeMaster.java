@@ -24,7 +24,9 @@ import rosgraph_msgs.Clock;
  */
 public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 	
-	private final String me ="[DefaultTImeMaster] ";
+	public static final String name = "NengoRosTimeMaster";
+	
+	private final String me ="["+name+"] ";
 	Log l;
 	
 	protected final java.lang.String cl = "Clock";
@@ -36,7 +38,7 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 	 * Default name of the ROS node
 	 */
 	@Override
-	public GraphName getDefaultNodeName() { return GraphName.of("Pub"); }
+	public GraphName getDefaultNodeName() { return GraphName.of(name); }
 
 	/**
 	 * Method called after launching the node. 
