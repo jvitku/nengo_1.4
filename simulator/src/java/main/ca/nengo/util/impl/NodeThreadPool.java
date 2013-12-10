@@ -249,11 +249,12 @@ public class NodeThreadPool {
 		
 		try
 		{
+			///my
 			// time: publish to/read from the ROS network  
 			float[] result = RosUtils.getTimeUtil().handleTime(startTime, endTime);
 			startTime = result[0];
 			endTime = result[1];
-			System.out.println("simulating from: "+startTime+" to: "+endTime);
+			//System.out.println("simulating from: "+startTime+" to: "+endTime);
 			
 			int oldPriority = Thread.currentThread().getPriority();
 			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);

@@ -10,6 +10,15 @@ import org.ros.node.topic.Subscriber;
 
 import ctu.nengoros.comm.rosutils.utilNode.time.RosTimeUtil;
 
+/**
+ * Here, the Nengo simulator waits for new tick from external clock, reads its value and passes this
+ * to the simulation step. 
+ * 
+ * TODO: do this better, now it seems that simulator does not use the time received correctly.
+ * 
+ * @author Jaroslav Vitku
+ *
+ */
 public class DefaultTimeSlave extends AbstractNodeMain implements RosTimeUtil{
 
 	public static int waitTime = 10;
@@ -71,10 +80,10 @@ public class DefaultTimeSlave extends AbstractNodeMain implements RosTimeUtil{
 		// wait until some new tick is not received
 		while(lastRead == lastReceived){
 			try {
-				/*
-				if(poc==0 || poc++%div==0)
-					System.out.println("waiting for new clock tick.. "+poc);
-					*/
+				
+				if(poc*waitTime%div==0)
+					System.out.println(me+"Waiting for clock tick from an external TimeProvider.."+(poc++));
+				
 				Thread.sleep(waitTime);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

@@ -109,6 +109,8 @@ public class RosUtils {
 			break;
 		case 2:
 			tu = RosTimeUtilFactory.startDefaultTimeSlave(utilNodes);
+			// TODO
+			System.err.println(me+"Note that use of timeSlave mode is experimental so far!");
 			break;
 		default:
 			tu = RosTimeUtilFactory.startDefaultTimeMaster(utilNodes);
@@ -133,7 +135,7 @@ public class RosUtils {
 	 * sets the NengoROS as a time master (selected by default).
 	 */
 	public static void setTimeMaster(){ selectedTimeUnit=0; }
-	public static void setTimeSlave(){  selectedTimeUnit=2; }
+	public static void setTimeSlave(){  selectedTimeUnit=2; } 
 	public static void setTimeIgnore(){ selectedTimeUnit=1; }
 
 	public synchronized static void stopAllNodes(){
