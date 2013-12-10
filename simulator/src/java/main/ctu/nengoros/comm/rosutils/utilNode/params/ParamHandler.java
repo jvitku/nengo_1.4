@@ -29,7 +29,9 @@ public class ParamHandler extends Rosparam{
 	public void onStart(ConnectedNode connectedNode){
 		super.onStart(connectedNode);
 		l = connectedNode.getLog();
+		l.info(me+"launched! Waiting for commands..");
 		
+		/*
 		// ROS uses these cancellable loops
 		connectedNode.executeCancellableLoop(new CancellableLoop() {
 
@@ -42,7 +44,7 @@ public class ParamHandler extends Rosparam{
 			protected void loop() throws InterruptedException {
 				Thread.sleep(sleeptime);
 			}
-		});
+		});*/
 	}
 
 }

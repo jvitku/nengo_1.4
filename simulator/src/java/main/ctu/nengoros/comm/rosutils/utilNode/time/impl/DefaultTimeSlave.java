@@ -54,8 +54,8 @@ public class DefaultTimeSlave extends AbstractNodeMain implements RosTimeUtil{
 			}
 		});
 
-		// just sleep and use the listener (above)
-		this.monitorTime(connectedNode);
+		// not necessary
+		// this.monitorTime(connectedNode);
 	}
 
 	private void monitorTime(final ConnectedNode connectedNode){

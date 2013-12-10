@@ -54,8 +54,8 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 		Clock mess = pub.newMessage();
 		mess.setClock(new Time(0));  // before starting the simulation, the time=0 should be published
 		pub.publish(mess);
-		
-		// ROS uses these cancellable loops
+		/*	
+		// this is not necessary here 
 		connectedNode.executeCancellableLoop(new CancellableLoop() {
 			
 			@Override
@@ -66,14 +66,9 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 			@Override
 			protected void loop() throws InterruptedException {
 				
-				Clock mess = pub.newMessage();
-				mess.setClock(new Time(0));  // before starting the simulation, the time=0 should be published
-				pub.publish(mess);
-				
 				Thread.sleep(sleeptime);
-				System.out.println(me+"hi "+poc++);
 			}
-		});
+		});*/
 	}
 
 	/**
