@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import ctu.nengoros.comm.rosutils.RosUtils;
 import ctu.nengoros.util.sync.impl.SyncedUnit;
 import ca.nengo.model.Network;
 import ca.nengo.model.Node;
@@ -248,6 +249,12 @@ public class NodeThreadPool {
 		
 		try
 		{
+			// time: publish to/read from the ROS network  
+			float[] result = RosUtils.getTimeUtil().handleTime(startTime, endTime);
+			startTime = result[0];
+			endTime = result[1];
+			System.out.println("simulating from: "+startTime+" to: "+endTime);
+			
 			int oldPriority = Thread.currentThread().getPriority();
 			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 

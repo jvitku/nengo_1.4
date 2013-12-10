@@ -76,8 +76,6 @@ public class RosUtils {
 			return;
 		checkInit();
 		
-		System.out.println("staaaaaaaaaaaaaaaaart !!!!!!!!!");
-		
 		if(!coreRunning())
 			coreStart();
 
@@ -279,7 +277,7 @@ public class RosUtils {
 		inited = true;
 	}
 	
-	public RosTimeUtil getTimeUtil(){
+	public static RosTimeUtil getTimeUtil(){
 		if(timeUnit==null){
 			System.err.println(me+"error! TimeUtil not initialized yet!");
 		}

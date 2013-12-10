@@ -28,7 +28,7 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 	private final String me ="["+name+"] ";
 	Log l;
 	
-	protected final java.lang.String cl = "Clock";
+	protected final java.lang.String cl = "clock";
 	private final int sleeptime = 1000;
 
 	Publisher<rosgraph_msgs.Clock> pub;
@@ -77,25 +77,24 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 	}
 
 	/**
-	 * Publish actual time across the ROS network.
+	 * Publish actual time (endTime) across the ROS network.
 	 */
 	@Override
-	public float[] handleTime(float startTime, float stopTime) {
+	public float[] handleTime(float startTime, float endTime) {
 		
 		if(pub==null){
 			System.err.println(me+" publisher still not initialized, my ROS node launched already??");
-			return new float[]{startTime, stopTime};
+			return new float[]{startTime, endTime};
 		}
 		
 		Clock mess = pub.newMessage();
-		mess.setClock(new Time(stopTime)); // TODO check this
+		mess.setClock(new Time(endTime));
 		pub.publish(mess);
-		//mess.setClock(tt);
 
-		System.out.println(me+"publishind this time value: "+mess.getClock().toString());
-		//tt=tt.add(dd);				// add duration
-		
-		return new float[]{startTime, stopTime};
+		float end = (float)(mess.getClock().secs+mess.getClock().nsecs/1000000000.0);
+		System.out.println(me+"publishind this time value: "+end+" where nengo gave me this endTime: "+endTime);
+
+		return new float[]{startTime, endTime};
 	}
 
 }

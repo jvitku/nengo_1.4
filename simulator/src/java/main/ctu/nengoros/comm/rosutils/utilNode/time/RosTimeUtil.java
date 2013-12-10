@@ -25,9 +25,9 @@ public interface RosTimeUtil {
 	 * -time slave: reads the Clock value 
 	 * 
 	 * @param startTime startTime of the Nengo simulation step 
-	 * @param stopTime stopTime of the Nengo simulation step
+	 * @param endTime stopTime of the Nengo simulation step
 	 * @return new float[startTime,stopTime], potentially changed according to external time master
 	 */
-	float[] handleTime(float startTime, float stopTime);
+	float[] handleTime(float startTime, float endTime);
 	
 }

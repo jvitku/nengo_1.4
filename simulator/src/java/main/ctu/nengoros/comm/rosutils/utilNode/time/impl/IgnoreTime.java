@@ -11,8 +11,8 @@ import ctu.nengoros.comm.rosutils.utilNode.time.RosTimeUtil;
 public class IgnoreTime implements RosTimeUtil{
 
 	@Override
-	public float[] handleTime(float startTime, float stopTime) {
-		return new float[]{startTime, stopTime};
+	public float[] handleTime(float startTime, float endTime) {
+		return new float[]{startTime, endTime};
 	}
 	
 }

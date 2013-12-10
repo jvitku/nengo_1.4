@@ -23,6 +23,7 @@ net=nef.Network('Demo of simple Neural modules which find min and max in receive
 net.add_to_nengo()  # here: delete old (toplevel) network and replace it with the newly CREATED one
 
 ################# setup the ROS utils (optional) 
+RosUtils.setTimeSlave()
 #RosUtils.setAutorun(False)     # Do we want to autorun roscore and rxgraph? (tru by default)
 #RosUtils.prefferJroscore(True)  # preffer jroscore before the roscore? 
 
