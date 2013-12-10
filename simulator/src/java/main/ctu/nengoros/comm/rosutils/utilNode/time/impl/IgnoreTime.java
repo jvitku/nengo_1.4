@@ -14,5 +14,8 @@ public class IgnoreTime implements RosTimeUtil{
 	public float[] handleTime(float startTime, float endTime) {
 		return new float[]{startTime, endTime};
 	}
+
+	@Override
+	public void simulationStopped() { }
 	
 }

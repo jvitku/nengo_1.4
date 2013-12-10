@@ -287,7 +287,7 @@ public class NodeThreadPool {
 				if(allready)
 					break;
 				if(sleeptime*poc++ > maxwait){
-					System.out.println(me+"giving up waiting for nodes!");
+					System.out.println(me+"giving up waiting for node(s)! Next step..");
 					break;
 				}
 				Thread.sleep(sleeptime);

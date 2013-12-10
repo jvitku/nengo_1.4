@@ -81,4 +81,9 @@ public class DefaultTimeSlave extends AbstractNodeMain implements RosTimeUtil{
 		lastRead = lastReceived;
 		return out;
 	}
+
+
+	@Override
+	public void simulationStopped() {
+	}
 }

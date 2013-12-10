@@ -106,6 +106,9 @@ public class RosUtils {
 				RosTimeUtilFactory.nme.shutdownNodeMain((NodeMain)timeUnit);
 				timeUnit = getTimeUnit();
 				previousTimeUnit = selectedTimeUnit;
+			}else{
+				// in case of reuse of simulationUnit, indicate that simulation is stopped
+				timeUnit.simulationStopped();
 			}
 		}else{
 			timeUnit = getTimeUnit();

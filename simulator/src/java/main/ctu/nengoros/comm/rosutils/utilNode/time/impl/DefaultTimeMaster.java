@@ -27,7 +27,7 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 	public static final String name = "NengoRosTimeMaster";
 	private final String me ="["+name+"] ";
 	Log l;
-	private boolean simStarted = false;
+	private boolean simRunning = false;
 	private final int sleepTime = 500;
 
 	protected final java.lang.String cl = "/clock";
@@ -58,14 +58,13 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 			protected void setup() { 
 			}
 
+			
 			@Override
 			protected void loop() throws InterruptedException {
 
-				if(simStarted)
-					return;
+				if(!simRunning)
+					publishZero(connectedNode);
 				
-				publishZero(connectedNode);
-
 				Thread.sleep(sleepTime);
 			}
 		});
@@ -104,4 +103,11 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 		return new float[]{startTime, endTime};
 	}
 
+	/**
+	 * If new script is launched, the TimeMaster does not have to be restarted.
+	 * But we need to publish periodically zero again..
+	 */
+	@Override
+	public void simulationStopped() { this.simRunning = false; }
+	
 }

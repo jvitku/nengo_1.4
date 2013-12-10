@@ -28,6 +28,10 @@ public interface RosTimeUtil {
 	 * @param endTime stopTime of the Nengo simulation step
 	 * @return new float[startTime,stopTime], potentially changed according to external time master
 	 */
-	float[] handleTime(float startTime, float endTime);
-	
+	public float[] handleTime(float startTime, float endTime);
+
+	/**
+	 * Used to indicate that the script was reloaded during the application run.
+	 */
+	public void simulationStopped();
 }
