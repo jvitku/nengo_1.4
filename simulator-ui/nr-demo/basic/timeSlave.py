@@ -33,21 +33,21 @@ from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
 import basic_nodes
 
 # creates nef network and adds it to nengo (this must be first in the script) 
-net=nef.Network('Demo of simple Neural modules which find min and max in received data and publish results')
+net=nef.Network('Demo of simple Neural modules which find min and max, multiplies them by the current time and publishes')
 net.add_to_nengo()  # here: delete old (toplevel) network and replace it with the newly CREATED one
 
 ################# setup the ROS utils (optional) 
 #RosUtils.setTimeIgnore() 	
 #RosUtils.setTimeMaster() 	# used by default
-RosUtils.setTimeIgnore() 	# note: experimental, TODO
+RosUtils.setTimeSlave() 	# note: experimental, TODO
 
 #RosUtils.setAutorun(False)     # Do we want to autorun roscore and rxgraph? (tru by default)
 #RosUtils.prefferJroscore(True)  # preffer jroscore before the roscore? 
 
 
 ################# add ROS nodes
-finderA = basic_nodes.async_minmaxint_node("MinMax Asynchronous Integer Finder") 	# build the neural module
-many=net.add(finderA)                        										# add it into the network
+finderA = basic_nodes.sync_timeaware_node("MinMax Synchronous Float Finder - Values multiplied by the current time") 	# build the neural module
+many=net.add(finderA)                        							# add it into the network
 
 #Create a white noise input function with params: baseFreq, maxFreq [rad/s], RMS, seed
 generator=FunctionInput('Randomized input', [FourierFunction(.1, 10,1, 12),
@@ -63,3 +63,13 @@ A=net.make('A',neurons=50,dimensions=2,radius=8)    				# identity transformatio
 net.connect(finderA.getOrigin('org/hanns/demonodes/pubsub/OUT'),A)	# connect the origin on our module to the network
 
 print 'Configuration complete.'
+print 'In this configuration, the Nengo is launched as a TimeSlave '
+print 'and waits for data on the /clock topic.'
+print 'Now it is expected that you start some external TimeProvider, which'
+print 'publishes these data'
+
+print 'Note that this is experimental and e.g. GUI does not reflect time values received.'
+
+print ''
+print 'To run the clockMaster, use e.g. from the folder nengoros/demonodes/basic the command:'
+print './runner org.hanns.demonodes.time.pubsub.Pub /use_sim_time:=false'
