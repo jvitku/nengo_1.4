@@ -1,6 +1,5 @@
 package ctu.nengoros.comm.rosutils.utilNode.time.impl;
 
-import org.ros.concurrent.CancellableLoop;
 import org.ros.message.Time;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
@@ -28,8 +27,7 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 	private final String me ="["+name+"] ";
 	Log l;
 	
-	protected final java.lang.String cl = "clock";
-	private final int sleeptime = 1000;
+	protected final java.lang.String cl = "/clock";
 
 	Publisher<rosgraph_msgs.Clock> pub;
 	int poc;
@@ -48,27 +46,13 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 	public void onStart(final ConnectedNode connectedNode) {
 
 		pub = connectedNode.newPublisher(cl, rosgraph_msgs.Clock._TYPE);
+		l = connectedNode.getLog();
 
-		System.out.println(me+"Node started, will publish Nengo clock!");
+		l.info(me+"Node started, will publish Nengo clock!");
 
 		Clock mess = pub.newMessage();
 		mess.setClock(new Time(0));  // before starting the simulation, the time=0 should be published
 		pub.publish(mess);
-		/*	
-		// this is not necessary here 
-		connectedNode.executeCancellableLoop(new CancellableLoop() {
-			
-			@Override
-			protected void setup() { 
-				poc = 0;
-			}
-			
-			@Override
-			protected void loop() throws InterruptedException {
-				
-				Thread.sleep(sleeptime);
-			}
-		});*/
 	}
 
 	/**
@@ -87,7 +71,7 @@ public class DefaultTimeMaster extends AbstractNodeMain implements RosTimeUtil{
 		pub.publish(mess);
 
 		float end = (float)(mess.getClock().secs+mess.getClock().nsecs/1000000000.0);
-		System.out.println(me+"publishind this time value: "+end+" where nengo gave me this endTime: "+endTime);
+		l.debug(me+"publishind this time value: "+end+" where nengo gave me this endTime: "+endTime);
 
 		return new float[]{startTime, endTime};
 	}

@@ -1,10 +1,24 @@
-# Create the NeuralModule which receives 4 float values, finds min and max, converts them to int and passes to the output.
+# Demo which shows how the NengoRos can be setup to use externally provided simulation time.
+# In this case, the Nengo simulator will subscribe to the /clock topic. At each time step it will
+# wait for a new stime tick (new time value) on this topic. If new value received, one Nengo simulation step 
+# is made. 
 #
-# starts: 
-#   -ROS-java node (class extending the org.ros.Node) which does exactly the thing described above 
-#   -NeuralModule with modem that communicates with the ROS node 
+# @see: @see: http://nengoros.wordpress.com/rosjava-tutorials/
 #
-# For mode information see the  the script nr-demo/basic/basic_nodes.py
+# This demo shows the scenario where time is provided from external source, e.g. real world robotic system 
+# or some external (environment) simulator.
+#
+# Note that external time provider can be launched completely externally or as an ordinary NeuralModule
+# from the Nengoros. But in both cases command line parameter /use_sim_time:=false .
+#
+# Note that this is not ideally implemented and not tested very much, so the received time is used in the 
+# NodeThreadPool.step() method, but e.g. the Nengo interactive simulaiton GUI does not reflect these values.
+#
+# @see: http://wiki.ros.org/roscpp/Overview/Time
+#
+# Demo is similar to the `basic/minmax.py` (starts two external ROS nodes), important are
+# lines after this one: '################# setup the ROS utils (optional)'.
+#
 #
 # by Jaroslav Vitku [vitkujar@fel.cvut.cz]
 
@@ -23,15 +37,17 @@ net=nef.Network('Demo of simple Neural modules which find min and max in receive
 net.add_to_nengo()  # here: delete old (toplevel) network and replace it with the newly CREATED one
 
 ################# setup the ROS utils (optional) 
-RosUtils.setTimeSlave()
-#RosUtils.setTimeIgnore()
+#RosUtils.setTimeIgnore() 	
+#RosUtils.setTimeMaster() 	# used by default
+RosUtils.setTimeIgnore() 	# note: experimental, TODO
 
 #RosUtils.setAutorun(False)     # Do we want to autorun roscore and rxgraph? (tru by default)
 #RosUtils.prefferJroscore(True)  # preffer jroscore before the roscore? 
 
 
+################# add ROS nodes
 finderA = basic_nodes.async_minmaxint_node("MinMax Asynchronous Integer Finder") 	# build the neural module
-many=net.add(finderA)                        							# add it into the network
+many=net.add(finderA)                        										# add it into the network
 
 #Create a white noise input function with params: baseFreq, maxFreq [rad/s], RMS, seed
 generator=FunctionInput('Randomized input', [FourierFunction(.1, 10,1, 12),

@@ -1,6 +1,5 @@
 package ctu.nengoros.comm.rosutils.utilNode.params;
 
-import org.ros.concurrent.CancellableLoop;
 import org.ros.namespace.GraphName;
 import org.ros.node.ConnectedNode;
 
@@ -30,21 +29,6 @@ public class ParamHandler extends Rosparam{
 		super.onStart(connectedNode);
 		l = connectedNode.getLog();
 		l.info(me+"launched! Waiting for commands..");
-		
-		/*
-		// ROS uses these cancellable loops
-		connectedNode.executeCancellableLoop(new CancellableLoop() {
-
-			@Override
-			protected void setup() {
-				l.info(me+"launched! Waiting for commands..");
-			}
-
-			@Override
-			protected void loop() throws InterruptedException {
-				Thread.sleep(sleeptime);
-			}
-		});*/
 	}
 
 }
