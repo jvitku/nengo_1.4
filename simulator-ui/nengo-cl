@@ -41,7 +41,7 @@ ROSJAVA=$RJ/rosjava-0.0.0-SNAPSHOT.jar:$RJ/rosjava_bootstrap-0.0.0-SNAPSHOT.jar:
 
 # jroscore & jrosparam
 Jroscore=$N_HOME/../../jroscore/build/libs/jroscore-0.0.2-SNAPSHOT.jar 
-Jrosapram=$N_HOME/../../jrosparam/build/libs/jrosparam-0.0.2-SNAPSHOT.jar
+JRP=$N_HOME/../../jrosparam/build/libs/jrosparam-0.0.2-SNAPSHOT.jar
 
 # dependencies for complete installation (with external rosjava nodes)
 NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.1-SNAPSHOT.jar 
@@ -55,11 +55,11 @@ NODES=$NODES:$N_HOME/../../demonodes/basic/build/libs/basic-0.0.2-SNAPSHOT.jar
 
 
 if [[ $# < 1 ]]; then
-    java -Xms100m -Xmx800m -cp $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore org.python.util.jython -i ./python/startup_cl.py
+    java -Xms100m -Xmx800m -cp $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP org.python.util.jython -i ./python/startup_cl.py
 else
 	# original one (does not work)
 	#java -Xms100m -Xmx800m -cp $THEIR_PATH:$MY_PATH:$MODLELS_PATH:$LOG:$PROJECTS org.python.util.jython -c "execfile('./python/startup_cl.py'); execfile('$1')"
-	java -Xms100m -Xmx800m -cp $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$Jrosparam org.python.util.jython -c "import sys; sys.argv=['./python/startup_cl.py','$1']; execfile('./python/startup_cl.py')"
+	java -Xms100m -Xmx800m -cp $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$Jrosparam:$JRP org.python.util.jython -c "import sys; sys.argv=['./python/startup_cl.py','$1']; execfile('./python/startup_cl.py')"
 
 fi
 
