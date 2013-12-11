@@ -87,7 +87,7 @@ public class ProcessLauncher {
 			if(s.length()>0){
 				System.out.println(me+"application '"+lc[0]+"' found on this system.");
 			}else{
-				if(!lc[0].equalsIgnoreCase("rxgraph") && !lc[0].equalsIgnoreCase("roscore"))
+				if(!lc[0].equalsIgnoreCase("rqt") && !lc[0].equalsIgnoreCase("roscore"))
 					System.err.println(me+"application not found! Command 'which "+lc[0]+"' returned" +
 						" empty string. My PWD is: "+printPWD());
 				else

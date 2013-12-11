@@ -1,0 +1,18 @@
+({'state': 0, 'height': 615, 'width': 1223, 'x': 54, 'y': 22},
+ [(u'Randomized input', None, {'label': False, 'height': 32, 'width': 170, 'x': 14, 'y': 50}),
+  (u'MinMax Synchronous Float Finder - Values multiplied by the current time_SynMinMaxFloat', None, {'label': False, 'height': 32, 'width': 815, 'x': 140, 'y': 12}),
+  (u'A', None, {'label': False, 'height': 32, 'width': 23, 'x': 1025, 'y': 43}),
+  (u'Randomized input', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2, 3], 'last_maxy': 3.3309173583984375, 'sel_all': True, 'height': 200, 'width': 300, 'x': 21, 'fixed_y': None, 'autozoom': False, 'y': 88}),
+  (u'Randomized input', 'control', {'label': True, 'range': 4.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 200, 'x': 46, 'y': 308}),
+  (u'A', 'spike raster', {'label': True, 'sample': 1, 'height': 200, 'width': 300, 'x': 909, 'y': 286}),
+  (u'MinMax Synchronous Float Finder - Values multiplied by the current time_SynMinMaxFloat', u'value|org/hanns/demonodes/pubsub/OUT', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 3.1054831281712962, 'sel_all': True, 'height': 200, 'width': 300, 'x': 331, 'fixed_y': None, 'autozoom': False, 'y': 81}),
+  (u'A', 'value|X', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 3.460056141181907, 'sel_all': True, 'height': 200, 'width': 300, 'x': 906, 'fixed_y': None, 'autozoom': False, 'y': 81})],
+ {'dt': 0, 'show_time': 0.5, 'sim_spd': 4, 'update_freq': 30.303030303030305, 'filter': 0.03, 'rcd_time': 4.0}) 
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=149.99999999999991,y=293.57320264281833,width=749.2052640914917,height=463.85359471436317]
+# Randomized input (Function Input)=Point2D.Double[250.0, 500.0]
+# MinMax Synchronous Float Finder - Values multiplied by the current time_SynMinMaxFloat (Generic Node)=Point2D.Double[500.0, 500.0]
+# A (NEFEnsemble)=Point2D.Double[750.0, 500.0]

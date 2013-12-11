@@ -1,0 +1,13 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="ca.nengo.model.impl.ConfigurationImplTest" tests="7" failures="0" errors="0" timestamp="2013-11-06T13:08:02" hostname="b.local" time="0.007">
+  <properties/>
+  <testcase name="testGetConfigurable" classname="ca.nengo.model.impl.ConfigurationImplTest" time="0.002"/>
+  <testcase name="testGetPropertyNames" classname="ca.nengo.model.impl.ConfigurationImplTest" time="0.001"/>
+  <testcase name="testIntProperty" classname="ca.nengo.model.impl.ConfigurationImplTest" time="0.0"/>
+  <testcase name="testFloatProperty" classname="ca.nengo.model.impl.ConfigurationImplTest" time="0.001"/>
+  <testcase name="testBooleanProperty" classname="ca.nengo.model.impl.ConfigurationImplTest" time="0.0"/>
+  <testcase name="testConstruction" classname="ca.nengo.model.impl.ConfigurationImplTest" time="0.001"/>
+  <testcase name="testChild" classname="ca.nengo.model.impl.ConfigurationImplTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

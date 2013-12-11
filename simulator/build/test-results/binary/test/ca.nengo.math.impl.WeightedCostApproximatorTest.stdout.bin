@@ -1,0 +1,13 @@
+testPseudoInversåêINFO  [Test worker:ca.nengo.util.Memory]: Used: 57056968 Total: 257425408 Max: 3817865216 (before gamma)
+testPseudoInversåìINFO  [Test worker:ca.nengo.util.Memory]: Used: 57056968 Total: 257425408 Max: 3817865216 (before inverse)
+testPseudoInversåíINFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 2 singular values for pseudo-inverse
+testPseudoInversåëINFO  [Test worker:ca.nengo.util.Memory]: Used: 57056968 Total: 257425408 Max: 3817865216 (after inverse)
+testPseudoInversåíINFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 2 singular values for pseudo-inverse
+testFindCoefficientóêINFO  [Test worker:ca.nengo.util.Memory]: Used: 57056968 Total: 257425408 Max: 3817865216 (before gamma)
+testFindCoefficientóìINFO  [Test worker:ca.nengo.util.Memory]: Used: 57056968 Total: 257425408 Max: 3817865216 (before inverse)
+testFindCoefficientóíINFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 3 singular values for pseudo-inverse
+testFindCoefficientóëINFO  [Test worker:ca.nengo.util.Memory]: Used: 57056968 Total: 257425408 Max: 3817865216 (after inverse)
+testFindCoefficientóêINFO  [Test worker:ca.nengo.util.Memory]: Used: 58409648 Total: 257425408 Max: 3817865216 (before gamma)
+testFindCoefficientóìINFO  [Test worker:ca.nengo.util.Memory]: Used: 58409648 Total: 257425408 Max: 3817865216 (before inverse)
+testFindCoefficientóíINFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 3 singular values for pseudo-inverse
+testFindCoefficientóëINFO  [Test worker:ca.nengo.util.Memory]: Used: 58409648 Total: 257425408 Max: 3817865216 (after inverse)

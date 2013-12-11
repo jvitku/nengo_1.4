@@ -1,0 +1,16 @@
+testFindCoefficientóêINFO  [Test worker:ca.nengo.util.Memory]: Used: 50291408 Total: 257425408 Max: 3817865216 (before gamma)
+testFindCoefficientóìINFO  [Test worker:ca.nengo.util.Memory]: Used: 50291408 Total: 257425408 Max: 3817865216 (before inverse)
+testFindCoefficientóíINFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 3 singular values for pseudo-inverse
+testFindCoefficientóëINFO  [Test worker:ca.nengo.util.Memory]: Used: 51644160 Total: 257425408 Max: 3817865216 (after inverse)
+testFindCoefficientóêINFO  [Test worker:ca.nengo.util.Memory]: Used: 51644160 Total: 257425408 Max: 3817865216 (before gamma)
+testFindCoefficientóìINFO  [Test worker:ca.nengo.util.Memory]: Used: 51644160 Total: 257425408 Max: 3817865216 (before inverse)
+testFindCoefficientóíINFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 3 singular values for pseudo-inverse
+testFindCoefficientóëINFO  [Test worker:ca.nengo.util.Memory]: Used: 51644160 Total: 257425408 Max: 3817865216 (after inverse)
+testFindCoefficientóêINFO  [Test worker:ca.nengo.util.Memory]: Used: 51644160 Total: 257425408 Max: 3817865216 (before gamma)
+testFindCoefficientóìINFO  [Test worker:ca.nengo.util.Memory]: Used: 51644160 Total: 257425408 Max: 3817865216 (before inverse)
+testFindCoefficientóíINFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 2 singular values for pseudo-inverse
+testFindCoefficientóëINFO  [Test worker:ca.nengo.util.Memory]: Used: 51644160 Total: 257425408 Max: 3817865216 (after inverse)
+testFindCoefficientóêINFO  [Test worker:ca.nengo.util.Memory]: Used: 51644160 Total: 257425408 Max: 3817865216 (before gamma)
+testFindCoefficientóìINFO  [Test worker:ca.nengo.util.Memory]: Used: 51644160 Total: 257425408 Max: 3817865216 (before inverse)
+testFindCoefficientóíINFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 2 singular values for pseudo-inverse
+testFindCoefficientóëINFO  [Test worker:ca.nengo.util.Memory]: Used: 51644160 Total: 257425408 Max: 3817865216 (after inverse)

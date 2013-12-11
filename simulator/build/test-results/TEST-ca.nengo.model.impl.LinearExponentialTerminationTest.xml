@@ -1,0 +1,16 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="ca.nengo.model.impl.LinearExponentialTerminationTest" tests="9" failures="0" errors="0" timestamp="2013-11-06T13:08:02" hostname="b.local" time="0.004">
+  <properties/>
+  <testcase name="testGetName" classname="ca.nengo.model.impl.LinearExponentialTerminationTest" time="0.0"/>
+  <testcase name="testGetProperty" classname="ca.nengo.model.impl.LinearExponentialTerminationTest" time="0.0"/>
+  <testcase name="testReset" classname="ca.nengo.model.impl.LinearExponentialTerminationTest" time="0.0"/>
+  <testcase name="testSetValues" classname="ca.nengo.model.impl.LinearExponentialTerminationTest" time="0.0"/>
+  <testcase name="testUpdateCurrent" classname="ca.nengo.model.impl.LinearExponentialTerminationTest" time="0.0"/>
+  <testcase name="testPreciseUpdateCurrent" classname="ca.nengo.model.impl.LinearExponentialTerminationTest" time="0.001"/>
+  <testcase name="testGetWeights" classname="ca.nengo.model.impl.LinearExponentialTerminationTest" time="0.0"/>
+  <testcase name="testSetWeights" classname="ca.nengo.model.impl.LinearExponentialTerminationTest" time="0.001"/>
+  <testcase name="testGetDimensions" classname="ca.nengo.model.impl.LinearExponentialTerminationTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Error, dimensions don't match in setWeights, ignoring new weights
+]]></system-err>
+</testsuite>

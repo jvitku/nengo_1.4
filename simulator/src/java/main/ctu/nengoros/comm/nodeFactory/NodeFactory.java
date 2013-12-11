@@ -26,7 +26,7 @@ public class NodeFactory{
 	
 	public static final boolean printOut = false;
 	
-	protected static final String me="NodeFactory: ";
+	protected static final String me="[NodeFactory] ";
 
 	// thing which launches JavaNodes
 	public static final NodeMainExecutor nme = DefaultNodeMainExecutor.newDefault();

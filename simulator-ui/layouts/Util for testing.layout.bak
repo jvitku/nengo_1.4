@@ -1,0 +1,27 @@
+({'state': 0, 'height': 600, 'width': 950, 'x': 4, 'y': 22},
+ [(u'myAND_AND', None, {'label': False, 'height': 32, 'width': 130, 'x': 354, 'y': 18}),
+  (u'myNAND_NAND', None, {'label': False, 'height': 32, 'width': 158, 'x': 362, 'y': 252}),
+  (u'Randomized input 1', None, {'label': False, 'height': 32, 'width': 187, 'x': 63, 'y': 17}),
+  (u'myXOR_XOR', None, {'label': False, 'height': 32, 'width': 134, 'x': 816, 'y': 4}),
+  (u'myNOT_NOT', None, {'label': False, 'height': 32, 'width': 132, 'x': 659, 'y': 25}),
+  (u'myOR_OR', None, {'label': False, 'height': 32, 'width': 108, 'x': 676, 'y': 262}),
+  (u'Randomized input 2', None, {'label': False, 'height': 32, 'width': 187, 'x': 50, 'y': 246}),
+  (u'Randomized input 1', 'value|origin', {'label': True, 'sel_dim': [0], 'last_maxy': 3.729058265686035, 'sel_all': True, 'height': 200, 'width': 300, 'x': 29, 'fixed_y': None, 'autozoom': False, 'y': 47}),
+  (u'Randomized input 2', 'value|origin', {'label': True, 'sel_dim': [0], 'last_maxy': 1.7972569465637207, 'sel_all': True, 'height': 200, 'width': 300, 'x': 26, 'fixed_y': None, 'autozoom': False, 'y': 280}),
+  (u'myAND_AND', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 325, 'fixed_y': None, 'autozoom': False, 'y': 55}),
+  (u'myNOT_NOT', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 601, 'fixed_y': None, 'autozoom': False, 'y': 59}),
+  (u'myNAND_NAND', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 332, 'fixed_y': None, 'autozoom': False, 'y': 275}),
+  (u'myOR_OR', u'value|logic/gates/outa', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 634, 'fixed_y': None, 'autozoom': False, 'y': 279})],
+ {'dt': 0, 'show_time': 0.5, 'sim_spd': 4, 'update_freq': 30.303030303030305, 'filter': 0.03, 'rcd_time': 4.0}) 
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=-215.59662183642712,y=66.66667175292966,width=1482.1932741904325,height=917.6666412353516]
+# myAND_AND (Generic Node)=Point2D.Double[666.6666870117188, 166.6666717529297]
+# myNAND_NAND (Generic Node)=Point2D.Double[666.6666870117188, 500.0]
+# Randomized input 1 (Function Input)=Point2D.Double[333.3333435058594, 333.3333435058594]
+# myXOR_XOR (Generic Node)=Point2D.Double[666.6666870117188, 666.6666870117188]
+# myNOT_NOT (Generic Node)=Point2D.Double[666.6666870117188, 333.3333435058594]
+# myOR_OR (Generic Node)=Point2D.Double[666.6666870117188, 833.3333129882812]
+# Randomized input 2 (Function Input)=Point2D.Double[333.3333435058594, 666.6666870117188]

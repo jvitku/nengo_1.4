@@ -1,0 +1,13 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="ca.nengo.util.DataUtilsTest" tests="5" failures="0" errors="0" timestamp="2013-11-06T13:11:20" hostname="b.local" time="0.001">
+  <properties/>
+  <testcase name="testExtractDimension" classname="ca.nengo.util.DataUtilsTest" time="0.0"/>
+  <testcase name="testExtractTime" classname="ca.nengo.util.DataUtilsTest" time="0.0"/>
+  <testcase name="testSubsample" classname="ca.nengo.util.DataUtilsTest" time="0.0"/>
+  <testcase name="testSubsetSpikePatternIntIntInt" classname="ca.nengo.util.DataUtilsTest" time="0.0"/>
+  <testcase name="testSubsetSpikePatternIntArray" classname="ca.nengo.util.DataUtilsTest" time="0.0"/>
+  <system-out><![CDATA[ 2.0000000000 5.0000000000
+
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
