@@ -36,7 +36,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import ctu.nengoros.util.sync.impl.SyncedUnit;
 import ca.nengo.model.Ensemble;
 import ca.nengo.model.InstantaneousOutput;
 import ca.nengo.model.Network;
@@ -245,25 +244,6 @@ public class LocalSimulator implements Simulator, java.io.Serializable {
             for (ThreadTask myTask : myTasks) {
                 myTask.run(startTime, endTime);
             }
-            
-            ///my @author Jaroslav Vitku
-            // here wait until all (ROS) units are ready
-            // TODO
-            //System.out.println("hi, simulator here..");
-            int sleeptime = 5;
-            for (Node myNode : myNodes) {
-                if(myNode instanceof SyncedUnit) {
-                	// note: nodeTHread pool is used instead of this, so the util.impl.NodeThreadPool is used ~ waits for ROS nodes
-                	System.out.println("hey, found this one: "+myNode.getName()+" and is ready? "+((SyncedUnit)myNode).isReady());
-                    while(!((SyncedUnit)myNode).isReady()){
-                    	try {
-                    		System.out.println("simulator sleep: waiting for: "+myNode.getName());
-							Thread.sleep(sleeptime);
-						} catch (InterruptedException e) { e.printStackTrace(); }
-                    }
-                } 
-            }
-            
             
             Iterator<Probe> it = myProbes.iterator();
             while (it.hasNext()) {
