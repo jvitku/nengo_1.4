@@ -98,6 +98,11 @@ public class RosUtils {
 		// launch the parameter handler?
 		if(paramHandler == null){
 			paramHandler = RosTimeUtilFactory.startParamHandler(utilNodes);
+		}else if(previousTimeUnit != selectedTimeUnit){
+			// if switched to the ignoreTime during application run, we have to delete param.: use_sim_time
+			if(selectedTimeUnit ==1){
+				paramHandler.delete(RosTimeUtilFactory.time);
+			}
 		}
 		
 		// if timeUnit is running and user selected some other one, restart
