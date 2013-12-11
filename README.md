@@ -27,7 +27,9 @@ If you want to install just the modified Nengoros simulator (with precompiled ro
 Installation:
 -------------
 
-To obtain the recommended complete installation, see [installation instructions](http://nengoros.wordpress.com/installation/).
+**To obtain the recommended complete installation, see [installation instructions](http://nengoros.wordpress.com/installation/).**
+
+### Not recommended installation:
 
 In order to install just standalone version of Nengoros, you can use the script `./installStandalone`.
 
