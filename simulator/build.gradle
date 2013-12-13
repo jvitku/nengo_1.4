@@ -41,8 +41,16 @@ dependencies {
 
 
     
-    compile 'ctu.nengoros:jrosparam:0.0.2-SNAPSHOT'
-    testCompile 'ctu.nengoros:jrosparam:0.0.2-SNAPSHOT'
+
+
+
+
+
+   // compile 'ctu.nengoros:jrosparam:0.0.2-SNAPSHOT'
+    //testCompile 'ctu.nengoros:jrosparam:0.0.2-SNAPSHOT'
+
+    compile 'ctu.nengoros:jroscore:0.0.2-SNAPSHOT'
+    testCompile 'ctu.nengoros:jroscore:0.0.2-SNAPSHOT'
 
 }
 
