@@ -12,9 +12,9 @@ import ctu.nengoros.comm.rosutils.Jroscore;
 import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.comm.rosutils.ProcessLauncher;
 import ctu.nengoros.comm.rosutils.RosUtils;
-import ctu.nengoros.comm.rosutils.utilNode.params.ParamHandler;
 import ctu.nengoros.comm.rosutils.utilNode.time.RosTimeUtil;
 import ctu.nengoros.comm.rosutils.utilNode.time.RosTimeUtilFactory;
+import ctu.nengoros.rosparam.node.RosparamNode;
 
 /**
  * Here are utilities for simple launching and stopping (some) roscore 
@@ -61,7 +61,7 @@ public class RosUtils {
 
 	// enables Nengo to set parameters of ROS network
 	// these parameters can modify how the nodes are launched, e.g. use_sim_time:=true
-	private static ParamHandler paramHandler;
+	private static RosparamNode paramHandler;
 	
 	/**
 	 * Start core and other utilities automatically?

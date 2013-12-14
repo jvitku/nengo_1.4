@@ -3,8 +3,7 @@ package ctu.nengoros.comm.rosutils.utilNode.params;
 import org.ros.namespace.GraphName;
 import org.ros.node.ConnectedNode;
 
-import ctu.nengoros.rosparam.Rosparam;
-
+import ctu.nengoros.rosparam.node.RosparamNode;
 /**
  * Allows Nengo to set/read parameters from the parameter server (ROS master).
  * 
@@ -16,7 +15,7 @@ import ctu.nengoros.rosparam.Rosparam;
  * @author Jaroslav Vitku
  *
  */
-public class ParamHandler extends Rosparam{
+public class ParamHandler extends RosparamNode{
 	
 	public static final String name = "NengoParameterHandler";
 	private final String me = "["+name+"] ";
@@ -27,8 +26,8 @@ public class ParamHandler extends Rosparam{
 	@Override
 	public void onStart(ConnectedNode connectedNode){
 		super.onStart(connectedNode);
-		l = connectedNode.getLog();
-		l.info(me+"launched! Waiting for commands..");
-	}
+		//l = connectedNode.getLog();
+	//	l.info(me+"launched! Waiting for commands..");
+	}	
 
 }

@@ -3,7 +3,7 @@ package ctu.nengoros.comm.nodeFactory.javanode;
 import java.util.List;
 
 import org.ros.exception.RosRuntimeException;
-import org.ros.internal.loader.CommandLineLoader;
+import org.ros.internal.loader.CommandLineLoaderII;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMain;
 import org.ros.node.NodeMainExecutor;
@@ -23,7 +23,7 @@ public class JavaNodeLauncher {
 			NodeMainExecutor nme, NodeGroup g){
 
 		NodeMain launchedOne = null;	
-		CommandLineLoader loader = new CommandLineLoader(launchCommand);
+		CommandLineLoaderII loader = new CommandLineLoaderII(launchCommand);
 		//CommandLineLoader loader = new CommandLineLoader(Lists.newArrayList(launchCommand));
 		
 		String nodeClassName = loader.getNodeClassName();
@@ -57,7 +57,7 @@ public class JavaNodeLauncher {
 			NodeMainExecutor nme){
 
 		NodeMain launchedOne = null;	
-		CommandLineLoader loader = new CommandLineLoader(launchCommand);
+		CommandLineLoaderII loader = new CommandLineLoaderII(launchCommand);
 		//CommandLineLoader loader = new CommandLineLoader(Lists.newArrayList(launchCommand));
 		
 		String nodeClassName = loader.getNodeClassName();
@@ -84,7 +84,7 @@ public class JavaNodeLauncher {
 			NodeMainExecutor nme){
 
 		NodeMain launchedOne = null;	
-		CommandLineLoader loader = new CommandLineLoader(Lists.newArrayList(launchCommand));
+		CommandLineLoaderII loader = new CommandLineLoaderII(Lists.newArrayList(launchCommand));
 		
 		String nodeClassName = loader.getNodeClassName();
 		NodeConfiguration nc = loader.build();
