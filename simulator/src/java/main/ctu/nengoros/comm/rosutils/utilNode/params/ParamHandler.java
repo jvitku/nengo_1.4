@@ -5,6 +5,9 @@ import org.ros.node.ConnectedNode;
 
 import ctu.nengoros.rosparam.node.RosparamNode;
 /**
+ * 
+ * This is deprecated! Now used RosparamNode under jroscore project.
+ * 
  * Allows Nengo to set/read parameters from the parameter server (ROS master).
  * 
  * This could be implemented as one ROS node, but due to problems with timeProvider
@@ -15,6 +18,7 @@ import ctu.nengoros.rosparam.node.RosparamNode;
  * @author Jaroslav Vitku
  *
  */
+@Deprecated
 public class ParamHandler extends RosparamNode{
 	
 	public static final String name = "NengoParameterHandler";
