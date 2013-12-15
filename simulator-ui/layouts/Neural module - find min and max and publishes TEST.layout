@@ -1,0 +1,10 @@
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=150.0,y=226.37269192894027,width=956.5955810546875,height=592.2546466596974]
+# Randomized input 2 (Function Input)=Point2D.Double[250.0, 333.3333435058594]
+# myNOT_NOT (Generic Node)=Point2D.Double[750.0, 500.0]
+# myAND_AND (Generic Node)=Point2D.Double[500.0, 500.0]
+# Randomized input 1 (Function Input)=Point2D.Double[250.0, 666.6666870117188]
+# Weighted connections test 1 (Network)=Point2D.Double[956.0955810546875, 482.4632873535156]
