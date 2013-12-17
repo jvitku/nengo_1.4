@@ -42,8 +42,5 @@ public class DefaultNeuralModule extends AbsNeuralModule{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-	
 	
 }
