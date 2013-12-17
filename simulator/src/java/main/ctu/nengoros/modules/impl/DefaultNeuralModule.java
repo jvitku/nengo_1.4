@@ -13,7 +13,6 @@ import ca.nengo.util.ScriptGenException;
  *
  */
 public class DefaultNeuralModule extends AbsNeuralModule{ 
-	
 
 	private static final long serialVersionUID = 1L;
 	public static final String me = "[DefaultSynchNeuralModule] ";
@@ -28,7 +27,7 @@ public class DefaultNeuralModule extends AbsNeuralModule{
 	public DefaultNeuralModule(String name, NodeGroup group){
 		super(name, group);
 	}
-
+	
 	@Override
 	public Node[] getChildren() {
 		// TODO Auto-generated method stub	
@@ -42,8 +41,4 @@ public class DefaultNeuralModule extends AbsNeuralModule{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-	
-	
 }
