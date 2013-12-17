@@ -102,6 +102,12 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 		this.init(name);
 	}
 	
+	/**
+	 * This can be used everywhere, because this can be asynchronous too
+	 * @param name
+	 * @param group
+	 * @param synchronous
+	 */
 	public AbsNeuralModule(String name, NodeGroup group, boolean synchronous){
 		super(name);
 		ModemContainer modContainer = group.getModem();
@@ -114,7 +120,7 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 		this.init(name);
 	}
 
-	private void init(String name){
+	protected void init(String name){
 		this.setReady(true);
 		this.myName=name;
 		this.myProperties = new Properties();
@@ -281,7 +287,6 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 	
 	
-	
 	/**
 	 * do not use this, use method createEn/Decoder
 	 * 
@@ -317,7 +322,7 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	
 
 	/**
-	 * TODO: solve the questions about the (start/stop) time, somehow.. 
+	 * TODO: check whether startTime/endTIme are handled correctly everywhere 
 	 */
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {

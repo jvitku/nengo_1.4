@@ -1,4 +1,4 @@
-package ctu.nengoros.comm.rosBackend.encoders.impl;
+package ctu.nengoros.comm.rosBackend.multiTerimnationEncoder.impl;
 
 import org.apache.log4j.Logger;
 import org.ros.node.ConnectedNode;
@@ -23,7 +23,15 @@ import ca.nengo.model.impl.BasicTermination;
 import ca.nengo.util.TimeSeries;
 import ca.nengo.util.impl.TimeSeriesImpl;
 
-public class BasicEncoder implements Encoder{
+/**
+ * The same as basic encoder, but this one can have multiple Terminations (inputs)
+ * 
+ * OK, so Encoder interface extends a termination..
+ * 
+ * @author Jaroslav Vitku
+ *
+ */
+public class MultipleTerminationEncoder implements Encoder{
 
 		private static final long serialVersionUID = 1L;
 
@@ -38,7 +46,9 @@ public class BasicEncoder implements Encoder{
 		private boolean myModulatory;
 		protected ConnectedNode myRosNode;	// factory for subscriber
 		
-		public /*final */Backend ros; 
+		public /*final */ Backend ros;
+		
+		
 
 		/**
 		 * Create BasicEncoder with dimension sizes determined by the ROS message type
@@ -53,8 +63,9 @@ public class BasicEncoder implements Encoder{
 		 * @param ros
 		 * @throws StructuralException
 		 */
-		public BasicEncoder(Node node, DynamicalSystem dynamics, Integrator integrator,
+		public MultipleTerminationEncoder(Node node, DynamicalSystem dynamics, Integrator integrator,
 				String name, String dataType, Units u, ModemContainer modem, Backend ros) throws StructuralException{
+			
 			cosntruct(node, dynamics, integrator, name, new int[]{ros.gedNumOfDimensions()}, dataType, u,modem,ros);
 		}
 		
@@ -73,7 +84,7 @@ public class BasicEncoder implements Encoder{
 		 * @param ros
 		 * @throws StructuralException
 		 */
-		public BasicEncoder(Node node, DynamicalSystem dynamics, Integrator integrator,
+		public MultipleTerminationEncoder(Node node, DynamicalSystem dynamics, Integrator integrator,
 				String name, int[] dimensionSizes, String dataType, Units u, ModemContainer modem, Backend ros) throws StructuralException 
 						{
 			cosntruct(node, dynamics, integrator, name, dimensionSizes, dataType, u,modem,ros);
@@ -181,7 +192,6 @@ public class BasicEncoder implements Encoder{
 			}
 		}
 		*/
-		
 		public void run(float startTime, float endTime) throws SimulationException {
 			
 			float[] input = null;
@@ -277,7 +287,7 @@ public class BasicEncoder implements Encoder{
 
 		@Override
 		public Encoder clone() throws CloneNotSupportedException {
-			BasicEncoder result = (BasicEncoder) super.clone();
+			MultipleTerminationEncoder result = (MultipleTerminationEncoder) super.clone();
 			result.myDynamics = myDynamics.clone();
 			result.myIntegrator = myIntegrator.clone();
 			result.myInput = myInput.clone();

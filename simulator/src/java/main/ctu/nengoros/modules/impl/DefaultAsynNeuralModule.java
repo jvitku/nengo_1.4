@@ -42,11 +42,7 @@ public class DefaultAsynNeuralModule extends AbsAsynNeuralModule{
 	public String toScript(HashMap<String, Object> scriptData)
 			throws ScriptGenException {
 		System.err.println("TODO: toScript not implemented so far!");
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-	
 	
 }

@@ -1,1 +1,56 @@
-.versions/rosjava.build.gradle
+// @author Jaroslav Vitku [vitkujar@fel.cvut.cz]
+
+
+
+
+
+version    = '0.0.3-SNAPSHOT'
+
+group      = 'ctu.nengoros'
+
+// Gradle uses different default folders for source files => remap them
+sourceSets {
+    test {
+        java {
+            srcDir 'src/java/test'
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+    main {
+        java {
+            srcDir 'src/java/main'
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+}
+
+dependencies {
+    //compile project(':testnodes')
+    compile 'ros.rosjava_core:rosjava:0.0.0-SNAPSHOT'
+    compile fileTree(dir: 'lib', include: '**/*.jar')
+
+    testCompile 'ros.rosjava_core:rosjava:0.0.0-SNAPSHOT'
+    testCompile fileTree(dir: 'lib', include: '**/*.jar')
+    // newer junit than is in the lib directory
+    compile 'junit:junit:4.10'
+    testCompile 'junit:junit:4.10'
+
+
+    
+   // compile 'ctu.nengoros:jrosparam:0.0.2-SNAPSHOT'
+    //testCompile 'ctu.nengoros:jrosparam:0.0.2-SNAPSHOT'
+
+    compile 'ctu.nengoros:jroscore:0.0.3-SNAPSHOT'
+    testCompile 'ctu.nengoros:jroscore:0.0.3-SNAPSHOT'
+}
+
+// prints out dependencies... 
+task list(dependsOn: configurations.compile) << {
+    println "classpath = ${configurations.compile.collect {File file -> file.name}}"
+}
+
+defaultTasks 'install', 'eclipse'
