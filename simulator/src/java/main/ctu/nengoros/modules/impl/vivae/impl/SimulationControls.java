@@ -1,6 +1,5 @@
 package ctu.nengoros.modules.impl.vivae.impl;
 
-
 import java.util.HashMap;
 
 import ctu.nengoros.comm.rosutils.communication.SynchronousService;
