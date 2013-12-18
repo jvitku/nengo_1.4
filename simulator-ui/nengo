@@ -45,6 +45,7 @@ JRP=$N_HOME/../../jrosparam/build/libs/jrosparam-0.0.2-SNAPSHOT.jar
 
 # vivae simulator
 VIVAE=$N_HOME/../../vivae/build/libs/vivae-0.0.0-SNAPSHOT.jar
+VIVAE=$VIVAE:$N_HOME/../../vivae/lib/*
 
 # dependencies for complete installation (with external rosjava nodes)
 NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.1-SNAPSHOT.jar 

@@ -29,7 +29,7 @@ from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
 from ctu.nengoros.modules.impl.vivae.impl import SimulationControls as Controls
 import simplemodule
 
-RosUtils.setAutorun(False)     # Do we want to autorun roscore and rxgraph? (tru by default)
+#RosUtils.setAutorun(False)     # Do we want to autorun roscore and rxgraph? (tru by default)
 
 # initializes the simulator
 def initVivae(numsensors):
@@ -40,7 +40,7 @@ def initVivae(numsensors):
 
     # create group of nodes
     g = NodeGroup("vivae", True);               # create default group of nodes
-    #g.addNode(server, "vivaeSimulator", "java");   # run the simulator..
+    g.addNode(server, "vivaeSimulator", "java");   # run the simulator..
     g.addNode(modem,"modem","modem")              # add default modem..
     g.startGroup()                              # start group normally
 
