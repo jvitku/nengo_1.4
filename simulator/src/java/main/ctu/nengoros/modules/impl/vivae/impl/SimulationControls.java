@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import ctu.nengoros.comm.rosutils.communication.SynchronousService;
 import ctu.nengoros.modules.AbsNeuralModule;
+import ctu.nengoros.modules.impl.vivae.Sim;
 import ctu.nengoros.modules.impl.vivae.VivaeAgent;
 import ctu.nengoros.modules.impl.vivae.VivaeNeuralModule;
 
@@ -31,12 +32,7 @@ import ca.nengo.model.StructuralException;
  */
 public class SimulationControls implements Controls{
 
-	public static final java.lang.String spwn = "spawnService";
-	public static final String controlSrv = "simControlSerice";
-	public static final String loadSrv = "loadMapSerice";
 	public final String me = "SimulationCOntrols: ";
-
-	String[] names = new String[]{"data/scenarios/arena1.svg", "data/scenarios/arena2.svg", "data/scenarios/ushape.svg" };
 
 	// map of agents in the network, do not try to add duplicate names please...
 	private final HashMap<String,VivaeAgent> agents;
@@ -61,14 +57,14 @@ public class SimulationControls implements Controls{
 
 			// service for map loading
 			ServiceClient<vivae.LoadMapRequest, vivae.LoadMapResponse> mapServiceClient =
-					cn.newServiceClient(loadSrv, vivae.LoadMap._TYPE);
+					cn.newServiceClient(Sim.Msg.LOAD, vivae.LoadMap._TYPE);
 			// service for controlling the simulation
 			ServiceClient<vivae.SimControllerRequest, vivae.SimControllerResponse> simServiceClient =
-					cn.newServiceClient(controlSrv, vivae.SimController._TYPE);
+					cn.newServiceClient(Sim.Msg.CONTROL, vivae.SimController._TYPE);
 
 			// service for spawning the agents
 			ServiceClient<vivae.SpawnRequest, vivae.SpawnResponse> serviceClient = 
-					cn.newServiceClient(spwn, vivae.Spawn._TYPE);
+					cn.newServiceClient(Sim.Msg.SPAWN, vivae.Spawn._TYPE);
 
 			// make them synchronous
 			controls = new SynchronousService<vivae.SimControllerRequest, vivae.SimControllerResponse>(simServiceClient);
@@ -88,28 +84,28 @@ public class SimulationControls implements Controls{
 	@Override
 	public void start(){
 		vivae.SimControllerRequest req = controls.getRequest();
-		req.setWhat("start");
+		req.setWhat(Sim.Cmd.START);
 		controls.callService(req);
 	}
 
 	@Override
 	public void stop(){
 		vivae.SimControllerRequest req = controls.getRequest();
-		req.setWhat("stop");
+		req.setWhat(Sim.Cmd.STOP);
 		controls.callService(req);
 	}
 
 	@Override
 	public void destroy(){
 		vivae.SimControllerRequest req = controls.getRequest();
-		req.setWhat("destroy");
+		req.setWhat(Sim.Cmd.DESTROY);
 		controls.callService(req);
 	}
 
 	@Override
 	public boolean init() {
 		vivae.SimControllerRequest req = controls.getRequest();
-		req.setWhat("init");
+		req.setWhat(Sim.Cmd.INIT);
 		vivae.SimControllerResponse resp = controls.callService(req);
 		return resp.getOk();
 	}
@@ -117,7 +113,7 @@ public class SimulationControls implements Controls{
 	@Override
 	public boolean reset() {
 		vivae.SimControllerRequest req = controls.getRequest();
-		req.setWhat("reset");
+		req.setWhat(Sim.Cmd.RESET);
 		vivae.SimControllerResponse resp = controls.callService(req);
 		return resp.getOk();
 	}
@@ -126,11 +122,11 @@ public class SimulationControls implements Controls{
 	public boolean setVisible(boolean visible) {
 		vivae.SimControllerRequest req = controls.getRequest();
 		if(visible){
-			req.setWhat("setvisible");
+			req.setWhat(Sim.Cmd.SETVISIBLE);
 			vivae.SimControllerResponse resp = controls.callService(req);
 			return resp.getOk();
 		}else{
-			req.setWhat("setinvisible");
+			req.setWhat(Sim.Cmd.SETINVISIBLE);
 			vivae.SimControllerResponse resp = controls.callService(req);
 			return resp.getOk();
 		}

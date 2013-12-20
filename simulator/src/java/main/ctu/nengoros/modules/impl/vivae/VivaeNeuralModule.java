@@ -11,9 +11,9 @@ import ctu.nengoros.modules.AbsNeuralModule;
 import ctu.nengoros.modules.impl.vivae.impl.SimulationControls;
 
 /**
- * This module represents ViVae simulator in the Nengo
+ * This module represents ViVae simulator in the Nengoros
  * Original ViVae simulator implemented by:
- * http://cig.felk.cvut.cz/projects/robo/ 
+ * http://cig.felk.cvut.cz/projects/robo/ extended by me with the ROS interface.
  * 
  * This has no IO by default (except simulation controls), origins/terminaitons
  * are added by adding vivae agent.
