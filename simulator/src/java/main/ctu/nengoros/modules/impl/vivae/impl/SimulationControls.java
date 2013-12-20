@@ -32,7 +32,8 @@ import ca.nengo.model.StructuralException;
  */
 public class SimulationControls implements Controls{
 
-	public final String me = "SimulationCOntrols: ";
+	public static final String NAME = "SimulationControls";
+	public final String me = "["+NAME+"] ";
 
 	// map of agents in the network, do not try to add duplicate names please...
 	private final HashMap<String,VivaeAgent> agents;

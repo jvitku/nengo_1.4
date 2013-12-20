@@ -1,4 +1,0 @@
-testGetOutpuôìINFO  [Test worker:ca.nengo.util.Memory]: Used: 906416632 Total: 1544028160 Max: 3817865216 (before gamma)
-testGetOutpuôîINFO  [Test worker:ca.nengo.util.Memory]: Used: 906416632 Total: 1544028160 Max: 3817865216 (before inverse)
-testGetOutpuôîINFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 52 singular values for pseudo-inverse
-testGetOutpuôíINFO  [Test worker:ca.nengo.util.Memory]: Used: 906416632 Total: 1544028160 Max: 3817865216 (after inverse)

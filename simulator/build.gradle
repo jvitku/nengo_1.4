@@ -1,11 +1,5 @@
 // @author Jaroslav Vitku [vitkujar@fel.cvut.cz]
-
-
-
-
-
 version    = '0.0.2-SNAPSHOT'
-
 group      = 'ctu.nengoros'
 
 // Gradle uses different default folders for source files => remap them
@@ -42,9 +36,13 @@ dependencies {
     compile 'ctu.nengoros:jroscore:0.0.2-SNAPSHOT'
     testCompile 'ctu.nengoros:jroscore:0.0.2-SNAPSHOT'
 
-    compile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
-    testCompile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
-    runtime 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT'
+    //compile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
+    //testCompile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
+    //runtime 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT'
+
+	// Note: this could be the circular dependency (TODO solve this somehow globally)
+	// compile 'ctu.nengoros.simulators:pluginvivae:0.0.0-SNAPSHOT'
+	runtime 'ctu.nengoros.simulators:pluginvivae:0.0.0-SNAPSHOT'
 }
 
 // prints out dependencies... 

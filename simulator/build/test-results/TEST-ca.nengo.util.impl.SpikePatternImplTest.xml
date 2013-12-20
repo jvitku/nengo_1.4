@@ -1,8 +1,0 @@
-<?xml version="1.1" encoding="UTF-8"?>
-<testsuite name="ca.nengo.util.impl.SpikePatternImplTest" tests="2" failures="0" errors="0" timestamp="2013-11-06T13:11:20" hostname="b.local" time="0.001">
-  <properties/>
-  <testcase name="testGetSpikeTimes" classname="ca.nengo.util.impl.SpikePatternImplTest" time="0.0"/>
-  <testcase name="testGetNumNeurons" classname="ca.nengo.util.impl.SpikePatternImplTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

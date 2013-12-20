@@ -91,10 +91,8 @@ public class VivaeNeuralModule extends AbsNeuralModule{
 	 */
 	@Override
 	public void reset(boolean randomize) {
-		//sc.stop();
-		//sc.start();
 		
-		// TODO: Vivae has to be reloaded in order to work correctly with Nengo..
+		// TODO: Vivae has to be reloaded in order to work correctly with the Nengo.. ?
 		sc.reset(); 
 		mc.resetModem();
 	}
