@@ -1,1 +1,0 @@
-/Users/j/Dropbox/workspace/nengoros/demonodes/../vivae/vivaeplugin//python/nr-demo/0x.py
