@@ -21,8 +21,8 @@ import ca.nengo.model.Termination;
 public interface Encoder extends Termination, Resettable{
 
 	String getName();
-	
-	
+
+
 	/**
 	 * run encoder for a given time that is: 
 	 * 	-generate values based on actual myValues
@@ -31,6 +31,6 @@ public interface Encoder extends Termination, Resettable{
 	 * @param endTime
 	 */
 	public void run(float startTime, float endTime) throws SimulationException;
-	
-	
+
+
 }

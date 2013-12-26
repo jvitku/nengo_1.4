@@ -1,0 +1,60 @@
+package ctu.nengoros.comm.rosBackend.multiTermination;
+
+import java.io.Serializable;
+
+import ca.nengo.model.Resettable;
+import ca.nengo.model.SimulationException;
+import ca.nengo.model.StructuralException;
+
+/**
+ * <p>This is as similar as possible to the Termination. The main difference is that this holds
+ * multiple terminations for one Node and represents one Nodes "input".</p>
+ * 
+ * <p>Run of the MultiTermination is composed of two steps: run all its Terminations and 
+ * sum all values on these terminations. The entire process should be transparent to the 
+ * Nengo except the fact that the particular Node is responsible for running own MultiTerminations
+ * and read their values</p>   
+ *  
+ * @author Jaroslav Vitku
+ *
+ */
+public interface MultiTermination  extends Serializable, Resettable, Cloneable /*, Terminatoin*/{
+
+	public String getName();
+
+	/**
+	 * Add new weighted Termination to this MultiTermination.
+	 *  
+	 * @param weight the termination can be weighter
+	 * @return auto-generated name of the created Termination 
+	 */
+	public String addTermination(float weight) throws StructuralException;
+	
+	/**
+	 * Add new multi-dimensional weighted Termination.
+	 *  
+	 * @param weights weight matrix
+	 * @return auto-generated name of the Termination 
+	 */
+	public String addTermination(float[][] weights) throws StructuralException;
+	
+	/**
+	 * Add new Termination with the weight of 1
+	 *  
+	 * @return auto-generated name of the created Termination
+	 */
+	public String addTerminaton() throws StructuralException;
+
+
+	/**
+	 * Runs all its Terminations, then combines their to its own value. 
+	 *
+	 * @param startTime simulation time at which running starts (s)
+	 * @param endTime simulation time at which running ends (s)
+	 * @throws SimulationException if a problem is encountered while trying to run
+	 */
+	public void run(float startTime, float endTime) throws SimulationException;
+	
+	
+	
+}

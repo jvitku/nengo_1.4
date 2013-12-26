@@ -62,9 +62,10 @@ public interface AsynNeuralModule extends Node, Probeable{
 	public void createOrigin(String topicName, Origin o) throws StructuralException;
 	
 	/**
-	 * This is used by Encoders to add their termination to the NeuralModule,
+	 * <p>This is used by Encoders to add their termination to the NeuralModule,
 	 * should not be used from any other place. Data from this termination
-	 * are read by encoder, encoded into ROS message format and sent to ROS net..
+	 * are read by encoder, encoded into ROS message format and sent to ROS net.</p>
+	 * 
 	 * @param topicName name of the ROS topic (and Nengo termination)
 	 * @param enc encoder which sets values (implements Termination)
 	 * @throws StructuralException is thrown if there already is term. with this name
