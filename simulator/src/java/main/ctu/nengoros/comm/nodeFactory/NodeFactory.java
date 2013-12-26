@@ -96,9 +96,10 @@ public class NodeFactory{
 	
 	private static ExternalNodeContainer createJavaNode(MyNodeConfig mnc, NodeGroup g){
 		command.clear();
-		// java nodes have only one part of command: complete class name
-		// with packages separated by dots.
-		command.add(mnc.command[0]);
+		// java node command is composed of complete.class.Name and command line parameters, copy all: 
+		for(int i=0; i<mnc.command.length; i++)
+			command.add(mnc.command[i]);
+		
 		// if name-space is set, add it to the command
 		if(g.namespace !=null && g.namespace.length() > 0){
 			command.add(NS+g.namespace);	

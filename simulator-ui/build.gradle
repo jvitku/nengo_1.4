@@ -3,7 +3,7 @@
 //
 // Version of build configuration which depends on local maven repository of rosjava
 //
-version     = '0.0.3-SNAPSHOT'
+version     = '0.0.4-SNAPSHOT'
 group       = 'ctu.nengoros'
 
 // Gradle uses different default folders for source files => remap them
@@ -36,6 +36,8 @@ mainClassName = 'ca.nengo.ui.NengoLauncher'
 
 dependencies {
 
+	//compile project(':vivae:vivaesimulator')
+	compile project(':vivae:vivaeplugin')
     compile project(':nengo:simulator')
     compile project(':jroscore')
 	//compile 'ctu.nengoros:jroscore:0.0.1-SNAPSHOT'	
@@ -49,6 +51,11 @@ dependencies {
 	// in fact, it is better for now to add the projects as a sub-projects of nengoros, so:  (TODO: online maven repository)
 	compile project(':logic:gates')
 	compile project(':demonodes:basic')
+	
+    //compile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
+    //testCompile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
+    //runtime 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
+	
 	//compile project(':projectTemplate')	// example how to include projectTemplate (uncomment to use it from nengoros/ directory)
 	
 }
@@ -109,6 +116,17 @@ installApp.doLast {
     }
     copy {
         from 'lib/Lib'
+        into "$buildDir/install/"+project.name+'/lib/Lib'
+        include('**/*')
+    }
+    // vivae simulator jar files (TODO make this more gradle compatible)
+    copy {
+        from '../../vivae/vivaeplugin/build/libs'
+        into "$buildDir/install/"+project.name+'/lib/Lib'
+        include('**/*')
+    }
+    copy {
+        from '../../vivae/vivaesimulator/build/libs'
         into "$buildDir/install/"+project.name+'/lib/Lib'
         include('**/*')
     }

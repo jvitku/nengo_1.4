@@ -13,7 +13,7 @@ from ca.nengo.model import Units
 #from ctu.nengoros.modules.impl import DefaultNeuralModule as NeuralModule
 from ctu.nengoros.modules.impl import DefaultAsynNeuralModule as NeuralModule
 from ctu.nengoros.comm.nodeFactory import NodeGroup as NodeGroup
-from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
+#from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
 
 # node utils..
 title='FuzzyMemLinInc'

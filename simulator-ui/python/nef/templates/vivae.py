@@ -1,0 +1,1 @@
+/Users/j/Dropbox/workspace/nengoros/demonodes/../vivae/vivaeplugin//python/nef/templates/vivae.py

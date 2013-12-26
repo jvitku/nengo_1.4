@@ -1,8 +1,0 @@
-<?xml version="1.1" encoding="UTF-8"?>
-<testsuite name="ca.nengo.math.impl.DefaultFunctionInterpreterTest" tests="2" failures="0" errors="0" timestamp="2013-11-06T13:08:02" hostname="b.local" time="0.017">
-  <properties/>
-  <testcase name="testRegisterFunction" classname="ca.nengo.math.impl.DefaultFunctionInterpreterTest" time="0.011"/>
-  <testcase name="testParse" classname="ca.nengo.math.impl.DefaultFunctionInterpreterTest" time="0.006"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

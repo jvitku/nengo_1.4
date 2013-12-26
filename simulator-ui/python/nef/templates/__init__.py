@@ -25,7 +25,7 @@ import logic_fuzzy_member_triangular
 import logic_fuzzy_member_trapezoid
 import demoSubscriber
 import demoPublisher
-
+import vivae
 
 templates=[
     networkarray,
@@ -52,5 +52,6 @@ templates=[
 	#logic_fuzzy_member_linearDec,# TODO: these two do not work in the GUI 
 	#logic_fuzzy_member_linearInc,
 	logic_fuzzy_member_triangular,
-	logic_fuzzy_member_trapezoid	
+	logic_fuzzy_member_trapezoid,
+	vivae	
     ]

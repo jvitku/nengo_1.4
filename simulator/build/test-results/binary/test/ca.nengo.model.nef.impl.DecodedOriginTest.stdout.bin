@@ -1,5 +1,0 @@
-testGetErroòìINFO  [Test worker:ca.nengo.util.Memory]: Used: 430009104 Total: 1408761856 Max: 3817865216 (before gamma)
-testGetErroòîINFO  [Test worker:ca.nengo.util.Memory]: Used: 430009104 Total: 1408761856 Max: 3817865216 (before inverse)
-testGetErroòîINFO  [Test worker:ca.nengo.math.impl.WeightedCostApproximator]: Using 51 singular values for pseudo-inverse
-testGetErroòíINFO  [Test worker:ca.nengo.util.Memory]: Used: 440727184 Total: 1408761856 Max: 3817865216 (after inverse)
-testGetErroò 0.0000421983ŠtestGetErroò‚
