@@ -37,7 +37,28 @@ In order to install just standalone version of Nengoros, you can use the script 
 
 * In Eclipse, import (simulator and simulator-ui) projects from nengo folder, run: `clean & build` in Eclipse. 
 
-* Launch Nengo by calling main method in class: `NengoLauncher` or by running scripts either `simulator-ui/nengo` or `simulator-ui/nengo-cl`.  
+* Launch Nengo by calling main method in class: `NengoLauncher` or by running scripts either `simulator-ui/nengo` or `simulator-ui/nengo-cl`. 
+
+
+Changelog
+--------------
+
+###nengoros-master-v0.0.4
+* Added support for the [my modification](https://github.com/jvitku/vivae) of the [Vivae](http://cig.felk.cvut.cz/projects/robo/) simulator. More precisely: the old version of Vivae support was removed from the Nengoros and placed into the `vivae/vivaeplugin` project.
+
+###nengoros-master-v0.0.2
+
+* Added three possibilities how to sync time between Nengo and ROS nodes: TimeMaster, TimeIgnore and TimeSlave. These are used in the `ca.nengo.util.impl.NodeThreadPool.step()`. 
+
+* Added demos representing time synchronization in the project demonodes/basic, the corresponding python scripts are located under `nr-demo/basic/time*`
+
+###nengoros-master-v0.0.1
+
+* The first stable version. Version is mainly taken from my older repositories on bitbucket.org. 
+
+* Includes demos on rosjava, ROS nodes and native process.
+
+* Communication with ROS nodes is synchronous or asynchronous
 
 
 
