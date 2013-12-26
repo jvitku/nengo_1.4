@@ -1,15 +1,27 @@
-({'state': 0, 'height': 794, 'width': 1062, 'x': 54, 'y': 22},
+({'state': 0, 'height': 793, 'width': 1232, 'x': 54, 'y': 22},
  [(u'VivaeSimulator', None, {'label': False, 'height': 32, 'width': 143, 'x': 707, 'y': 7}),
-  (u'VivaeSimulator', u'value|a_pub', {'label': True, 'sel_dim': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 651, 'fixed_y': None, 'autozoom': True, 'y': 48}),
-  (u'VivaeSimulator', u'value|b_pub', {'label': True, 'sel_dim': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 'last_maxy': 13.505847260546885, 'sel_all': True, 'height': 200, 'width': 300, 'x': 648, 'fixed_y': None, 'autozoom': False, 'y': 251}),
-  (u'VivaeSimulator', u'value|c_pub', {'label': True, 'sel_dim': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 'last_maxy': 1.0436803149516698, 'sel_all': True, 'height': 200, 'width': 300, 'x': 644, 'fixed_y': None, 'autozoom': False, 'y': 462}),
-  (u'AgentC', 'value|origin', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 296, 'fixed_y': None, 'autozoom': False, 'y': 469}),
-  (u'AgentC', 'control', {'label': True, 'range': 1.0, 'limits_w': 22, 'limits': True, 'height': 200, 'width': 142, 'x': 163, 'y': 52}),
-  (u'agentB', None, {'label': False, 'height': 32, 'width': 73, 'x': 10, 'y': 304}),
-  (u'agentB', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 120, 'x': 170, 'y': 264}),
-  (u'agentB', 'value|origin', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 316, 'fixed_y': None, 'autozoom': False, 'y': 261}),
+  (u'VivaeSimulator', u'value|a_pub', {'label': True, 'sel_dim': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 612, 'fixed_y': None, 'autozoom': True, 'y': 463}),
+  (u'VivaeSimulator', u'value|b_pub', {'label': True, 'sel_dim': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 625, 'fixed_y': None, 'autozoom': True, 'y': 253}),
+  (u'VivaeSimulator', u'value|c_pub', {'label': True, 'sel_dim': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 611, 'fixed_y': None, 'autozoom': True, 'y': 41}),
+  (u'AgentC', 'value|origin', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 296, 'fixed_y': None, 'autozoom': True, 'y': 469}),
+  (u'AgentC', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 142, 'x': 163, 'y': 52}),
   (u'AgentC', None, {'label': False, 'height': 32, 'width': 76, 'x': 16, 'y': 87}),
-  (u'agentA', None, {'label': False, 'height': 32, 'width': 73, 'x': 20, 'y': 585}),
-  (u'agentA', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 120, 'x': 160, 'y': 463}),
-  (u'agentA', 'value|origin', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 317, 'fixed_y': None, 'autozoom': False, 'y': 37})],
+  (u'AgentB', None, {'label': False, 'height': 32, 'width': 75, 'x': 11, 'y': 264}),
+  (u'AgentB', 'value|origin', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 306, 'fixed_y': None, 'autozoom': True, 'y': 259}),
+  (u'AgentC', 'value|origin', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 298, 'fixed_y': None, 'autozoom': True, 'y': 52}),
+  (u'AgentB', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 120, 'x': 172, 'y': 259}),
+  (u'AgentA', None, {'label': False, 'height': 32, 'width': 75, 'x': 9, 'y': 487}),
+  (u'AgentA', 'control', {'label': True, 'range': 2.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 120, 'x': 171, 'y': 466}),
+  (u'VivaeSimulator', u'value|a_pub', {'label': True, 'sel_dim': [0, 1, 2, 3, 4, 16], 'last_maxy': 47.08968585437785, 'sel_all': False, 'height': 200, 'width': 300, 'x': 901, 'fixed_y': None, 'autozoom': False, 'y': 468}),
+  (u'VivaeSimulator', u'value|b_pub', {'label': True, 'sel_dim': [0, 1, 2, 3, 4, 16], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 923, 'fixed_y': None, 'autozoom': False, 'y': 256}),
+  (u'VivaeSimulator', u'value|c_pub', {'label': True, 'sel_dim': [0, 1, 2, 3, 4, 16], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 913, 'fixed_y': None, 'autozoom': False, 'y': 52})],
  {'dt': 0, 'show_time': 0.5, 'sim_spd': 0, 'update_freq': 30.303030303030305, 'filter': 0.03, 'rcd_time': 4.0}) 
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=375.075859586721,y=80.5,width=432.8482808265579,height=267.9882812499998]
+# VivaeSimulator (Generic Node)=Point2D.Double[566.0, 181.0]
+# AgentA (Function Input)=Point2D.Double[388.31444589093195, 246.82962115535798]
+# AgentC (Function Input)=Point2D.Double[380.102384051997, 100.21974743690525]
+# AgentB (Function Input)=Point2D.Double[385.587208787571, 169.10238405199703]
