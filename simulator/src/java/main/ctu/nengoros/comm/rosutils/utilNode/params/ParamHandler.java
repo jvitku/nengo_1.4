@@ -22,7 +22,7 @@ import ctu.nengoros.rosparam.node.RosparamNode;
 public class ParamHandler extends RosparamNode{
 	
 	public static final String name = "NengoParameterHandler";
-	private final String me = "["+name+"] ";
+	public final String me = "["+name+"] ";
 	
 	@Override
 	public GraphName getDefaultNodeName() { return GraphName.of(name); }

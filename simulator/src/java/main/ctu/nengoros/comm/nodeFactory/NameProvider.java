@@ -3,6 +3,7 @@ package ctu.nengoros.comm.nodeFactory;
 import java.util.ArrayList;
 
 import ctu.nengoros.comm.rosutils.Mess;
+import ctu.nengoros.comm.rosutils.utilNode.params.ParamHandler;
 import ctu.nengoros.comm.rosutils.utilNode.time.impl.DefaultTimeMaster;
 import ctu.nengoros.comm.rosutils.utilNode.time.impl.DefaultTimeSlave;
 
@@ -17,7 +18,7 @@ import ctu.nengoros.comm.rosutils.utilNode.time.impl.DefaultTimeSlave;
  */
 public class NameProvider{
 
-	private final String[] ignoredNames = new String[]{DefaultTimeMaster.name, DefaultTimeSlave.name};
+	private final String[] ignoredNames = new String[]{DefaultTimeMaster.name, DefaultTimeSlave.name, ParamHandler.name};
 	
 	private ArrayList<String> nameList;
 	// note: this separator "_" does not work at all, look at screens/nameconflict.png

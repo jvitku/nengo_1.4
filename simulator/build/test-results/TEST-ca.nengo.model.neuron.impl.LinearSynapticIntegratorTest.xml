@@ -1,9 +1,0 @@
-<?xml version="1.1" encoding="UTF-8"?>
-<testsuite name="ca.nengo.model.neuron.impl.LinearSynapticIntegratorTest" tests="3" failures="0" errors="0" timestamp="2013-11-06T13:11:19" hostname="b.local" time="0.001">
-  <properties/>
-  <testcase name="testRun" classname="ca.nengo.model.neuron.impl.LinearSynapticIntegratorTest" time="0.0"/>
-  <testcase name="testReset" classname="ca.nengo.model.neuron.impl.LinearSynapticIntegratorTest" time="0.001"/>
-  <testcase name="testGetTerminations" classname="ca.nengo.model.neuron.impl.LinearSynapticIntegratorTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

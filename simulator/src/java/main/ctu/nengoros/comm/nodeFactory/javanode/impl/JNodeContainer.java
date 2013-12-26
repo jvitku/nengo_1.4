@@ -35,17 +35,17 @@ public class JNodeContainer implements JavaNodeContainer{
 	@Override
 	public void start() {
 		if(running){
-			System.err.println(name+": I am already running!");
+			System.out.println("["+name+"] OK, I am already running!");
 			return;		
 		}
-		System.out.println(name+": OK, starting myself.");
+		System.out.println("["+name+"] OK, starting myself.");
 		nme.execute(this.getNode(), conf);
 		running = true;
 	}
 
 	@Override
 	public void stop() {
-		System.out.println(name+": OK, shutting down myself..");
+		System.out.println("["+name+"] OK, shutting down myself..");
 		nme.shutdownNodeMain(this.getNode());
 		NodeFactory.killNode(this);
 		running = false;
