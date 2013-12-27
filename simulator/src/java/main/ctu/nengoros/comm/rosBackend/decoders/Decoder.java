@@ -17,7 +17,7 @@ import ca.nengo.model.Origin;
  * @author Jaroslav Vitku
  *
  */
-public interface Decoder extends SyncedUnitInterface,Origin, MyEventListenerInterface{
+public interface Decoder extends SyncedUnitInterface, Origin, MyEventListenerInterface{
 
 	/**
 	 * get name of the termination 

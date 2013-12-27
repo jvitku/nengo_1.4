@@ -1,5 +1,7 @@
 package ctu.nengoros.comm.rosBackend.multiTermination.impl;
 
+import ca.nengo.dynamics.DynamicalSystem;
+import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.Node;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.Termination;
@@ -32,13 +34,12 @@ public class SumMultiTermination extends BasicMultiTermination{
 	TimeSeriesImpl myValue;
 	float[][] myVals;
 
-	public SumMultiTermination(Node parent, String name, int dimension){
-		super(parent,name, dimension);
+	public SumMultiTermination(Node parent, String name, int dimension, Integrator integ, DynamicalSystem myDynamics){
+		super(parent,name, dimension, integ, myDynamics);
 	}
 
 	/**
-	 * This class sums all values on own Terminations and sets it 
-	 * as own value. 
+	 * This class sums all values on own Terminations and sets it as own value. 
 	 */
 	@Override
 	protected void runCombineValues(float startTime, float endTime)
@@ -48,17 +49,20 @@ public class SumMultiTermination extends BasicMultiTermination{
 			System.err.println(me+"Warning: no terminations registered");
 			return;
 		}
-
 		// read the first Termination
 		this.initMyValue();
 
+		float weight; 
+		
 		// add the rest of Terminations to it
 		for(int i=1; i<this.orderedTerminations.size(); i++){
 			Termination t = this.orderedTerminations.get(i);
+			
+			weight = readWeight(t.getName());
 
 			super.checkInstance(t);
 			TimeSeries out = ((BasicTermination)t).getOutput();
-			this.sumToMyValue((TimeSeriesImpl) out);
+			this.sumToMyValue((TimeSeriesImpl) out, weight);
 		}
 	}
 
@@ -76,14 +80,26 @@ public class SumMultiTermination extends BasicMultiTermination{
 					+t.getName()+" does not support clonning");
 			e.printStackTrace();
 		}
+		
+		float weight = readWeight(orderedTerminations.get(0).getName());
+		
+		// apply weights
+		for(int i=0; i<myVals.length; i++){
+			for(int j=0; j<myVals[0].length; j++){
+				myVals[i][j] = myVals[i][j]*weight;
+			}
+		}
 	}
+	
+	
 
 	/**
-	 * Just add values on this termination to myValue
+	 * Just add values on this termination to myValue.
+	 * 
 	 * @param t Termination with values to read
 	 * @throws SimulationException
 	 */
-	private void sumToMyValue(TimeSeriesImpl t) throws SimulationException{
+	private void sumToMyValue(TimeSeriesImpl t, float weight) throws SimulationException{
 
 		float[][] values = t.getValues();
 
@@ -102,9 +118,12 @@ public class SumMultiTermination extends BasicMultiTermination{
 		for(int i=0; i<values.length; i++){
 			// sum all dimensions
 			for(int j=0; j<values[0].length; j++){
-				myVals[i][j] = myVals[i][j] + values[i][j];
+				myVals[i][j] = myVals[i][j] + values[i][j] * weight;
 			}
 		}
 	}
+
+	@Override
+	public TimeSeries getOutput() { return this.myValue; }
 
 }

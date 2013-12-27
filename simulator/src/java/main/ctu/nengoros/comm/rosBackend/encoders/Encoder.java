@@ -6,7 +6,7 @@ import ca.nengo.model.SimulationException;
 import ca.nengo.model.Termination;
 
 /**
- * each Enoder is associated with it Nengo Origin, it does:
+ * Each Enoder is associated with its Nengo Termination, it does:
  * 	-in constructor:	
  * 		-registers new ROS message publisher (topic equals to its name)
  * 
@@ -22,7 +22,6 @@ public interface Encoder extends Termination, Resettable{
 
 	String getName();
 
-
 	/**
 	 * run encoder for a given time that is: 
 	 * 	-generate values based on actual myValues
@@ -31,6 +30,5 @@ public interface Encoder extends Termination, Resettable{
 	 * @param endTime
 	 */
 	public void run(float startTime, float endTime) throws SimulationException;
-
 
 }

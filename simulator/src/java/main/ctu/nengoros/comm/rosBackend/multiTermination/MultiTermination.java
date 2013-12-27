@@ -2,9 +2,11 @@ package ctu.nengoros.comm.rosBackend.multiTermination;
 
 import java.io.Serializable;
 
+import ca.nengo.model.Node;
 import ca.nengo.model.Resettable;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
+import ca.nengo.util.TimeSeries;
 
 /**
  * <p>This is as similar as possible to the Termination. The main difference is that this holds
@@ -18,7 +20,7 @@ import ca.nengo.model.StructuralException;
  * @author Jaroslav Vitku
  *
  */
-public interface MultiTermination  extends Serializable, Resettable, Cloneable /*, Terminatoin*/{
+public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 
 	public String getName();
 
@@ -30,6 +32,7 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable /
 	 */
 	public String addTermination(float weight) throws StructuralException;
 	
+	
 	/**
 	 * Add new multi-dimensional weighted Termination.
 	 *  
@@ -38,6 +41,7 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable /
 	 */
 	public String addTermination(float[][] weights) throws StructuralException;
 	
+	
 	/**
 	 * Add new Termination with the weight of 1
 	 *  
@@ -45,9 +49,11 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable /
 	 */
 	public String addTerminaton() throws StructuralException;
 
-
+	
 	/**
 	 * Runs all its Terminations, then combines their to its own value. 
+	 * This method sets the value of TimeSeries myOutput, which can be obtained 
+	 * by means of getOutput() method after that.
 	 *
 	 * @param startTime simulation time at which running starts (s)
 	 * @param endTime simulation time at which running ends (s)
@@ -56,5 +62,18 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable /
 	public void run(float startTime, float endTime) throws SimulationException;
 	
 	
-	
+	/**
+	 * Get output of this MultiTermination
+	 * 
+	 * @return TimeSeries representing the actual output
+	 */
+	public TimeSeries getOutput();
+
+	/**
+	 * Get parent Node of my all Terminations.
+	 * 
+	 * @return
+	 */
+	public Node getNode();
+
 }

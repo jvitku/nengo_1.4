@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import ca.nengo.model.SimulationException;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
-import ctu.nengoros.comm.rosBackend.multiTerimnationEncoder.MultiTerminationEncoder;
+import ctu.nengoros.comm.rosBackend.encoders.MultiTerminationEncoder;
 import ctu.nengoros.modules.AbsNeuralModule;
 
 /**
@@ -21,7 +21,7 @@ import ctu.nengoros.modules.AbsNeuralModule;
  * @author Jaroslav Vitku
  *
  */
-public class MultipleInputAsyncNeuralModule extends AbsNeuralModule{
+public class MultipleInputNeuralModule extends AbsNeuralModule{
 
 	private static final long serialVersionUID = 8852344940100722448L;
 
@@ -29,23 +29,26 @@ public class MultipleInputAsyncNeuralModule extends AbsNeuralModule{
 	//protected Map<String, Termination> myTerminations;	// map of terminations used
 
 	// instead of Terminations, each module contains MultipleTerminationEncoders
-	// where each MultipleTerminationEncoder can have one or more terminations
+	// where each MultiTerminationEncoder can have one or more terminations
 	protected HashMap <String, MultiTerminationEncoder> mTEs;		
 	protected LinkedList <MultiTerminationEncoder> orderedMTEs;
 
-	public MultipleInputAsyncNeuralModule(String name, NodeGroup group) {
+	/**
+	 * <p>Instantiates a NeuralModule which can have potentially many Terminations connected
+	 * to one Encoder. This enables connecting multiple Origins to "one Termination".</p>
+	 * 
+	 * <p>Each MultiTermination holds several own Terminations whose value is combined together.</p>
+	 * 
+	 * @param name name of the module
+	 * @param group group into which this module belongs
+	 */
+	public MultipleInputNeuralModule(String name, NodeGroup group) {
 		super(name, group);
 
-		// these are not used here (TODO: better class hierarchy)
-		this.myTerminations = null;
-		this.orderedTerminations = null;
-
-		mTEs = new HashMap<String, MultiTerminationEncoder>();
-		orderedMTEs = new LinkedList<MultiTerminationEncoder>();
+		this.init(name);
 	}
 
-
-	public MultipleInputAsyncNeuralModule(String name, NodeGroup group, boolean synchronous){
+	public MultipleInputNeuralModule(String name, NodeGroup group, boolean synchronous){
 		super(name, group, synchronous);
 
 		this.init(name);
@@ -73,41 +76,12 @@ public class MultipleInputAsyncNeuralModule extends AbsNeuralModule{
 	 */
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
-		myTime = endTime;
+		myTime = endTime; 
+		
+		// TODO
 
-		// run all Terminations of this Module
-		this.runAllEncoderTerminations(startTime, endTime);
-
-		// collect data on all Terminations and pass data to ROS network  
-		this.runCollectingAllTerminationValues(startTime, endTime);
 	}
 
 
-	/**
-	 * For each MultiTerminationEncoder, run all its Terminations
-	 * @param startTime
-	 * @param endTime
-	 * @throws SimulationException
-	 */
-	private void runAllEncoderTerminations(float startTime, float endTime) throws SimulationException{
-
-		for(int i=0; i<orderedMTEs.size(); i++){
-			orderedMTEs.get(i).runAllTerminations(startTime, endTime);
-		}
-	}
-
-	/**
-	 * For each MultiTerminationEncoder, collect data on its Terminations
-	 * and pass the result ("input value on dendrite")
-	 * @param startTime
-	 * @param endTime
-	 * @throws SimulationException
-	 */
-	private void runCollectingAllTerminationValues(float startTime, float endTime) throws SimulationException{
-
-		for(int i=0; i<orderedMTEs.size(); i++){
-			orderedMTEs.get(i).runCollectDataOnTerminations(startTime, endTime);
-		}
-	}
 }
 

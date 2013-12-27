@@ -1,6 +1,7 @@
 package ctu.nengoros.comm.rosBackend.multiTermination;
 
-import ctu.nengoros.comm.rosBackend.multiTermination.impl.TerminationFactory;
+import ca.nengo.dynamics.DynamicalSystem;
+import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.Node;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
@@ -18,8 +19,8 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 	private static final long serialVersionUID = 7943836551919849111L;
 	public final String me = "[BasicMultiTermination] ";
 
-	public BasicMultiTermination(Node parent, String name, int dimension) {
-		super(parent, name, dimension);
+	public BasicMultiTermination(Node parent, String name, int dimension, Integrator integ, DynamicalSystem lti) {
+		super(parent, name, dimension, integ, lti);
 	}
 
 	/**
@@ -31,7 +32,7 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 	@Override
 	public String addTermination(float weight) throws StructuralException {
 
-		// TODO: add this weight to all dimensions of mutlidimensional input
+		// TODO: add this weight to all dimensions of multi-dimensional input
 		if(dimension != 1){
 			String mess = me+"ERROR: my dimension is "+dimension+
 					", now only one-dimensional Terminations are supported";
@@ -41,11 +42,11 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 		}
 
 		String termName = this.generateName();
-		Termination t = TerminationFactory.buldBasicTermination(
-				parent, termName, this.dimension);
+		//Termination t = TerminationFactory.buldBasicTermination(parent, termName, this.dimension);
+		Termination t = new BasicTermination(parent, lti, integ, name);
 
 		this.myTerminations.put(termName, t);
-		this.orderedTerminations.push(t);
+		this.orderedTerminations.add(t);
 		return name;
 	}
 

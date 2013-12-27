@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import ca.nengo.dynamics.DynamicalSystem;
+import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.Node;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
@@ -21,9 +23,10 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 
 	private static final long serialVersionUID = -5806553506661735679L;
 
-	protected LinkedList <Termination> orderedTerminations;
-	protected Map<String, Termination> myTerminations;
-
+	protected final LinkedList <Termination> orderedTerminations;
+	protected final Map<String, Float> weights;				// weight for each Termination
+	protected final Map<String, Termination> myTerminations;
+	
 	// dimensionality of my input
 	protected final int dimension;	
 
@@ -41,12 +44,18 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 	protected final Node parent;
 	
 	public final float DEF_W = 1;
-
 	
 	protected String mess = me+"ERROR: suport fot multidimensional Terminations" +
 			"is not implemented so far!";
 	
-	public AbstractMultiTermination(Node parent, String name, int dimension){
+	// setup properties of my Terminations
+	protected final Integrator integ;
+	protected final DynamicalSystem lti;
+	
+	public AbstractMultiTermination(Node parent, String name, int dimension, Integrator integ, DynamicalSystem lti2){
+		
+		this.lti = lti2;
+		this.integ = integ;
 		
 		this.t_start=0;
 		this.t_end=0;
@@ -57,6 +66,7 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 		this.parent = parent;
 		this.orderedTerminations = new LinkedList<Termination>();
 		this.myTerminations = new HashMap<String, Termination>();
+		this.weights = new HashMap<String, Float>();
 		
 		//TODO
 		if(dimension>1)
@@ -118,13 +128,18 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 		return name+"_"+counter++;
 	}
 
+	/**
+	 * Add new termination with its own weight.
+	 */
+	@Override
+	public abstract String addTermination(float weight) throws StructuralException;
+	
 	@Override
 	public String addTermination(float[][] weights) throws StructuralException{
 		// TODO
 		this.checkDimensions(weights);
 		return null;
 	}
-
 
 	@Override
 	public String addTerminaton() throws StructuralException{
@@ -138,5 +153,14 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 		throw new StructuralException(mess);
 	}
 	
+	protected float readWeight(String name) throws SimulationException{
+		if(!this.weights.containsKey(name))
+ 			throw new SimulationException(me+"ERROR: weight for this Termination not found: "+name);
+		
+		return this.weights.get(name);
+	}
+	
+	@Override
+	public Node getNode() { return this.parent;	}
 
 }
