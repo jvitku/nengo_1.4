@@ -6,20 +6,19 @@ import ctu.nengoros.util.sync.SyncedUnitInterface;
 import ca.nengo.model.StructuralException;
 
 /**
- * Class for synchronization (e.g. Nengo with ROS components)
- * 
- * Unit has two states: ready/notReady
- * Unit is ready if:
- * 	-has set flag: asynchronous=true (simulaiton is not waiting for it)
- * 	-all its childs are ready
- * 	-does not have any childs and is set to state: ready
+ * Class for synchronization (e.g. Nengo with ROS components) of arbitrary components.
+ * The Unit has two states: ready/notReady, Unit is ready if the following is true:
+ * <ul>
+ * 	<li> has set flag: asynchronous=true (simulation is not waiting for it) </li>
+ * 	<li> all its childs are ready </li>
+ * 	<li> does not have any childs and is set to state: ready</li>
+ * </ul>
  * 
  * @author Jaroslav Vitku
- *
  */
 public abstract class SyncedUnit implements SyncedUnitInterface{
 
-	// should we check all conditions, or always presume state: ready (therefore asynchornous communication?)
+	// should we check all conditions, or always presume state: ready (therefore asynchronous communication?)
 	protected boolean synchronous;
 	private volatile boolean ready = true;
 	private final boolean DEFSYNCHRONOUS = true;	// synchronous communication by default
@@ -60,7 +59,6 @@ public abstract class SyncedUnit implements SyncedUnitInterface{
 		this.synchronous = synchronous;
 		if(this.synchronous)
 			this.ready = true;	// not to halt the simulation
-		
 	}
 	
 	@Override

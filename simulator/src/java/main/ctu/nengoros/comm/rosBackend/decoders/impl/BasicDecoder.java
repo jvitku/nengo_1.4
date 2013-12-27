@@ -13,7 +13,6 @@ import ctu.nengoros.comm.rosBackend.backend.BackendUtils;
 import ctu.nengoros.comm.rosBackend.decoders.Decoder;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.exceptions.MessageFormatException;
-import ctu.nengoros.modules.AsynNeuralModule;
 import ctu.nengoros.util.sync.impl.SyncedUnit;
 import ca.nengo.config.ConfigUtil;
 import ca.nengo.config.Configuration;
@@ -28,6 +27,8 @@ import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ca.nengo.model.Units;
 import ca.nengo.model.impl.RealOutputImpl;
+
+import ctu.nengoros.newmodules.NeuralModule;
 
 /**
  * This is (the simplest version of) decoder, thing that receives messages
@@ -110,7 +111,7 @@ public class BasicDecoder extends SyncedUnit implements Decoder {
 		this.ros = ros;
 		this.ros.addEventListener(this);	
 		// Nengo stuff
-		((AsynNeuralModule)myNode).createOrigin(myName, this);
+		((NeuralModule)myNode).addOrigin(myName, this);
 		super.setReady(true);
 	}
 	

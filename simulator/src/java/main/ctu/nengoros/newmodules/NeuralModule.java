@@ -2,7 +2,6 @@ package ctu.nengoros.newmodules;
 
 import ca.nengo.model.Node;
 import ca.nengo.model.Probeable;
-import ctu.nengoros.modules.PeripheralsRegisteringNode;
 
 /**
  * 

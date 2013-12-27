@@ -3,11 +3,20 @@ package ctu.nengoros.util.sync;
 import ca.nengo.model.StructuralException;
 
 /**
- * Represents basically an object that can be in two states: ready/notReady
- * If you want to use hierarchical infrastructure, extend abstract SyncedUnit
+ * This is supposed to implement simple synchronization between Nengo and ROS nodes.
+ * 
+ * Basic idea:
+ * <ul>
+ * 	<li>each Unit can have two states: ready / notReady</li>
+ *  <li>each Unit can have arbitrary number of children</li>
+ *  <li>each children is also unit</li>
+ *  </ul>
  *  
+ * Simulator can easily determine whether all components of simulation are ready. 
+ * Extend unit class in order to synchronize.
+ * 
+ *   
  * @author Jaroslav Vitku
- *
  */
 public interface SyncedUnitInterface {
 	

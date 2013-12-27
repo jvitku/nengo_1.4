@@ -5,8 +5,8 @@ import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.comm.rosutils.RosUtils;
-import ctu.nengoros.modules.AsynNeuralModule;
-import ctu.nengoros.modules.impl.test.NeuralModuleTest;
+import ctu.nengoros.newmodules.NeuralModule;
+import ctu.nengoros.newmodules.test.NeuralModuleTest;
 
 /**
  * This demo starts roscore and launches two nodes in one group of nodes.
@@ -61,7 +61,7 @@ public class ModemF2I {
 
 		ModemContainer md = g.getModem();
 		System.out.println("name of nmodem obtained is:"+md.getName());
-		AsynNeuralModule smartOne = new NeuralModuleTest("SmartNeuron",md);
+		NeuralModule smartOne = new NeuralModuleTest("SmartNeuron",md);
 
 		smartOne.createDecoder("ros2annFloatArr", "int", 2);
 		smartOne.createEncoder("ann2rosFloatArr", "float", 4);

@@ -55,7 +55,7 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 
 	Integrator noInt = new NoIntegrator();					// do not integrate termination values
 	
-	public static final String me = "[AbsNeuron] ";
+	public static final String me = "[AbsNeuralModule] ";
 	
 	private static final long serialVersionUID = -5590968314570316769L;
 	protected float myTime;
@@ -238,6 +238,18 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	
 	
 	/**
+	 * Check whether an encoder to the same topicName is not already registered here.
+	 * @param topicName name of the ROS topic and name of the Encoder (base name for its Terminations). 
+	 * @throws StructuralException if a Encoder with given name already registered here
+	 */
+	private void checkEncoderAvailable(String topicName) throws StructuralException{
+		if(this.myEncoders.containsKey(topicName))
+			throw new StructuralException(me+"Encoder to the requested topic "+topicName+
+					" alredy registered to this NeuralModule!");
+	}
+	
+	
+	/**
 	 * This method adds encoder, that is owner of one or multiple Terminations to this NeuralModule.
 	 * 
 	 * Note: units are left default, TODO: add units to make use of other ROS message types
@@ -245,11 +257,13 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	 * @param topicName name of termination and the corresponding ROS topic
 	 * @param dimension
 	 */
-	public void createEncoder(String topicName, String dataType, int[] dimensionSizes){
+	public void createEncoder(String topicName, String dataType, int[] dimensionSizes) {
 		
 		int dim;
 		Backend ros;
 		try {
+			this.checkEncoderAvailable(topicName);
+			
 			ros = BackendUtils.select(topicName, dataType, dimensionSizes, mc.getConnectedNode(), true);
 			dim = BackendUtils.countNengoDimension(dimensionSizes);
 			
@@ -285,6 +299,9 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	public void createEncoder(String topicName, String dataType) {
 		Backend ros;
 		try {
+			
+			this.checkEncoderAvailable(topicName);
+
 			ros = BackendUtils.select(topicName, dataType, /*dimensionSizes,*/ mc.getConnectedNode(), true);
 			int dim = ros.gedNumOfDimensions();
 
@@ -377,7 +394,14 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	
 	@Override
 	public void reset(boolean randomize) {
-		mc.resetModem();	// should call reset() for all nodes in the group (including modem itself)	
+		mc.resetModem();	// should call reset() for all nodes in the group (including modem itself)
+		
+		for(int i=0; i<this.orderedEncoders.size(); i++)
+			this.orderedEncoders.get(i).reset(randomize);
+		
+		for(int i=0; i<this.orderedTerminations.size(); i++)
+			this.orderedTerminations.get(i).reset(randomize);
+		
 		// System.out.println("reset");
 		// TODO: delete history, kill and restart myNode (modem can stay..)
 	}
@@ -523,6 +547,24 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 			throws ScriptGenException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void addOrigin(String topicName, Origin o) throws StructuralException {
+		if(this.myOrigins.containsKey(o.getName()))
+			throw new StructuralException(me+"Origin named "+o.getName()+" is already registered here!");
+		
+		this.myOrigins.put(o.getName(), o);
+		this.orderedOrigins.add(o);
+	}
+
+	@Override
+	public void addTermination(String topicName, Termination t) throws StructuralException {
+		if(this.myTerminations.containsKey(t.getName()))
+			throw new StructuralException(me+"Termination named "+t.getName()+" is already registered here!");
+		
+		this.myTerminations.put(t.getName(), t);
+		this.orderedTerminations.add(t);
 	}
 
 }
