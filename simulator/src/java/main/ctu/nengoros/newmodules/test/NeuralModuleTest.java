@@ -67,7 +67,7 @@ public class NeuralModuleTest extends SyncedUnit implements NeuralModule{
 	// run all these Encoders after Terminations
 	protected Map<String, NewEncoder> myEncoders;		
 	protected LinkedList<NewEncoder> orderedEncoders;	
-
+	
 	protected String myDocumentation;
 	
 	double t_start,t_end,t;		
@@ -101,8 +101,11 @@ public class NeuralModuleTest extends SyncedUnit implements NeuralModule{
         this.t=0;
         this.myOrigins = new HashMap<String, Origin>(5);
 		this.myTerminations = new HashMap<String, Termination>(5);
+		this.myEncoders = new HashMap<String,NewEncoder>(5);
+		
 		this.orderedOrigins = new LinkedList <Origin> ();
 		this.orderedTerminations = new LinkedList <Termination> ();
+		this.orderedEncoders = new LinkedList<NewEncoder>();
 		
 		if(modContainer == null)
 			System.err.println(me+"modem probably not initialized!!!! ");

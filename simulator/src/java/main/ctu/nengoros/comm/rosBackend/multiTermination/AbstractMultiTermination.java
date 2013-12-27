@@ -69,8 +69,10 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 		this.weights = new HashMap<String, Float>();
 		
 		//TODO
+		/*
 		if(dimension>1)
 			System.err.println(mess);
+			*/
 	}
 
 

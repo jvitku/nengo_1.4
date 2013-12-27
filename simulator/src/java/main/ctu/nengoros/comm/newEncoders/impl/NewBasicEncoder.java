@@ -106,13 +106,16 @@ public class NewBasicEncoder implements NewEncoder{
 			System.err.println(me+mess);
 			throw new ConnectionException(me+mess, e);
 		}
-
+/*
+ * TODO check this
 		if(dimensions>1){
 			// TODO this is not necessary here
 			String mess = me+"ERROR: currently, only one dimensinal vectors of values are supported!";
 			System.err.println(mess);
 			throw new StructuralException(mess);
-		}
+			}
+			*/
+		
 		
 		this.ros = ros;	// get my ROS backend
 

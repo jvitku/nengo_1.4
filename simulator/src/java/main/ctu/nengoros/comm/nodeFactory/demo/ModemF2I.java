@@ -50,7 +50,8 @@ public class ModemF2I {
 
 
 		String minimax = "resender.mpt.F2IPubSub";
-		String modem = "nengoros.comm.nodeFactory.modem.impl.MySecondModem";
+		//String modem = "nengoros.comm.nodeFactory.modem.impl.MySecondModem";
+		String modem = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
 
 		NodeGroup g = new NodeGroup("pubsub",false);
 

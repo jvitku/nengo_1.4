@@ -33,13 +33,14 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 	public String addTermination(float weight) throws StructuralException {
 
 		// TODO: add this weight to all dimensions of multi-dimensional input
+		/*
 		if(dimension != 1){
 			String mess = me+"ERROR: my dimension is "+dimension+
 					", now only one-dimensional Terminations are supported";
 			
 			System.err.println(mess);
 			throw new StructuralException(mess);
-		}
+		}*/
 
 		String termName = this.generateName();
 		//Termination t = TerminationFactory.buldBasicTermination(parent, termName, this.dimension);
