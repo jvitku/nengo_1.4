@@ -146,6 +146,7 @@ public class MultipleInputNeuralModule extends AbsNeuralModule{
 		this.createEncoder(topicName, dataType, new int[]{dimensionSize});
 	}
 	
+	
 
 	/**
 	 * Create encoder where the dimensionality of message data is determined by data type (e.g. turtlesim/Velocity=2)
