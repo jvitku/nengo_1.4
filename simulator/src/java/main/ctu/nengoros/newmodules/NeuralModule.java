@@ -85,9 +85,9 @@ public interface NeuralModule extends Node, Probeable, PeripheralsRegisteringNod
 	 * <p>In other words: synchronous Decoders block the Nengo simulation each time step
 	 * until they receive ROS message on own ROS topic.</p>
 	 *    
-	 * @param topicName
-	 * @param dataType
-	 * @param dimensionSizes
+	 * @param topicName name of the ROS topic
+	 * @param dataType type of data ( @See rosjava std_msgs package for more info) 
+	 * @param dimensionSizes list of dimension sizes (best support only for 1D vectors)
 	 * @param synchronous wait for incoming message after corresponding sent message?
 	 */
 	public void createDecoder(String topicName, String dataType, int[] dimensionSizes, boolean synchronous);
