@@ -21,8 +21,8 @@ public class ConnectionException extends NengoException {
 	 * @param myName
 	 * @param cause
 	 */
-	public ConnectionException(String myName, String cause){
-		super("Connection problem!! My name is: "+myName+" problem is: "+cause);
+	public ConnectionException(String name, String cause){
+		super(name+"ROS Connection Problem!! The problem is: "+cause);
 	}
 	
 	/**

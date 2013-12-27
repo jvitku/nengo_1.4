@@ -51,7 +51,9 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 
 	
 	/**
-	 * Runs all its Terminations, then combines their to its own value. 
+	 * This supposed that all my Terminations were ran before, so 
+	 * this method just combines values on them to one own value.
+	 *  
 	 * This method sets the value of TimeSeries myOutput, which can be obtained 
 	 * by means of getOutput() method after that.
 	 *

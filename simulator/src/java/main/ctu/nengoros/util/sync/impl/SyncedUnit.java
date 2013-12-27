@@ -21,7 +21,7 @@ public abstract class SyncedUnit implements SyncedUnitInterface{
 
 	// should we check all conditions, or always presume state: ready (therefore asynchornous communication?)
 	protected boolean synchronous;
-	private boolean ready = true;
+	private volatile boolean ready = true;
 	private final boolean DEFSYNCHRONOUS = true;	// synchronous communication by default
 	private final boolean DEFREADY = true; 			// default state after init
 	private ArrayList<SyncedUnitInterface> childs;

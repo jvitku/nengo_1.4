@@ -48,7 +48,9 @@ public interface Backend extends OnNewRosMessageSourceInt{
 	float[] decodeMessage(Message mess);
 
 	/**
-	 * return number of floats that are connected to Nengo side. 
+	 * The data from ROS message are concatenated into one vector
+	 * of float values. This method returns the resulting length
+	 * of this vector = number of dimensions for a Nengo Termination.
 	 * 
 	 * @return dimension of data for Nengo
 	 */

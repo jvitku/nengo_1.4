@@ -1,10 +1,12 @@
-package ctu.nengoros.modules;
+package ctu.nengoros.newmodules;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Properties;
 
+import ctu.nengoros.comm.newEncoders.NewEncoder;
+import ctu.nengoros.comm.newEncoders.impl.NewBasicEncoder;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
@@ -28,6 +30,7 @@ import ca.nengo.model.SimulationMode;
 import ca.nengo.model.StructuralException;
 import ca.nengo.model.Termination;
 import ca.nengo.model.Units;
+import ca.nengo.model.impl.BasicTermination;
 import ca.nengo.util.ScriptGenException;
 import ca.nengo.util.TimeSeries;
 import ca.nengo.util.impl.TimeSeriesImpl;
@@ -50,7 +53,8 @@ import ca.nengo.util.impl.TimeSeriesImpl;
  */
 public class AbsNeuralModule extends SyncedUnit implements NeuralModule{ 
 
-
+	Integrator noInt = new NoIntegrator();					// do not integrate termination values
+	
 	public static final String me = "[AbsNeuron] ";
 	
 	private static final long serialVersionUID = -5590968314570316769L;
@@ -58,11 +62,17 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 
 	protected Properties myProperties;
 	
-	protected Map<String, Origin> myOrigins;			// map of origins used
-	protected Map<String, Termination> myTerminations;	// map of terminations used
-
-	protected LinkedList <Origin> orderedOrigins;		// ordered list (.toArray())
+	// map of origins used (used by Decoders)
+	protected Map<String, Origin> myOrigins;			
+	protected LinkedList <Origin> orderedOrigins;		
+	
+	// map of terminations used (are registered by Encoders)
+	protected Map<String, Termination> myTerminations;	
 	protected LinkedList <Termination> orderedTerminations;
+	
+	// run all these Encoders after Terminations
+	protected Map<String, NewEncoder> myEncoders;		
+	protected LinkedList<NewEncoder> orderedEncoders;	
 
 	protected String myDocumentation;
 	
@@ -88,11 +98,12 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	 * @param name name of neural module
 	 */
 	public AbsNeuralModule(String name, NodeGroup group){
-		super(name);
+		super(name);	// make this unit synchronous by default
 
 		if(! group.isRunning()){
 			group.startGroup();
 		}
+		
 		ModemContainer modContainer = group.getModem();
 		if(modContainer == null){
 			System.err.println(me+"modem probably not initialized!!!! I am not ready!");
@@ -109,7 +120,7 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	 * @param synchronous
 	 */
 	public AbsNeuralModule(String name, NodeGroup group, boolean synchronous){
-		super(name);
+		super(synchronous,name);	// choose whether to be synchronous or not
 		ModemContainer modContainer = group.getModem();
 		
 		if(modContainer == null){
@@ -132,8 +143,11 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
         this.t=0;
         this.myOrigins = new HashMap<String, Origin>(5);
 		this.myTerminations = new HashMap<String, Termination>(5);
+		this.myEncoders = new HashMap<String,NewEncoder>(5);
+		
 		this.orderedOrigins = new LinkedList <Origin> ();
 		this.orderedTerminations = new LinkedList <Termination> ();
+		this.orderedEncoders = new LinkedList<NewEncoder>();
 	}
 	
 	@Override
@@ -142,10 +156,15 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	/**
-	 * This method should add decoder (that is nengo origin to the neural module)
+	 * This method should add decoder (that is Nengo origin to this NeuralModule). 
+	 * Each Decoder is registered as a child of thus SynchedUnit, so if the decoder is set
+	 * to be synchronous, the simulator will wait for new values on it each sim. step.
+	 * 
 	 * Note: units are left default, TODO: add units to make use of other ROS message types
+	 * 
 	 * @param topicName name of the origin and ROS topic
-	 * @param dimensionSizes dimensions of decoded data 
+	 * @param dimensionSizes dimensions of decoded data
+	 * @param synchronous whether the decoder will be synchronous (see above) 
 	 */
 	@Override
 	public void createDecoder(String topicName, String dataType, int[] dimensionSizes, boolean synchronous) {
@@ -154,7 +173,7 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 			Backend ros = BackendUtils.select(topicName, dataType, dimensionSizes, mc.getConnectedNode(), false);
 			// make decoder synchronous or not (always ready)
 			Decoder d = new BasicDecoder(this, topicName, dataType, dimensionSizes, Units.UNK, mc, ros,synchronous);
-			// register as child (will or will not block the simulation)
+			// register as child (will or will not block the simulation if is not set to be synchronous)
 			super.addChild(d);
 			
 		} catch (MessageFormatException e) {
@@ -164,10 +183,10 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 			System.err.println(me+"This format of ROS message probably not supported so far!");
 			e.printStackTrace();
 		} catch (StructuralException e) {
-			System.err.println(me+"could not add my Origin to neural module!!");
+			System.err.println(me+"could not add my Origin to neural module!");
 			e.printStackTrace();
 		} catch (ConnectionException e) {
-			System.err.println(me+"my modem was not connected. Probably ROS communication error!!");
+			System.err.println(me+"my modem was not connected. Probably ROS communication error!");
 			e.printStackTrace();
 		}
 	}
@@ -184,6 +203,7 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	public void createDecoder(String topicName, String dataType, boolean synchronous) {
 		try {
 			Backend ros = BackendUtils.select(topicName, dataType, mc.getConnectedNode(), false);
+			
 			int dim = ros.gedNumOfDimensions();
 			Decoder d = new BasicDecoder(this, topicName, dataType, new int[]{dim}, Units.UNK, mc, ros, synchronous);
 			super.addChild(d);
@@ -195,10 +215,10 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 			System.err.println(me+"This format of ROS message probably not supported so far!");
 			e.printStackTrace();
 		} catch (StructuralException e) {
-			System.err.println(me+"could not add my Origin to neural module!!");
+			System.err.println(me+"could not add my Origin to neural module!");
 			e.printStackTrace();
 		} catch (ConnectionException e) {
-			System.err.println(me+"my modem was not connected. Probably ROS communication error!!");
+			System.err.println(me+"my modem was not connected. Probably ROS communication error!");
 			e.printStackTrace();
 		}
 	}
@@ -218,8 +238,10 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	
 	
 	/**
-	 * This method adds encoder (that is termination to the neural module)
+	 * This method adds encoder, that is owner of one or multiple Terminations to this NeuralModule.
+	 * 
 	 * Note: units are left default, TODO: add units to make use of other ROS message types
+	 * 
 	 * @param topicName name of termination and the corresponding ROS topic
 	 * @param dimension
 	 */
@@ -231,10 +253,10 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 			ros = BackendUtils.select(topicName, dataType, dimensionSizes, mc.getConnectedNode(), true);
 			dim = BackendUtils.countNengoDimension(dimensionSizes);
 			
-			Integrator noInt = new NoIntegrator();					// do not integrate termination values
 			IdentityLTISystem noLTI = new IdentityLTISystem(dim); 	// do not use any decay..
 			
-			new BasicEncoder(this, noLTI, noInt, topicName, dimensionSizes, dataType, Units.UNK, mc, ros);
+			new NewBasicEncoder(this, dimensionSizes, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
+			//new NewBasicEncoder(this, noLTI, noInt, topicName, dimensionSizes, dataType, Units.UNK, mc, ros);
 			
 		} catch (MessageFormatException e1) {
 			System.err.println(me+"Bad message format.");
@@ -266,10 +288,10 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 			ros = BackendUtils.select(topicName, dataType, /*dimensionSizes,*/ mc.getConnectedNode(), true);
 			int dim = ros.gedNumOfDimensions();
 
-			Integrator noInt = new NoIntegrator();			// do not integrate termination values
 			IdentityLTISystem noLTI = new IdentityLTISystem(dim); 	// do not use any decay..
 			
-			new BasicEncoder(this, noLTI, noInt, topicName, new int[]{dim}, dataType, Units.UNK, mc, ros);
+			new NewBasicEncoder(this, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
+			//new BasicEncoder(this, noLTI, noInt, topicName, new int[]{dim}, dataType, Units.UNK, mc, ros);
 			
 		} catch (MessageFormatException e) {
 			System.err.println(me+"Bad message format.");
@@ -321,23 +343,35 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 	
 
-	/**
-	 * TODO: check whether startTime/endTIme are handled correctly everywhere 
-	 */
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
 		myTime = endTime;
-		this.runAllEncoders(startTime, endTime);
+		
+		this.runAllTerminations(startTime, endTime);	// run all terminations to collect input values
+		
+		this.runAllEncoders(startTime, endTime);	// encode data on registered Terminations and send to ROS
 		
 		super.discardChildsReady();// wait for all registered synchronous decoders to receive message
 	}
 	
-	private void runAllEncoders(float startTime, float endTime) throws SimulationException{
+	private void runAllTerminations(float startTime, float endTime) throws SimulationException{
 		Termination t;
 		for(int i=0; i<orderedTerminations.size(); i++){
 			t=orderedTerminations.get(i);
-			if(t instanceof Encoder)
-				((Encoder)t).run(startTime, endTime);
+			if(t instanceof BasicTermination)
+				((BasicTermination)t).run(startTime, endTime);
+			else{
+				throw new SimulationException(me+"only BasicTerminations are supporeted here!");
+			}
+		}
+	}
+	
+	private void runAllEncoders(float startTime, float endTime) throws SimulationException{
+		NewEncoder e;
+		for(int i=0; i<orderedEncoders.size(); i++){
+			e=orderedEncoders.get(i);
+			if(e instanceof NewEncoder)
+				((NewEncoder)e).run(startTime, endTime);
 		}
 	}
 	
@@ -383,7 +417,7 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 		if(myTerminations.containsKey(kk)){
 			Termination t = myTerminations.get(kk);
 			// works only for basic terminations with real valued output (hopefully..)
-			return ((BasicEncoder)t).getOutput();
+			return ((BasicTermination)t).getOutput();
 			
 		}else if(myOrigins.containsKey(kk)){
 			Origin o = myOrigins.get(kk);

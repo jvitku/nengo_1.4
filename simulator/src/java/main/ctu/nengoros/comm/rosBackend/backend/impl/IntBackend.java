@@ -1,7 +1,6 @@
 package ctu.nengoros.comm.rosBackend.backend.impl;
 
 
-
 import org.ros.internal.message.Message;
 import org.ros.message.MessageListener;
 import org.ros.node.ConnectedNode;
@@ -14,7 +13,7 @@ import ctu.nengoros.comm.rosBackend.backend.newMessageEvent.OnNewRosMessageSourc
 import ctu.nengoros.comm.rosBackend.transformations.IntegerTransform;
 import ctu.nengoros.comm.rosBackend.transformations.impl.IntegerSimpleRounding;
 import ctu.nengoros.exceptions.MessageFormatException;
-//import std_msgs.MultiArrayLayout;
+//import std_msgs.MultiArrayLayout; // TODO
 
 /**
  * 
