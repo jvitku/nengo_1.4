@@ -35,18 +35,22 @@ build/tmp/jar/*
 simulator/.settings/org.eclipse.jdt.core.prefs
 simulator-ui/.settings/org.eclipse.jdt.core.prefs
 
-simulator-ui/build/poms/pom-default.xml
-
-simulator/build/resources/
-simulator-ui/build/resources/
-simulator/build/reports/
-simulator-ui/build/reports/
-
-simulator-ui/build/install/*
-simulator-ui/build/scripts/simulator-ui
-simulator-ui/build/scripts/simulator-ui.bat
-
+ 
+########################## ignore entire build (including javadoc)
+simulator/build/
+simulator-ui/build/
 simulator-ui/lib/cachedir/*
+
+
+#simulator-ui/build/poms/pom-default.xml
+#simulator/build/resources/
+#simulator-ui/build/resources/
+#simulator/build/reports/
+#simulator-ui/build/reports/
+
+#simulator-ui/build/install/*
+#simulator-ui/build/scripts/simulator-ui
+#simulator-ui/build/scripts/simulator-ui.bat
 
 
 
