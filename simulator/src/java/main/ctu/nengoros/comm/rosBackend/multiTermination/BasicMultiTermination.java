@@ -26,7 +26,7 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 	/**
 	 * Adds BasicTerminaiton of dimension 1 with auto-generated name. 
 	 * @param weight name of newly created termination
-	 * @return
+	 * @return name of newly created Termination
 	 * @throws StructuralException 
 	 */
 	@Override
@@ -43,6 +43,7 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 
 		String termName = this.generateName();
 		//Termination t = TerminationFactory.buldBasicTermination(parent, termName, this.dimension);
+		
 		Termination t = new BasicTermination(parent, lti, integ, name);
 
 		this.myTerminations.put(termName, t);

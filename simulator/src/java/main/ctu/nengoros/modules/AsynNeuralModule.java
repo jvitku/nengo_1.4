@@ -1,10 +1,7 @@
 package ctu.nengoros.modules;
 
 import ca.nengo.model.Node;
-import ca.nengo.model.Origin;
 import ca.nengo.model.Probeable;
-import ca.nengo.model.StructuralException;
-import ca.nengo.model.Termination;
 /**
  * This defines how a NeuralModule should look like. 
  * Basically NeuralModule is a Nengo Node, methods 
@@ -17,7 +14,7 @@ import ca.nengo.model.Termination;
  * @author Jaroslav Vitku
  *
  */
-public interface AsynNeuralModule extends Node, Probeable{
+public interface AsynNeuralModule extends Node, Probeable, PeripheralsRegisteringNode{
 
 	/**
 	 * Add decoder to the neural module, that is: subscribe to given ROS topic 
@@ -49,27 +46,5 @@ public interface AsynNeuralModule extends Node, Probeable{
 	public void createEncoder(String topicName, String dataType, int[] dimensionSizes);
 	public void createEncoder(String topicName, String dataType, int dimensionSize);
 	public void createEncoder(String topicName, String dataType);
-
-	/**
-	 * This is used by Decoders to add their origin to the NeuralModule, 
-	 * should not be used from any other place.
-	 * 
-	 * @param topicName name of topic (this will be the same with the origin name)
-	 * @param dec decoder which sets values of this origin (Decoders implement Origin)
- 	 * @throws StructuralException is thrown if there already is orig. with this name
-	 *
-	 */
-	public void createOrigin(String topicName, Origin o) throws StructuralException;
-	
-	/**
-	 * <p>This is used by Encoders to add their termination to the NeuralModule,
-	 * should not be used from any other place. Data from this termination
-	 * are read by encoder, encoded into ROS message format and sent to ROS net.</p>
-	 * 
-	 * @param topicName name of the ROS topic (and Nengo termination)
-	 * @param enc encoder which sets values (implements Termination)
-	 * @throws StructuralException is thrown if there already is term. with this name
-	 */
-	public void createTermination(String topicName, Termination t) throws StructuralException;
 
 }
