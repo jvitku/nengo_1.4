@@ -5,15 +5,10 @@ import ca.nengo.model.Units;
 import ca.nengo.util.MU;
 
 /**
- * new Termination needs to have defined its own dynamics
- * for now, I do not want to use this, so this creates simple LTI 
- * dynamic system with no dynamics at all
+ * New Termination needs to have defined its own dynamics for now. 
+ * This is simple helper class which defines simple LTI with no dynamics at all.
  * 
- * reminder: http://web.mit.edu/2.14/www/Handouts/StateSpace.pdf
- * 
- * x' = Ax+Bu 			u = input 		size(x,1)=num. of state variables
- * y  = Cx+Du			y = output
- * 
+ * @see <a href="http://web.mit.edu/2.14/www/Handouts/StateSpace.pdf">LTI system reminder</a>
  * 
  * @author Jaroslav Vitku
  *
@@ -29,15 +24,15 @@ public class IdentityLTISystem extends LTISystem {
 	 * @param numberOfInputs
 	 */
 	public IdentityLTISystem(int numInputs){
-		
+
 		super(MU.zero(1,1),						// A 
 				MU.zero(1,numInputs),			// B
 				MU.zero(numInputs, 1),			// C
-				MU.diag(ones(numInputs)), 		// D - identity here !
+				MU.diag(ones(numInputs)), 		// D - identity here
 				new float[1],					// x0 = initial conditions 
 				Units.uniform(Units.UNK, numInputs));
 	}
-	
+
 	private static float[] ones(int len){
 		float [] out = new float[len];
 		for(int i=0;i<len; i++)

@@ -10,15 +10,20 @@ import ctu.nengoros.exceptions.ConnectionException;
 public interface ModemContainer extends ExternalNodeContainer{
 
 	/**
-	 * This may not be supported
+	 * This may not be supported so far
 	 */
 	public void reset();
 
 	/**
 	 * Modem is interface for a ROS/Nengo modem
-	 * @return
+	 * @return modem (ROS node) of this ModemContainer
 	 */
 	public Modem getModem();
+	
+	/**
+	 * Set modem to this ModemContainer
+	 * @param myModem modem to be used
+	 */
 	public void setModem(Modem myModem);
 
 	/**
@@ -31,13 +36,6 @@ public interface ModemContainer extends ExternalNodeContainer{
 	 * @return factory for ROS publishers/subscribers
 	 */
 	public ConnectedNode getConnectedNode() throws ConnectionException; 
-	
-	/**
-	 * Add reference to modems group, modem should be able to 
-	 * shutdown the group of nodes it belongs into. Shutting 
-	 * down the group should be called from within the method stop()
-	 * @param g
-	 */
 	
 	/**
 	 * This calls (typical Nengo method) reset on modem in the container.
@@ -56,7 +54,7 @@ public interface ModemContainer extends ExternalNodeContainer{
 	
 	/**
 	 * Configuration which launches the node (name, namespace..)
-	 * @return
+	 * @return node cofiguration of the launched Modem
 	 */
 	@Deprecated
 	public NodeConfiguration getConfiguration();

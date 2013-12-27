@@ -1,10 +1,13 @@
 /**
- * Builds containers for ROS nodes. ROS node can be e.g.:
- * -java thread which supports ROSjava and therefore implements org.ros.node.NodeMain
- * -installed ROS node which can be launched by command "rosrun [nodepackage.nodename]"
- * -in fact an arbitrary native process 
+ * Builds containers for ROS nodes. ROS node can be onw of the following: 
  * 
- * note: so far only Unix processes are supported, tested on Ubuntu 12 and OS X 10.6.8     
+ * Java thread which supports ROSjava and therefore implements org.ros.node.NodeMain. 
+ * 
+ * Installed ROS node which can be launched by command "rosrun [nodepackage.nodename]"
+ * 
+ * Or any arbitrary native process. 
+ * 
+ * TODO: Only the Unix processes are supported so far. Tested on Ubuntu 12 and OS X 10.6, OS X 10.8.     
  * 
  * @author Jaroslav Vitku
  *

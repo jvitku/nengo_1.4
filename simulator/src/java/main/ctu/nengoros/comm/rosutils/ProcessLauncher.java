@@ -11,8 +11,14 @@ import ctu.nengoros.comm.rosutils.Mess;
 
 import org.jdesktop.swingx.util.OS;
 
-
-//TODO: change this to its own thread which is subscribed to both streams..
+/**
+ * Factory which is able to launch native processes. 
+ * 
+ *  TODO: change this to its own thread which is subscribed to both streams.
+ *  
+ * @author Jaroslav Vitku
+ *
+ */
 public class ProcessLauncher {
 
 	public static final String me = "[ProcessLauncher] ";
@@ -35,7 +41,12 @@ public class ProcessLauncher {
 	public static void checkOS(List<String> launchCommand){
 		checkOS(launchCommand.toArray(new String[launchCommand.size()]));
 	}
-	
+
+	/**
+	 * Check which operating system is installed and then check whether the application 
+	 * can be found.
+	 * @param launchCommand command which launches the application (e.g. Unix command) 
+	 */
 	public static void checkOS(String[] launchCommand){
 		if(OS.isMacOSX()){
 			if(chatty)
@@ -54,14 +65,14 @@ public class ProcessLauncher {
 					" Is the path right? My PWD is now: "+printPWD());
 		}
 	}
-	
+
 	public static Process launchProcess(List<String> launchCommand){
 		return launchProcess(toStr(launchCommand));
 	}
 
 	/**
 	 * Whether we are able to launch Unix processes
-	 * @return
+	 * @return true if the OS is Unix-based
 	 */
 	public static boolean isUnix(){
 		return (OS.isLinux() || OS.isMacOSX());
@@ -76,11 +87,11 @@ public class ProcessLauncher {
 		String s;
 		if(lc.length<1)
 			return false;
-		
+
 		// TODO: no support for win so far..
 		if(!isUnix())
 			return false;
-		
+
 		s = getOutput(new String[]{"which",lc[0]});	//e.g. "which roscore" should return something
 
 		if(chatty){
@@ -89,18 +100,18 @@ public class ProcessLauncher {
 			}else{
 				if(!lc[0].equalsIgnoreCase("rqt") && !lc[0].equalsIgnoreCase("roscore"))
 					System.err.println(me+"application not found! Command 'which "+lc[0]+"' returned" +
-						" empty string. My PWD is: "+printPWD());
+							" empty string. My PWD is: "+printPWD());
 				else
 					System.err.println(me+lc[0]+" not found on this system.");
 			}
 		}
 		return (s.length()>0);
 	}
-	
+
 	/**
 	 * User can specify command as array of strings or space-separated string
 	 * @param appName command to be executed
-	 * @return
+	 * @return true if the application can be found
 	 */
 	public static boolean appExists(String appName){
 		return appExists(appName.split("\\s+"));
@@ -109,10 +120,10 @@ public class ProcessLauncher {
 	public static Process startProcess(String comm){
 		return startProcess(comm.split(" "));
 	}
-	
+
 	public static Process startProcess(String[] comm) {
 		try {
-			
+
 			Process proc = Runtime.getRuntime().exec(comm);
 			if(chatty)
 				System.out.println(me+Mess.toAr(comm)+" ....started OK");

@@ -48,7 +48,7 @@ simulator-ui/build/scripts/simulator-ui.bat
 
 simulator-ui/lib/cachedir/*
 
-build/
+
 
 # linux
 *~

@@ -18,13 +18,19 @@ import ctu.nengoros.rosparam.node.RosparamNode;
 
 /**
  * Here are utilities for simple launching and stopping (some) roscore 
- * and rqt, if available. 
+ * and rqt utility, if available. 
  * 
  * -UtilsAutorun says whether to start anything from this
  * -these situations can occur:
  * 		-rqt and c++ roscore found, so they will be used
  * 		-rqt and c++ roscore found, but jroscore is preffered: running jroscore+rqt
+ * 
+ * 
  * 		-ROS installation not foud, running just jroscore
+ * 
+ * @see <a href="http://www.ros.org/wiki/">ROS wiki</a>
+ * @see <a href="http://docs.rosjava.googlecode.com/hg/rosjava_core/html/index.html">
+ * ROSjava documentation</a>
  * 
  * @author Jaroslav Vitku
  *
@@ -32,11 +38,11 @@ import ctu.nengoros.rosparam.node.RosparamNode;
 public class RosUtils {
 
 	private static final ArrayList<NodeGroup> groupList = new ArrayList<NodeGroup>();
-	
+
 	private static int timeBeforeCoreShutdown = 1;	// in seconds
-	
+
 	public static boolean nodesShouldStop = false;
-	
+
 	public static final String me = "[RosUtils]: ";
 
 	// preferred roscore, if this is false, will launch C++ roscore if found
@@ -62,7 +68,7 @@ public class RosUtils {
 	// enables Nengo to set parameters of ROS network
 	// these parameters can modify how the nodes are launched, e.g. use_sim_time:=true
 	private static RosparamNode paramHandler;
-	
+
 	/**
 	 * Start core and other utilities automatically?
 	 *  
@@ -86,7 +92,7 @@ public class RosUtils {
 		if(!utilsAutorun)
 			return;
 		checkInit();
-		
+
 		if(!coreRunning())
 			coreStart();
 
@@ -104,7 +110,7 @@ public class RosUtils {
 				paramHandler.delete(RosTimeUtilFactory.time);
 			}
 		}
-		
+
 		// if timeUnit is running and user selected some other one, restart
 		if(timeUnit!=null){
 			if(previousTimeUnit != selectedTimeUnit){
@@ -119,18 +125,18 @@ public class RosUtils {
 			timeUnit = getTimeUnit();
 			previousTimeUnit = selectedTimeUnit;
 		}
-		
+
 	}
-	
+
 	/**
 	 * Select what to do with time: publish, ignore, receive.
 	 * 
 	 * @return unit which does this @see: see: ca.nengo.util.impl.NodeThreadPool.step()
 	 */
 	private static RosTimeUtil getTimeUnit(){
-		
+
 		RosTimeUtil tu;
-		
+
 		switch(selectedTimeUnit){
 		case 1:
 			tu = RosTimeUtilFactory.getTimeIgnoringUtil();
@@ -151,23 +157,23 @@ public class RosUtils {
 		}
 		return tu;
 	}
-	
+
 	/**
 	 * Stop every ROSjava node which is launhced (timeHandler and ParamHandler).
 	 */
 	private static void stopAllUtilNodes(){
 		JavaNodeContainer tmp = null;
-		
+
 		while(!utilNodes.isEmpty()){
 			tmp = utilNodes.remove(0);
 			System.out.println(me+"stopping UtilNode called: "+tmp.getName());
 			tmp.stop();
 		}
-		
+
 		System.out.println(me+"Shutting down NodeMainExecutor for UtilNodes");
 		RosTimeUtilFactory.stopNME();
 	}
-	
+
 	/**
 	 * sets the NengoROS as a time master (selected by default).
 	 * Use these in python scripts.
@@ -177,10 +183,10 @@ public class RosUtils {
 	public static void setTimeIgnore(){ selectedTimeUnit=1; }
 
 	public synchronized static void stopAllNodes(){
-		
+
 		// this is necessary, NodeGroup.stopGroup() removes itself from the list
 		NodeGroup[] tmp = groupList.toArray(new NodeGroup[groupList.size()]);
-		
+
 		for(int i=0; i<tmp.length; i++)
 			tmp[i].stopGroup();
 		/*
@@ -191,7 +197,7 @@ public class RosUtils {
 			groupList.get(i).stopGroup();
 		}*/
 	}
-	
+
 	/**
 	 * RosUtils should remember all currently running groups
 	 * in order to be able to stop them if necessary.
@@ -200,16 +206,16 @@ public class RosUtils {
 	public synchronized static void addGroup(NodeGroup g){
 		groupList.add(g);
 	}
-	
+
 	public synchronized static void removeGroup(NodeGroup g){
 		if(!groupList.contains(g))
 			System.err.println(me+" removeGroup(): list does not contain: "+g.groupName);
 		else
 			groupList.remove(g);
 	}
-	
+
 	public synchronized static int getNumOfGroups(){ return groupList.size(); }
-	
+
 	/**
 	 * When the Nengo application stops, do this:
 	 */
@@ -222,22 +228,22 @@ public class RosUtils {
 			System.out.println(me+"Stopping the rqt now");
 			rqtNode.stop();
 		}
-		
+
 		System.out.println(me+"Stopping all "+getNumOfGroups()+" group(s) of ROS nodes");
 		RosUtils.stopAllNodes();			// manually stop all known node containers (all)	
-		
+
 		Mess.wait(timeBeforeCoreShutdown);	// give'em time..
-		
+
 		NodeFactory.nme.shutdown();			// TODO: do this automatically, and this does not work?
 
 		stopAllUtilNodes();					// stop the parameter server and time handler
-		
+
 		if(coreRunning()){
 			System.out.println(me+"Stopping the core now");
 			coreStop();
 		}
 	}
-	
+
 	/**
 	 * if C++ roscore found, which one prefer?
 	 * @param prefer
@@ -257,7 +263,7 @@ public class RosUtils {
 		if(roscoreFound && !preferJroscore){
 			roscoreNode = new RunnableNode(new String[]{"roscore"},"roscore");
 			roscoreNode.start();
-//			roscoreNode.startAutoKiller();// not necessary
+			//			roscoreNode.startAutoKiller();// not necessary
 		}
 		// or start java roscore here?
 		else{
@@ -315,10 +321,10 @@ public class RosUtils {
 
 		roscoreFound = ProcessLauncher.appExists("roscore");
 		rqtFound = ProcessLauncher.appExists("rqt");
-		
+
 		inited = true;
 	}
-	
+
 	public static RosTimeUtil getTimeUtil(){
 		if(timeUnit==null){
 			System.err.println(me+"error! TimeUtil not initialized yet!");

@@ -8,10 +8,18 @@ import ctu.nengoros.comm.rosutils.utilNode.time.impl.DefaultTimeMaster;
 import ctu.nengoros.comm.rosutils.utilNode.time.impl.DefaultTimeSlave;
 
 /**
- * Stores names (each name includes namespace too) of
- * ROS nodes that should be currently running in the ROS
- * network and provides unique names (or namespaces) for 
- * groups of new nodes.
+ * 
+ * <p>This enables to Nengoros to automatically push groups of ROS nodes (launched nodes
+ * and group modem) into own namespaces. This ensures that the ROS communication will not 
+ * interfere between ROS nodes in different NodeGroups. This enables Nengo to launch 
+ * e.g. 2 instances of the same NeuralModule, which uses the same ROS nodes with the 
+ * same names and topics. Nodes in each NodeGroup will be pushed into own namespace, 
+ * so their complete names will be unique in the ROS network.</p>
+ *   
+ * <p>Stores names (each name includes namespace too) of ROS nodes that should be currently 
+ * running in the ROS network and provides unique names (or namespaces) for groups of new nodes.</p>
+ * 
+ * @see <a href="http://wiki.ros.org/Nodes">ROS namespaces</a>
  * 
  * @author Jaroslav Vitku
  *
@@ -19,11 +27,11 @@ import ctu.nengoros.comm.rosutils.utilNode.time.impl.DefaultTimeSlave;
 public class NameProvider{
 
 	private final String[] ignoredNames = new String[]{DefaultTimeMaster.name, DefaultTimeSlave.name, ParamHandler.name};
-	
+
 	private ArrayList<String> nameList;
 	// note: this separator "_" does not work at all, look at screens/nameconflict.png
 	public final String separator = "__";
-	
+
 
 	public NameProvider(){
 		nameList = new ArrayList<String>(10);
@@ -37,7 +45,7 @@ public class NameProvider{
 	 */
 	public String[] modifyNames(String namespace, String[] prefferedNames, String group){
 		String groupMod=group+separator;	// modified name of group
-		
+
 		if(repeat(prefferedNames)){
 			return null;
 		}
@@ -51,7 +59,7 @@ public class NameProvider{
 				poc++;
 			}
 			return saveNameModification(groupMod+poc, prefferedNames, true);
-		// preferred namespace provided, so work with modified names
+			// preferred namespace provided, so work with modified names
 		}else{
 			if(allUnique(namespace, group, prefferedNames)){
 				return saveNameModification(namespace, group, prefferedNames, true);
@@ -117,14 +125,14 @@ public class NameProvider{
 	}
 
 	private void removeName(String n){
-		
+
 		if(this.isIgnored(n))
 			return;
-		
+
 		if(!nameList.contains(n.toLowerCase())){
 			System.err.println("NameProvider: you want to remove " +
 					"this node: "+n+ " but it is not in the list! " +
-							"list size: "+this.numOfRunningNodes()+"  "
+					"list size: "+this.numOfRunningNodes()+"  "
 					+" names of nodes: "+Mess.toAr(this.namesOfRunningNodes()));
 		}else{
 			nameList.remove(n.toLowerCase());
@@ -138,7 +146,7 @@ public class NameProvider{
 		}
 		return false;
 	}
-	
+
 	private String[] saveNamespaceModification(String group, String[] names, 
 			boolean modifyNames){
 		String tmp;
@@ -152,7 +160,7 @@ public class NameProvider{
 			return modified;
 		return names;
 	}
-	
+
 	private String[] saveNameModification(String group, String[] names, 
 			boolean modifyNames){
 		String tmp;
@@ -168,8 +176,9 @@ public class NameProvider{
 	}
 
 	/**
-	 * here it is not nice, we need to save modification of names, but we do not
-	 * want to save the namespace used by the name provider 
+	 * We need to save modification of names, but we do not
+	 * want to save the namespace used by the name provider.
+	 *  
 	 * @param namespace namespace to run the nodes (part of unique name)
 	 * @param group group that these nodes belong to
 	 * @param names list of node names
@@ -191,7 +200,7 @@ public class NameProvider{
 			return modifiedII;
 		return names;
 	}
-	
+
 	private boolean allUnique(final String ns, final String group, final String[] names){
 		for(String s:names){
 			if(nameList.contains((ns+"/"+group+separator+s).toLowerCase()))
@@ -199,7 +208,7 @@ public class NameProvider{
 		}
 		return true;
 	}
-	
+
 	private boolean allUnique(final String group, final String[] names, String sep){
 		for(String s:names){
 			if(nameList.contains((group+sep+s).toLowerCase()))
