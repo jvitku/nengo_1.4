@@ -51,6 +51,8 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 		Termination t = new BasicTermination(parent, lti, integ, termName);
 		((PeripheralsRegisteringNode) parent).addTermination(t);
 		
+		this.weights.put(t.getName(), weight);
+		
 		this.myTerminations.put(termName, t);
 		this.orderedTerminations.add(t);
 		return name;

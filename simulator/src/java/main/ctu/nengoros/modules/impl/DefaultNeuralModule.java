@@ -368,10 +368,13 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	public void run(float startTime, float endTime) throws SimulationException {
 		myTime = endTime;
 
+		System.out.println("running all terminations");
 		this.runAllTerminations(startTime, endTime);	// run all terminations to collect input values
-
+		
+		System.out.println("running all enoders");
 		this.runAllEncoders(startTime, endTime);	// encode data on registered Terminations and send to ROS
 
+		System.out.println("done, discargintg ready state for all decoders");
 		super.discardChildsReady();// wait for all registered synchronous decoders to receive message
 	}
 
@@ -389,8 +392,10 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	private void runAllEncoders(float startTime, float endTime) throws SimulationException{
 		Encoder e;
+		System.out.println(me+"encoders...");
 		for(int i=0; i<orderedEncoders.size(); i++){
 			e=orderedEncoders.get(i);
+			System.out.println(me+" will run this one: "+e.getName());
 			if(e instanceof Encoder)
 				((Encoder)e).run(startTime, endTime);
 		}
@@ -601,7 +606,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		
 		if(this.myEncoders.containsKey(e.getName()))
 			throw new StructuralException(me+"Encoder named "+e.getName()+" is already registered here!");
-
 				
 		myProperties.setProperty("enc__"+e.getName(), "Encoder named: "+e.getName());
 		this.myEncoders.put(e.getName(), e);

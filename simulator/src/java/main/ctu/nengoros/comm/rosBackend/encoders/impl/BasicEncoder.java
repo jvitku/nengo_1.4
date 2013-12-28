@@ -19,8 +19,6 @@ public class BasicEncoder implements Encoder{
 
 	public static final String me = "[BasicEncoder] ";
 
-	// all my Terminations are here
-	protected MultiTermination multiTermination;
 	
 	// common properties of my Terminations
 	protected int dimensions;
@@ -31,7 +29,7 @@ public class BasicEncoder implements Encoder{
 	protected NeuralModule parent;				
 	protected String name;		
 	protected ConnectedNode myRosNode;	// factory for subscriber
-	protected MultiTermination mt;		// this combines values on all Terminations
+	protected MultiTermination multiTermination;// this combines values on all Terminations
 	
 	public Backend ros;					// Nengo interfaced with ROS here
 	
@@ -131,16 +129,23 @@ public class BasicEncoder implements Encoder{
 	@Override
 	public String addTermination() throws StructuralException {
 		// ad Termination to my MultiTermination and return its name
-		return mt.addTerminaton();
+		return multiTermination.addTerminaton();
 	}
 
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
 		
+		System.out.println(me+"mt wil runn ");
+		System.out.println(me+" mt is null? "+(multiTermination==null));
 		// collect data on all my Terminations
-		mt.run(startTime, endTime);
-		float[][] ff_series = mt.getOutput().getValues();
+		multiTermination.run(startTime, endTime);
 		
+		System.out.println(me+" getting tiem series ");
+		
+		float[][] ff_series = multiTermination.getOutput().getValues();
+		
+		
+		System.out.println(me+" publishing ROS");
 		// publish as a ROS message
 		// TODO: send entire TimeSeries over the ROS network, not just one time sample
 		ros.publish(ff_series[0]);

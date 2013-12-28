@@ -44,7 +44,7 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 
 	protected final Node parent;
 	
-	//public final float DEF_W = 1;
+	public final float DEF_W = 1;
 	
 	protected String mess = me+"ERROR: suport fot multidimensional Terminations" +
 			"is not implemented so far!";
@@ -158,7 +158,7 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 
 	@Override
 	public String addTerminaton() throws StructuralException{
-		return this.addTermination(this.dimension);
+		return this.addTermination(this.DEF_W);
 	}
 
 	// TODO: add support for multidimensional terminations
