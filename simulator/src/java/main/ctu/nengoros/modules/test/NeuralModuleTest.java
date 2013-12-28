@@ -529,4 +529,16 @@ public class NeuralModuleTest extends SyncedUnit implements NeuralModule{
 		this.orderedTerminations.add(t);
 	}
 
+	@Override
+	public void printTerminationNames() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void printOriginNames() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

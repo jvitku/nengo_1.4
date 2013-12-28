@@ -55,42 +55,42 @@ import ca.nengo.util.impl.TimeSeriesImpl;
 public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{ 
 
 	Integrator noInt = new NoIntegrator();					// do not integrate termination values
-	
+
 	public static final String me = "[DefaultNeuralModule] ";
-	
+
 	private static final long serialVersionUID = -5590968314570316769L;
 	protected float myTime;
 
 	protected Properties myProperties;
-	
+
 	// map of origins used (used by Decoders)
 	protected Map<String, Origin> myOrigins;			
 	protected LinkedList <Origin> orderedOrigins;		
-	
+
 	// map of terminations used (are registered by Encoders)
 	protected Map<String, Termination> myTerminations;	
 	protected LinkedList <Termination> orderedTerminations;
-	
+
 	// run all these Encoders after Terminations
 	protected Map<String, Encoder> myEncoders;		
 	protected LinkedList<Encoder> orderedEncoders;	
 
 	protected String myDocumentation;
-	
+
 	double t_start,t_end,t;		
-	
+
 	protected String myName;
 
 	Units myU = Units.UNK;
-	
+
 	protected int myNumGPU = 0;
 	protected int myNumJavaThreads = 1;
 	protected boolean myUseGPU = false;
 	protected SimulationMode myMode;
 
 	protected final ModemContainer mc;
-	
-	
+
+
 	/**
 	 * Initialize complete neural module, that means 
 	 * modem and a corresponding ros node. 
@@ -104,7 +104,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		if(! group.isRunning()){
 			group.startGroup();
 		}
-		
+
 		ModemContainer modContainer = group.getModem();
 		if(modContainer == null){
 			System.err.println(me+"modem probably not initialized!!!! I am not ready!");
@@ -113,7 +113,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		this.mc = modContainer;
 		this.init(name);
 	}
-	
+
 	/**
 	 * This can be used everywhere, because this can be asynchronous too
 	 * @param name
@@ -123,7 +123,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	public DefaultNeuralModule(String name, NodeGroup group, boolean synchronous){
 		super(synchronous,name);	// choose whether to be synchronous or not
 		ModemContainer modContainer = group.getModem();
-		
+
 		if(modContainer == null){
 			System.err.println(me+"modem probably not initialized!!!! I am not ready!");
 			this.setReady(false); // stop the simulation..
@@ -137,20 +137,20 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		this.myName=name;
 		this.myProperties = new Properties();
 		this.myTime=0;
-        
-        this.setMode(SimulationMode.DEFAULT);
-        this.t_start=0;
-        this.t_end=0;
-        this.t=0;
-        this.myOrigins = new HashMap<String, Origin>(5);
+
+		this.setMode(SimulationMode.DEFAULT);
+		this.t_start=0;
+		this.t_end=0;
+		this.t=0;
+		this.myOrigins = new HashMap<String, Origin>(5);
 		this.myTerminations = new HashMap<String, Termination>(5);
 		this.myEncoders = new HashMap<String,Encoder>(5);
-		
+
 		this.orderedOrigins = new LinkedList <Origin> ();
 		this.orderedTerminations = new LinkedList <Termination> ();
 		this.orderedEncoders = new LinkedList<Encoder>();
 	}
-	
+
 	@Override
 	public void setSynchronous(boolean synchronous) {
 		super.setSynchronous(synchronous);
@@ -169,14 +169,14 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	 */
 	@Override
 	public void createDecoder(String topicName, String dataType, int[] dimensionSizes, boolean synchronous) {
-		
+
 		try {
 			Backend ros = BackendUtils.select(topicName, dataType, dimensionSizes, mc.getConnectedNode(), false);
 			// make decoder synchronous or not (always ready)
 			Decoder d = new BasicDecoder(this, topicName, dataType, dimensionSizes, Units.UNK, mc, ros,synchronous);
 			// register as child (will or will not block the simulation if is not set to be synchronous)
 			super.addChild(d);
-			
+
 		} catch (MessageFormatException e) {
 			System.err.println(me+"Given message type had probably a bad format!");
 			e.printStackTrace();
@@ -204,11 +204,11 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	public void createDecoder(String topicName, String dataType, boolean synchronous) {
 		try {
 			Backend ros = BackendUtils.select(topicName, dataType, mc.getConnectedNode(), false);
-			
+
 			int dim = ros.gedNumOfDimensions();
 			Decoder d = new BasicDecoder(this, topicName, dataType, new int[]{dim}, Units.UNK, mc, ros, synchronous);
 			super.addChild(d);
-			
+
 		} catch (MessageFormatException e) {
 			System.err.println(me+"Given message type had probably a bad format!");
 			e.printStackTrace();
@@ -223,11 +223,11 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void createDecoder(String topicName, String dataType, int[] dimensionSizes){
 		this.createDecoder(topicName, dataType, dimensionSizes, super.synchronous);
 	}
-	
+
 	public void createDecoder(String topicName, String dataType, int dimensionSize){
 		this.createDecoder(topicName, dataType, new int[]{dimensionSize}, super.synchronous);
 	}
@@ -236,8 +236,8 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	public void createDecoder(String topicName, String dataType) {
 		this.createDecoder(topicName, dataType, super.synchronous);
 	}
-	
-	
+
+
 	/**
 	 * Check whether an encoder to the same topicName is not already registered here.
 	 * @param topicName name of the ROS topic and name of the Encoder (base name for its Terminations). 
@@ -248,8 +248,8 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			throw new StructuralException(me+"Encoder to the requested topic "+topicName+
 					" alredy registered to this NeuralModule!");
 	}
-	
-	
+
+
 	/**
 	 * This method adds encoder, that is owner of one or multiple Terminations to this NeuralModule.
 	 * 
@@ -259,21 +259,21 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	 * @param dimension
 	 */
 	public void createEncoder(String topicName, String dataType, int[] dimensionSizes) {
-		
+
 		int dim;
 		Backend ros;
 		try {
 			this.checkEncoderAvailable(topicName);
-			
+
 			ros = BackendUtils.select(topicName, dataType, dimensionSizes, mc.getConnectedNode(), true);
 			dim = BackendUtils.countNengoDimension(dimensionSizes);
-			
+
 			IdentityLTISystem noLTI = new IdentityLTISystem(dim); 	// do not use any decay..
-			
+
 			Encoder enc = new BasicEncoder(this, dimensionSizes, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
 			this.addEncoder(enc);
 			//new BasicEncoder(this, noLTI, noInt, topicName, dimensionSizes, dataType, Units.UNK, mc, ros);
-			
+
 		} catch (MessageFormatException e1) {
 			System.err.println(me+"Bad message format.");
 			e1.printStackTrace();
@@ -288,11 +288,11 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void createEncoder(String topicName, String dataType, int dimensionSize){
 		this.createEncoder(topicName, dataType, new int[]{dimensionSize});
 	}
-	
+
 
 	/**
 	 * Create encoder where the dimensionality of message data is determined by data type (e.g. turtlesim/Velocity=2)
@@ -301,19 +301,19 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	public void createEncoder(String topicName, String dataType) {
 		Backend ros;
 		try {
-			
+
 			this.checkEncoderAvailable(topicName);
 
 			ros = BackendUtils.select(topicName, dataType, /*dimensionSizes,*/ mc.getConnectedNode(), true);
 			int dim = ros.gedNumOfDimensions();
 
 			IdentityLTISystem noLTI = new IdentityLTISystem(dim); 	// do not use any decay..
-			
+
 			Encoder enc = new BasicEncoder(this, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
 			this.addEncoder(enc);
-			
+
 			//new BasicEncoder(this, noLTI, noInt, topicName, new int[]{dim}, dataType, Units.UNK, mc, ros);
-			
+
 		} catch (MessageFormatException e) {
 			System.err.println(me+"Bad message format.");
 			e.printStackTrace();
@@ -328,8 +328,8 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/**
 	 * do not use this, use method createEn/Decoder
 	 * 
@@ -337,7 +337,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	 * @throws StructuralException 
 	 *
 	public void createOrigin(String name, Origin o) throws StructuralException{
-		
+
 		if(myOrigins.containsKey(name)){
 			System.err.println("Origin with the same name already here, ignoring!");
 			throw new StructuralException("Origin with this name already connected! "+name);
@@ -346,14 +346,14 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		myOrigins.put(name, o);
 		orderedOrigins.add(o);
 	}*/
-	
+
 	/**
 	 * 
 	 * @param name termination name, should correspond to subscribed ROS topic
 	 * @throws StructuralException 
 	 *
 	public void createTermination(String name, Termination t) throws StructuralException{
-		
+
 		if(myTerminations.containsKey(name)){
 			System.err.println("Termination iwth this name already here, ignoring!");
 			throw new StructuralException("Termination iwth this name already here, ignoring! " + name);
@@ -362,19 +362,19 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		myTerminations.put(name,t);
 		orderedTerminations.add(t);
 	}*/
-	
+
 
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
 		myTime = endTime;
-		
+
 		this.runAllTerminations(startTime, endTime);	// run all terminations to collect input values
-		
+
 		this.runAllEncoders(startTime, endTime);	// encode data on registered Terminations and send to ROS
-		
+
 		super.discardChildsReady();// wait for all registered synchronous decoders to receive message
 	}
-	
+
 	private void runAllTerminations(float startTime, float endTime) throws SimulationException{
 		Termination t;
 		for(int i=0; i<orderedTerminations.size(); i++){
@@ -386,7 +386,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			}
 		}
 	}
-	
+
 	private void runAllEncoders(float startTime, float endTime) throws SimulationException{
 		Encoder e;
 		for(int i=0; i<orderedEncoders.size(); i++){
@@ -395,17 +395,17 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 				((Encoder)e).run(startTime, endTime);
 		}
 	}
-	
+
 	@Override
 	public void reset(boolean randomize) {
 		mc.resetModem();	// should call reset() for all nodes in the group (including modem itself)
-		
+
 		for(int i=0; i<this.orderedEncoders.size(); i++)
 			this.orderedEncoders.get(i).reset(randomize);
-		
+
 		for(int i=0; i<this.orderedTerminations.size(); i++)
 			this.orderedTerminations.get(i).reset(randomize);
-		
+
 		// System.out.println("reset");
 		// TODO: delete history, kill and restart myNode (modem can stay..)
 	}
@@ -439,23 +439,23 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	@Override
 	public TimeSeries getHistory(String key) throws SimulationException {		
 		TimeSeries result = null;
-		
+
 		String kk = key.substring(3, key.length());
-				
+
 		if(myTerminations.containsKey(kk)){
 			Termination t = myTerminations.get(kk);
 			// works only for basic terminations with real valued output (hopefully..)
 			return ((BasicTermination)t).getOutput();
-			
+
 		}else if(myOrigins.containsKey(kk)){
 			Origin o = myOrigins.get(kk);
 			float[] values = ((RealOutput) o.getValues()).getValues();
 			result = new TimeSeriesImpl(new float[]{myTime}, new float[][]{values}, 
-										Units.uniform(Units.UNK, values.length));
+					Units.uniform(Units.UNK, values.length));
 			return result;
 		}
 		throw new SimulationException("Probeable:getHistory: " +
-					"this termination or origin is not known!: "+kk);
+				"this termination or origin is not known!: "+kk);
 	}
 
 	/**
@@ -480,54 +480,45 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	@Override
 	public Origin[] getOrigins() {
 		if (myOrigins.values().size() == 0) {
-            return myOrigins.values().toArray(new Origin[0]);
-        }
+			return myOrigins.values().toArray(new Origin[0]);
+		}
 		return orderedOrigins.toArray(new Origin [0]);
 	}
 
 	@Override
 	public Origin getOrigin(String name) throws StructuralException {
-		
-	//	this.printOrigins();
-		
+
 		if ( !myOrigins.containsKey(name) ) {
+			this.printOriginNames();
 			throw new StructuralException("There is no Origin named " + name);
 		}
 		return myOrigins.get(name);
 	}
-	
+
 	protected void printOrigins(){
 		System.out.print(me+"printing orogins now: ");
 		for(int i=0; i<orderedOrigins.size(); i++)
 			System.out.print(" "+orderedOrigins.get(i).getName());
 		System.out.println("done");
 	}
-	
+
 	@Override
 	public Termination[] getTerminations() {
 		if (myTerminations.values().size() == 0) {
-            return myTerminations.values().toArray(new Termination[0]);
-        }
+			return myTerminations.values().toArray(new Termination[0]);
+		}
 		return orderedTerminations.toArray(new Termination[0]);
 	}
 
 	@Override
 	public Termination getTermination(String name) throws StructuralException {
 		if ( !myTerminations.containsKey(name) ) {
-			this.printTerminations();
+			this.printTerminationNames();
 			throw new StructuralException("There is no Termination named " + name);
 		}
 		return myTerminations.get(name);
 	}
 
-	private void printTerminations(){
-		if(this.orderedTerminations.size() == 0)
-			System.out.println(me+" list of Terminations is empty!!");
-		for(int i=0; i<this.orderedTerminations.size(); i++){
-			System.out.println(me+"term no: "+i+" is named "+this.orderedTerminations.get(i).getName());
-		}
-	}
-	
 	@Override
 	public String getDocumentation() {
 		return this.myDocumentation;
@@ -537,7 +528,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	public void setDocumentation(String text) {
 		this.myDocumentation=text;		
 	}
-	
+
 	public DefaultNeuralModule clone(){
 		// TODO
 		return null;
@@ -567,12 +558,12 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		/*
 		if(this.myOrigins.containsKey(o.getName()))
 			throw new StructuralException(me+"Origin named "+o.getName()+" is already registered here!");
-		
+
 		this.myOrigins.put(o.getName(), o);
 		this.orderedOrigins.add(o);
-		*/
+		 */
 		String name = o.getName();
-		
+
 		if(myOrigins.containsKey(name)){
 			System.err.println("Origin with the same name already here, ignoring!");
 			throw new StructuralException("Origin with this name already connected! "+name);
@@ -584,7 +575,8 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	@Override
 	public void addTermination(Termination t) throws StructuralException {
-		
+
+		System.out.println(me+"adding termination named "+t.getName());
 		String name = t.getName();
 
 		if(myTerminations.containsKey(name)){
@@ -594,22 +586,45 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		myProperties.setProperty("t__"+name, "Termination named: "+name);
 		myTerminations.put(name,t);
 		orderedTerminations.add(t);
-		
+
 		/*
 		if(this.myTerminations.containsKey(t.getName()))
 			throw new StructuralException(me+"Termination named "+t.getName()+" is already registered here!");
-		
+
 		this.myTerminations.put(t.getName(), t);
 		this.orderedTerminations.add(t);*/
 	}
-	
+
 	protected void addEncoder(Encoder e) throws StructuralException {
-		if(this.myEncoders.containsKey(e.getName()))
-			throw new StructuralException(me+"Encodernamed "+e.getName()+" is already registered here!");
 		
+		System.out.println(me+"adding encoder named "+e.getName());
+		
+		if(this.myEncoders.containsKey(e.getName()))
+			throw new StructuralException(me+"Encoder named "+e.getName()+" is already registered here!");
+
+				
 		myProperties.setProperty("enc__"+e.getName(), "Encoder named: "+e.getName());
 		this.myEncoders.put(e.getName(), e);
 		this.orderedEncoders.add(e);
+	}
+
+	@Override
+	public void printTerminationNames() {
+
+		if(this.orderedTerminations.size() == 0)
+			System.out.println(me+" list of Terminations is empty!!");
+		for(int i=0; i<this.orderedTerminations.size(); i++){
+			System.out.println(me+"term no: "+i+" is named "+this.orderedTerminations.get(i).getName());
+		}
+	}
+
+	@Override
+	public void printOriginNames() {
+		if(this.orderedOrigins.size() == 0)
+			System.out.println(me+" list of Origins is empty!!");
+		for(int i=0; i<this.orderedOrigins.size(); i++){
+			System.out.println(me+"Origin no: "+i+" is named "+this.orderedOrigins.get(i).getName());
+		}
 	}
 
 }

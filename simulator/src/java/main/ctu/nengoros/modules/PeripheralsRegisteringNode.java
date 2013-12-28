@@ -34,4 +34,7 @@ public interface PeripheralsRegisteringNode {
 	 */
 	public void addTermination(Termination t) throws StructuralException;
 
+	
+	public void printTerminationNames();
+	public void printOriginNames();
 }

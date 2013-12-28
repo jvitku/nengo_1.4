@@ -20,8 +20,8 @@ import org.ros.node.topic.Subscriber;
  */
 public class F2IPubSub extends AbstractNodeMain {
 
-	private final java.lang.String ann2ros = "ann2rosFloatArr";
-	protected final java.lang.String ros2ann = "ros2annFloatArr";
+	public static final java.lang.String ann2ros = "ann2rosFloatArr";
+	public static final java.lang.String ros2ann = "ros2annFloatArr";
 
 	private float min;
 	private float max;

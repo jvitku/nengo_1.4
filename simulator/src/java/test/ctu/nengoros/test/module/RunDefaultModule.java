@@ -15,6 +15,8 @@ import ctu.nengoros.modules.impl.DefaultNeuralModule;
  * Tests how the NeuralModule can be launched, how the DefaultModem is auto-started.
  * Tests include also starting and stopping the group of nodes and RosUtils.
  * 
+ * Note that the RosCommunicationTest does the testing faster.
+ * 
  * @author Jaroslav Vitku
  *
  */

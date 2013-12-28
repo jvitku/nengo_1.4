@@ -123,6 +123,7 @@ public class BasicEncoder implements Encoder{
 		multiTermination  = new SumMultiTermination(
 				this.parent, this.name, dimensions, this.integrator, this.dynamics);
 		
+		System.out.println(me+"adding new Termination to my multitermination");
 		// add one termination on the start (usable by GUI, has default weight of 1)
 		multiTermination.addTerminaton();
 	}
