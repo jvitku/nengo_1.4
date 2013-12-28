@@ -9,7 +9,10 @@ import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.comm.rosutils.RosUtils;
 
 public class NameProviderNamespaceTest {
-
+	
+	public static String talker = "ctu.nengoros.testsuit.demo.nodes.DemoPublisher";		
+	public static String receiveer = "ctu.nengoros.testsuit.demo.nodes.DemoSubscriber";
+	
 	/**
 	 * start dependent group of nodes wihtout namespace specified
 	 */
@@ -18,19 +21,17 @@ public class NameProviderNamespaceTest {
 		
 		assertEquals(0,RosUtils.getNumOfGroups());
 		
-		String talker = "resender.mt.IntSender";
-		String receiveer = "resender.mt.IntReceiver";
-		
 		// group called pubsub which is independent?
 		NodeGroup g = new NodeGroup("pubsub",false);
 		g.addNode(talker, "talker", "java");
 		assertEquals(1,g.getNames().length);
 		
 		g.addNode(receiveer, "receiver", "java");		
-		assertEquals(2,g.getNames().length);
+		assertEquals(2, g.getNames().length);
 		
 		g.startGroup();
-		assertEquals(2,g.nodes.length);	
+		System.out.println("no of modes is :"+g.nodes.length);
+		assertEquals(3, g.nodes.length);	// modem container added?	
 		
 		assertEquals(1,RosUtils.getNumOfGroups());
 		
@@ -48,9 +49,6 @@ public class NameProviderNamespaceTest {
 		
 		assertEquals(0,RosUtils.getNumOfGroups());
 		
-		String talker = "resender.mt.IntSender";
-		String receiveer = "resender.mt.IntReceiver";
-		
 		// group called pubsub which is independent?
 		NodeGroup g = new NodeGroup("pubsub",true);
 		g.addNode(talker, "talker", "java");
@@ -60,7 +58,7 @@ public class NameProviderNamespaceTest {
 		assertEquals(2,g.getNames().length);
 		
 		g.startGroup();
-		assertEquals(2,g.nodes.length);	
+		assertEquals(3,g.nodes.length);	
 		
 		assertEquals(1,RosUtils.getNumOfGroups());
 		
@@ -78,9 +76,6 @@ public class NameProviderNamespaceTest {
 		
 		assertEquals(0,RosUtils.getNumOfGroups());
 		
-		String talker = "resender.mt.IntSender";
-		String receiveer = "resender.mt.IntReceiver";
-		
 		// group called pubsub which is independent?
 		NodeGroup g = new NodeGroup("pubsub","namespaceString");
 		g.addNode(talker, "talker", "java");
@@ -90,7 +85,7 @@ public class NameProviderNamespaceTest {
 		assertEquals(2,g.getNames().length);
 		
 		g.startGroup();
-		assertEquals(2,g.nodes.length);	
+		assertEquals(3,g.nodes.length);	
 		
 		assertEquals(1,RosUtils.getNumOfGroups());
 		

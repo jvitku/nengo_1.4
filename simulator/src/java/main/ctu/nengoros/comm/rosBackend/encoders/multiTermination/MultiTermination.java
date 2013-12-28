@@ -1,4 +1,4 @@
-package ctu.nengoros.comm.rosBackend.multiTermination;
+package ctu.nengoros.comm.rosBackend.encoders.multiTermination;
 
 import java.io.Serializable;
 

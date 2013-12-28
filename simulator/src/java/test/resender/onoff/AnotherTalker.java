@@ -2,13 +2,11 @@ package resender.onoff;
 
 import java.util.Random;
 
-import org.apache.commons.logging.Log;
 import org.ros.concurrent.CancellableLoop;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Publisher;
-import org.ros.node.topic.Subscriber;
 
 /**
  * this thing is for testing of communication by means of int[] messages

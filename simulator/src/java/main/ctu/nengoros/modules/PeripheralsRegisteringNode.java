@@ -18,22 +18,20 @@ public interface PeripheralsRegisteringNode {
 	 * This is used by Decoders to add their origin to the NeuralModule, 
 	 * should not be used from any other place.
 	 * 
-	 * @param topicName name of topic (this will be the same with the origin name)
-	 * @param dec decoder which sets values of this origin (Decoders implement Origin)
+	 * @param o Origin to be added
  	 * @throws StructuralException is thrown if there already is orig. with this name
 	 *
 	 */
-	public void addOrigin(String topicName, Origin o) throws StructuralException;
+	public void addOrigin(Origin o) throws StructuralException;
 	
 	/**
 	 * This is used by Encoders to add their termination to the NeuralModule,
 	 * should not be used from any other place. Data from this termination
 	 * are read by encoder, encoded into ROS message format and sent to ROS net.
 	 * 
-	 * @param topicName name of the ROS topic (and Nengo termination)
-	 * @param enc encoder which sets values (implements Termination)
+	 * @param t Termination to be added to the parent
 	 * @throws StructuralException is thrown if there already is term. with this name
 	 */
-	public void addTermination(String topicName, Termination t) throws StructuralException;
+	public void addTermination(Termination t) throws StructuralException;
 
 }

@@ -1,9 +1,10 @@
-package ctu.nengoros.comm.rosBackend.multiTermination;
+package ctu.nengoros.comm.rosBackend.encoders.multiTermination;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import ctu.nengoros.modules.NeuralModule;
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.Node;
@@ -43,7 +44,7 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 
 	protected final Node parent;
 	
-	public final float DEF_W = 1;
+	//public final float DEF_W = 1;
 	
 	protected String mess = me+"ERROR: suport fot multidimensional Terminations" +
 			"is not implemented so far!";
@@ -52,7 +53,7 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 	protected final Integrator integ;
 	protected final DynamicalSystem lti;
 	
-	public AbstractMultiTermination(Node parent, String name, int dimension, Integrator integ, DynamicalSystem lti2){
+	public AbstractMultiTermination(NeuralModule parent, String name, int dimension, Integrator integ, DynamicalSystem lti2){
 		
 		this.lti = lti2;
 		this.integ = integ;
@@ -157,7 +158,7 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 
 	@Override
 	public String addTerminaton() throws StructuralException{
-		return this.addTermination(this.DEF_W);
+		return this.addTermination(this.dimension);
 	}
 
 	// TODO: add support for multidimensional terminations

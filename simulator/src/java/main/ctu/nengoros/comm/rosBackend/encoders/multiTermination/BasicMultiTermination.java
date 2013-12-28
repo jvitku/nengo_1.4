@@ -1,8 +1,8 @@
-package ctu.nengoros.comm.rosBackend.multiTermination;
+package ctu.nengoros.comm.rosBackend.encoders.multiTermination;
 
+import ctu.nengoros.modules.NeuralModule;
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
-import ca.nengo.model.Node;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ca.nengo.model.Termination;
@@ -19,7 +19,7 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 	private static final long serialVersionUID = 7943836551919849111L;
 	public final String me = "[BasicMultiTermination] ";
 
-	public BasicMultiTermination(Node parent, String name, int dimension, Integrator integ, DynamicalSystem lti) {
+	public BasicMultiTermination(NeuralModule parent, String name, int dimension, Integrator integ, DynamicalSystem lti) {
 		super(parent, name, dimension, integ, lti);
 	}
 
@@ -45,8 +45,8 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 		String termName = this.generateName();
 		//Termination t = TerminationFactory.buldBasicTermination(parent, termName, this.dimension);
 		
-		Termination t = new BasicTermination(parent, lti, integ, name);
-
+		Termination t = new BasicTermination(parent, lti, integ, termName);
+		
 		this.myTerminations.put(termName, t);
 		this.orderedTerminations.add(t);
 		return name;

@@ -1,9 +1,15 @@
 package nengoros.util;
 
 import ctu.nengoros.util.sync.impl.SyncedUnit;
+
 import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+
 public class SyncHierarchyTest {
 
+	/*
 	public static void main(String[] args){
 		System.out.println(" will init some hierarchy of Units and test if it works");
 		SyncHierarchyTest st = new SyncHierarchyTest();
@@ -16,8 +22,10 @@ public class SyncHierarchyTest {
 		st.testC();
 		
 		System.out.println("done");
-	}
+	}*/
 	
+
+	@Test
 	public void testA(){
 		Something nochilds = new Something(); 
 		nochilds.setReady(true);
@@ -29,6 +37,7 @@ public class SyncHierarchyTest {
 		assertTrue(nochilds.isReady());
 	}
 	
+	@Test
 	public void testB(){
 		// init
 		Something a = new Something();
@@ -67,6 +76,7 @@ public class SyncHierarchyTest {
 	
 	
 	// test discardChildsReady
+	@Test
 	public void testC(){
 		// init
 		Something a = new Something();

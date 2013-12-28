@@ -1,13 +1,9 @@
 package resender.turtle;
 
-import java.util.Random;
-
-import org.ros.concurrent.CancellableLoop;
 import org.ros.message.MessageListener;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
-import org.ros.node.topic.Publisher;
 import org.ros.node.topic.Subscriber;
 
 import turtlesim.Color;

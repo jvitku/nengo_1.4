@@ -10,8 +10,8 @@ import ca.nengo.model.Units;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.comm.rosBackend.encoders.Encoder;
-import ctu.nengoros.comm.rosBackend.multiTermination.MultiTermination;
-import ctu.nengoros.comm.rosBackend.multiTermination.impl.SumMultiTermination;
+import ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination;
+import ctu.nengoros.comm.rosBackend.encoders.multiTermination.impl.SumMultiTermination;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.modules.NeuralModule;
 

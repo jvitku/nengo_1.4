@@ -137,6 +137,10 @@ public class NodeFactory{
 			System.out.println(me+"launching "+type+" node with the following command: "+Mess.toAr(command));
 	}
 	
+	/**
+	 * Get number of currently running ROS nodes. It is for each NeuralModule two typically (modem included)
+	 * @return number of currently running ROS nodes (including modems)
+	 */
 	public static int numOfRunningNodes() { return np.numOfRunningNodes(); }
 
 	public static String[] namesOfRunningNodes() { return np.namesOfRunningNodes(); }

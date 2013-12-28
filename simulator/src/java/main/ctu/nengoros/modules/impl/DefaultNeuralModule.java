@@ -335,7 +335,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	 * 
 	 * @param name name of origin, should correspond to published topic
 	 * @throws StructuralException 
-	 */
+	 *
 	public void createOrigin(String name, Origin o) throws StructuralException{
 		
 		if(myOrigins.containsKey(name)){
@@ -345,13 +345,13 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		myProperties.setProperty("o__"+name, "Origin named: "+name);
 		myOrigins.put(name, o);
 		orderedOrigins.add(o);
-	}
+	}*/
 	
 	/**
 	 * 
 	 * @param name termination name, should correspond to subscribed ROS topic
 	 * @throws StructuralException 
-	 */
+	 *
 	public void createTermination(String name, Termination t) throws StructuralException{
 		
 		if(myTerminations.containsKey(name)){
@@ -361,7 +361,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		myProperties.setProperty("t__"+name, "Termination named: "+name);
 		myTerminations.put(name,t);
 		orderedTerminations.add(t);
-	}
+	}*/
 	
 
 	@Override
@@ -514,11 +514,20 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	@Override
 	public Termination getTermination(String name) throws StructuralException {
 		if ( !myTerminations.containsKey(name) ) {
+			this.printTerminations();
 			throw new StructuralException("There is no Termination named " + name);
 		}
 		return myTerminations.get(name);
 	}
 
+	private void printTerminations(){
+		if(this.orderedTerminations.size() == 0)
+			System.out.println(me+" list of Terminations is empty!!");
+		for(int i=0; i<this.orderedTerminations.size(); i++){
+			System.out.println(me+"term no: "+i+" is named "+this.orderedTerminations.get(i).getName());
+		}
+	}
+	
 	@Override
 	public String getDocumentation() {
 		return this.myDocumentation;
@@ -554,27 +563,51 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public void addOrigin(String topicName, Origin o) throws StructuralException {
+	public void addOrigin(Origin o) throws StructuralException {
+		/*
 		if(this.myOrigins.containsKey(o.getName()))
 			throw new StructuralException(me+"Origin named "+o.getName()+" is already registered here!");
 		
 		this.myOrigins.put(o.getName(), o);
 		this.orderedOrigins.add(o);
+		*/
+		String name = o.getName();
+		
+		if(myOrigins.containsKey(name)){
+			System.err.println("Origin with the same name already here, ignoring!");
+			throw new StructuralException("Origin with this name already connected! "+name);
+		}
+		myProperties.setProperty("o__"+name, "Origin named: "+name);
+		myOrigins.put(name, o);
+		orderedOrigins.add(o);
 	}
 
 	@Override
-	public void addTermination(String topicName, Termination t) throws StructuralException {
+	public void addTermination(Termination t) throws StructuralException {
+		
+		String name = t.getName();
+
+		if(myTerminations.containsKey(name)){
+			System.err.println("Termination iwth this name already here, ignoring!");
+			throw new StructuralException("Termination iwth this name already here, ignoring! " + name);
+		}
+		myProperties.setProperty("t__"+name, "Termination named: "+name);
+		myTerminations.put(name,t);
+		orderedTerminations.add(t);
+		
+		/*
 		if(this.myTerminations.containsKey(t.getName()))
 			throw new StructuralException(me+"Termination named "+t.getName()+" is already registered here!");
 		
 		this.myTerminations.put(t.getName(), t);
-		this.orderedTerminations.add(t);
+		this.orderedTerminations.add(t);*/
 	}
 	
 	protected void addEncoder(Encoder e) throws StructuralException {
 		if(this.myEncoders.containsKey(e.getName()))
 			throw new StructuralException(me+"Encodernamed "+e.getName()+" is already registered here!");
 		
+		myProperties.setProperty("enc__"+e.getName(), "Encoder named: "+e.getName());
 		this.myEncoders.put(e.getName(), e);
 		this.orderedEncoders.add(e);
 	}

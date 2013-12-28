@@ -30,7 +30,7 @@ public class NameProvider{
 
 	private ArrayList<String> nameList;
 	// note: this separator "_" does not work at all, look at screens/nameconflict.png
-	public final String separator = "__";
+	public final String separator = "/";
 
 
 	public NameProvider(){

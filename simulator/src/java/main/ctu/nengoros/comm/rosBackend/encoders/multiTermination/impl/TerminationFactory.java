@@ -1,4 +1,4 @@
-package ctu.nengoros.comm.rosBackend.multiTermination.impl;
+package ctu.nengoros.comm.rosBackend.encoders.multiTermination.impl;
 
 import ctu.nengoros.dynamics.IdentityLTISystem;
 import ctu.nengoros.dynamics.NoIntegrator;

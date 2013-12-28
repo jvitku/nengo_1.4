@@ -1,14 +1,14 @@
-package ctu.nengoros.comm.rosBackend.multiTermination.impl;
+package ctu.nengoros.comm.rosBackend.encoders.multiTermination.impl;
 
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
-import ca.nengo.model.Node;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.Termination;
 import ca.nengo.model.impl.BasicTermination;
 import ca.nengo.util.TimeSeries;
 import ca.nengo.util.impl.TimeSeriesImpl;
-import ctu.nengoros.comm.rosBackend.multiTermination.BasicMultiTermination;
+import ctu.nengoros.comm.rosBackend.encoders.multiTermination.BasicMultiTermination;
+import ctu.nengoros.modules.NeuralModule;
 
 /**
  * 
@@ -34,8 +34,8 @@ public class SumMultiTermination extends BasicMultiTermination{
 	TimeSeriesImpl myValue;
 	float[][] myVals;
 
-	public SumMultiTermination(Node parent, String name, int dimension, Integrator integ, DynamicalSystem myDynamics){
-		super(parent,name, dimension, integ, myDynamics);
+	public SumMultiTermination(NeuralModule parent, String name, int dimension, Integrator integ, DynamicalSystem myDynamics){
+		super(parent, name, dimension, integ, myDynamics);
 	}
 
 	/**

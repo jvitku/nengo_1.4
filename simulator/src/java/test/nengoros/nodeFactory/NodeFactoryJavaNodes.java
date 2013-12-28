@@ -17,17 +17,18 @@ import ctu.nengoros.comm.rosutils.RosUtils;
  */
 public class NodeFactoryJavaNodes {
 
+	public static String className = "resender.onoff.Talker";
+	
 	@Test
 	public void launchOneJavaNode(){
 		
 		assertEquals(NodeFactory.numOfRunningNodes(),0);
 
-		String className = "resender.onoff.Talker";
 		NodeGroup n = new NodeGroup("test", true);
 		n.addNode(className, "testNode", "java");
 		n.startGroup();
 		
-		assertEquals(NodeFactory.numOfRunningNodes(),1);
+		assertEquals(NodeFactory.numOfRunningNodes(),2);
 		Mess.wait(2);
 		n.stopGroup();
 		assertEquals(NodeFactory.numOfRunningNodes(),0);
@@ -42,23 +43,20 @@ public class NodeFactoryJavaNodes {
 	public void launchTwoNodes(){
 		assertEquals(NodeFactory.numOfRunningNodes(),0);
 
-		String className = "resender.onoff.Talker";
-
 		NodeGroup n = new NodeGroup("test", false);
 		n.addNode(className, "testNode", "java");
 		n.startGroup();
-
-		assertEquals(NodeFactory.numOfRunningNodes(),1);
+		
+		assertEquals(NodeFactory.numOfRunningNodes(),2); // also modem
 		
 		NodeGroup n2 = new NodeGroup("test", false);
 		n2.addNode(className, "testNode", "java");
 		n2.startGroup();
 		
-		assertEquals(NodeFactory.numOfRunningNodes(),2);
-				
+		assertEquals(NodeFactory.numOfRunningNodes(),4);
 		Mess.wait(2);
 		n2.stopGroup();
-		assertEquals(NodeFactory.numOfRunningNodes(),1);
+		assertEquals(NodeFactory.numOfRunningNodes(),2);
 		
 		Mess.wait(1);
 		n.stopGroup();

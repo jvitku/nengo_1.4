@@ -1,8 +1,6 @@
 package resender.testnodes;
 
-
 import org.apache.commons.logging.Log;
-import org.ros.concurrent.CancellableLoop;
 import org.ros.message.MessageListener;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;

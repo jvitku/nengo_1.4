@@ -11,7 +11,6 @@ import ctu.nengoros.comm.nodeFactory.NameProvider;
  * 
  * @author Jaroslav Vitku
  *
-  http://supportweb.cs.bham.ac.uk/documentation/tutorials/docsystem/build/tutorials/junit/junit.html
  */
 public class NameProviderTest/*extends TestCase*/{
 
@@ -38,6 +37,7 @@ public class NameProviderTest/*extends TestCase*/{
 		
 		assertEquals(np.numOfRunningNodes(),1);
 		np.shutDown(new String[]{x+np.separator+node[0]});
+		
 		assertEquals(np.numOfRunningNodes(),0);		
 	}
 	

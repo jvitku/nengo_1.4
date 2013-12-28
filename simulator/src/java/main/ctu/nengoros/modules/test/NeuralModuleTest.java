@@ -43,11 +43,11 @@ import ca.nengo.util.impl.TimeSeriesImpl;
  * 
  * @author Jaroslav Vitku
  *
- * uses asynchronous communication with ROS backends
+ * uses asynchronous communication with ROS Backends
  */
 public class NeuralModuleTest extends SyncedUnit implements NeuralModule{ 
 
-	Integrator noInt = new NoIntegrator();					// do not integrate termination values
+	Integrator noInt = new NoIntegrator();	// do not integrate termination values TODO
 	
 	public static final String me = "[AbsNeuron] ";
 	
@@ -512,7 +512,7 @@ public class NeuralModuleTest extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public void addOrigin(String topicName, Origin o) throws StructuralException {
+	public void addOrigin(Origin o) throws StructuralException {
 		if(this.myOrigins.containsKey(o.getName()))
 			throw new StructuralException(me+"Origin named "+o.getName()+" is already registered here!");
 		
@@ -521,7 +521,7 @@ public class NeuralModuleTest extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public void addTermination(String topicName, Termination t) throws StructuralException {
+	public void addTermination(Termination t) throws StructuralException {
 		if(this.myTerminations.containsKey(t.getName()))
 			throw new StructuralException(me+"Termination named "+t.getName()+" is already registered here!");
 		

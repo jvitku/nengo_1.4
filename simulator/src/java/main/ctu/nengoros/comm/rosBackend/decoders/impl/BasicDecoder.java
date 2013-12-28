@@ -110,7 +110,7 @@ public class BasicDecoder extends SyncedUnit implements Decoder {
 		this.ros = ros;
 		this.ros.addEventListener(this);	
 		// Nengo stuff
-		((NeuralModule)myNode).addOrigin(myName, this);
+		((NeuralModule)myNode).addOrigin(this);
 		super.setReady(true);
 	}
 	
