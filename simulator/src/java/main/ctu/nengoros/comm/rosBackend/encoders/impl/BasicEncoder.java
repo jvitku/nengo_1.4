@@ -114,14 +114,12 @@ public class BasicEncoder implements Encoder{
 			}
 			*/
 		
-		
 		this.ros = ros;	// get my ROS backend
 
 		// Here, add new MultiTermination which sums inputs on all own Terminations together.
 		multiTermination  = new SumMultiTermination(
 				this.parent, this.name, dimensions, this.integrator, this.dynamics);
 		
-		System.out.println(me+"adding new Termination to my multitermination");
 		// add one termination on the start (usable by GUI, has default weight of 1)
 		multiTermination.addTerminaton();
 	}
@@ -135,17 +133,11 @@ public class BasicEncoder implements Encoder{
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
 		
-		System.out.println(me+"mt wil runn ");
-		System.out.println(me+" mt is null? "+(multiTermination==null));
 		// collect data on all my Terminations
 		multiTermination.run(startTime, endTime);
 		
-		System.out.println(me+" getting tiem series ");
-		
 		float[][] ff_series = multiTermination.getOutput().getValues();
 		
-		
-		System.out.println(me+" publishing ROS");
 		// publish as a ROS message
 		// TODO: send entire TimeSeries over the ROS network, not just one time sample
 		ros.publish(ff_series[0]);

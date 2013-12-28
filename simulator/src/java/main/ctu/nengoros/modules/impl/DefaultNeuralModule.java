@@ -330,51 +330,14 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 
-	/**
-	 * do not use this, use method createEn/Decoder
-	 * 
-	 * @param name name of origin, should correspond to published topic
-	 * @throws StructuralException 
-	 *
-	public void createOrigin(String name, Origin o) throws StructuralException{
-
-		if(myOrigins.containsKey(name)){
-			System.err.println("Origin with the same name already here, ignoring!");
-			throw new StructuralException("Origin with this name already connected! "+name);
-		}
-		myProperties.setProperty("o__"+name, "Origin named: "+name);
-		myOrigins.put(name, o);
-		orderedOrigins.add(o);
-	}*/
-
-	/**
-	 * 
-	 * @param name termination name, should correspond to subscribed ROS topic
-	 * @throws StructuralException 
-	 *
-	public void createTermination(String name, Termination t) throws StructuralException{
-
-		if(myTerminations.containsKey(name)){
-			System.err.println("Termination iwth this name already here, ignoring!");
-			throw new StructuralException("Termination iwth this name already here, ignoring! " + name);
-		}
-		myProperties.setProperty("t__"+name, "Termination named: "+name);
-		myTerminations.put(name,t);
-		orderedTerminations.add(t);
-	}*/
-
-
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
 		myTime = endTime;
 
-		System.out.println("running all terminations");
 		this.runAllTerminations(startTime, endTime);	// run all terminations to collect input values
 		
-		System.out.println("running all enoders");
 		this.runAllEncoders(startTime, endTime);	// encode data on registered Terminations and send to ROS
 
-		System.out.println("done, discargintg ready state for all decoders");
 		super.discardChildsReady();// wait for all registered synchronous decoders to receive message
 	}
 
@@ -392,10 +355,8 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	private void runAllEncoders(float startTime, float endTime) throws SimulationException{
 		Encoder e;
-		System.out.println(me+"encoders...");
 		for(int i=0; i<orderedEncoders.size(); i++){
 			e=orderedEncoders.get(i);
-			System.out.println(me+" will run this one: "+e.getName());
 			if(e instanceof Encoder)
 				((Encoder)e).run(startTime, endTime);
 		}
@@ -459,7 +420,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 					Units.uniform(Units.UNK, values.length));
 			return result;
 		}
-		throw new SimulationException("Probeable:getHistory: " +
+		throw new SimulationException("Probeable: getHistory: " +
 				"this termination or origin is not known!: "+kk);
 	}
 
@@ -498,13 +459,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			throw new StructuralException("There is no Origin named " + name);
 		}
 		return myOrigins.get(name);
-	}
-
-	protected void printOrigins(){
-		System.out.print(me+"printing orogins now: ");
-		for(int i=0; i<orderedOrigins.size(); i++)
-			System.out.print(" "+orderedOrigins.get(i).getName());
-		System.out.println("done");
 	}
 
 	@Override
@@ -560,13 +514,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	@Override
 	public void addOrigin(Origin o) throws StructuralException {
-		/*
-		if(this.myOrigins.containsKey(o.getName()))
-			throw new StructuralException(me+"Origin named "+o.getName()+" is already registered here!");
 
-		this.myOrigins.put(o.getName(), o);
-		this.orderedOrigins.add(o);
-		 */
 		String name = o.getName();
 
 		if(myOrigins.containsKey(name)){
@@ -592,12 +540,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		myTerminations.put(name,t);
 		orderedTerminations.add(t);
 
-		/*
-		if(this.myTerminations.containsKey(t.getName()))
-			throw new StructuralException(me+"Termination named "+t.getName()+" is already registered here!");
-
-		this.myTerminations.put(t.getName(), t);
-		this.orderedTerminations.add(t);*/
 	}
 
 	protected void addEncoder(Encoder e) throws StructuralException {

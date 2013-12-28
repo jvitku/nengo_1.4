@@ -30,3 +30,39 @@ structure:
 	if(post is MultipleInputEncoder)
 
 	connect(pre,new_WeightedTermination('name'))
+
+-----------------TODO
+==========================
+# Multiple Inputs
+
+* Test combination of multiple Termination values into one
+
+* Implement API for simple connecting multiple Terminations
+
+* Implement support for nef.connect
+
+* Make more tests
+
+
+# Simulator Core and General
+
+* Better implementation of waiting for `SynchedUnit`s?
+
+* Better handling of Exceptions
+
+
+# ROS integration into Nengo
+
+* Enable sending/receiving entire `RealOutput` value (multiple values) over the ROS network 
+
+	* Sending is done in the `ctu.nengoros.modules.impl.DefaultNeuraoModule.runAllEncoders()`, and therefore in the `Encoder.run()`
+	* Receiving values from the ROS network is done asynchronously (events) in the Decoder class.
+	
+* Enable encoding, sending and decoding `SpikeOutput` to/from the ROS messages. 
+
+	* This requires ROS nodes with support of `SpikeOutput`
+
+
+# ROS support 
+
+* Encoding/Decoding multidimensional messages. Test it.

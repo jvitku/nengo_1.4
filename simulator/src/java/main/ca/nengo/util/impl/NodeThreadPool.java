@@ -259,25 +259,20 @@ public class NodeThreadPool {
 			int oldPriority = Thread.currentThread().getPriority();
 			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 
-			System.out.println("starting threads 1");
 			// start the projection processing, wait for it to finish
 			startThreads();
-			System.out.println("starting threads 2");
 			// start the node processing, wait for it to finish
 			///my: Here, nodes have values on inputs and node.run() sends values over the ROS network
 			startThreads();	
 			
-			System.out.println("starting threads 3");
 			// start the task processing, wait for it to finish
 			startThreads();
 			
-			System.out.println("while");
 			///my: Here, it is expected that nodes finished processing and have origins set, 
 			// ..so wait for ROS messages to arrive, this (asynchronous) should set values to their origins
 			int poc=1;
 			boolean allready = false;
 			while(!allready){
-				System.out.println("whileee");
 				allready=true;
 				for(SyncedUnit u : myUnits){
 					if(!u.isReady()){			///TODO: request for re-sending the message?

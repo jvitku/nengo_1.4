@@ -90,8 +90,6 @@ public class SumMultiTermination extends BasicMultiTermination{
 			}
 		}
 	}
-	
-	
 
 	/**
 	 * Just add values on this termination to myValue.
