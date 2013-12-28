@@ -12,7 +12,6 @@ import ca.nengo.model.Termination;
 import ca.nengo.model.Units;
 import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
-import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.comm.rosutils.RosUtils;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
@@ -62,44 +61,6 @@ public class DefaultModuleTerminationsOrigins extends RosCommunicationTest {
 		RosUtils.utilsShallStop();
 	}
 
-	/**
-	 * Test how to ROsCommunicationTest can be used
-	 */
-	//@Ignore
-	@Test
-	public void disableRosUtils(){
-
-
-		NodeGroup g = new NodeGroup("pubsub",false);
-		g.addNode(minimax,"minimaxNode","java");
-
-		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
-
-		NeuralModule smartOne = new DefaultNeuralModule("SmartNeuron",g);
-		assertTrue(NodeFactory.np.numOfRunningNodes() == 2); // one modem and one ROS node
-
-		smartOne.createDecoder("ros2annFloatArr", "int", 2);
-		smartOne.createEncoder("ann2rosFloatArr", "float", 4);
-
-		System.out.println("Names of running nodes are: " +
-				Mess.toAr(NodeFactory.np.namesOfRunningNodes()));
-		assertTrue(NodeFactory.np.numOfRunningNodes() == 2); // one modem and one ROS node
-		try {
-			Thread.sleep(300);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			Thread.sleep(300);
-		} catch (InterruptedException e) { e.printStackTrace(); }
-
-		g.stopGroup();	// not necessary
-
-		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
-
-	}
-	
 	//@Ignore
 	@Test
 	public void registersOrigins(){
@@ -167,6 +128,7 @@ public class DefaultModuleTerminationsOrigins extends RosCommunicationTest {
 	/**
 	 * Test whether values are actually passed by the components - simple example.
 	 */
+	//@Ignore
 	@Test
 	public void communicationWorks(){
 
@@ -213,7 +175,7 @@ public class DefaultModuleTerminationsOrigins extends RosCommunicationTest {
 		System.out.println("origin named: "+OR.outAT+"found");
 		
 		
-		// compute the OR truth table over the ROS newtork by means of Neural module
+		// compute the OR truth table over the ROS network by means of Neural module
 		assertFalse(this.makeSimulationStep(false, false, module, inTA, inTB, outA));
 		assertTrue(this.makeSimulationStep(false, true, module, inTA, inTB, outA));
 		assertTrue(this.makeSimulationStep(true, false, module, inTA, inTB, outA));
@@ -278,10 +240,9 @@ public class DefaultModuleTerminationsOrigins extends RosCommunicationTest {
 				
 			RealOutputImpl out = (RealOutputImpl) outA.getValues();
 			float[]values = out.getValues();
-			System.out.println("dimension of the output values is: "+values.length);
-			System.out.println("Computed value (the value of this origin) is : \t"+values[0]);
-			
 			assertEquals(values.length,1);	// should return one float value representing true/false (1/0)
+			
+			System.out.println("Computed value (the value of this origin) is : \t"+values[0]);
 			
 			assertTrue(values[0]==1.0 || values[0]==0.0);
 			
@@ -321,6 +282,4 @@ public class DefaultModuleTerminationsOrigins extends RosCommunicationTest {
 		}
 		System.out.println("");
 	}
-	
-
 }
