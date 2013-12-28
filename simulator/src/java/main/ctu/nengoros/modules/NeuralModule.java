@@ -1,4 +1,4 @@
-package ctu.nengoros.newmodules;
+package ctu.nengoros.modules;
 
 import ca.nengo.model.Node;
 import ca.nengo.model.Probeable;

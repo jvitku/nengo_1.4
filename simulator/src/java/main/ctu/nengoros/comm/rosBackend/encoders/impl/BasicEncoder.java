@@ -1,4 +1,4 @@
-package ctu.nengoros.comm.newEncoders.impl;
+package ctu.nengoros.comm.rosBackend.encoders.impl;
 
 import org.ros.node.ConnectedNode;
 
@@ -7,15 +7,15 @@ import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ca.nengo.model.Units;
-import ctu.nengoros.comm.newEncoders.NewEncoder;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
+import ctu.nengoros.comm.rosBackend.encoders.Encoder;
 import ctu.nengoros.comm.rosBackend.multiTermination.MultiTermination;
 import ctu.nengoros.comm.rosBackend.multiTermination.impl.SumMultiTermination;
 import ctu.nengoros.exceptions.ConnectionException;
-import ctu.nengoros.newmodules.NeuralModule;
+import ctu.nengoros.modules.NeuralModule;
 
-public class NewBasicEncoder implements NewEncoder{
+public class BasicEncoder implements Encoder{
 
 	public static final String me = "[BasicEncoder] ";
 
@@ -52,7 +52,7 @@ public class NewBasicEncoder implements NewEncoder{
 	 * 
 	 * @see ctu.nengoros.comm.rosBackend.backend.impl
 	 */
-	public NewBasicEncoder(NeuralModule parent, DynamicalSystem dynamics, Integrator integrator, 
+	public BasicEncoder(NeuralModule parent, DynamicalSystem dynamics, Integrator integrator, 
 			String name, String dataType, Units u, ModemContainer modem, Backend ros) 
 					throws StructuralException, ConnectionException{
 		
@@ -80,7 +80,7 @@ public class NewBasicEncoder implements NewEncoder{
 	 * 
 	 * @see ctu.nengoros.comm.rosBackend.backend.impl
 	 */
-	public NewBasicEncoder(NeuralModule parent, int[] dimensionsizes, DynamicalSystem dynamics, Integrator integrator, 
+	public BasicEncoder(NeuralModule parent, int[] dimensionsizes, DynamicalSystem dynamics, Integrator integrator, 
 			String name, String dataType, Units u, ModemContainer modem, Backend ros) 
 					throws StructuralException, ConnectionException{
 		

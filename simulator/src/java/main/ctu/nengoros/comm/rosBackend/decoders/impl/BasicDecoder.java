@@ -27,8 +27,7 @@ import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ca.nengo.model.Units;
 import ca.nengo.model.impl.RealOutputImpl;
-
-import ctu.nengoros.newmodules.NeuralModule;
+import ctu.nengoros.modules.NeuralModule;
 
 /**
  * This is (the simplest version of) decoder, thing that receives messages

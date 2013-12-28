@@ -22,7 +22,7 @@ NOT 		= "org.hanns.logic.crisp.gates.impl.NOT";
 def or_node(name):
 	g = NodeGroup("OR", True);
 	g.addNode(OR, "OR", "java");
-	module = NeuralModuleMI(name+'_OR', g)
+	module = NeuralModule(name+'_OR', g)
 	module.createEncoder("logic/gates/ina", "bool", 1)
 	module.createEncoder("logic/gates/inb", "bool", 1)
 	module.createDecoder("logic/gates/outa", "bool", 1)

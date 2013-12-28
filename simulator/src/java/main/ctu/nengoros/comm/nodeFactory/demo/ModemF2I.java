@@ -5,8 +5,8 @@ import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.comm.rosutils.RosUtils;
-import ctu.nengoros.newmodules.NeuralModule;
-import ctu.nengoros.newmodules.test.NeuralModuleTest;
+import ctu.nengoros.modules.NeuralModule;
+import ctu.nengoros.modules.test.NeuralModuleTest;
 
 /**
  * This demo starts roscore and launches two nodes in one group of nodes.

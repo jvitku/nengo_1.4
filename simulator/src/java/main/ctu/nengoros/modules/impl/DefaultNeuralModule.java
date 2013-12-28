@@ -1,18 +1,18 @@
-package ctu.nengoros.newmodules;
+package ctu.nengoros.modules.impl;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Properties;
 
-import ctu.nengoros.comm.newEncoders.NewEncoder;
-import ctu.nengoros.comm.newEncoders.impl.NewBasicEncoder;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.comm.rosBackend.backend.BackendUtils;
 import ctu.nengoros.comm.rosBackend.decoders.Decoder;
 import ctu.nengoros.comm.rosBackend.decoders.impl.BasicDecoder;
+import ctu.nengoros.comm.rosBackend.encoders.Encoder;
+import ctu.nengoros.comm.rosBackend.encoders.impl.BasicEncoder;
 //import ctu.nengoros.comm.rosBackend.encoders.Encoder;
 //import ctu.nengoros.comm.rosBackend.encoders.impl.BasicEncoder;
 import ctu.nengoros.dynamics.IdentityLTISystem;
@@ -20,6 +20,7 @@ import ctu.nengoros.dynamics.NoIntegrator;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.exceptions.MessageFormatException;
 import ctu.nengoros.exceptions.UnsupportedMessageFormatExc;
+import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.util.sync.impl.SyncedUnit;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.Node;
@@ -51,11 +52,11 @@ import ca.nengo.util.impl.TimeSeriesImpl;
  * @author Jaroslav Vitku
  *
  */
-public class AbsNeuralModule extends SyncedUnit implements NeuralModule{ 
+public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{ 
 
 	Integrator noInt = new NoIntegrator();					// do not integrate termination values
 	
-	public static final String me = "[AbsNeuralModule] ";
+	public static final String me = "[DefaultNeuralModule] ";
 	
 	private static final long serialVersionUID = -5590968314570316769L;
 	protected float myTime;
@@ -71,8 +72,8 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	protected LinkedList <Termination> orderedTerminations;
 	
 	// run all these Encoders after Terminations
-	protected Map<String, NewEncoder> myEncoders;		
-	protected LinkedList<NewEncoder> orderedEncoders;	
+	protected Map<String, Encoder> myEncoders;		
+	protected LinkedList<Encoder> orderedEncoders;	
 
 	protected String myDocumentation;
 	
@@ -97,7 +98,7 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	 * 
 	 * @param name name of neural module
 	 */
-	public AbsNeuralModule(String name, NodeGroup group){
+	public DefaultNeuralModule(String name, NodeGroup group){
 		super(name);	// make this unit synchronous by default
 
 		if(! group.isRunning()){
@@ -119,7 +120,7 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	 * @param group
 	 * @param synchronous
 	 */
-	public AbsNeuralModule(String name, NodeGroup group, boolean synchronous){
+	public DefaultNeuralModule(String name, NodeGroup group, boolean synchronous){
 		super(synchronous,name);	// choose whether to be synchronous or not
 		ModemContainer modContainer = group.getModem();
 		
@@ -143,11 +144,11 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
         this.t=0;
         this.myOrigins = new HashMap<String, Origin>(5);
 		this.myTerminations = new HashMap<String, Termination>(5);
-		this.myEncoders = new HashMap<String,NewEncoder>(5);
+		this.myEncoders = new HashMap<String,Encoder>(5);
 		
 		this.orderedOrigins = new LinkedList <Origin> ();
 		this.orderedTerminations = new LinkedList <Termination> ();
-		this.orderedEncoders = new LinkedList<NewEncoder>();
+		this.orderedEncoders = new LinkedList<Encoder>();
 	}
 	
 	@Override
@@ -269,8 +270,9 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 			
 			IdentityLTISystem noLTI = new IdentityLTISystem(dim); 	// do not use any decay..
 			
-			new NewBasicEncoder(this, dimensionSizes, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
-			//new NewBasicEncoder(this, noLTI, noInt, topicName, dimensionSizes, dataType, Units.UNK, mc, ros);
+			Encoder enc = new BasicEncoder(this, dimensionSizes, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
+			this.addEncoder(enc);
+			//new BasicEncoder(this, noLTI, noInt, topicName, dimensionSizes, dataType, Units.UNK, mc, ros);
 			
 		} catch (MessageFormatException e1) {
 			System.err.println(me+"Bad message format.");
@@ -307,7 +309,9 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 
 			IdentityLTISystem noLTI = new IdentityLTISystem(dim); 	// do not use any decay..
 			
-			new NewBasicEncoder(this, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
+			Encoder enc = new BasicEncoder(this, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
+			this.addEncoder(enc);
+			
 			//new BasicEncoder(this, noLTI, noInt, topicName, new int[]{dim}, dataType, Units.UNK, mc, ros);
 			
 		} catch (MessageFormatException e) {
@@ -384,11 +388,11 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 	
 	private void runAllEncoders(float startTime, float endTime) throws SimulationException{
-		NewEncoder e;
+		Encoder e;
 		for(int i=0; i<orderedEncoders.size(); i++){
 			e=orderedEncoders.get(i);
-			if(e instanceof NewEncoder)
-				((NewEncoder)e).run(startTime, endTime);
+			if(e instanceof Encoder)
+				((Encoder)e).run(startTime, endTime);
 		}
 	}
 	
@@ -525,7 +529,7 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 		this.myDocumentation=text;		
 	}
 	
-	public AbsNeuralModule clone(){
+	public DefaultNeuralModule clone(){
 		// TODO
 		return null;
 	}
@@ -565,6 +569,14 @@ public class AbsNeuralModule extends SyncedUnit implements NeuralModule{
 		
 		this.myTerminations.put(t.getName(), t);
 		this.orderedTerminations.add(t);
+	}
+	
+	protected void addEncoder(Encoder e) throws StructuralException {
+		if(this.myEncoders.containsKey(e.getName()))
+			throw new StructuralException(me+"Encodernamed "+e.getName()+" is already registered here!");
+		
+		this.myEncoders.put(e.getName(), e);
+		this.orderedEncoders.add(e);
 	}
 
 }

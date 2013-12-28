@@ -1,7 +1,7 @@
-package ctu.nengoros.comm.newEncoders;
+package ctu.nengoros.comm.rosBackend.encoders;
 
 
-import ctu.nengoros.newmodules.NeuralModule;
+import ctu.nengoros.modules.NeuralModule;
 import ca.nengo.model.Resettable;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
@@ -26,7 +26,7 @@ import ca.nengo.model.StructuralException;
  * @author Jaroslav Vitku
  *
  */
-public interface NewEncoder extends Resettable{
+public interface Encoder extends Resettable{
 
 	/**
 	 * Get the parent of Encoder

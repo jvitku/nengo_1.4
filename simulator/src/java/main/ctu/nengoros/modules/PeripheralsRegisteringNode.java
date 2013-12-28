@@ -1,4 +1,4 @@
-package ctu.nengoros.newmodules;
+package ctu.nengoros.modules;
 
 import ca.nengo.model.Origin;
 import ca.nengo.model.StructuralException;

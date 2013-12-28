@@ -1,24 +1,24 @@
-package ctu.nengoros.newmodules.test;
+package ctu.nengoros.modules.test;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Properties;
 
-import ctu.nengoros.comm.newEncoders.NewEncoder;
-import ctu.nengoros.comm.newEncoders.impl.NewBasicEncoder;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.comm.rosBackend.backend.BackendUtils;
 import ctu.nengoros.comm.rosBackend.decoders.Decoder;
 import ctu.nengoros.comm.rosBackend.decoders.impl.BasicDecoder;
+import ctu.nengoros.comm.rosBackend.encoders.Encoder;
+import ctu.nengoros.comm.rosBackend.encoders.impl.BasicEncoder;
 import ctu.nengoros.dynamics.IdentityLTISystem;
 import ctu.nengoros.dynamics.NoIntegrator;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.exceptions.MessageFormatException;
 import ctu.nengoros.exceptions.UnsupportedMessageFormatExc;
-import ctu.nengoros.newmodules.AbsNeuralModule;
-import ctu.nengoros.newmodules.NeuralModule;
+import ctu.nengoros.modules.NeuralModule;
+import ctu.nengoros.modules.impl.DefaultNeuralModule;
 import ctu.nengoros.util.sync.impl.SyncedUnit;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.Node;
@@ -65,8 +65,8 @@ public class NeuralModuleTest extends SyncedUnit implements NeuralModule{
 	protected LinkedList <Termination> orderedTerminations;
 	
 	// run all these Encoders after Terminations
-	protected Map<String, NewEncoder> myEncoders;		
-	protected LinkedList<NewEncoder> orderedEncoders;	
+	protected Map<String, Encoder> myEncoders;		
+	protected LinkedList<Encoder> orderedEncoders;	
 	
 	protected String myDocumentation;
 	
@@ -101,11 +101,11 @@ public class NeuralModuleTest extends SyncedUnit implements NeuralModule{
         this.t=0;
         this.myOrigins = new HashMap<String, Origin>(5);
 		this.myTerminations = new HashMap<String, Termination>(5);
-		this.myEncoders = new HashMap<String,NewEncoder>(5);
+		this.myEncoders = new HashMap<String,Encoder>(5);
 		
 		this.orderedOrigins = new LinkedList <Origin> ();
 		this.orderedTerminations = new LinkedList <Termination> ();
-		this.orderedEncoders = new LinkedList<NewEncoder>();
+		this.orderedEncoders = new LinkedList<Encoder>();
 		
 		if(modContainer == null)
 			System.err.println(me+"modem probably not initialized!!!! ");
@@ -231,8 +231,8 @@ public class NeuralModuleTest extends SyncedUnit implements NeuralModule{
 			
 			IdentityLTISystem noLTI = new IdentityLTISystem(dim); 	// do not use any decay..
 			
-			new NewBasicEncoder(this, dimensionSizes, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
-			//new NewBasicEncoder(this, noLTI, noInt, topicName, dimensionSizes, dataType, Units.UNK, mc, ros);
+			new BasicEncoder(this, dimensionSizes, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
+			//new BasicEncoder(this, noLTI, noInt, topicName, dimensionSizes, dataType, Units.UNK, mc, ros);
 			
 		} catch (MessageFormatException e1) {
 			System.err.println(me+"Bad message format.");
@@ -269,7 +269,7 @@ public class NeuralModuleTest extends SyncedUnit implements NeuralModule{
 
 			IdentityLTISystem noLTI = new IdentityLTISystem(dim); 	// do not use any decay..
 			
-			new NewBasicEncoder(this, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
+			new BasicEncoder(this, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
 			//new BasicEncoder(this, noLTI, noInt, topicName, new int[]{dim}, dataType, Units.UNK, mc, ros);
 			
 		} catch (MessageFormatException e) {
@@ -346,11 +346,11 @@ public class NeuralModuleTest extends SyncedUnit implements NeuralModule{
 	}
 	
 	private void runAllEncoders(float startTime, float endTime) throws SimulationException{
-		NewEncoder e;
+		Encoder e;
 		for(int i=0; i<orderedEncoders.size(); i++){
 			e=orderedEncoders.get(i);
-			if(e instanceof NewEncoder)
-				((NewEncoder)e).run(startTime, endTime);
+			if(e instanceof Encoder)
+				((Encoder)e).run(startTime, endTime);
 		}
 	}
 	
@@ -487,7 +487,7 @@ public class NeuralModuleTest extends SyncedUnit implements NeuralModule{
 		this.myDocumentation=text;		
 	}
 	
-	public AbsNeuralModule clone(){
+	public DefaultNeuralModule clone(){
 		// TODO
 		return null;
 	}

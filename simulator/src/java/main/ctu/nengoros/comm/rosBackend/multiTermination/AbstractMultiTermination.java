@@ -126,7 +126,19 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 			throws SimulationException;
 
 
+	/**
+	 * This method generates unique name for my Termination based on
+	 * the name of MultiTermination. For the backwards compatibility, the
+	 * first Termination is created by default and is named identically
+	 * as the MultiTermination.
+	 * 
+	 * @return name of the Termination. If no Terminations registered so far, return my name.
+	 */
 	protected String generateName(){
+		if(counter==0){
+			counter++;
+			return this.name;
+		}
 		return name+"_"+counter++;
 	}
 
