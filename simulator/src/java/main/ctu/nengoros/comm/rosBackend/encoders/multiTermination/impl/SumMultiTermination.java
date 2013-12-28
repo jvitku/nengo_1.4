@@ -34,8 +34,8 @@ public class SumMultiTermination extends BasicMultiTermination{
 	TimeSeriesImpl myValue;
 	float[][] myVals;
 
-	public SumMultiTermination(NeuralModule parent, String name, int dimension, Integrator integ, DynamicalSystem myDynamics){
-		super(parent, name, dimension, integ, myDynamics);
+	public SumMultiTermination(NeuralModule parent, String name, Integrator integ, DynamicalSystem myDynamics){
+		super(parent, name, integ, myDynamics);
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class SumMultiTermination extends BasicMultiTermination{
 		// read the first Termination
 		this.initMyValue();
 
-		float weight; 
+		Float[] weight; 
 		
 		// add the rest of Terminations to it
 		for(int i=1; i<this.orderedTerminations.size(); i++){
@@ -81,12 +81,12 @@ public class SumMultiTermination extends BasicMultiTermination{
 			e.printStackTrace();
 		}
 		
-		float weight = readWeight(orderedTerminations.get(0).getName());
+		Float[] weights = readWeight(orderedTerminations.get(0).getName());
 		
 		// apply weights
 		for(int i=0; i<myVals.length; i++){
 			for(int j=0; j<myVals[0].length; j++){
-				myVals[i][j] = myVals[i][j]*weight;
+				myVals[i][j] = myVals[i][j]*weights[0]; //TODO
 			}
 		}
 	}
@@ -97,7 +97,7 @@ public class SumMultiTermination extends BasicMultiTermination{
 	 * @param t Termination with values to read
 	 * @throws SimulationException
 	 */
-	private void sumToMyValue(TimeSeriesImpl t, float weight) throws SimulationException{
+	private void sumToMyValue(TimeSeriesImpl t, Float[] weights) throws SimulationException{
 
 		float[][] values = t.getValues();
 
@@ -116,7 +116,7 @@ public class SumMultiTermination extends BasicMultiTermination{
 		for(int i=0; i<values.length; i++){
 			// sum all dimensions
 			for(int j=0; j<values[0].length; j++){
-				myVals[i][j] = myVals[i][j] + values[i][j] * weight;
+				myVals[i][j] = myVals[i][j] + values[i][j] * weights[0]; // TODO OK??
 			}
 		}
 	}

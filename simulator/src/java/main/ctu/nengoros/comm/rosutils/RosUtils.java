@@ -94,12 +94,15 @@ public class RosUtils {
 		if(!utilsAutorun)
 			return;
 		checkInit();
-
-		if(!coreRunning())
-			coreStart();
-
+		
+		// if the core is running, suppose that everything other has been initialized too.
+		if(coreRunning()){
+			return;
+		}
+		
+		coreStart();
 		Mess.wait(1);	// just to give roscore time to start..
-
+			
 		if(!rqtRunning() && rqtFound)
 			rqtStart();
 
@@ -235,7 +238,7 @@ public class RosUtils {
 		System.out.println(me+"Stopping all "+getNumOfGroups()+" group(s) of ROS nodes");
 		RosUtils.stopAllNodes();			// manually stop all known node containers (all)	
 
-		Mess.wait(timeBeforeCoreShutdown);	// give'em time..
+		Mess.wait(timeBeforeCoreShutdown);	// give them time..
 
 		NodeFactory.nme.shutdown();			// TODO: do this automatically, and this does not work?
 

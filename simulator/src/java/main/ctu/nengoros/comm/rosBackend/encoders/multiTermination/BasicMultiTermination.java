@@ -20,8 +20,10 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 	private static final long serialVersionUID = 7943836551919849111L;
 	public final String me = "[BasicMultiTermination] ";
 
-	public BasicMultiTermination(NeuralModule parent, String name, int dimension, Integrator integ, DynamicalSystem lti) {
-		super(parent, name, dimension, integ, lti);
+	public BasicMultiTermination(NeuralModule parent, String name, 
+			Integrator integ, DynamicalSystem lti) {
+		
+		super(parent, name, integ, lti);
 	}
 
 	/**
@@ -31,29 +33,18 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 	 * @throws StructuralException 
 	 */
 	@Override
-	public String addTermination(float weight) throws StructuralException {
-
-		// TODO: add this weight to all dimensions of multi-dimensional input
-		/*
-		if(dimension != 1){
-			String mess = me+"ERROR: my dimension is "+dimension+
-					", now only one-dimensional Terminations are supported";
-			
-			System.err.println(mess);
-			throw new StructuralException(mess);
-		}*/
-
-		String termName = this.generateName();
+	public String addTermination(Float [] weights) throws StructuralException {
 		
-		//Termination t = TerminationFactory.buldBasicTermination(parent, termName, this.dimension);
-		
+		super.checkDimensions(weights);
+		String termName = this.generateName(); // TODO solve this
+
 		Termination t = new BasicTermination(parent, lti, integ, termName);
 		((PeripheralsRegisteringNode) parent).addTermination(t);
-		
-		this.weights.put(t.getName(), weight);
-		
+
+		this.myWeights.put(t.getName(), weights.clone());
 		this.myTerminations.put(termName, t);
 		this.orderedTerminations.add(t);
+		
 		return name;
 	}
 

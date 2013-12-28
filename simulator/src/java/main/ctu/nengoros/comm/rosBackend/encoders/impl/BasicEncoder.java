@@ -104,21 +104,12 @@ public class BasicEncoder implements Encoder{
 			System.err.println(me+mess);
 			throw new ConnectionException(me+mess, e);
 		}
-/*
- * TODO check this
-		if(dimensions>1){
-			// TODO this is not necessary here
-			String mess = me+"ERROR: currently, only one dimensinal vectors of values are supported!";
-			System.err.println(mess);
-			throw new StructuralException(mess);
-			}
-			*/
 		
 		this.ros = ros;	// get my ROS backend
 
 		// Here, add new MultiTermination which sums inputs on all own Terminations together.
 		multiTermination  = new SumMultiTermination(
-				this.parent, this.name, dimensions, this.integrator, this.dynamics);
+				this.parent, this.name, this.integrator, this.dynamics);
 		
 		// add one termination on the start (usable by GUI, has default weight of 1)
 		multiTermination.addTerminaton();
@@ -138,9 +129,9 @@ public class BasicEncoder implements Encoder{
 		
 		float[][] ff_series = multiTermination.getOutput().getValues();
 		
-		// publish as a ROS message
+		// publish as a ROS message with the last data sample available
 		// TODO: send entire TimeSeries over the ROS network, not just one time sample
-		ros.publish(ff_series[0]);
+		ros.publish(ff_series[ff_series.length-1]);
 	}
 	
 	@Override

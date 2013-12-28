@@ -12,10 +12,8 @@ import ca.nengo.model.Termination;
 import ca.nengo.model.Units;
 import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
-import ctu.nengoros.comm.rosutils.RosUtils;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
-import ctu.nengoros.nodes.RosCommunicationTest;
 import ctu.nengoros.testsuit.demo.nodes.gate.OR;
 import ctu.nengoros.util.sync.impl.SyncedUnit;
 import ca.nengo.model.impl.RealOutputImpl;
@@ -35,36 +33,18 @@ import ca.nengo.model.impl.RealOutputImpl;
  * @author Jaroslav Vitku
  *
  */
-public class DefaultModuleTerminationsOrigins extends RosCommunicationTest {
+public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosCommunicationTest */{
 
+	
 	public static String minimax = "resender.mpt.F2IPubSub";
 	public static String modem = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
 
 	public static String ORR 		= "ctu.nengoros.testsuit.demo.nodes.gate.OR";
 
-	/**
-	 * Called before any unit @Test
-	 */
-	@BeforeClass
-	public static void startCore(){
-
-		//RosUtils.setRqtAutorun(false);
-		RosUtils.setAutorun(true);
-		RosUtils.utilsShallStart();
-	}
-
-	/**
-	 * Called after all unit @Test s
-	 */
-	@AfterClass
-	public static void stopCore(){
-		RosUtils.utilsShallStop();
-	}
 
 	//@Ignore
 	@Test
 	public void registersOrigins(){
-		RosUtils.setAutorun(false); // disable Nengoros core autorun, the @BeforeClass is used
 
 		NodeGroup g = new NodeGroup("pubsub",false);
 		g.addNode(minimax,"minimaxNode","java");
@@ -91,7 +71,6 @@ public class DefaultModuleTerminationsOrigins extends RosCommunicationTest {
 	//@Ignore
 	@Test
 	public void registersTerminations(){
-		RosUtils.setAutorun(false); // disable Nengoros core autorun, the @BeforeClass is used
 
 		NodeGroup g = new NodeGroup("pubsub",false);
 		g.addNode(minimax,"minimaxNode","java");
@@ -124,13 +103,72 @@ public class DefaultModuleTerminationsOrigins extends RosCommunicationTest {
 		g.stopGroup();
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 	}
+	
+	
+	@Test
+	public void MIMOCommunicationWorks(){
 
+		// Run ROS node computing logical OR (taken from the project logic/gates)
+		String name = "myName";
+		NodeGroup g = new NodeGroup("ORGROUP", true);
+		g.addNode(ORR, "ORNODE", "java");
+		NeuralModule module = new DefaultNeuralModule(name+"_OR", g);
+
+		// Connect Neural module to the node
+		module.createEncoder(OR.inAT, "bool", 1);
+		module.createEncoder(OR.inBT, "bool", 1);
+		module.createDecoder(OR.outAT, "bool", 1);		
+
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		// obtain connections from the Node (NeuralModule) (created by methods createEncoder/Decoder)
+		Termination inTA=null, inTB=null;
+		Origin outA=null;
+		
+		try {
+			inTA = module.getTermination(OR.inAT);
+			inTB = module.getTermination(OR.inBT);
+		} catch (StructuralException e) {
+			System.err.println("On of Terminations not found!");
+			e.printStackTrace();
+			fail();
+		}
+		System.out.println("termination called "+OR.inAT+" found");
+		System.out.println("termination called "+OR.inBT+" found");
+
+		try {
+			outA = module.getOrigin(OR.outAT);
+		} catch (StructuralException e) {
+			System.err.println("Origin named "+OR.outAT+" not found!");
+			e.printStackTrace();
+			fail();
+		}
+		
+		System.out.println("origin named: "+OR.outAT+"found");
+		
+		// compute the OR truth table over the ROS network by means of Neural module
+		assertFalse(this.makeSimulationStep(false, false, module, inTA, inTB, outA));
+		assertTrue(this.makeSimulationStep(false, true, module, inTA, inTB, outA));
+		assertTrue(this.makeSimulationStep(true, false, module, inTA, inTB, outA));
+		assertTrue(this.makeSimulationStep(true, true, module, inTA, inTB, outA));
+		
+		assertFalse(this.makeSimulationStep(false, false, module, inTA, inTB, outA));
+	}
+
+	
+	
 	/**
-	 * Test whether values are actually passed by the components - simple example.
+	 * Test whether values are actually passed by the components - test with
+	 * multiple-valued Terminations and Origins.
+	 * 
 	 */
 	//@Ignore
 	@Test
-	public void communicationWorks(){
+	public void SISOCommunicationWorks(){
 
 		// Run ROS node computing logical OR (taken from the project logic/gates)
 		String name = "myName";

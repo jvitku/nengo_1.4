@@ -2,6 +2,8 @@ package ctu.nengoros.test.module;
 
 import static org.junit.Assert.*;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ctu.nengoros.comm.nodeFactory.NodeFactory;
@@ -15,20 +17,29 @@ import ctu.nengoros.modules.impl.DefaultNeuralModule;
  * Tests how the NeuralModule can be launched, how the DefaultModem is auto-started.
  * Tests include also starting and stopping the group of nodes and RosUtils.
  * 
- * Note that the RosCommunicationTest does the testing faster.
- * 
  * @author Jaroslav Vitku
  *
  */
-public class RunDefaultModule /*extends RosCommunicationTest*/ {
+public class RunDefaultModule{
 
 	public static String minimax = "resender.mpt.F2IPubSub";
 	public static String modem = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
+	
+	@BeforeClass
+	public static void before(){
+		// use JRoscore if also roscore found
+		RosUtils.prefferJroscore(true);		
+	}
+	
+	@AfterClass
+	public static void after(){
+		// called during exiting of the Nengo application
+		RosUtils.utilsShallStop();
+	}
+	
+	
 	@Test
 	public void runDemo(){
-
-		// use JRoscore if also roscore found
-		RosUtils.prefferJroscore(true);
 
 		NodeGroup g = new NodeGroup("pubsub",false);
 
@@ -50,8 +61,7 @@ public class RunDefaultModule /*extends RosCommunicationTest*/ {
 
 		g.stopGroup(); 
 
-		// called during exiting of the Nengo application
-		RosUtils.utilsShallStop();
+
 	}
 
 	/**
@@ -60,8 +70,6 @@ public class RunDefaultModule /*extends RosCommunicationTest*/ {
 	 */
 	@Test
 	public void runDemoNoModem(){
-
-		RosUtils.prefferJroscore(true);
 
 		NodeGroup g = new NodeGroup("pubsub",false);
 		g.addNode(minimax,"minimaxNode","java");
@@ -91,8 +99,6 @@ public class RunDefaultModule /*extends RosCommunicationTest*/ {
 		
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 		
-		// called during exiting of the Nengo application
-		RosUtils.utilsShallStop();
 	}
 	
 

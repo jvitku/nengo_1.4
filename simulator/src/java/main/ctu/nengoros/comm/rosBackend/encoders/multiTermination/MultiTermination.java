@@ -23,15 +23,6 @@ import ca.nengo.util.TimeSeries;
 public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 
 	public String getName();
-
-	/**
-	 * Add new weighted Termination to this MultiTermination.
-	 *  
-	 * @param weight the termination can be weighter
-	 * @return auto-generated name of the created Termination 
-	 */
-	public String addTermination(float weight) throws StructuralException;
-	
 	
 	/**
 	 * Add new multi-dimensional weighted Termination.
@@ -39,7 +30,7 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 	 * @param weights weight matrix
 	 * @return auto-generated name of the Termination 
 	 */
-	public String addTermination(float[][] weights) throws StructuralException;
+	public String addTermination(Float[] weights) throws StructuralException;
 	
 	
 	/**
@@ -48,6 +39,17 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 	 * @return auto-generated name of the created Termination
 	 */
 	public String addTerminaton() throws StructuralException;
+	
+
+	/**
+	 * Add new weighted termination with its own weight. If the weights
+	 * dimensions does not correspond with the dimensionality 
+	 * of the Termination, the weight matrix will contain only these values.
+	 *  
+	 * @param weight the termination can be weighter
+	 * @return auto-generated name of the created Termination 
+	 */
+	public String addTermination(float weight) throws StructuralException;
 
 	
 	/**
@@ -78,4 +80,11 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 	 */
 	public Node getNode();
 
+	
+	/**
+	 * NUmber of values passed through multiTerminations, the same 
+	 * as dimensions of all child Terminations.
+	 * @return dimensionality of the multi-termination
+	 */
+	public int getDimension();
 }

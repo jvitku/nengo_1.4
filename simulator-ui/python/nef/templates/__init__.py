@@ -11,9 +11,9 @@ import hpes_termination
 import bcm_termination
 import thalamus
 import interneuron
-#import logic_crisp_gates_or
-#import logic_crisp_gates_xor
-#import logic_crisp_gates_nand
+import logic_crisp_gates_or
+import logic_crisp_gates_xor
+import logic_crisp_gates_nand
 #import logic_crisp_gates_and
 #import logic_crisp_gates_not
 #import logic_fuzzy_gates_not
@@ -41,9 +41,9 @@ templates=[
     interneuron,
     #demoSubscriber,
     #demoPublisher,
-    #logic_crisp_gates_or,
-    #logic_crisp_gates_xor,
-    #logic_crisp_gates_nand,
+    logic_crisp_gates_or,
+    logic_crisp_gates_xor,
+    logic_crisp_gates_nand,
     #logic_crisp_gates_and,
     #logic_crisp_gates_not,
 	#logic_fuzzy_gates_not,

@@ -50,6 +50,8 @@ structure:
 
 * Better handling of Exceptions
 
+* Deprecated ParameterHandler, is launched twice? Delete the deprecated one, use the one in RosUtils?
+
 
 # ROS integration into Nengo
 

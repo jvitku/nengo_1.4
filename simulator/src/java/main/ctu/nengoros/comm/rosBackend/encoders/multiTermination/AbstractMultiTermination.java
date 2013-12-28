@@ -11,6 +11,7 @@ import ca.nengo.model.Node;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ca.nengo.model.Termination;
+import ca.nengo.util.TimeSeries;
 
 /**
  * TODO: add the support for weighted multi-dimensional terminations.
@@ -20,62 +21,42 @@ import ca.nengo.model.Termination;
  */
 public abstract class AbstractMultiTermination implements MultiTermination{
 
-	public final String me = "[AbstractMultiTermination] ";
-
+	public static final String me = "[AbstractMultiTermination] ";
 	private static final long serialVersionUID = -5806553506661735679L;
 
 	protected final LinkedList <Termination> orderedTerminations;
-	protected final Map<String, Float> weights;				// weight for each Termination
+	protected final Map<String, Float[]> myWeights;				// weight for each Termination
 	protected final Map<String, Termination> myTerminations;
-	
-	// dimensionality of my input
-	protected final int dimension;	
-
-	protected double t_start = 0; 
-	protected double t_end=0;
-	protected double t=0;
-
-	// the resulting value of this multiTermination
-	protected float value = 0;	
 
 	// number of registered terminations
 	protected int counter = 0;	
 	protected final String name;
+	protected final int dimensions;
 
 	protected final Node parent;
-	
 	public final float DEF_W = 1;
-	
-	protected String mess = me+"ERROR: suport fot multidimensional Terminations" +
-			"is not implemented so far!";
-	
+
+	//protected InstantaneousOutput myValue;
+	private TimeSeries myOutput; //TODO
+
 	// setup properties of my Terminations
 	protected final Integrator integ;
 	protected final DynamicalSystem lti;
-	
-	public AbstractMultiTermination(NeuralModule parent, String name, int dimension, Integrator integ, DynamicalSystem lti2){
-		
+
+
+	public AbstractMultiTermination(NeuralModule parent, String name, /*int dimension,*/ Integrator integ, DynamicalSystem lti2){
+
 		this.lti = lti2;
 		this.integ = integ;
-		
-		this.t_start=0;
-		this.t_end=0;
-		this.t=0;
 
-		this.dimension = dimension;
 		this.name = name;
 		this.parent = parent;
 		this.orderedTerminations = new LinkedList<Termination>();
 		this.myTerminations = new HashMap<String, Termination>();
-		this.weights = new HashMap<String, Float>();
-		
-		//TODO
-		/*
-		if(dimension>1)
-			System.err.println(mess);
-			*/
-	}
+		this.myWeights = new HashMap<String, Float[]>();
 
+		this.dimensions = lti.getInputDimension();
+	}
 
 	/**
 	 * Runs all its Terminations, then combines their to its own value. 
@@ -94,7 +75,6 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 
 	@Override
 	public void reset(boolean randomize) {
-		this.value = 0; 
 
 		for(int i=0; i<this.orderedTerminations.size(); i++){
 			Termination t = this.orderedTerminations.get(i);
@@ -104,7 +84,6 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 
 	@Override
 	public String getName() { return name; }
-
 
 	/**
 	 * Runs all its Terminations.
@@ -143,39 +122,50 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 		return name+"_"+counter++;
 	}
 
-	/**
-	 * Add new termination with its own weight.
-	 */
 	@Override
-	public abstract String addTermination(float weight) throws StructuralException;
-	
-	@Override
-	public String addTermination(float[][] weights) throws StructuralException{
-		// TODO
-		this.checkDimensions(weights);
-		return null;
+	public String addTermination(float weight) throws StructuralException{
+		return this.addTermination(this.generateWeights(weight));
 	}
+
+	// physically create and Register the termination
+	@Override
+	public abstract String addTermination(final Float[] weights) throws StructuralException;
 
 	@Override
 	public String addTerminaton() throws StructuralException{
-		return this.addTermination(this.DEF_W);
+		return this.addTermination(this.generateWeights(this.DEF_W));
 	}
 
-	// TODO: add support for multidimensional terminations
-	protected void checkDimensions(float[][] weights) throws StructuralException{
-		
-		System.err.println(mess);
-		throw new StructuralException(mess);
+	protected void checkDimensions(final Float[] weights) throws StructuralException{
+
+		if(weights.length != this.dimensions)
+			throw new StructuralException(me+"incorrect dimensionality" +
+					" of weights, dimension of this MultiTermination is "+this.dimensions);
 	}
-	
-	protected float readWeight(String name) throws SimulationException{
-		if(!this.weights.containsKey(name))
- 			throw new SimulationException(me+"ERROR: weight for this Termination not found: "+name);
-		
-		return this.weights.get(name);
+
+	protected Float[] readWeight(String name) throws SimulationException{
+
+		if(!this.myWeights.containsKey(name))
+			throw new SimulationException(me+"ERROR: weight for this Termination not found: "+name);
+
+		return this.myWeights.get(name);
 	}
-	
+
+	protected Float[] generateWeights(float weight){
+		Float[] w = new Float[this.dimensions];
+		for(int i=0; i<w.length; i++){
+			w[i] = weight;
+		}
+		return w;
+	}
+
 	@Override
 	public Node getNode() { return this.parent;	}
 
+	@Override
+	public int getDimension(){
+		// this is how BasicTermination determines its dimension
+		return this.dimensions;	
+	}
 }
+
