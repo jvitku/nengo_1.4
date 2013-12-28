@@ -68,6 +68,8 @@ public class RosUtils {
 	// enables Nengo to set parameters of ROS network
 	// these parameters can modify how the nodes are launched, e.g. use_sim_time:=true
 	private static RosparamNode paramHandler;
+	
+	private static boolean rqtAutorun = true;
 
 	/**
 	 * Start core and other utilities automatically?
@@ -101,6 +103,7 @@ public class RosUtils {
 		if(!rqtRunning() && rqtFound)
 			rqtStart();
 
+		
 		// launch the parameter handler?
 		if(paramHandler == null){
 			paramHandler = RosTimeUtilFactory.startParamHandler(utilNodes);
@@ -272,6 +275,14 @@ public class RosUtils {
 		if(rqtFound)
 			rqtStart();
 	}
+	
+	/**
+	 * Should the RQT start automatically?
+	 * @param autorun
+	 */
+	public static void setRqtAutorun(boolean autorun){
+		rqtAutorun = autorun;
+	}
 
 	private static void coreStop(){
 		if(!coreRunning())
@@ -287,6 +298,9 @@ public class RosUtils {
 
 	private static void rqtStart(){
 		checkInit();
+		
+		if(!rqtAutorun)
+			return;
 
 		if(rqtRunning())
 			return;
