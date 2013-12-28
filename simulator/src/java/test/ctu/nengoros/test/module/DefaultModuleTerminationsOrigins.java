@@ -65,7 +65,7 @@ public class DefaultModuleTerminationsOrigins extends RosCommunicationTest {
 	/**
 	 * Test how to ROsCommunicationTest can be used
 	 */
-	@Ignore
+	//@Ignore
 	@Test
 	public void disableRosUtils(){
 
@@ -99,7 +99,8 @@ public class DefaultModuleTerminationsOrigins extends RosCommunicationTest {
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 
 	}
-	@Ignore
+	
+	//@Ignore
 	@Test
 	public void registersOrigins(){
 		RosUtils.setAutorun(false); // disable Nengoros core autorun, the @BeforeClass is used
@@ -222,7 +223,16 @@ public class DefaultModuleTerminationsOrigins extends RosCommunicationTest {
 		
 	}
 
-	
+	/**
+	 * Simulate the Nengo simulation step. 
+	 * @param a logic value to be sent to ROS OR node
+	 * @param b logic value to be sent to ROS OR node
+	 * @param module NeuralModule to be simulated
+	 * @param inTA first Termination of the Module
+	 * @param inTB second Termination of the Module
+	 * @param outA Origin of the Module
+	 * @return if everything worked good, return the binary value responded by the ROS node
+	 */
 	private boolean makeSimulationStep(boolean a, boolean b, 
 			NeuralModule module, Termination inTA, Termination inTB, Origin outA){
 		
@@ -257,6 +267,7 @@ public class DefaultModuleTerminationsOrigins extends RosCommunicationTest {
 			fail();
 		}
 		
+		// after this, the values on all Origins (with synchronous Decoders) will be available
 		this.waitForModuleReady(module);
 		
 		try {
@@ -311,11 +322,5 @@ public class DefaultModuleTerminationsOrigins extends RosCommunicationTest {
 		System.out.println("");
 	}
 	
-	/*
-	public static void main(String[] a){
-		DefaultModuleTerminationsOrigins t = new DefaultModuleTerminationsOrigins();
-		t.communicationWorks();
-	}
-	 */
 
 }
