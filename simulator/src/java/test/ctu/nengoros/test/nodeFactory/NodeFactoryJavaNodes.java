@@ -1,4 +1,4 @@
-package nengoros.nodeFactory;
+package ctu.nengoros.test.nodeFactory;
 
 import static org.junit.Assert.*;
 
@@ -66,5 +66,5 @@ public class NodeFactoryJavaNodes {
 		Mess.wait(1);
 
 	}
-		
+	
 }

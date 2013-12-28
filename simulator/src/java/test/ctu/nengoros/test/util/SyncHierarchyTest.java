@@ -1,4 +1,4 @@
-package nengoros.util;
+package ctu.nengoros.test.util;
 
 import ctu.nengoros.util.sync.impl.SyncedUnit;
 

@@ -52,7 +52,7 @@ public class AnotherTalker extends AbstractNodeMain {
 	        intt.setData(sequenceNumber);
 	        
 	        publisher.publish(intt);
-	        System.out.println("ID:"+id+" sending this kamo: "+sequenceNumber);
+	        System.out.println("ID:"+id+" sending this: "+sequenceNumber);
 	        
 	        sequenceNumber++;
 	        Thread.sleep(1000);
