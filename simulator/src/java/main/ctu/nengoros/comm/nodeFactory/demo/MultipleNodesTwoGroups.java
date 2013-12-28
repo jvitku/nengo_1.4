@@ -45,8 +45,8 @@ public class MultipleNodesTwoGroups {
 		
 		RosUtils.prefferJroscore(true);
 		
-		String talkerClass = "resender.mt.IntSender";
-		String listenerClass = "resender.mt.IntReceiver";
+		String talkerClass = "ctu.nengoros.test.resender.mt.IntSender";
+		String listenerClass = "ctu.nengoros.test.resender.mt.IntReceiver";
 
 		// if make conflict, groups are not independent (preserve no namespace) and will 
 		// be conflict there..
@@ -81,8 +81,8 @@ public class MultipleNodesTwoGroups {
 	 */
 	protected static void twoDependent(){
 		
-		String talkerClass = "resender.onoff.Talker";
-		String listenerClass = "resender.mt.IntReceiver";
+		String talkerClass = "ctu.nengoros.test.resender.onoff.Talker";
+		String listenerClass = "ctu.nengoros.test.resender.mt.IntReceiver";
 		
 		NodeGroup n = new NodeGroup("demo",false);
 		n.addNode(talkerClass, "talker", "java");

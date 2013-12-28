@@ -45,8 +45,8 @@ public class TwoNodesFactoryDemo {
 		
 		RosUtils.prefferJroscore(true);
 		
-		String talker = "resender.mt.IntSender";
-		String receiveer = "resender.mt.IntReceiver";
+		String talker = "ctu.nengoros.test.resender.mt.IntSender";
+		String receiveer = "ctu.nengoros.test.resender.mt.IntReceiver";
 		
 		// group called pubsub which is independent?
 		NodeGroup g = new NodeGroup("pubsub",indep);
@@ -72,8 +72,8 @@ public class TwoNodesFactoryDemo {
 		
 		RosUtils.prefferJroscore(true);
 		
-		String talker = "resender.mt.IntSender";
-		String receiveer = "resender.mt.IntReceiver";
+		String talker = "ctu.nengoros.test.resender.mt.IntSender";
+		String receiveer = "ctu.nengoros.test.resender.mt.IntReceiver";
 		
 		// group called pubsub which is independent?
 		NodeGroup g = new NodeGroup("pubsub",namespace);

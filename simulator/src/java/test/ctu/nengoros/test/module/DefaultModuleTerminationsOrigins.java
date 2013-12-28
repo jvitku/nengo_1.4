@@ -36,11 +36,10 @@ import ca.nengo.model.impl.RealOutputImpl;
 public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosCommunicationTest */{
 
 	
-	public static String minimax = "resender.mpt.F2IPubSub";
+	public static String minimax = "ctu.nengoros.test.resender.mpt.F2IPubSub";
 	public static String modem = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
 
 	public static String ORR 		= "ctu.nengoros.testsuit.demo.nodes.gate.OR";
-
 
 	//@Ignore
 	@Test
@@ -104,9 +103,13 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 	}
 	
-	
+
+	/**
+	 * Test whether values are actually passed by the components - test with
+	 * multiple-valued Terminations and Origins.
+	 */
 	@Test
-	public void MIMOCommunicationWorks(){
+	public void MIMOCommunication(){
 
 		// Run ROS node computing logical OR (taken from the project logic/gates)
 		String name = "myName";
@@ -162,13 +165,12 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 	
 	
 	/**
-	 * Test whether values are actually passed by the components - test with
-	 * multiple-valued Terminations and Origins.
-	 * 
+	 * Test whether values are actually passed by the components - simple test with
+	 * single-valued Terminations and Origins.
 	 */
 	//@Ignore
 	@Test
-	public void SISOCommunicationWorks(){
+	public void SISOCommunication(){
 
 		// Run ROS node computing logical OR (taken from the project logic/gates)
 		String name = "myName";
@@ -314,7 +316,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 			
 			waited +=10;
 			if(waited > maxWait){
-				System.err.println("NeuralModule not ready fast enough! ROS communication probably broken!");
+				System.err.println("\n\nNeuralModule not ready fast enough! ROS communication probably broken!");
 				fail();
 			}
 		}

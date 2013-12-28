@@ -12,6 +12,7 @@ public class RoscoreTest {
 	
 	@Test
 	public void startStop(){
+		
 		assertFalse(Jroscore.running());
 		
 		Jroscore.start();

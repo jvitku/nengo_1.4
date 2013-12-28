@@ -49,7 +49,7 @@ public class ModemF2I {
 		RosUtils.prefferJroscore(true);
 
 
-		String minimax = "resender.mpt.F2IPubSub";
+		String minimax = "ctu.nengoros.test.resender.mpt.F2IPubSub";
 		//String modem = "nengoros.comm.nodeFactory.modem.impl.MySecondModem";
 		String modem = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
 

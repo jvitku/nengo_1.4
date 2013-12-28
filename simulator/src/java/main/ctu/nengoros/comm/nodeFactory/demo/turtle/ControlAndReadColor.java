@@ -30,8 +30,8 @@ public class ControlAndReadColor {
 		
 		RosUtils.setAutorun(runUtils);		
 		// define and run controller
-		String actuator = "resender.turtle.Controller";
-		String colorSensor = "resender.turtle.PositionSensor";
+		String actuator = "ctu.nengoros.test.resender.turtle.Controller";
+		String colorSensor = "ctu.nengoros.test.resender.turtle.PositionSensor";
 		
 		// run non-independent group called sense-act
 		// non-independent means that name-space will not be changed

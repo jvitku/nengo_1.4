@@ -8,7 +8,7 @@ WARRANTY OF ANY KIND, either express or implied. See the License for the specifi
 language governing rights and limitations under the License.
 
 The Original Code is "Memory.java". Description: 
-"Internal tools for checking memory usage"
+"Internal ctu.nengoros.test.external.tools for checking memory usage"
 
 The Initial Developer of the Original Code is Bryan Tripp & Centre for Theoretical Neuroscience, University of Waterloo. Copyright (C) 2006-2008. All Rights Reserved.
 
@@ -30,7 +30,7 @@ package ca.nengo.util;
 import org.apache.log4j.Logger;
 
 /**
- * Internal tools for checking memory usage. 
+ * Internal ctu.nengoros.test.external.tools for checking memory usage. 
  *  
  * @author Bryan Tripp
  */

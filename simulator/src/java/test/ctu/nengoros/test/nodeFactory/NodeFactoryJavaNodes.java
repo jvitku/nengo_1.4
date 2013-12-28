@@ -17,7 +17,7 @@ import ctu.nengoros.comm.rosutils.RosUtils;
  */
 public class NodeFactoryJavaNodes {
 
-	public static String className = "resender.onoff.Talker";
+	public static String className = "ctu.nengoros.test.resender.onoff.Talker";
 	
 	@Test
 	public void launchOneJavaNode(){
@@ -35,7 +35,6 @@ public class NodeFactoryJavaNodes {
 
 		RosUtils.utilsShallStop();
 		Mess.wait(1);
-
 	}
 
 	
@@ -64,7 +63,6 @@ public class NodeFactoryJavaNodes {
 		
 		RosUtils.utilsShallStop();
 		Mess.wait(1);
-
 	}
-	
 }
+

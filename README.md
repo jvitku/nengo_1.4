@@ -65,6 +65,13 @@ Changelog
 Technical Notes:
 -------------
 
+###Gradle tests
+
+The project `nengo/simulator` has the src folder set to: `src/java/test/ctu` to ensure that all Nengo tests are omitted, in order to run also Nengo tests, set this folder to `src/java/test`.
+
+
+###Other
+
 1. Note that the standalone version contains only pre-compiled rosjava_core jar files and no additional projects, so the limitations are:
 
 	* Does not include any demos (or those included may not work correctly).

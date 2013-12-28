@@ -10,8 +10,8 @@ import ctu.nengoros.comm.rosutils.RosUtils;
 
 public class NameProviderNamespaceTest {
 	
-	public static String talker = "ctu.nengoros.testsuit.demo.nodes.DemoPublisher";		
-	public static String receiveer = "ctu.nengoros.testsuit.demo.nodes.DemoSubscriber";
+	public static String talker = "ctu.nengoros.testsuit.demo.nodes.pubsub.DemoPublisher";		
+	public static String receiveer = "ctu.nengoros.testsuit.demo.nodes.pubsub.DemoSubscriber";
 	
 	/**
 	 * start dependent group of nodes wihtout namespace specified

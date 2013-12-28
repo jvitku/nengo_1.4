@@ -40,8 +40,8 @@ public class OneTurtle {
 		RosUtils.prefferJroscore(false);
 
 		String turtlesim = 	"../testnodes/turtlesim/turtlesim_node";
-		String className = 	"resender.turtle.Controller";
-		String clName = 	"resender.turtle.PositionSensor";
+		String className = 	"ctu.nengoros.test.resender.turtle.Controller";
+		String clName = 	"ctu.nengoros.test.resender.turtle.PositionSensor";
 
 		// create group with a name
 		NodeGroup g = new NodeGroup("zelvicka", true);

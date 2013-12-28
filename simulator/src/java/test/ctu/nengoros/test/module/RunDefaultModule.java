@@ -22,7 +22,7 @@ import ctu.nengoros.modules.impl.DefaultNeuralModule;
  */
 public class RunDefaultModule{
 
-	public static String minimax = "resender.mpt.F2IPubSub";
+	public static String minimax = "ctu.nengoros.test.resender.mpt.F2IPubSub";
 	public static String modem = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
 	
 	@BeforeClass
