@@ -1,9 +1,12 @@
 package ctu.nengoros.test.module;
 
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.rosutils.RosUtils;
+import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
 
@@ -18,8 +21,14 @@ public class SocketException {
 		String name = "myName";
 		NodeGroup g = new NodeGroup("OR", true);
 		g.addNode(OR, "OR", "java");
-		NeuralModule module = new DefaultNeuralModule(name+"_OR", g);
+		NeuralModule module = null;
 		
+		try {
+			module = new DefaultNeuralModule(name+"_OR", g);
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			fail();
+		}
 		
 		module.createEncoder("logic/gates/ina", "bool", 1);
 		/*

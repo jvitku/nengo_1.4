@@ -10,6 +10,7 @@ import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.comm.rosutils.RosUtils;
+import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
 
@@ -46,7 +47,13 @@ public class RunDefaultModule{
 		g.addNode(minimax,"minimaxNode","java");
 		g.addNode(modem,"modemNode","modem");
 
-		NeuralModule smartOne = new DefaultNeuralModule("SmartNeuron",g);
+		NeuralModule smartOne = null;
+		try {
+			smartOne = new DefaultNeuralModule("SmartNeuron",g);
+		} catch (ConnectionException e1) {
+			e1.printStackTrace();
+			fail();
+		}
 
 		smartOne.createDecoder("ros2annFloatArr", "int", 2);
 		smartOne.createEncoder("ann2rosFloatArr", "float", 4);
@@ -75,7 +82,13 @@ public class RunDefaultModule{
 		
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 
-		NeuralModule smartOne = new DefaultNeuralModule("SmartNeuron",g);
+		NeuralModule smartOne = null;
+		try {
+			smartOne = new DefaultNeuralModule("SmartNeuron",g);
+		} catch (ConnectionException e1) {
+			e1.printStackTrace();
+			fail();
+		}
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 2); // one modem and one ROS node
 		
 		smartOne.createDecoder("ros2annFloatArr", "int", 2);

@@ -4,6 +4,7 @@ import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.comm.rosutils.RosUtils;
+import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.modules.NeuralModule;
 //import ctu.nengoros.modules.test.NeuralModuleTest;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
@@ -56,9 +57,13 @@ public class ModemF2I {
 		g.addNode(minimax,"minimaxNode","java");
 		g.addNode(modem,"modemNode","modem");
 
-		g.startGroup();
-
-		NeuralModule smartOne = new DefaultNeuralModule("SmartNeuron",g);
+		NeuralModule smartOne = null;
+		try {
+			smartOne = new DefaultNeuralModule("SmartNeuron",g);
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			return;
+		}
 
 		smartOne.createDecoder("ros2annFloatArr", "int", 2);
 		smartOne.createEncoder("ann2rosFloatArr", "float", 4);

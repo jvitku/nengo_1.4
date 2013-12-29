@@ -8,6 +8,7 @@ import ca.nengo.model.Origin;
 import ca.nengo.model.StructuralException;
 import ca.nengo.model.Termination;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
+import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
 import ctu.nengoros.testsuit.demo.nodes.gate.OR;
@@ -31,7 +32,13 @@ public class MultipleTerminationsOneEncoder extends NengorosTest{
 		String name = "myName";
 		NodeGroup g = new NodeGroup("ORGROUP", true);
 		g.addNode(ORR, "ORNODE", "java");
-		NeuralModule module = new DefaultNeuralModule(name+"_OR", g);
+		NeuralModule module = null;
+		try {
+			module = new DefaultNeuralModule(name+"_OR", g);
+		} catch (ConnectionException e1) {
+			e1.printStackTrace();
+			fail();
+		}
 
 		// Connect Neural module to the node
 		module.createEncoder(OR.inAT, "bool", 1);

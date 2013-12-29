@@ -88,54 +88,79 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	protected boolean myUseGPU = false;
 	protected SimulationMode myMode;
 
-	protected final ModemContainer mc;
+	protected ModemContainer mc;
 
 
 	/**
-	 * Initialize complete neural module, that means 
-	 * modem and a corresponding ros node. 
-	 * Ros node can be another rosjava node or native C++ node.
+	 * <p>The NeuralModule which features BasicEncoders (with BasicMultiTerminations),
+	 * BasicDecoders (which are synchronous by default, that means they wait for
+	 * ROS message to be received), which is synchronous by default.</p>
 	 * 
-	 * @param name name of neural module
+	 * <p>The simulator waits for all synchronous components at each sim. step</p>
+	 * 
+	 * @param name name of the Module
+	 * @param group NodeGroup which belongs to this Module (group can have one
+	 * or multiple ROS nodes and one Modem for translating communication between
+	 * ROS and Nengo)
+	 * @throws ConnectionException group of running ROS nodes should already contain
+	 * the Modem, if no Modem is found, ROS communication will not be available 
+	 * 
+	 *  @see ctu.nengoros.comm.nodeFactory.modem.Modem
+	 *  @see ctu.nengoros.util.sync.impl.SyncedUnit
+	 *  @see ctu.nengoros.comm.rosBackend.decoders.impl.BasicDecoder
+	 *  @see ctu.nengoros.comm.rosBackend.encoders.impl.BasicEncoder
 	 */
-	public DefaultNeuralModule(String name, NodeGroup group){
+	public DefaultNeuralModule(String name, NodeGroup group) throws ConnectionException{
 		super(name);	// make this unit synchronous by default
 
-		if(! group.isRunning()){
-			group.startGroup();
-		}
-
-		ModemContainer modContainer = group.getModem();
-		if(modContainer == null){
-			System.err.println(me+"modem probably not initialized!!!! I am not ready!");
-			this.setReady(false); // stop the simulation..
-		}
-		this.mc = modContainer;
-		this.init(name);
+		this.init(name, group);
 	}
 
 	/**
-	 * This can be used everywhere, because this can be asynchronous too
-	 * @param name
-	 * @param group
-	 * @param synchronous
+	 * <p>The NeuralModule which features BasicEncoders (with BasicMultiTerminations),
+	 * BasicDecoders (which are synchronous by default, that means they wait for
+	 * ROS message to be received), which is synchronous by default.</p>
+	 * 
+	 * <p>The simulator waits for all synchronous components at each sim. step</p>
+	 * 
+	 * @param name name of the Module
+	 * @param group NodeGroup which belongs to this Module (group can have one
+	 * or multiple ROS nodes and one Modem for translating communication between
+	 * ROS and Nengo) 
+	 * @param synchronous the Nengo simulator waits each time step for all 
+	 * synchronous Modules 
+	 * @throws ConnectionException group of running ROS nodes should already contain
+	 * the Modem, if no Modem is found, ROS communication will not be available  
+	 * 
+	 *  @see ctu.nengoros.comm.nodeFactory.modem.Modem
+	 *  @see ctu.nengoros.util.sync.impl.SyncedUnit
+	 *  @see ctu.nengoros.comm.rosBackend.decoders.impl.BasicDecoder
+	 *  @see ctu.nengoros.comm.rosBackend.encoders.impl.BasicEncoder
 	 */
-	public DefaultNeuralModule(String name, NodeGroup group, boolean synchronous){
+	public DefaultNeuralModule(String name, NodeGroup group, boolean synchronous)
+		throws ConnectionException{
+		
 		super(synchronous,name);	// choose whether to be synchronous or not
 		
-		if(! group.isRunning()){
-			group.startGroup();
-		}
-		ModemContainer modContainer = group.getModem();
-		if(modContainer == null){
-			System.err.println(me+"modem probably not initialized!!!! I am not ready!");
-			this.setReady(false); // stop the simulation..
-		}
-		this.mc = modContainer;
-		this.init(name);
+		this.init(name, group);
 	}
 
-	protected void init(String name){
+	protected void init(String name, NodeGroup group) throws ConnectionException{
+		
+		// group not running already? start it 
+		if(! group.isRunning())
+			group.startGroup();
+		
+		// try to obtain the modem (for ROS communication)
+		ModemContainer modContainer = group.getModem();
+		if(modContainer == null){
+			String mess = me+"modem probably not initialized! NeuralModule not ready!";
+			System.err.println(mess);
+			this.setReady(false); // stop the simulation..
+			throw new ConnectionException(mess);
+		}
+		this.mc = modContainer;
+		
 		this.setReady(true);
 		this.myName=name;
 		this.myProperties = new Properties();

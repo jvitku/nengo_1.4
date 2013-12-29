@@ -14,6 +14,7 @@ import ca.nengo.model.Units;
 import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.rosutils.Mess;
+import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
 import ctu.nengoros.testsuit.demo.nodes.gate.OR;
@@ -51,7 +52,13 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 
-		NeuralModule smartOne = new DefaultNeuralModule("SmartNeuron",g);
+		NeuralModule smartOne = null;
+		try {
+			smartOne = new DefaultNeuralModule("SmartNeuron",g);
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			fail();
+		}
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 2); // one modem and one ROS node
 
 		smartOne.createDecoder("ros2annFloatArr", "int", 2);
@@ -77,7 +84,13 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 
-		NeuralModule smartOne = new DefaultNeuralModule("SmartNeuron",g);
+		NeuralModule smartOne = null;
+		try {
+			smartOne = new DefaultNeuralModule("SmartNeuron",g);
+		} catch (ConnectionException e2) {
+			e2.printStackTrace();
+			fail();
+		}
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 2); // one modem and one ROS node
 
 		smartOne.createDecoder("ros2annFloatArr", "int", 2);
@@ -105,7 +118,6 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 	}
 
 
-
 	/**
 	 * Test whether values are actually passed by the components - test with
 	 * multiple-valued Terminations and Origins.
@@ -118,7 +130,13 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		String name = "myName";
 		NodeGroup g = new NodeGroup("MINMAXGROUP", true);
 		g.addNode(minimax, "MINMAX", "java");
-		NeuralModule module = new DefaultNeuralModule(name+"_MM", g);
+		NeuralModule module = null;
+		try {
+			module = new DefaultNeuralModule(name+"_MM", g);
+		} catch (ConnectionException e1) {
+			e1.printStackTrace();
+			fail();
+		}
 
 		// Connect Neural module to the node
 		module.createEncoder(F2IPubSub.ann2ros , "float", 4);//ROS input=4lfoats
@@ -145,18 +163,18 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		// note that it is not guaranteed that the external ROS node is started
 		// already, so wait for it several milliseconds
 		Mess.waitms(100);	 
-		
+
 		this.checkComputation(new float[]{-10,10,11,230}, 	module, t, o);
 		this.checkComputation(new float[]{0,0,0,0}, 		module, t, o);
 		this.checkComputation(new float[]{1000,0,1,10}, 	module, t, o);
 		this.checkComputation(new float[]{-10,-10,-11,-230},module, t, o);
-		
+
 		g.stopGroup();
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 	}
-	
+
 	private void checkComputation(float[] vals, NeuralModule module, Termination t, Origin o){
-		
+
 		float[] out = this.makeSimulationStepMIMO(vals, module, t, o);
 		System.out.println("-- received values are:  "+out[0]+" "+out[1]);
 		assertTrue(out[0] == min(vals));
@@ -170,7 +188,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 				out=vals[i];
 		return out;
 	}
-	
+
 	private float min(float[] vals){
 		float out = vals[0];
 		for(int i=1; i<vals.length; i++)
@@ -235,7 +253,13 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		String name = "myName";
 		NodeGroup g = new NodeGroup("ORGROUP", true);
 		g.addNode(ORR, "ORNODE", "java");
-		NeuralModule module = new DefaultNeuralModule(name+"_OR", g);
+		NeuralModule module = null;
+		try {
+			module = new DefaultNeuralModule(name+"_OR", g);
+		} catch (ConnectionException e1) {
+			e1.printStackTrace();
+			fail();
+		}
 
 		// Connect Neural module to the node
 		module.createEncoder(OR.inAT, "bool", 1);
