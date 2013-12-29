@@ -1,6 +1,7 @@
 package ctu.nengoros.comm.rosBackend.encoders;
 
 
+import ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 import ca.nengo.model.Resettable;
 import ca.nengo.model.SimulationException;
@@ -77,4 +78,10 @@ public interface Encoder extends Resettable{
 	public void run(float startTime, float endTime) throws SimulationException;
 
 	
+	/**
+	 * Return own MultiTermination, this allows user to add new Terminations
+	 * to it.
+	 * @return MultiTermination if found
+	 */
+	public MultiTermination getMultiTermination() throws StructuralException;
 }

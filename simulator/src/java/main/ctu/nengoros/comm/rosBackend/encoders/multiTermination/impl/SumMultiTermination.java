@@ -31,7 +31,7 @@ public class SumMultiTermination extends BasicMultiTermination{
 
 	String mess = me+"Dimension sizes of particular Terminations differ!";
 
-	TimeSeriesImpl myValue;
+	//TimeSeriesImpl myValue;
 	float[][] myVals;
 
 	public SumMultiTermination(NeuralModule parent, String name, Integrator integ, DynamicalSystem myDynamics){
@@ -87,8 +87,8 @@ public class SumMultiTermination extends BasicMultiTermination{
 		for(int i=0; i<myVals.length; i++){
 			// each dimension
 			for(int j=0; j<myVals[0].length; j++){
-				
-				myVals[i][j] = myVals[i][j]*weights[j]; // TODO check ok
+				// each dimension is weighted according to own weight
+				myVals[i][j] = myVals[i][j]*weights[j];
 			}
 		}
 	}
@@ -118,12 +118,10 @@ public class SumMultiTermination extends BasicMultiTermination{
 		for(int i=0; i<values.length; i++){
 			// sum all dimensions
 			for(int j=0; j<values[0].length; j++){
-				myVals[i][j] = myVals[i][j] + values[i][j] * weights[j]; // TODO check
+				// each dimension is weighted according to own weight
+				myVals[i][j] = myVals[i][j] + values[i][j] * weights[j]; 
 			}
 		}
 	}
-
-	@Override
-	public TimeSeries getOutput() { return this.myValue; }
 
 }

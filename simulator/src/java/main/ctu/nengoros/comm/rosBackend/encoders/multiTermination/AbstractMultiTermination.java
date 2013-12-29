@@ -35,9 +35,8 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 
 	protected final Node parent;
 	public final float DEF_W = 1;
-
-	//protected InstantaneousOutput myValue;
-	private TimeSeries myOutput; //TODO
+	
+	protected TimeSeries myValue;
 
 	// setup properties of my Terminations
 	protected final Integrator integ;
@@ -167,5 +166,9 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 		// this is how BasicTermination determines its dimension
 		return this.dimensions;	
 	}
+	
+
+	@Override
+	public TimeSeries getOutput() { return this.myValue; }
 }
 

@@ -1,7 +1,10 @@
 package ctu.nengoros.modules;
 
+import ctu.nengoros.comm.rosBackend.encoders.Encoder;
+import ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination;
 import ca.nengo.model.Node;
 import ca.nengo.model.Probeable;
+import ca.nengo.model.StructuralException;
 
 /**
  * 
@@ -23,6 +26,23 @@ import ca.nengo.model.Probeable;
  */
 public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeable{
 
+	/**
+	 * <p>This NeuralModule supports connecting multiple "inputs" to one Encoder.
+	 * It is accomplished by the fact that each Encoder has MultiTermination, where
+	 * the MultiTermination can have several own Terminations, whose values are
+	 * combined into one value. </p> 
+	 * 
+	 * <p>The user is allowed to create new Terminations for Encoder. In order to 
+	 * do this, the Encoders MultiTermination has to be available. The MultiTermination
+	 * is generated with identical name as the Encoder. This method provides access
+	 * to the Encoders MultiTermination by its name.</p>
+	 * 
+	 * @param name name of the Encoder==MultiTermination
+	 * @return MultiTermination if found
+	 * @throws StructuralException if no Encoder of such name found
+	 */
+	public MultiTermination getMultiTermination(String name) throws StructuralException;
+	
 	/**
 	 * <p>Turn synchronous communication on/off. Node is synchronous by default.
 	 * If the synchronous communication is turned on, the Nengo simulator waits for

@@ -148,4 +148,9 @@ public class BasicEncoder implements Encoder{
 	@Override
 	public int getDimensions() { return dimensions; }
 
+	@Override
+	public MultiTermination getMultiTermination() throws StructuralException {
+		return multiTermination;
+	}
+
 }

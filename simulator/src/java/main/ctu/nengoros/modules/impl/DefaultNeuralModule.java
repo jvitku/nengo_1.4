@@ -13,6 +13,7 @@ import ctu.nengoros.comm.rosBackend.decoders.Decoder;
 import ctu.nengoros.comm.rosBackend.decoders.impl.BasicDecoder;
 import ctu.nengoros.comm.rosBackend.encoders.Encoder;
 import ctu.nengoros.comm.rosBackend.encoders.impl.BasicEncoder;
+import ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination;
 //import ctu.nengoros.comm.rosBackend.encoders.Encoder;
 //import ctu.nengoros.comm.rosBackend.encoders.impl.BasicEncoder;
 import ctu.nengoros.dynamics.IdentityLTISystem;
@@ -570,6 +571,11 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	}
 
+	@Override
+	public MultiTermination getMultiTermination(String name) throws StructuralException {
+		return this.myEncoders.get(name).getMultiTermination();
+	}
+	
 	protected void addEncoder(Encoder e) throws StructuralException {
 		
 		System.out.println(me+"adding encoder named "+e.getName());
@@ -600,5 +606,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			System.out.println(me+"Origin no: "+i+" is named "+this.orderedOrigins.get(i).getName());
 		}
 	}
+
 
 }

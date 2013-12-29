@@ -18,7 +18,6 @@ import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
 import ctu.nengoros.testsuit.demo.nodes.gate.OR;
-import ctu.nengoros.util.sync.impl.SyncedUnit;
 import ca.nengo.model.impl.RealOutputImpl;
 
 /**
@@ -40,7 +39,6 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 
 
 	public static String minimax = "ctu.nengoros.testsuit.demo.nodes.minmax.F2IPubSub";
-
 	public static String ORR 		= "ctu.nengoros.testsuit.demo.nodes.gate.OR";
 
 	//@Ignore
@@ -212,10 +210,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 			fail();
 		}
 
-		this.makeSimStep(0, 1, module);
-
-		// after this, the values on all Origins (with synchronous Decoders) will be available
-		this.waitForModuleReady(module);
+		makeSimStep(0, 1, module);
 
 		try {
 			if(!(o.getValues() instanceof RealOutputImpl)){
@@ -239,7 +234,6 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		System.err.println("ERROR! this should not be reached!");
 		return new float[]{-1,-1};
 	}
-
 
 	/**
 	 * Test whether values are actually passed by the components - simple test with
@@ -307,8 +301,6 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 	}
 
-
-
 	/**
 	 * Simulate the Nengo simulation step. 
 	 * @param a logic value to be sent to ROS OR node
@@ -345,7 +337,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 			fail();
 		}
 
-		this.makeSimStep(0, 1, module);
+		makeSimStep(0, 1, module);
 
 		try {
 			if(!(outA.getValues() instanceof RealOutputImpl)){
@@ -372,51 +364,6 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		return false;
 	}
 
-	private int maxWait = 3000;
-
-	/**
-	 * Simulate the simulation step of the Nengo: call run() and wait for 
-	 * Module to be ready. 
-	 * @param start start time (not important here)
-	 * @param end (not important here)
-	 * @param module Module that is waited to
-	 */
-	private void makeSimStep(float start, float end, NeuralModule module){
-		try {
-			module.run(0, 1); // make the simulation step
-		} catch (SimulationException e) {
-			System.out.println("failed to run the module");
-			e.printStackTrace();
-			fail();
-		}
-		// after this, the values on all Origins (with synchronous Decoders) will be available
-		this.waitForModuleReady(module);
-	}
-
-
-	/**
-	 * The NeuralModule is synchronous by default, this does the modified Nengo simulator core
-	 * for all NeuralModules (waits for they to be ready, for all their Decoders to be ready).
-	 * Decoder is ready when it receives the ROS message (each time step, the ready state of
-	 * all decoders is discarded).
-	 */
-	private void waitForModuleReady(NeuralModule module){
-		int waited = 0;
-		System.out.print("\n waiting for the ROS message to be received");
-		while(!((SyncedUnit)module).isReady()){
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) { e.printStackTrace(); }
-			System.out.print(".");
-
-			waited +=10;
-			if(waited > maxWait){
-				System.err.println("\n\nNeuralModule not ready fast enough! ROS communication probably broken!");
-				fail();
-			}
-		}
-		System.out.println("");
-	}
 
 
 }

@@ -31,15 +31,6 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 	 * @return auto-generated name of the Termination 
 	 */
 	public String addTermination(Float[] weights) throws StructuralException;
-	
-	
-	/**
-	 * Add new Termination with the weight of 1
-	 *  
-	 * @return auto-generated name of the created Termination
-	 */
-	public String addTerminaton() throws StructuralException;
-	
 
 	/**
 	 * Add new weighted termination with its own weight. If the weights
@@ -50,7 +41,14 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 	 * @return auto-generated name of the created Termination 
 	 */
 	public String addTermination(float weight) throws StructuralException;
-
+	
+	/**
+	 * Add new Termination with the weight of 1
+	 *  
+	 * @return auto-generated name of the created Termination
+	 */
+	public String addTerminaton() throws StructuralException;
+	
 	
 	/**
 	 * This supposed that all my Terminations were ran before, so 
