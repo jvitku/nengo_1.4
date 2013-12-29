@@ -122,8 +122,11 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	 */
 	public DefaultNeuralModule(String name, NodeGroup group, boolean synchronous){
 		super(synchronous,name);	// choose whether to be synchronous or not
+		
+		if(! group.isRunning()){
+			group.startGroup();
+		}
 		ModemContainer modContainer = group.getModem();
-
 		if(modContainer == null){
 			System.err.println(me+"modem probably not initialized!!!! I am not ready!");
 			this.setReady(false); // stop the simulation..
