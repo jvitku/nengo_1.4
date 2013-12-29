@@ -36,7 +36,7 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 	public Termination addTermination(Float [] weights) throws StructuralException {
 
 		super.checkDimensions(weights);
-		String termName = this.generateName(); // TODO solve this
+		String termName = this.generateName(); 
 
 		Termination t = new BasicTermination(parent, lti, integ, termName);
 		((PeripheralsRegisteringNode) parent).addTermination(t);

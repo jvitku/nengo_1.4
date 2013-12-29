@@ -59,8 +59,8 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	 * @throws StructuralException if the Termination could not be created (e.g. Encoder not found,
 	 * name is used etc.)
 	 * 
-	 * @see {@link ctu.nengoros.comm.rosBackend.encoders.Encoder}
-	 * @see {@link ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination}
+	 * {@link ctu.nengoros.comm.rosBackend.encoders.Encoder#getMultiTermination()}
+	 * {@link ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination#addTermination()}
 	 */
 	public Termination connectMultiTermination(String name) throws StructuralException;
 	
@@ -72,6 +72,9 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	 * @param weight terminations input is weighted
 	 * @return newly created Termination
 	 * @throws StructuralException if the Termination could not be created
+	 * 
+	 * @see #connectMultiTermination(String)
+	 * {@link ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination#addTermination(float)}
 	 */
 	public Termination connectMultiTermination(String name, float weight) throws StructuralException;
 	
@@ -80,10 +83,13 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	 * but here the weight for each dimension can be specified.
 	 * 
 	 * @param name name of the Encoder
-	 * @param weight array of weights, for each dimension one weight
+	 * @param weights array of weights, for each dimension one weight
 	 * @return newly created Termination 
 	 * @throws StructuralException exception if the Termination could not be created (e.g. dimension
-	 * of weight array provided is incorrect) 
+	 * of weight array provided is incorrect)
+	 * 
+	 *  @see #connectMultiTermination(String)
+	 *  {@link ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination#addTermination(Float[])}
 	 */
 	public Termination connectMultiTermination(String name, Float[] weights) throws StructuralException;
 	

@@ -19,7 +19,6 @@ public class BasicEncoder implements Encoder{
 
 	public static final String me = "[BasicEncoder] ";
 
-
 	// common properties of my Terminations
 	protected int dimensions;
 	protected DynamicalSystem dynamics; 
@@ -65,7 +64,7 @@ public class BasicEncoder implements Encoder{
 	 * 
 	 * 
 	 * @param parent NeuralModule to which this belongs (will register Terminations to it)
-	 * @param dimensionsizes sizes of each dimension, TODO probably
+	 * @param dimensionsizes sizes of each dimension
 	 * @param dynamics defines dynamics of all Terminations registered and used by me
 	 * @param integrator defines dynamics of all my Terminations
 	 * @param name name of this Encoder (also name of my ROS topic and base name for my Terminations) 
@@ -110,18 +109,11 @@ public class BasicEncoder implements Encoder{
 		// Here, add new MultiTermination which sums inputs on all own Terminations together.
 		multiTermination  = new SumMultiTermination(
 				this.parent, this.name, this.integrator, this.dynamics);
+		
+		// one Termination with the corresponding is added automatically 
 
-		// add one termination on the start (usable by GUI, has default weight of 1)
-		//multiTermination.addTerminaton();
 	}
 
-	/*
-	@Override
-	public Termination addTermination() throws StructuralException {
-		// ad Termination to my MultiTermination and return its name
-		return multiTermination.addTermination();
-	}
-	*/
 
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
@@ -132,7 +124,7 @@ public class BasicEncoder implements Encoder{
 		float[][] ff_series = multiTermination.getOutput().getValues();
 
 		// publish as a ROS message with the last data sample available
-		// TODO: send entire TimeSeries over the ROS network, not just one time sample
+		// TODO: send entire TimeSeries over the ROS network?
 		ros.publish(ff_series[ff_series.length-1]);
 	}
 

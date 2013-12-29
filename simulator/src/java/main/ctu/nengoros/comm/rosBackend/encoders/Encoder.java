@@ -6,7 +6,6 @@ import ctu.nengoros.modules.NeuralModule;
 import ca.nengo.model.Resettable;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
-import ca.nengo.model.Termination;
 
 /**
  * <p>Each Encoder is allowed to register one or more own Nengo Terminations.
@@ -47,18 +46,9 @@ public interface Encoder extends Resettable{
 
 	/**
 	 * Get dimensions of this encoder.
-	 * TODO: only one-dimensional Terminations are supported currently  
 	 * @return number of dimensions of my encoded input 
 	 */
 	public int getDimensions();
-
-	/**
-	 * Adds new Termination to the encoder (that is, builds it and registers it
-	 * to the parent NeuralModule). 
-	 * 
-	 * @return new Termination with auto-generated name  
-	 */
-	//public Termination addTermination() throws StructuralException;
 	
 	/**
 	 * Run encoder for a given time, that is

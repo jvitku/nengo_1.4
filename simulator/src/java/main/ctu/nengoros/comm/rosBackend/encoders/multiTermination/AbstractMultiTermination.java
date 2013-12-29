@@ -14,8 +14,6 @@ import ca.nengo.model.Termination;
 import ca.nengo.util.TimeSeries;
 
 /**
- * TODO: add the support for weighted multi-dimensional terminations.
- * 
  * @author Jaroslav Vitku
  *
  */
@@ -69,7 +67,8 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 	}
  
 	/**
-	 * Runs all its Terminations, then combines their to its own value. 
+	 * Connect data on all its Terminations, terminations are ran by 
+	 * the NeuralModule to which they are registered (too). 
 	 *
 	 * @param startTime simulation time at which running starts (s)
 	 * @param endTime simulation time at which running ends (s)
@@ -78,12 +77,10 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 	public void run(float startTime, float endTime) 
 			throws SimulationException{
 
-		
+		// terminatoins are ran by the NeuralModule
 		//this.runAllTerminations(startTime, endTime);
 
-		System.out.println("\n\n-------- will combine values now!");
 		this.runCombineValues(startTime, endTime);
-		System.out.println("------ valies combined !");
 	}
 
 	@Override

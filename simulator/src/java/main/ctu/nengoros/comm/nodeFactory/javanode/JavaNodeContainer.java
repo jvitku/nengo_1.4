@@ -22,14 +22,19 @@ public interface JavaNodeContainer extends ExternalNodeContainer{
 
 	/**
 	 * NodeMain is interface for a ROS communication-enabled class
-	 * @return
+	 * @return node which belongs to this container
 	 */
 	public NodeMain getNode();
+	
+	/**
+	 * Adds a node to this container
+	 * @param myNode
+	 */
 	public void setNodeMain(NodeMain myNode);
 
 	/**
 	 * Configuration which launches the node (name, namespace..)
-	 * @return
+	 * @return NodeConfituration of this node
 	 */
 	public NodeConfiguration getConfiguration();
 

@@ -26,30 +26,39 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 
 	public String getName();
 	
-	/**
-	 * Add new multi-dimensional weighted Termination.
-	 *  
-	 * @param weights weight matrix
-	 * @return new weighted Termination with auto-generated name 
-	 */
-	public Termination addTermination(Float[] weights) throws StructuralException;
 
 	/**
-	 * Add new weighted termination with its own weight. If the weights
-	 * dimensions does not correspond with the dimensionality 
-	 * of the Termination, the weight matrix will contain only these values.
+	 * Add new weighted termination with the default weight (1).
+	 * The Terminations are named as follows: first Termination is created
+	 * automatically and corresponds with the name of MultiTermination (backwards
+	 * compatibility). Following added Terminations are named as follows:
+	 * "[MultiTermination_name]_0",   
+	 * "[MultiTermination_name]_1", 
+	 *  ...
+	 *  
+	 * @return new Termination with auto-generated name
+	 */
+	public Termination addTermination() throws StructuralException;
+
+	/**
+	 * Specify the weight of this newly created Termination, if the 
+	 * Terminaion is multi-dimensional, weight will be applied on all dimensions.
 	 *  
 	 * @param weight the termination can be weighter
 	 * @return new weighted Termination with auto-generated name 
 	 */
 	public Termination addTermination(float weight) throws StructuralException;
 	
+	
 	/**
-	 * Add new Termination with the weight of 1
-	 *  
-	 * @return new Termination with auto-generated name
+	 * Specify the weight matrix for this newly created weighted Termination.
+	 * 
+	 * @param weights weight matrix
+	 * @return new weighted Termination with auto-generated name 
 	 */
-	public Termination addTermination() throws StructuralException;
+	public Termination addTermination(Float[] weights) throws StructuralException;
+
+	
 	
 	public HashMap<String,Termination> getTerminations();
 	

@@ -102,8 +102,9 @@ public class MultipleTerminationsOneEncoder extends NengorosTest{
 				onevals[2]	+	onevals[2] + onevals[2]*weight	+ onevals[2]*weights[2],
 				onevals[3]	+	onevals[3] + onevals[3]*weight	+ onevals[3]*weights[3],};
 
-		int max = (int)this.max(result);	// this should be retrieved from the ROS node
-		int min = (int)this.min(result);
+		// this should be retrieved from the ROS node
+		int max = Math.round(this.max(result));
+		int min = Math.round(this.min(result));
 
 		/**
 		 * Simulate
@@ -115,17 +116,20 @@ public class MultipleTerminationsOneEncoder extends NengorosTest{
 			t1.setValues(io);
 			t2.setValues(io);
 
-			
 			// run and wait for module to be ready
 			makeSimStep(0,1,module);	
 
 			// read data from output
 			Origin o = module.getOrigin(F2IPubSub.ros2ann);
 			float[] vals = ((RealOutputImpl)o.getValues()).getValues();
-			
+
 			System.out.println("values are: "+vals[0]+" "+vals[1]);
 			System.out.println("values should be "+min+" "+max);
-			
+
+			//check if the result is correct
+			assertTrue(min==vals[0]);
+			assertTrue(max==vals[1]);
+
 		} catch (SimulationException e) {
 			e.printStackTrace();
 			fail();
