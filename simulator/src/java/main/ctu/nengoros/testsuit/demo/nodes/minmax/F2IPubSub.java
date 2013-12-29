@@ -70,7 +70,7 @@ public class F2IPubSub extends AbstractNodeMain {
 	}
 	
 	private float max(float[] vals){
-		float mx = Float.MIN_VALUE;
+		float mx = vals[0];
 		for(int i=0;i<vals.length; i++)
 			if(mx<vals[i])
 				mx=vals[i];
@@ -78,7 +78,7 @@ public class F2IPubSub extends AbstractNodeMain {
 	}
 		
 	private float min(float[] vals){
-		float min = Float.MAX_VALUE;
+		float min = vals[0];
 		for(int i=0;i<vals.length; i++)
 			if(min>vals[i])
 				min=vals[i];

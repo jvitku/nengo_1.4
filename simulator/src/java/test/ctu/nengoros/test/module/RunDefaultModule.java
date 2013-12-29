@@ -22,7 +22,7 @@ import ctu.nengoros.modules.impl.DefaultNeuralModule;
  */
 public class RunDefaultModule{
 
-	public static String minimax = "ctu.nengoros.test.resender.mpt.F2IPubSub";
+	public static String minimax = "ctu.nengoros.testsuit.demo.nodes.minmax.F2IPubSub";
 	public static String modem = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
 	
 	@BeforeClass
@@ -61,7 +61,6 @@ public class RunDefaultModule{
 
 		g.stopGroup(); 
 
-
 	}
 
 	/**
@@ -96,7 +95,6 @@ public class RunDefaultModule{
 		} catch (InterruptedException e) { e.printStackTrace(); }
 		
 		g.stopGroup();
-		
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 		
 	}

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
+import ctu.nengoros.testsuit.demo.nodes.minmax.*;
 import ca.nengo.model.InstantaneousOutput;
 import ca.nengo.model.Origin;
 import ca.nengo.model.SimulationException;
@@ -12,6 +13,7 @@ import ca.nengo.model.Termination;
 import ca.nengo.model.Units;
 import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
+import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
 import ctu.nengoros.testsuit.demo.nodes.gate.OR;
@@ -35,9 +37,8 @@ import ca.nengo.model.impl.RealOutputImpl;
  */
 public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosCommunicationTest */{
 
-	
-	public static String minimax = "ctu.nengoros.test.resender.mpt.F2IPubSub";
-	public static String modem = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
+
+	public static String minimax = "ctu.nengoros.testsuit.demo.nodes.minmax.F2IPubSub";
 
 	public static String ORR 		= "ctu.nengoros.testsuit.demo.nodes.gate.OR";
 
@@ -102,68 +103,126 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		g.stopGroup();
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 	}
-	
+
+
 
 	/**
 	 * Test whether values are actually passed by the components - test with
 	 * multiple-valued Terminations and Origins.
 	 */
+	//@Ignore
 	@Test
 	public void MIMOCommunication(){
 
 		// Run ROS node computing logical OR (taken from the project logic/gates)
 		String name = "myName";
-		NodeGroup g = new NodeGroup("ORGROUP", true);
-		g.addNode(ORR, "ORNODE", "java");
-		NeuralModule module = new DefaultNeuralModule(name+"_OR", g);
+		NodeGroup g = new NodeGroup("MINMAXGROUP", true);
+		g.addNode(minimax, "MINMAX", "java");
+		NeuralModule module = new DefaultNeuralModule(name+"_MM", g);
 
 		// Connect Neural module to the node
-		module.createEncoder(OR.inAT, "bool", 1);
-		module.createEncoder(OR.inBT, "bool", 1);
-		module.createDecoder(OR.outAT, "bool", 1);		
+		module.createEncoder(F2IPubSub.ann2ros , "float", 4);//ROS input=4lfoats
+		module.createDecoder(F2IPubSub.ros2ann, "int", 2);	 //ROS output=2	
+
+		Termination t=null; Origin o=null;
 
 		try {
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		// obtain connections from the Node (NeuralModule) (created by methods createEncoder/Decoder)
-		Termination inTA=null, inTB=null;
-		Origin outA=null;
-		
-		try {
-			inTA = module.getTermination(OR.inAT);
-			inTB = module.getTermination(OR.inBT);
+			t = module.getTermination(F2IPubSub.ann2ros);
+			System.out.println("termination called "+t.getName()+" found");
+
 		} catch (StructuralException e) {
-			System.err.println("On of Terminations not found!");
 			e.printStackTrace();
 			fail();
 		}
-		System.out.println("termination called "+OR.inAT+" found");
-		System.out.println("termination called "+OR.inBT+" found");
-
 		try {
-			outA = module.getOrigin(OR.outAT);
+			o = module.getOrigin(F2IPubSub.ros2ann);
+			System.out.println("origin named: "+o.getName()+" found");
+
 		} catch (StructuralException e) {
-			System.err.println("Origin named "+OR.outAT+" not found!");
 			e.printStackTrace();
 			fail();
 		}
+		// note that it is not guaranteed that the external ROS node is started
+		// already, so wait for it several milliseconds
+		Mess.waitms(100);	 
 		
-		System.out.println("origin named: "+OR.outAT+"found");
+		this.checkComputation(new float[]{-10,10,11,230}, 	module, t, o);
+		this.checkComputation(new float[]{0,0,0,0}, 		module, t, o);
+		this.checkComputation(new float[]{1000,0,1,10}, 	module, t, o);
+		this.checkComputation(new float[]{-10,-10,-11,-230},module, t, o);
 		
-		// compute the OR truth table over the ROS network by means of Neural module
-		assertFalse(this.makeSimulationStep(false, false, module, inTA, inTB, outA));
-		assertTrue(this.makeSimulationStep(false, true, module, inTA, inTB, outA));
-		assertTrue(this.makeSimulationStep(true, false, module, inTA, inTB, outA));
-		assertTrue(this.makeSimulationStep(true, true, module, inTA, inTB, outA));
+		g.stopGroup();
+		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
+	}
+	
+	private void checkComputation(float[] vals, NeuralModule module, Termination t, Origin o){
 		
-		assertFalse(this.makeSimulationStep(false, false, module, inTA, inTB, outA));
+		float[] out = this.makeSimulationStepMIMO(vals, module, t, o);
+		System.out.println("-- received values are:  "+out[0]+" "+out[1]);
+		assertTrue(out[0] == min(vals));
+		assertTrue(out[1] == max(vals));
 	}
 
+	private float max(float[] vals){
+		float out = vals[0];
+		for(int i=1; i<vals.length; i++)
+			if(vals[i]>out)
+				out=vals[i];
+		return out;
+	}
 	
-	
+	private float min(float[] vals){
+		float out = vals[0];
+		for(int i=1; i<vals.length; i++)
+			if(vals[i]<out)
+				out=vals[i];
+		return out;
+	}
+
+	private float[] makeSimulationStepMIMO(float[] inputs, NeuralModule module, 
+			Termination t, Origin o){
+
+		InstantaneousOutput aa =
+				new RealOutputImpl(inputs, Units.ACU, 0);
+
+		// set values on both Terminations
+		try {
+			t.setValues(aa);
+		} catch (SimulationException e) {
+			System.err.println("could not set values on termination");
+			e.printStackTrace();
+			fail();
+		}
+
+		this.makeSimStep(0, 1, module);
+
+		// after this, the values on all Origins (with synchronous Decoders) will be available
+		this.waitForModuleReady(module);
+
+		try {
+			if(!(o.getValues() instanceof RealOutputImpl)){
+				System.err.println("Origin returned something different than RealOutputImpl");
+				fail();
+			}
+
+			RealOutputImpl out = (RealOutputImpl) o.getValues();
+			float[]values = out.getValues();
+			assertEquals(values.length,2);	// the Decoder returns only one time sample (2 dim output)
+
+			System.out.println("Computed values are: \t"+values[0]+" "+values[1]);
+
+			return values;
+
+		} catch (SimulationException e) {
+			System.out.println("could not read Origin vale");
+			e.printStackTrace();
+			fail();
+		}
+		System.err.println("ERROR! this should not be reached!");
+		return new float[]{-1,-1};
+	}
+
+
 	/**
 	 * Test whether values are actually passed by the components - simple test with
 	 * single-valued Terminations and Origins.
@@ -183,16 +242,10 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		module.createEncoder(OR.inBT, "bool", 1);
 		module.createDecoder(OR.outAT, "bool", 1);		
 
-		try {
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
 		// obtain connections from the Node (NeuralModule) (created by methods createEncoder/Decoder)
 		Termination inTA=null, inTB=null;
 		Origin outA=null;
-		
+
 		try {
 			inTA = module.getTermination(OR.inAT);
 			inTB = module.getTermination(OR.inBT);
@@ -211,19 +264,26 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 			e.printStackTrace();
 			fail();
 		}
-		
+
 		System.out.println("origin named: "+OR.outAT+"found");
-		
-		
+
+		// note that it is not guaranteed that the external ROS node is started
+		// already, so wait for it several milliseconds
+		Mess.waitms(100); 
+
 		// compute the OR truth table over the ROS network by means of Neural module
-		assertFalse(this.makeSimulationStep(false, false, module, inTA, inTB, outA));
-		assertTrue(this.makeSimulationStep(false, true, module, inTA, inTB, outA));
-		assertTrue(this.makeSimulationStep(true, false, module, inTA, inTB, outA));
-		assertTrue(this.makeSimulationStep(true, true, module, inTA, inTB, outA));
-		
-		assertFalse(this.makeSimulationStep(false, false, module, inTA, inTB, outA));
-		
+		assertFalse(this.makeSimulationStep(false, false, 	module, inTA, inTB, outA));
+		assertTrue(this.makeSimulationStep(false, true, 	module, inTA, inTB, outA));
+		assertTrue(this.makeSimulationStep(true, false, 	module, inTA, inTB, outA));
+		assertTrue(this.makeSimulationStep(true, true, 		module, inTA, inTB, outA));
+
+		assertFalse(this.makeSimulationStep(false, false, 	module, inTA, inTB, outA));
+
+		g.stopGroup();
+		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 	}
+
+
 
 	/**
 	 * Simulate the Nengo simulation step. 
@@ -237,9 +297,9 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 	 */
 	private boolean makeSimulationStep(boolean a, boolean b, 
 			NeuralModule module, Termination inTA, Termination inTB, Origin outA){
-		
+
 		InstantaneousOutput aa, bb;
-		
+
 		if(a){
 			aa = new RealOutputImpl(new float[]{1}, Units.ACU, 0);
 		}else{
@@ -260,34 +320,25 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 			e.printStackTrace();
 			fail();
 		}
-		
-		try {
-			module.run(0, 1); // make the simulation step
-		} catch (SimulationException e) {
-			System.out.println("failed to run the module");
-			e.printStackTrace();
-			fail();
-		}
-		
-		// after this, the values on all Origins (with synchronous Decoders) will be available
-		this.waitForModuleReady(module);
-		
+
+		this.makeSimStep(0, 1, module);
+
 		try {
 			if(!(outA.getValues() instanceof RealOutputImpl)){
 				System.err.println("Origin returned something different than RealOutputImpl");
 				fail();
 			}
-				
+
 			RealOutputImpl out = (RealOutputImpl) outA.getValues();
 			float[]values = out.getValues();
 			assertEquals(values.length,1);	// should return one float value representing true/false (1/0)
-			
+
 			System.out.println("Computed value (the value of this origin) is : \t"+values[0]);
-			
+
 			assertTrue(values[0]==1.0 || values[0]==0.0);
-			
+
 			return (values[0]==1);	// return boolean value of the Origin
-			
+
 		} catch (SimulationException e) {
 			System.out.println("could not read Origin vale");
 			e.printStackTrace();
@@ -296,9 +347,29 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		System.err.println("ERROR! this should not be reached!");
 		return false;
 	}
-	
+
 	private int maxWait = 3000;
-	
+
+	/**
+	 * Simulate the simulation step of the Nengo: call run() and wait for 
+	 * Module to be ready. 
+	 * @param start start time (not important here)
+	 * @param end (not important here)
+	 * @param module Module that is waited to
+	 */
+	private void makeSimStep(float start, float end, NeuralModule module){
+		try {
+			module.run(0, 1); // make the simulation step
+		} catch (SimulationException e) {
+			System.out.println("failed to run the module");
+			e.printStackTrace();
+			fail();
+		}
+		// after this, the values on all Origins (with synchronous Decoders) will be available
+		this.waitForModuleReady(module);
+	}
+
+
 	/**
 	 * The NeuralModule is synchronous by default, this does the modified Nengo simulator core
 	 * for all NeuralModules (waits for they to be ready, for all their Decoders to be ready).
@@ -313,7 +384,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 				Thread.sleep(10);
 			} catch (InterruptedException e) { e.printStackTrace(); }
 			System.out.print(".");
-			
+
 			waited +=10;
 			if(waited > maxWait){
 				System.err.println("\n\nNeuralModule not ready fast enough! ROS communication probably broken!");
@@ -322,4 +393,6 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		}
 		System.out.println("");
 	}
+
+
 }

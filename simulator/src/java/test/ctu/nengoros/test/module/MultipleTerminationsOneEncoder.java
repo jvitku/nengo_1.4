@@ -22,7 +22,7 @@ import ctu.nengoros.testsuit.demo.nodes.gate.OR;
  */
 public class MultipleTerminationsOneEncoder extends NengorosTest{
 
-	public static String ORR 		= "ctu.nengoros.testsuit.demo.nodes.gate.OR";
+	public static String ORR = "ctu.nengoros.testsuit.demo.nodes.gate.OR";
 	
 	@Test
 	public void communicationWorks(){
@@ -66,6 +66,8 @@ public class MultipleTerminationsOneEncoder extends NengorosTest{
 			e.printStackTrace();
 			fail();
 		}
+		
+		
 	}
 
 }

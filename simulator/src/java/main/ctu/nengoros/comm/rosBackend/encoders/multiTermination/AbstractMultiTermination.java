@@ -143,7 +143,7 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 					" of weights, dimension of this MultiTermination is "+this.dimensions);
 	}
 
-	protected Float[] readWeight(String name) throws SimulationException{
+	protected Float[] readWeights(String name) throws SimulationException{
 
 		if(!this.myWeights.containsKey(name))
 			throw new SimulationException(me+"ERROR: weight for this Termination not found: "+name);

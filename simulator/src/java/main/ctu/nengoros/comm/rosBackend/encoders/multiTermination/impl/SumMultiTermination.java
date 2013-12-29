@@ -58,7 +58,7 @@ public class SumMultiTermination extends BasicMultiTermination{
 		for(int i=1; i<this.orderedTerminations.size(); i++){
 			Termination t = this.orderedTerminations.get(i);
 			
-			weight = readWeight(t.getName());
+			weight = readWeights(t.getName());
 
 			super.checkInstance(t);
 			TimeSeries out = ((BasicTermination)t).getOutput();
@@ -81,12 +81,14 @@ public class SumMultiTermination extends BasicMultiTermination{
 			e.printStackTrace();
 		}
 		
-		Float[] weights = readWeight(orderedTerminations.get(0).getName());
+		Float[] weights = readWeights(orderedTerminations.get(0).getName());
 		
-		// apply weights
+		// for each time step
 		for(int i=0; i<myVals.length; i++){
+			// each dimension
 			for(int j=0; j<myVals[0].length; j++){
-				myVals[i][j] = myVals[i][j]*weights[0]; //TODO
+				
+				myVals[i][j] = myVals[i][j]*weights[j]; // TODO check ok
 			}
 		}
 	}
@@ -116,7 +118,7 @@ public class SumMultiTermination extends BasicMultiTermination{
 		for(int i=0; i<values.length; i++){
 			// sum all dimensions
 			for(int j=0; j<values[0].length; j++){
-				myVals[i][j] = myVals[i][j] + values[i][j] * weights[0]; // TODO OK??
+				myVals[i][j] = myVals[i][j] + values[i][j] * weights[j]; // TODO check
 			}
 		}
 	}

@@ -44,6 +44,7 @@ public class NameProviderNamespaceTest {
 		RosUtils.utilsShallStop();		
 	}
 	
+	
 	@Test
 	public void independentGroup(){
 		

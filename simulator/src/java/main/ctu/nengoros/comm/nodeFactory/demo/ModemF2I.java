@@ -2,17 +2,15 @@ package ctu.nengoros.comm.nodeFactory.demo;
 
 import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
-import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.comm.rosutils.RosUtils;
 import ctu.nengoros.modules.NeuralModule;
-import ctu.nengoros.modules.test.NeuralModuleTest;
+//import ctu.nengoros.modules.test.NeuralModuleTest;
+import ctu.nengoros.modules.impl.DefaultNeuralModule;
 
 /**
  * This demo starts roscore and launches two nodes in one group of nodes.
  * One node publishes integers, the other is subscribed to the corresponding topic.
- * 
- * 
  * 
  * Note: if roscore and rxgraph are found on this computer: will be automatically
  * launched and closed.
@@ -60,9 +58,7 @@ public class ModemF2I {
 
 		g.startGroup();
 
-		ModemContainer md = g.getModem();
-		System.out.println("name of nmodem obtained is:"+md.getName());
-		NeuralModule smartOne = new NeuralModuleTest("SmartNeuron",md);
+		NeuralModule smartOne = new DefaultNeuralModule("SmartNeuron",g);
 
 		smartOne.createDecoder("ros2annFloatArr", "int", 2);
 		smartOne.createEncoder("ann2rosFloatArr", "float", 4);
@@ -76,8 +72,6 @@ public class ModemF2I {
 
 		RosUtils.utilsShallStop();
 	}
-
-
 
 }
 

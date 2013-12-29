@@ -37,6 +37,14 @@ public class Mess {
 		return out;
 	}
 	
+	public static void waitms(int ms){
+		try {
+			Thread.sleep(ms);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void wait(int sec){
 		try {
 			Thread.sleep(sec*1000);
