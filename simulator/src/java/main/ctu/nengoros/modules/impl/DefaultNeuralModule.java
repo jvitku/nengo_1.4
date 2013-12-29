@@ -604,5 +604,32 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		}
 	}
 
+	@Override
+	public Termination connectMultiTermination(String name)	throws StructuralException {
+		
+		if(!this.myEncoders.containsKey(name))
+			throw new StructuralException(me+"requested MultiTermination not found!");
+		
+		return this.myEncoders.get(name).getMultiTermination().addTermination();
+	}
+
+	@Override
+	public Termination connectMultiTermination(String name, float weight) throws StructuralException {
+		
+		if(!this.myEncoders.containsKey(name))
+			throw new StructuralException(me+"requested MultiTermination not found!");		
+			
+		return this.myEncoders.get(name).getMultiTermination().addTermination(weight);
+	}
+
+	@Override
+	public Termination connectMultiTermination(String name, Float[] weights) throws StructuralException {
+
+		if(!this.myEncoders.containsKey(name))
+			throw new StructuralException(me+"requested MultiTermination not found!");		
+			
+		return this.myEncoders.get(name).getMultiTermination().addTermination(weights);
+	}
+
 
 }

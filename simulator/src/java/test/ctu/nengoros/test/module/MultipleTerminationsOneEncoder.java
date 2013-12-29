@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import ca.nengo.model.InstantaneousOutput;
 import ca.nengo.model.Origin;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
@@ -13,7 +12,6 @@ import ca.nengo.model.Units;
 import ca.nengo.model.impl.RealOutputImpl;
 import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
-import ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination;
 import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.modules.NeuralModule;
@@ -31,75 +29,111 @@ import ctu.nengoros.testsuit.demo.nodes.minmax.F2IPubSub;
 public class MultipleTerminationsOneEncoder extends NengorosTest{
 
 	public static String minimax = "ctu.nengoros.testsuit.demo.nodes.minmax.F2IPubSub";
-	public static String ORR = "ctu.nengoros.testsuit.demo.nodes.gate.OR";
 
-
+	/**
+	 * The same as 
+	 * 
+	 * {@link ctu.nengoros.test.module.components.MultiTermination#runSingleWeightedTermination()}
+	 * 
+	 * but this one uses the MultiTermination to send summed data on own 
+	 * Terminations over the ROS network to the ROS node, the received 
+	 * values (min/max of MulitTerminationOutput) are checked to be correct.
+	 *  
+	 */
 	@Test
-	public void MIMOCommunication(){
+	public void MultiTerminationWithEncoder(){
 
-		// Run ROS node computing logical OR (taken from the project logic/gates)
-		String name = "myName";
-		NodeGroup g = new NodeGroup("MINMAXGROUP", true);
-		g.addNode(minimax, "MINMAX", "java");
+		String name = "singleWaightedTermMinMax";
+
+		/**
+		 * setup the neural module, run the ROS MinMaxInt node
+		 */
+
+		NodeGroup g = new NodeGroup(name, false);
+		g.addNode(minimax,"NameX","java");
+		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
+
 		NeuralModule module = null;
 		try {
-			module = new DefaultNeuralModule(name+"_MM", g);
-		} catch (ConnectionException e1) {
-			e1.printStackTrace();
+			module = new DefaultNeuralModule(name,g);
+		} catch (ConnectionException e) {
+			e.printStackTrace();
 			fail();
 		}
+		assertTrue(NodeFactory.np.numOfRunningNodes() == 2); // one modem and one ROS node
 
-		// Connect NeuralModule with one Encoder and one Decoder
-		module.createEncoder(F2IPubSub.ann2ros , "float", 4);
-		module.createDecoder(F2IPubSub.ros2ann, "int", 2);	 	
+		// this is used in Jython script to crate Encoders/Decoders
+		module.createDecoder(F2IPubSub.ros2ann, "int", 2);		// Origin
+		module.createEncoder(F2IPubSub.ann2ros, "float", 4);	// Termination(s)
 
-		Termination t=null; Origin o=null;
+		/**
+		 * setup the interface in the Nengo
+		 */
+
+		float weight = (float) 0.65;
+		Float[] weights = new Float[]{(float) 0.1,(float) 1,(float) 10,(float) -101};
+
+		Termination t0=null,t1=null,t2=null;
+		Termination tDef = null;
 
 		try {
-			t = module.getTermination(F2IPubSub.ann2ros);
-			System.out.println("termination called "+t.getName()+" found");
+			tDef = module.getTermination(F2IPubSub.ann2ros);	// created by default
+
+			t0 = module.connectMultiTermination(F2IPubSub.ann2ros);
+			t1 = module.connectMultiTermination(F2IPubSub.ann2ros,weight);	
+			t2 = module.connectMultiTermination(F2IPubSub.ann2ros,weights);
 
 		} catch (StructuralException e) {
 			e.printStackTrace();
-			fail();
 		}
+
+		/**
+		 * prepare data
+		 */
+		Mess.waitms(100);	// to ROS nodes to start
+
+		// compute the result of computation:
+		// min/max value of: weighted sum of Terminations
+		float[] onevals = new float[]{1,1,1,1};
+		RealOutputImpl io = new RealOutputImpl(onevals,Units.UNK,0);
+		float[] result = new float[]{
+				onevals[0]	+	onevals[0] + onevals[0]*weight	+ onevals[0]*weights[0],
+				onevals[1]	+	onevals[1] + onevals[1]*weight	+ onevals[1]*weights[1],
+				onevals[2]	+	onevals[2] + onevals[2]*weight	+ onevals[2]*weights[2],
+				onevals[3]	+	onevals[3] + onevals[3]*weight	+ onevals[3]*weights[3],};
+
+		int max = (int)this.max(result);	// this should be retrieved from the ROS node
+		int min = (int)this.min(result);
+
+		/**
+		 * Simulate
+		 */
 		try {
-			o = module.getOrigin(F2IPubSub.ros2ann);
-			System.out.println("origin named: "+o.getName()+" found");
+			// set data on inputs
+			tDef.setValues(io);
+			t0.setValues(io);
+			t1.setValues(io);
+			t2.setValues(io);
 
-		} catch (StructuralException e) {
+			
+			// run and wait for module to be ready
+			makeSimStep(0,1,module);	
+
+			// read data from output
+			Origin o = module.getOrigin(F2IPubSub.ros2ann);
+			float[] vals = ((RealOutputImpl)o.getValues()).getValues();
+			
+			System.out.println("values are: "+vals[0]+" "+vals[1]);
+			System.out.println("values should be "+min+" "+max);
+			
+		} catch (SimulationException e) {
+			e.printStackTrace();
+			fail();
+		}catch (StructuralException e) {
 			e.printStackTrace();
 			fail();
 		}
-		Termination tt = null;
-		try{
-			MultiTermination mt = module.getMultiTermination(F2IPubSub.ann2ros);
-			tt = mt.addTermination();
-
-		} catch (StructuralException e) {
-			e.printStackTrace();
-			fail();
-		}
-
-		// note that it is not guaranteed that the external ROS node is started
-		// already, so wait for it several milliseconds
-		Mess.waitms(100);	 
-
-		this.checkComputation(new float[]{-10,10,11,230}, 	module, t, tt,o);
-		this.checkComputation(new float[]{0,0,0,0}, 		module, t, tt,o);
-		this.checkComputation(new float[]{1000,0,1,10}, 	module, t, tt,o);
-		this.checkComputation(new float[]{-10,-10,-11,-230},module, t, tt,o);
-
 		g.stopGroup();
-		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
-	}
-
-	private void checkComputation(float[] vals, NeuralModule module, Termination t, Termination tt, Origin o){
-
-		float[] out = this.makeSimulationStepMIMO(vals, module, t, tt,o);
-		System.out.println("-- received values are:  "+out[0]+" "+out[1]);
-		assertTrue(out[0] == min(vals));
-		assertTrue(out[1] == max(vals));
 	}
 
 	private float max(float[] vals){
@@ -117,45 +151,4 @@ public class MultipleTerminationsOneEncoder extends NengorosTest{
 				out=vals[i];
 		return out;
 	}
-
-	private float[] makeSimulationStepMIMO(float[] inputs, NeuralModule module, 
-			Termination t, Termination tt, Origin o){
-
-		InstantaneousOutput aa =
-				new RealOutputImpl(inputs, Units.ACU, 0);
-
-		try {
-			t.setValues(aa);
-			tt.setValues(aa);
-		} catch (SimulationException e) {
-			System.err.println("could not set values on termination");
-			e.printStackTrace();
-			fail();
-		}
-
-		makeSimStep(0, 1, module);
-
-		try {
-			if(!(o.getValues() instanceof RealOutputImpl)){
-				System.err.println("Origin returned something different than RealOutputImpl");
-				fail();
-			}
-
-			RealOutputImpl out = (RealOutputImpl) o.getValues();
-			float[]values = out.getValues();
-			assertEquals(values.length,2);	// the Decoder returns only one time sample (2 dim output)
-
-			System.out.println("Computed values are: \t"+values[0]+" "+values[1]);
-
-			return values;
-
-		} catch (SimulationException e) {
-			System.out.println("could not read Origin vale");
-			e.printStackTrace();
-			fail();
-		}
-		System.err.println("ERROR! this should not be reached!");
-		return new float[]{-1,-1};
-	}	
-
 }

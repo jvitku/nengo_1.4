@@ -55,6 +55,8 @@ structure:
 
 # ROS integration into Nengo
 
+* Choose some method how to **check** whether the ROS nodes are set up and **ready** (now it may be necessary to wait several milliseconds before using the node in synchronous mode)
+
 * Enable sending/receiving entire `RealOutput` value (multiple values) over the ROS network 
 
 	* Sending is done in the `ctu.nengoros.modules.impl.DefaultNeuraoModule.runAllEncoders()`, and therefore in the `Encoder.run()`

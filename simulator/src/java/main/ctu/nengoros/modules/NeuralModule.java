@@ -1,10 +1,10 @@
 package ctu.nengoros.modules;
 
-import ctu.nengoros.comm.rosBackend.encoders.Encoder;
 import ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination;
 import ca.nengo.model.Node;
 import ca.nengo.model.Probeable;
 import ca.nengo.model.StructuralException;
+import ca.nengo.model.Termination;
 
 /**
  * 
@@ -42,6 +42,51 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	 * @throws StructuralException if no Encoder of such name found
 	 */
 	public MultiTermination getMultiTermination(String name) throws StructuralException;
+	
+	/**
+	 * <p>In order to simplify connecting new inputs to the Encoder (MultiTermination in general), 
+	 * this method can be use to create new Terminations. It receives name of the Encoded 
+	 * ROS topic (name of MultiTermination), crates new Termination with default weight (1), 
+	 * registers it to own MultiTermination and this NauralModule.</p>
+	 * 
+	 * <p>The MultiTermination in DefaultNeuralModule computes weighted sum of all its
+	 * Terminations. The resulting value is then encoded and sent as a ROS message on the
+	 * topic which corresponds to the Encoders name.</p>
+	 * 
+	 * @param name name of MultiTermination to connect newly created Termination (this equals
+	 * to the name of ROS topic used by Encoder)
+	 * @return newly created Termination
+	 * @throws StructuralException if the Termination could not be created (e.g. Encoder not found,
+	 * name is used etc.)
+	 * 
+	 * @see {@link ctu.nengoros.comm.rosBackend.encoders.Encoder}
+	 * @see {@link ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination}
+	 */
+	public Termination connectMultiTermination(String name) throws StructuralException;
+	
+	/**
+	 * The same as the {@link ctu.nengoros.modules.NeuralModule#connectMultiTermination(String)}, 
+	 * but here the weight can be specified. 
+	 * 
+	 * @param name name of the ROS topic == name of the Encoder == name of the parent MultiTermination 
+	 * @param weight terminations input is weighted
+	 * @return newly created Termination
+	 * @throws StructuralException if the Termination could not be created
+	 */
+	public Termination connectMultiTermination(String name, float weight) throws StructuralException;
+	
+	/**
+	 * The same as the {@link ctu.nengoros.modules.NeuralModule#connectMultiTermination(String)}, 
+	 * but here the weight for each dimension can be specified.
+	 * 
+	 * @param name name of the Encoder
+	 * @param weight array of weights, for each dimension one weight
+	 * @return newly created Termination 
+	 * @throws StructuralException exception if the Termination could not be created (e.g. dimension
+	 * of weight array provided is incorrect) 
+	 */
+	public Termination connectMultiTermination(String name, Float[] weights) throws StructuralException;
+	
 	
 	/**
 	 * <p>Turn synchronous communication on/off. Node is synchronous by default.

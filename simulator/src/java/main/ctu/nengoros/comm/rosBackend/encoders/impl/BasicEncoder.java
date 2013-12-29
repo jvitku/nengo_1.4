@@ -6,7 +6,6 @@ import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
-import ca.nengo.model.Termination;
 import ca.nengo.model.Units;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
@@ -20,7 +19,7 @@ public class BasicEncoder implements Encoder{
 
 	public static final String me = "[BasicEncoder] ";
 
-	
+
 	// common properties of my Terminations
 	protected int dimensions;
 	protected DynamicalSystem dynamics; 
@@ -31,9 +30,9 @@ public class BasicEncoder implements Encoder{
 	protected String name;		
 	protected ConnectedNode myRosNode;	// factory for subscriber
 	protected MultiTermination multiTermination;// this combines values on all Terminations
-	
+
 	public Backend ros;					// Nengo interfaced with ROS here
-	
+
 	/**
 	 * Constructor of Basic Encoder which can hold one or more Terminations. Create MultiTermination, 
 	 * register one own Termination by default and wait for running. 
@@ -54,10 +53,10 @@ public class BasicEncoder implements Encoder{
 	public BasicEncoder(NeuralModule parent, DynamicalSystem dynamics, Integrator integrator, 
 			String name, String dataType, Units u, ModemContainer modem, Backend ros) 
 					throws StructuralException, ConnectionException{
-		
+
 		init(parent, new int[]{ros.gedNumOfDimensions()}, dynamics, integrator, name, dataType, u, modem, ros);	
 	}
-	
+
 	/**
 	 * Constructor of Basic Encoder which can hold one or more Terminations. Create MultiTermination, 
 	 * register one own Termination by default and wait for running. 
@@ -82,21 +81,21 @@ public class BasicEncoder implements Encoder{
 	public BasicEncoder(NeuralModule parent, int[] dimensionsizes, DynamicalSystem dynamics, Integrator integrator, 
 			String name, String dataType, Units u, ModemContainer modem, Backend ros) 
 					throws StructuralException, ConnectionException{
-		
+
 		init(parent, dimensionsizes, dynamics, integrator, name, dataType, u, modem, ros);
 	}
-	
+
 	private void init(NeuralModule parent, int[] dimensionSizes, DynamicalSystem dynamics, Integrator integrator, 
 			String name, String dataType, Units u, ModemContainer modem, Backend ros) 
 					throws ConnectionException, StructuralException{
-		
+
 		this.parent = parent;
 		this.name = name;
 		this.dynamics = dynamics;
 		this.integrator = integrator;
-		
+
 		dimensions = ros.gedNumOfDimensions();
-		
+
 		// connect to its part which was launched as a ROS node
 		try {
 			myRosNode = modem.getConnectedNode();
@@ -105,36 +104,38 @@ public class BasicEncoder implements Encoder{
 			System.err.println(me+mess);
 			throw new ConnectionException(me+mess, e);
 		}
-		
+
 		this.ros = ros;	// get my ROS backend
 
 		// Here, add new MultiTermination which sums inputs on all own Terminations together.
 		multiTermination  = new SumMultiTermination(
 				this.parent, this.name, this.integrator, this.dynamics);
-		
+
 		// add one termination on the start (usable by GUI, has default weight of 1)
 		//multiTermination.addTerminaton();
 	}
-	
+
+	/*
 	@Override
 	public Termination addTermination() throws StructuralException {
 		// ad Termination to my MultiTermination and return its name
 		return multiTermination.addTermination();
 	}
+	*/
 
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
-		
+
 		// collect data on all my Terminations
 		multiTermination.run(startTime, endTime);
-		
+
 		float[][] ff_series = multiTermination.getOutput().getValues();
-		
+
 		// publish as a ROS message with the last data sample available
 		// TODO: send entire TimeSeries over the ROS network, not just one time sample
 		ros.publish(ff_series[ff_series.length-1]);
 	}
-	
+
 	@Override
 	public void reset(boolean randomize) {
 		multiTermination.reset(randomize);

@@ -58,7 +58,7 @@ public interface Encoder extends Resettable{
 	 * 
 	 * @return new Termination with auto-generated name  
 	 */
-	public Termination addTermination() throws StructuralException;
+	//public Termination addTermination() throws StructuralException;
 	
 	/**
 	 * Run encoder for a given time, that is

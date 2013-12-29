@@ -184,10 +184,10 @@ public class MultiTermination extends NengorosTest{
 		 */
 
 		//float weight = (float) 1;
-		Float[] weights = new Float[]{(float) 1,(float)1,(float)1,(float)1};
+		//Float[] weights = new Float[]{(float) 1,(float)1,(float)1,(float)1};
 
 		float weight = (float) 0.65;
-		//Float[] weights = new Float[]{(float) 0.1,(float) 1,(float) 10,(float) -101};
+		Float[] weights = new Float[]{(float) 0.1,(float) 1,(float) 10,(float) -101};
 
 		assertTrue(mt.getDimension()==4);
 		assertTrue(mt.getTerminations().size()==1); 
