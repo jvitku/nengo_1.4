@@ -1,25 +1,25 @@
 ({'state': 0, 'height': 718, 'width': 1255, 'x': 4, 'y': 22},
- [(u'Generator1', None, {'label': False, 'height': 32, 'width': 112, 'x': 70, 'y': 3}),
-  (u'defaultModule_MinMaxInt', None, {'label': False, 'height': 32, 'width': 239, 'x': 715, 'y': 9}),
-  (u'Generator3', None, {'label': False, 'height': 32, 'width': 112, 'x': 70, 'y': 471}),
-  (u'Generator2', None, {'label': False, 'height': 32, 'width': 112, 'x': 74, 'y': 239}),
-  (u'multiTerminationModule_MinMaxInt', None, {'label': False, 'height': 32, 'width': 326, 'x': 687, 'y': 332}),
-  (u'Generator1', 'control', {'label': True, 'range': 2.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 200, 'x': 28, 'y': 37}),
-  (u'Generator1', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2, 3], 'last_maxy': 1.2462236881256104, 'sel_all': True, 'height': 200, 'width': 300, 'x': 233, 'fixed_y': None, 'autozoom': False, 'y': 38}),
-  (u'Generator2', 'control', {'label': True, 'range': 2.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 200, 'x': 32, 'y': 270}),
-  (u'Generator2', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2, 3], 'last_maxy': 1.2462236881256104, 'sel_all': True, 'height': 200, 'width': 300, 'x': 245, 'fixed_y': None, 'autozoom': False, 'y': 272}),
-  (u'Generator3', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2, 3], 'last_maxy': 1.2462236881256104, 'sel_all': True, 'height': 200, 'width': 300, 'x': 256, 'fixed_y': None, 'autozoom': False, 'y': 473}),
-  (u'Generator3', 'control', {'label': True, 'range': 2.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 200, 'x': 34, 'y': 482}),
-  (u'multiTerminationModule_MinMaxInt', u'value|ros2annFloatArr', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 706, 'fixed_y': None, 'autozoom': False, 'y': 365}),
-  (u'defaultModule_MinMaxInt', u'value|ros2annFloatArr', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 693, 'fixed_y': None, 'autozoom': False, 'y': 42})],
+ [(u'Generator1', None, {'label': False, 'height': 32, 'width': 112, 'x': 52, 'y': -12}),
+  (u'Generator3', None, {'label': False, 'height': 32, 'width': 112, 'x': 52, 'y': 456}),
+  (u'Generator2', None, {'label': False, 'height': 32, 'width': 112, 'x': 56, 'y': 224}),
+  (u'Generator1', 'control', {'label': True, 'range': 2.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 200, 'x': 10, 'y': 22}),
+  (u'Generator1', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2, 3], 'last_maxy': 1.2462236881256104, 'sel_all': True, 'height': 200, 'width': 300, 'x': 215, 'fixed_y': None, 'autozoom': False, 'y': 23}),
+  (u'Generator2', 'control', {'label': True, 'range': 2.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 200, 'x': 14, 'y': 255}),
+  (u'Generator2', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2, 3], 'last_maxy': 1.2462236881256104, 'sel_all': True, 'height': 200, 'width': 300, 'x': 227, 'fixed_y': None, 'autozoom': False, 'y': 257}),
+  (u'Generator3', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2, 3], 'last_maxy': 1.2462236881256104, 'sel_all': True, 'height': 200, 'width': 300, 'x': 238, 'fixed_y': None, 'autozoom': False, 'y': 458}),
+  (u'Generator3', 'control', {'label': True, 'range': 2.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 200, 'x': 16, 'y': 467}),
+  (u'defaultModule_MinMaxFloat', None, {'label': False, 'height': 32, 'width': 260, 'x': 747, 'y': 16}),
+  (u'multiTerminationModule_MinMaxFloat', None, {'label': False, 'height': 32, 'width': 347, 'x': 694, 'y': 258}),
+  (u'multiTerminationModule_MinMaxFloat', u'value|ros2annFloatArr', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 694, 'fixed_y': None, 'autozoom': False, 'y': 359}),
+  (u'defaultModule_MinMaxFloat', u'value|ros2annFloatArr', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 708, 'fixed_y': None, 'autozoom': False, 'y': 39})],
  {'dt': 0, 'show_time': 0.5, 'sim_spd': 4, 'update_freq': 30.303030303030305, 'filter': 0.03, 'rcd_time': 4.0}) 
 ##############################
 ### Nengo Workspace layout ###
 ##############################
 # elasticmode=false
-# viewbounds=PBounds[x=-1.6857588646534623,y=303.4607410792736,width=1226.8193308098857,height=522.4729225551534]
-# Generator1 (Function Input)=Point2D.Double[387.89538921573285, 475.19907013187577]
-# defaultModule_MinMaxInt (Generic Node)=Point2D.Double[666.6666870117188, 333.3333435058594]
-# Generator3 (Function Input)=Point2D.Double[208.1699676513672, 649.5894775390625]
-# Generator2 (Function Input)=Point2D.Double[358.4461975097656, 307.5638122558594]
-# multiTerminationModule_MinMaxInt (Generic Node)=Point2D.Double[666.6666870117188, 666.6666870117188]
+# viewbounds=PBounds[x=-76.15310127237622,y=149.99999999999994,width=1203.3062330623304,height=744.9999999999999]
+# Generator3 (Function Input)=Point2D.Double[333.3333435058594, 750.0]
+# multiTerminationModule_MinMaxFloat (Generic Node)=Point2D.Double[666.6666870117188, 666.6666870117188]
+# Generator2 (Function Input)=Point2D.Double[333.3333435058594, 500.0]
+# defaultModule_MinMaxFloat (Generic Node)=Point2D.Double[666.6666870117188, 333.3333435058594]
+# Generator1 (Function Input)=Point2D.Double[333.3333435058594, 250.0]

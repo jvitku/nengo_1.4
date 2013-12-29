@@ -358,13 +358,11 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	public void run(float startTime, float endTime) throws SimulationException {
 		myTime = endTime;
 
-		System.out.println("running all terminations ");
 		this.runAllTerminations(startTime, endTime);	// run all terminations to collect input values
 		
-		System.out.println("running all encoders");
 		this.runAllEncoders(startTime, endTime);	// encode data on registered Terminations and send to ROS
-		System.out.println("done");
-		super.discardChildsReady();// wait for all registered synchronous decoders to receive message
+
+		super.discardChildsReady(); // wait for all registered synchronous decoders to receive message
 	}
 
 	private void runAllTerminations(float startTime, float endTime) throws SimulationException{
@@ -393,17 +391,14 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		
 		mc.resetModem();	// should call reset() for all nodes in the group (including modem itself)
 
-		System.out.println("reseting encoders");
 		for(int i=0; i<this.orderedEncoders.size(); i++)
 			this.orderedEncoders.get(i).reset(randomize);
-		
-		System.out.println("reseting terminations");
 		
 		for(int i=0; i<this.orderedTerminations.size(); i++)
 			this.orderedTerminations.get(i).reset(randomize);
 
 		// System.out.println("reset");
-		// TODO: delete history, kill and restart myNode (modem can stay..)
+		// TODO: delete history, kill and restart myNode (modem can stay..)?
 	}
 
 	@Override

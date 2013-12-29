@@ -67,6 +67,9 @@ public class BasicTermination implements Termination, Resettable {
 	private InstantaneousOutput myInput;
 	private TimeSeries myOutput;
 	private boolean myModulatory;
+	
+	private final float[] notConnectedInput;	///my
+	private final float defVal = 0;
 
 	/**
 	 * @param node Node that owns this termination
@@ -80,6 +83,11 @@ public class BasicTermination implements Termination, Resettable {
 		myIntegrator = integrator;
 		myName = name;
 		myModulatory = false;
+		
+		// not connected BasicTermination caused NullPointerException in the method run(..)
+		this.notConnectedInput = new float[this.getDimensions()];	///my
+		for(int i=0; i<this.getDimensions(); i++)
+			this.notConnectedInput[i] = this.defVal;
 	}
 
 	/**
@@ -112,7 +120,8 @@ public class BasicTermination implements Termination, Resettable {
 	 * @throws SimulationException if a problem is encountered while trying to run
 	 */
 	public void run(float startTime, float endTime) throws SimulationException {
-		float[] input = null;
+		//float[] input = null;
+		float[] input = this.notConnectedInput;	///my
 		if (myInput instanceof RealOutput) {
 			input = ((RealOutput) myInput).getValues();
 		} else if (myInput instanceof SpikeOutput) {
