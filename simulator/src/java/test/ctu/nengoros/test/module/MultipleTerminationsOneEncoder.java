@@ -79,9 +79,9 @@ public class MultipleTerminationsOneEncoder extends NengorosTest{
 		try {
 			tDef = module.getTermination(F2IPubSub.ann2ros);	// created by default
 
-			t0 = module.connectMultiTermination(F2IPubSub.ann2ros);
-			t1 = module.connectMultiTermination(F2IPubSub.ann2ros,weight);	
-			t2 = module.connectMultiTermination(F2IPubSub.ann2ros,weights);
+			t0 = module.newTerminationFor(F2IPubSub.ann2ros);
+			t1 = module.newTerminationFor(F2IPubSub.ann2ros,weight);	
+			t2 = module.newTerminationFor(F2IPubSub.ann2ros,weights);
 
 		} catch (StructuralException e) {
 			e.printStackTrace();

@@ -111,7 +111,6 @@ public class BasicEncoder implements Encoder{
 				this.parent, this.name, this.integrator, this.dynamics);
 		
 		// one Termination with the corresponding is added automatically 
-
 	}
 
 

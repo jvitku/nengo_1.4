@@ -358,10 +358,12 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	public void run(float startTime, float endTime) throws SimulationException {
 		myTime = endTime;
 
+		System.out.println("running all terminations ");
 		this.runAllTerminations(startTime, endTime);	// run all terminations to collect input values
 		
+		System.out.println("running all encoders");
 		this.runAllEncoders(startTime, endTime);	// encode data on registered Terminations and send to ROS
-
+		System.out.println("done");
 		super.discardChildsReady();// wait for all registered synchronous decoders to receive message
 	}
 
@@ -388,13 +390,14 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	@Override
 	public void reset(boolean randomize) {
+		
 		mc.resetModem();	// should call reset() for all nodes in the group (including modem itself)
 
+		System.out.println("reseting encoders");
 		for(int i=0; i<this.orderedEncoders.size(); i++)
 			this.orderedEncoders.get(i).reset(randomize);
-
-		for(int i=0; i<this.orderedEncoders.size(); i++)
-			this.orderedEncoders.get(i).reset(randomize);
+		
+		System.out.println("reseting terminations");
 		
 		for(int i=0; i<this.orderedTerminations.size(); i++)
 			this.orderedTerminations.get(i).reset(randomize);
@@ -605,7 +608,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public Termination connectMultiTermination(String name)	throws StructuralException {
+	public Termination newTerminationFor(String name)	throws StructuralException {
 		
 		if(!this.myEncoders.containsKey(name))
 			throw new StructuralException(me+"requested MultiTermination not found!");
@@ -614,7 +617,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public Termination connectMultiTermination(String name, float weight) throws StructuralException {
+	public Termination newTerminationFor(String name, float weight) throws StructuralException {
 		
 		if(!this.myEncoders.containsKey(name))
 			throw new StructuralException(me+"requested MultiTermination not found!");		
@@ -623,13 +626,12 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public Termination connectMultiTermination(String name, Float[] weights) throws StructuralException {
+	public Termination newTerminationFor(String name, Float[] weights) throws StructuralException {
 
 		if(!this.myEncoders.containsKey(name))
 			throw new StructuralException(me+"requested MultiTermination not found!");		
 			
 		return this.myEncoders.get(name).getMultiTermination().addTermination(weights);
 	}
-
 
 }

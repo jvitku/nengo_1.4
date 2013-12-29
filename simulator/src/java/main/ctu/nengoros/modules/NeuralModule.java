@@ -62,10 +62,10 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	 * {@link ctu.nengoros.comm.rosBackend.encoders.Encoder#getMultiTermination()}
 	 * {@link ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination#addTermination()}
 	 */
-	public Termination connectMultiTermination(String name) throws StructuralException;
+	public Termination newTerminationFor(String name) throws StructuralException;
 	
 	/**
-	 * The same as the {@link ctu.nengoros.modules.NeuralModule#connectMultiTermination(String)}, 
+	 * The same as the {@link ctu.nengoros.modules.NeuralModule#newTerminationFor(String)}, 
 	 * but here the weight can be specified. 
 	 * 
 	 * @param name name of the ROS topic == name of the Encoder == name of the parent MultiTermination 
@@ -73,13 +73,13 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	 * @return newly created Termination
 	 * @throws StructuralException if the Termination could not be created
 	 * 
-	 * @see #connectMultiTermination(String)
+	 * @see #newTerminationFor(String)
 	 * {@link ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination#addTermination(float)}
 	 */
-	public Termination connectMultiTermination(String name, float weight) throws StructuralException;
+	public Termination newTerminationFor(String name, float weight) throws StructuralException;
 	
 	/**
-	 * The same as the {@link ctu.nengoros.modules.NeuralModule#connectMultiTermination(String)}, 
+	 * The same as the {@link ctu.nengoros.modules.NeuralModule#newTerminationFor(String)}, 
 	 * but here the weight for each dimension can be specified.
 	 * 
 	 * @param name name of the Encoder
@@ -88,10 +88,10 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	 * @throws StructuralException exception if the Termination could not be created (e.g. dimension
 	 * of weight array provided is incorrect)
 	 * 
-	 *  @see #connectMultiTermination(String)
+	 *  @see #newTerminationFor(String)
 	 *  {@link ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination#addTermination(Float[])}
 	 */
-	public Termination connectMultiTermination(String name, Float[] weights) throws StructuralException;
+	public Termination newTerminationFor(String name, Float[] weights) throws StructuralException;
 	
 	
 	/**
