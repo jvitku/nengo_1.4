@@ -14,18 +14,18 @@ import interneuron
 import logic_crisp_gates_or
 import logic_crisp_gates_xor
 import logic_crisp_gates_nand
-#import logic_crisp_gates_and
-#import logic_crisp_gates_not
-#import logic_fuzzy_gates_not
-#import logic_fuzzy_gates_or
-#import logic_fuzzy_gates_and
-#import logic_fuzzy_member_linearDec
-#import logic_fuzzy_member_linearInc
-#import logic_fuzzy_member_triangular
-#import logic_fuzzy_member_trapezoid
-#import demoSubscriber
-#import demoPublisher
-#import vivae
+import logic_crisp_gates_and
+import logic_crisp_gates_not
+import logic_fuzzy_gates_not
+import logic_fuzzy_gates_or
+import logic_fuzzy_gates_and
+import logic_fuzzy_member_linearDec
+import logic_fuzzy_member_linearInc
+import logic_fuzzy_member_triangular
+import logic_fuzzy_member_trapezoid
+import demoSubscriber
+import demoPublisher
+import vivae
 
 templates=[
     networkarray,
@@ -39,19 +39,19 @@ templates=[
     gate,
     learned_termination,
     interneuron,
-    #demoSubscriber,
-    #demoPublisher,
+    demoSubscriber,
+    demoPublisher,
     logic_crisp_gates_or,
     logic_crisp_gates_xor,
     logic_crisp_gates_nand,
-    #logic_crisp_gates_and,
-    #logic_crisp_gates_not,
-	#logic_fuzzy_gates_not,
-	#logic_fuzzy_gates_or,
-	#logic_fuzzy_gates_and,
-	#logic_fuzzy_member_linearDec,# TODO: these two do not work in the GUI 
-	#logic_fuzzy_member_linearInc,
-	#logic_fuzzy_member_triangular,
-	#logic_fuzzy_member_trapezoid,
-	#vivae	
+    logic_crisp_gates_and,
+    logic_crisp_gates_not,
+	logic_fuzzy_gates_not,
+	logic_fuzzy_gates_or,
+	logic_fuzzy_gates_and,
+	logic_fuzzy_member_linearDec,# TODO: these two do not work in the GUI 
+	logic_fuzzy_member_linearInc,
+	logic_fuzzy_member_triangular,
+	logic_fuzzy_member_trapezoid,
+	vivae	
     ]

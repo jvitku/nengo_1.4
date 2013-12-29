@@ -10,10 +10,9 @@ import math
 from ca.nengo.math.impl import FourierFunction
 from ca.nengo.model.impl import FunctionInput
 from ca.nengo.model import Units
-#from nengoros.neurons.impl.test import SecondOne as NeuralModule
 from ctu.nengoros.modules.impl import DefaultNeuralModule as NeuralModule
 from ctu.nengoros.comm.nodeFactory import NodeGroup as NodeGroup
-#from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
+from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
 
 # node utils..
 title='FuzzyNOT'
