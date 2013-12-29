@@ -1,9 +1,6 @@
 package ctu.nengoros.test.module;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -32,11 +29,11 @@ import ctu.nengoros.testsuit.demo.nodes.minmax.F2IPubSub;
  *
  */
 public class MultipleTerminationsOneEncoder extends NengorosTest{
-	
+
 	public static String minimax = "ctu.nengoros.testsuit.demo.nodes.minmax.F2IPubSub";
 	public static String ORR = "ctu.nengoros.testsuit.demo.nodes.gate.OR";
-	
-	
+
+
 	@Test
 	public void MIMOCommunication(){
 
@@ -57,7 +54,7 @@ public class MultipleTerminationsOneEncoder extends NengorosTest{
 		module.createDecoder(F2IPubSub.ros2ann, "int", 2);	 	
 
 		Termination t=null; Origin o=null;
-		
+
 		try {
 			t = module.getTermination(F2IPubSub.ann2ros);
 			System.out.println("termination called "+t.getName()+" found");
@@ -77,15 +74,13 @@ public class MultipleTerminationsOneEncoder extends NengorosTest{
 		Termination tt = null;
 		try{
 			MultiTermination mt = module.getMultiTermination(F2IPubSub.ann2ros);
-			String termName = mt.addTerminaton();
-			tt = module.getTermination(termName);
-			
+			tt = mt.addTermination();
+
 		} catch (StructuralException e) {
 			e.printStackTrace();
 			fail();
 		}
-		
-		
+
 		// note that it is not guaranteed that the external ROS node is started
 		// already, so wait for it several milliseconds
 		Mess.waitms(100);	 

@@ -6,6 +6,7 @@ import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
+import ca.nengo.model.Termination;
 import ca.nengo.model.Units;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
@@ -112,13 +113,13 @@ public class BasicEncoder implements Encoder{
 				this.parent, this.name, this.integrator, this.dynamics);
 		
 		// add one termination on the start (usable by GUI, has default weight of 1)
-		multiTermination.addTerminaton();
+		//multiTermination.addTerminaton();
 	}
 	
 	@Override
-	public String addTermination() throws StructuralException {
+	public Termination addTermination() throws StructuralException {
 		// ad Termination to my MultiTermination and return its name
-		return multiTermination.addTerminaton();
+		return multiTermination.addTermination();
 	}
 
 	@Override

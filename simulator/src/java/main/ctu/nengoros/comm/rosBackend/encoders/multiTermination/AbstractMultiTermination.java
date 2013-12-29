@@ -26,7 +26,7 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 
 	protected final LinkedList <Termination> orderedTerminations;
 	protected final Map<String, Float[]> myWeights;				// weight for each Termination
-	protected final Map<String, Termination> myTerminations;
+	protected final HashMap<String, Termination> myTerminations;
 
 	// number of registered terminations
 	protected int counter = 0;	
@@ -55,8 +55,19 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 		this.myWeights = new HashMap<String, Float[]>();
 
 		this.dimensions = lti.getInputDimension();
+		
+		try {
+			this.addTermination();
+		} catch (StructuralException e) {
+			e.printStackTrace();
+		}	
 	}
-
+	
+	@Override
+	public HashMap<String,Termination> getTerminations(){
+		return this.myTerminations;
+	}
+ 
 	/**
 	 * Runs all its Terminations, then combines their to its own value. 
 	 *
@@ -67,9 +78,12 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 	public void run(float startTime, float endTime) 
 			throws SimulationException{
 
-		this.runAllTerminations(startTime, endTime);
+		
+		//this.runAllTerminations(startTime, endTime);
 
+		System.out.println("\n\n-------- will combine values now!");
 		this.runCombineValues(startTime, endTime);
+		System.out.println("------ valies combined !");
 	}
 
 	@Override
@@ -118,20 +132,20 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 			counter++;
 			return this.name;
 		}
-		return name+"_"+counter++;
+		return name+"_"+((counter++)-1); // start from 0
 	}
 
 	@Override
-	public String addTermination(float weight) throws StructuralException{
+	public Termination addTermination(float weight) throws StructuralException{
 		return this.addTermination(this.generateWeights(weight));
 	}
 
 	// physically create and Register the termination
 	@Override
-	public abstract String addTermination(final Float[] weights) throws StructuralException;
+	public abstract Termination addTermination(final Float[] weights) throws StructuralException;
 
 	@Override
-	public String addTerminaton() throws StructuralException{
+	public Termination addTermination() throws StructuralException{
 		return this.addTermination(this.generateWeights(this.DEF_W));
 	}
 

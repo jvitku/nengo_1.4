@@ -91,7 +91,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	protected ModemContainer mc;
 
-
 	/**
 	 * <p>The NeuralModule which features BasicEncoders (with BasicMultiTerminations),
 	 * BasicDecoders (which are synchronous by default, that means they wait for
@@ -322,7 +321,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		this.createEncoder(topicName, dataType, new int[]{dimensionSize});
 	}
 
-
 	/**
 	 * Create encoder where the dimensionality of message data is determined by data type (e.g. turtlesim/Velocity=2)
 	 */
@@ -341,8 +339,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			Encoder enc = new BasicEncoder(this, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
 			this.addEncoder(enc);
 
-			//new BasicEncoder(this, noLTI, noInt, topicName, new int[]{dim}, dataType, Units.UNK, mc, ros);
-
 		} catch (MessageFormatException e) {
 			System.err.println(me+"Bad message format.");
 			e.printStackTrace();
@@ -357,7 +353,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			e.printStackTrace();
 		}
 	}
-
 
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
@@ -398,6 +393,9 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		for(int i=0; i<this.orderedEncoders.size(); i++)
 			this.orderedEncoders.get(i).reset(randomize);
 
+		for(int i=0; i<this.orderedEncoders.size(); i++)
+			this.orderedEncoders.get(i).reset(randomize);
+		
 		for(int i=0; i<this.orderedTerminations.size(); i++)
 			this.orderedTerminations.get(i).reset(randomize);
 
@@ -562,13 +560,12 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		String name = t.getName();
 
 		if(myTerminations.containsKey(name)){
-			System.err.println("Termination iwth this name already here, ignoring!");
+			System.err.println("Termination with this name already here, ignoring!");
 			throw new StructuralException("Termination iwth this name already here, ignoring! " + name);
 		}
 		myProperties.setProperty("t__"+name, "Termination named: "+name);
 		myTerminations.put(name,t);
 		orderedTerminations.add(t);
-
 	}
 
 	@Override

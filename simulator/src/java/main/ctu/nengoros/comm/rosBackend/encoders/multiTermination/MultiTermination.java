@@ -1,11 +1,13 @@
 package ctu.nengoros.comm.rosBackend.encoders.multiTermination;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 import ca.nengo.model.Node;
 import ca.nengo.model.Resettable;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
+import ca.nengo.model.Termination;
 import ca.nengo.util.TimeSeries;
 
 /**
@@ -28,9 +30,9 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 	 * Add new multi-dimensional weighted Termination.
 	 *  
 	 * @param weights weight matrix
-	 * @return auto-generated name of the Termination 
+	 * @return new weighted Termination with auto-generated name 
 	 */
-	public String addTermination(Float[] weights) throws StructuralException;
+	public Termination addTermination(Float[] weights) throws StructuralException;
 
 	/**
 	 * Add new weighted termination with its own weight. If the weights
@@ -38,17 +40,18 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 	 * of the Termination, the weight matrix will contain only these values.
 	 *  
 	 * @param weight the termination can be weighter
-	 * @return auto-generated name of the created Termination 
+	 * @return new weighted Termination with auto-generated name 
 	 */
-	public String addTermination(float weight) throws StructuralException;
+	public Termination addTermination(float weight) throws StructuralException;
 	
 	/**
 	 * Add new Termination with the weight of 1
 	 *  
-	 * @return auto-generated name of the created Termination
+	 * @return new Termination with auto-generated name
 	 */
-	public String addTerminaton() throws StructuralException;
+	public Termination addTermination() throws StructuralException;
 	
+	public HashMap<String,Termination> getTerminations();
 	
 	/**
 	 * This supposed that all my Terminations were ran before, so 

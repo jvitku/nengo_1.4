@@ -22,7 +22,7 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 
 	public BasicMultiTermination(NeuralModule parent, String name, 
 			Integrator integ, DynamicalSystem lti) {
-		
+
 		super(parent, name, integ, lti);
 	}
 
@@ -33,8 +33,8 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 	 * @throws StructuralException 
 	 */
 	@Override
-	public String addTermination(Float [] weights) throws StructuralException {
-		
+	public Termination addTermination(Float [] weights) throws StructuralException {
+
 		super.checkDimensions(weights);
 		String termName = this.generateName(); // TODO solve this
 
@@ -44,8 +44,8 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 		this.myWeights.put(t.getName(), weights.clone());
 		this.myTerminations.put(termName, t);
 		this.orderedTerminations.add(t);
-		
-		return name;
+
+		return t;
 	}
 
 	@Override
@@ -56,7 +56,12 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 			Termination t = this.orderedTerminations.get(i);
 
 			this.checkInstance(t);
-			((BasicTermination)t).run(startTime, endTime);
+
+			BasicTermination tt = ((BasicTermination)t);
+
+			// do not run terminations which have not value set?
+			//if(tt.getInput() != null)
+			tt.run(startTime, endTime);
 		}
 	}
 

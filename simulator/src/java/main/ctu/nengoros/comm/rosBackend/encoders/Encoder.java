@@ -6,6 +6,7 @@ import ctu.nengoros.modules.NeuralModule;
 import ca.nengo.model.Resettable;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
+import ca.nengo.model.Termination;
 
 /**
  * <p>Each Encoder is allowed to register one or more own Nengo Terminations.
@@ -55,9 +56,9 @@ public interface Encoder extends Resettable{
 	 * Adds new Termination to the encoder (that is, builds it and registers it
 	 * to the parent NeuralModule). 
 	 * 
-	 * @return auto-generated name of newly created Termination 
+	 * @return new Termination with auto-generated name  
 	 */
-	public String addTermination() throws StructuralException;
+	public Termination addTermination() throws StructuralException;
 	
 	/**
 	 * Run encoder for a given time, that is
