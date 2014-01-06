@@ -40,7 +40,7 @@ ROSJAVA=$RJ/rosjava-0.0.0-SNAPSHOT.jar:$RJ/rosjava_bootstrap-0.0.0-SNAPSHOT.jar:
 #FROMJARS=$HO/simulator-ui-0.0.0-SNAPSHOT.jar:$HO/simulator-0.0.0-SNAPSHOT.jar
 
 # jroscore
-Jroscore=$N_HOME/../../jroscore/build/libs/jroscore-0.0.5-SNAPSHOT.jar 
+Jroscore=$N_HOME/../../jroscore/build/libs/jroscore-0.0.6-SNAPSHOT.jar 
 
 # vivae simulator
 VIVAE=$N_HOME/../../vivae/vivaesimulator/build/libs/vivaesimulator-0.0.2-SNAPSHOT.jar	# simulator in jar
@@ -50,13 +50,9 @@ VIVAE=$VIVAE:$N_HOME/../../vivae/vivaeplugin/build/libs/vivaeplugin-0.0.2-SNAPSH
 # dependencies for complete installation (with external rosjava nodes)
 NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.3-SNAPSHOT.jar 
 NODES=$NODES:$N_HOME/../../demonodes/basic/build/libs/basic-0.0.5-SNAPSHOT.jar
-# example how to link maven repository:
-#NODES=$NODES:$HOME/.m2/repository/org/hanns/projectTemplate/0.0.1-SNAPSHOT/projectTemplate-0.0.1-SNAPSHOT.jar 
 
-# example how to link projectTemplate, uncomment in order to use this initialized project (under nengoros/ folder)
-#NODES=$NODES:$N_HOME/../../projectTemplate/build/libs/projectTemplate-0.0.1-SNAPSHOT.jar
-
+SARSA=$N_HOME/../../rl/sarsa/build/libs/sarsa-0.0.0-SNAPSHOT.jar
 
 #java -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO ca.nengo.ui.NengoLauncher
-java -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE ca.nengo.ui.NengoLauncher
+java -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$SARSA ca.nengo.ui.NengoLauncher
 
