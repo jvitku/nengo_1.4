@@ -1,0 +1,31 @@
+({'state': 0, 'height': 946, 'width': 1080, 'x': 60, 'y': 142},
+ [(u'StateGenerator', None, {'label': False, 'height': 32, 'width': 148, 'x': 82, 'y': 260}),
+  (u'alpha', None, {'label': False, 'height': 32, 'width': 58, 'x': 248, 'y': 572}),
+  (u'RL_QLambda', None, {'label': False, 'height': 32, 'width': 134, 'x': 613, 'y': 0}),
+  (u'RewardGenerator', None, {'label': False, 'height': 32, 'width': 169, 'x': 89, 'y': 10}),
+  (u'lambda', None, {'label': False, 'height': 32, 'width': 75, 'x': 152, 'y': 570}),
+  (u'gamma', None, {'label': False, 'height': 32, 'width': 77, 'x': 28, 'y': 561}),
+  (u'RL_QLambda', u'value|QLambda/prosperity', {'label': True, 'sel_dim': [0, 1, 2], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 793, 'fixed_y': None, 'autozoom': False, 'y': 40}),
+  (u'RL_QLambda', u'value|outActions', {'label': True, 'sel_dim': [1], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 517, 'fixed_y': None, 'autozoom': False, 'y': 247}),
+  (u'RL_QLambda', u'value|outActions', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 514, 'fixed_y': None, 'autozoom': False, 'y': 43}),
+  (u'RL_QLambda', u'value|outActions', {'label': True, 'sel_dim': [2], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 516, 'fixed_y': None, 'autozoom': False, 'y': 446}),
+  (u'RL_QLambda', u'value|outActions', {'label': True, 'sel_dim': [3], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 519, 'fixed_y': None, 'autozoom': False, 'y': 635}),
+  (u'RewardGenerator', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2], 'last_maxy': 3.3309199810028076, 'sel_all': True, 'height': 200, 'width': 300, 'x': 183, 'fixed_y': None, 'autozoom': False, 'y': 54}),
+  (u'StateGenerator', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2], 'last_maxy': 3.9999988079071045, 'sel_all': True, 'height': 200, 'width': 300, 'x': 176, 'fixed_y': None, 'autozoom': False, 'y': 298}),
+  (u'gamma', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 34, 'y': 595}),
+  (u'lambda', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 146, 'y': 603}),
+  (u'alpha', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 267, 'y': 605}),
+  (u'StateGenerator', 'control', {'label': True, 'range': 4.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 160, 'x': 25, 'y': 299}),
+  (u'RewardGenerator', 'control', {'label': True, 'range': 4.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 160, 'x': 25, 'y': 55})],
+ {'dt': 0, 'show_time': 0.5, 'sim_spd': 0, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 4.0}) 
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=82.70827211236742,y=204.28425305242857,width=876.4894150475377,height=542.6587150210427]
+# lambda (Function Input)=Point2D.Double[453.9241690660911, 621.077472470655]
+# RL_QLambda (Generic Node)=Point2D.Double[656.69528024133, 455.52845652510507]
+# gamma (Function Input)=Point2D.Double[448.04168977046993, 474.0262149491298]
+# alpha (Function Input)=Point2D.Double[448.04168977047004, 550.9850774438389]
+# RewardGenerator (Function Input)=Point2D.Double[323.0390047385226, 347.13612022201175]
+# StateGenerator (Function Input)=Point2D.Double[332.24045137645044, 255.44015862463138]
