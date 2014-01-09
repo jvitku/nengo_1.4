@@ -1,10 +1,21 @@
-({'state': 0, 'height': 600, 'width': 950, 'x': 298, 'y': 31},
- [(u'RL_QLambda', None, {'label': False, 'height': 32, 'width': 134, 'x': 597, 'y': 2}),
+({'state': 0, 'height': 718, 'width': 909, 'x': 116, 'y': 22},
+ [(u'RL_QLambda', None, {'label': False, 'height': 32, 'width': 134, 'x': 595, 'y': 2}),
   (u'StateGenerator', None, {'label': False, 'height': 32, 'width': 148, 'x': 175, 'y': -2}),
   (u'RewardGenerator', None, {'label': False, 'height': 32, 'width': 169, 'x': 174, 'y': 228}),
-  (u'StateGenerator', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2], 'last_maxy': 3.330918788909912, 'sel_all': True, 'height': 200, 'width': 300, 'x': 183, 'fixed_y': None, 'autozoom': False, 'y': 31}),
-  (u'RewardGenerator', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2], 'last_maxy': 3.330918788909912, 'sel_all': True, 'height': 200, 'width': 300, 'x': 191, 'fixed_y': None, 'autozoom': False, 'y': 263}),
-  (u'RL_QLambda', u'value|outActions', {'label': True, 'sel_dim': [0, 1, 2, 3], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 507, 'fixed_y': None, 'autozoom': False, 'y': 31}),
-  (u'StateGenerator', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 160, 'x': 20, 'y': 37}),
-  (u'RewardGenerator', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 160, 'x': 14, 'y': 274})],
- {'dt': 0, 'show_time': 0.5, 'sim_spd': 0, 'update_freq': 30.303030303030305, 'filter': 0.01, 'rcd_time': 4.0}) 
+  (u'StateGenerator', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2], 'last_maxy': 3.3309199810028076, 'sel_all': True, 'height': 200, 'width': 300, 'x': 183, 'fixed_y': None, 'autozoom': False, 'y': 31}),
+  (u'RewardGenerator', 'value|origin', {'label': True, 'sel_dim': [0, 1, 2], 'last_maxy': 3.63420033454895, 'sel_all': True, 'height': 200, 'width': 300, 'x': 191, 'fixed_y': None, 'autozoom': False, 'y': 263}),
+  (u'RL_QLambda', u'value|outActions', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': False, 'height': 145, 'width': 218, 'x': 549, 'fixed_y': None, 'autozoom': False, 'y': 29}),
+  (u'StateGenerator', 'control', {'label': True, 'range': 4.0, 'limits_w': 22, 'limits': True, 'height': 200, 'width': 182, 'x': -2, 'y': 37}),
+  (u'RewardGenerator', 'control', {'label': True, 'range': 4.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 160, 'x': 14, 'y': 274}),
+  (u'RL_QLambda', u'value|outActions', {'label': True, 'sel_dim': [1], 'last_maxy': 1.0, 'sel_all': False, 'height': 144, 'width': 217, 'x': 549, 'fixed_y': None, 'autozoom': False, 'y': 168}),
+  (u'RL_QLambda', u'value|outActions', {'label': True, 'sel_dim': [2], 'last_maxy': 1.0, 'sel_all': False, 'height': 144, 'width': 217, 'x': 548, 'fixed_y': None, 'autozoom': False, 'y': 310}),
+  (u'RL_QLambda', u'value|outActions', {'label': True, 'sel_dim': [3], 'last_maxy': 1.0, 'sel_all': False, 'height': 145, 'width': 218, 'x': 546, 'fixed_y': None, 'autozoom': False, 'y': 451})],
+ {'dt': 0, 'show_time': 0.5, 'sim_spd': 0, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 4.0}) 
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=291.0021687567544,y=312.42790939327546,width=464.1796730354778,height=246.8489271844227]
+# RewardGenerator (Function Input)=Point2D.Double[333.3333435058594, 333.3333435058594]
+# StateGenerator (Function Input)=Point2D.Double[339.01480250371503, 476.33781058355424]
+# RL_QLambda (Generic Node)=Point2D.Double[666.6666870117188, 421.5840294566797]
