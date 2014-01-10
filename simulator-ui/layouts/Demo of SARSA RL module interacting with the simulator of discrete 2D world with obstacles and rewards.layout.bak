@@ -15,7 +15,9 @@
   (u'RL_QLambda', u'value|outActions', {'label': True, 'sel_dim': [1], 'last_maxy': 1.0, 'sel_all': False, 'height': 116, 'width': 270, 'x': 366, 'fixed_y': (0, 1), 'autozoom': False, 'y': 184}),
   (u'RL_QLambda', u'value|outActions', {'label': True, 'sel_dim': [2], 'last_maxy': 1.0, 'sel_all': False, 'height': 122, 'width': 260, 'x': 369, 'fixed_y': (0, 1), 'autozoom': False, 'y': 300}),
   (u'RL_QLambda', u'value|outActions', {'label': True, 'sel_dim': [3], 'last_maxy': 1.0, 'sel_all': False, 'height': 133, 'width': 270, 'x': 366, 'fixed_y': (0, 1), 'autozoom': False, 'y': 425}),
-  (u'RL_QLambda', u'value|QLambda/prosperity', {'label': True, 'sel_dim': [2], 'last_maxy': 1.0, 'sel_all': False, 'height': 148, 'width': 292, 'x': 18, 'fixed_y': None, 'autozoom': False, 'y': 423})],
+  (u'RL_QLambda', u'value|QLambda/prosperity', {'label': True, 'sel_dim': [2], 'last_maxy': 1.0, 'sel_all': False, 'height': 148, 'width': 292, 'x': 18, 'fixed_y': None, 'autozoom': False, 'y': 423}),
+  (u'importance', None, {'label': False, 'height': 32, 'width': 109, 'x': 258, 'y': 19}),
+  (u'importance', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 287, 'y': 60})],
  {'dt': 0, 'show_time': 0.5, 'sim_spd': 4, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 4.0}) 
 ##############################
 ### Nengo Workspace layout ###

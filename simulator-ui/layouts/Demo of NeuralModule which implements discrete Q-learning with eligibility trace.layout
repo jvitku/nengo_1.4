@@ -1,4 +1,4 @@
-({'state': 0, 'height': 946, 'width': 1080, 'x': 60, 'y': 142},
+({'state': 0, 'height': 946, 'width': 1080, 'x': 876, 'y': 22},
  [(u'StateGenerator', None, {'label': False, 'height': 32, 'width': 148, 'x': 82, 'y': 260}),
   (u'alpha', None, {'label': False, 'height': 32, 'width': 58, 'x': 248, 'y': 572}),
   (u'RL_QLambda', None, {'label': False, 'height': 32, 'width': 134, 'x': 613, 'y': 0}),
@@ -16,7 +16,9 @@
   (u'lambda', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 146, 'y': 603}),
   (u'alpha', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 267, 'y': 605}),
   (u'StateGenerator', 'control', {'label': True, 'range': 4.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 160, 'x': 25, 'y': 299}),
-  (u'RewardGenerator', 'control', {'label': True, 'range': 4.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 160, 'x': 25, 'y': 55})],
+  (u'RewardGenerator', 'control', {'label': True, 'range': 4.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 160, 'x': 25, 'y': 55}),
+  (u'importance', None, {'label': False, 'height': 32, 'width': 109, 'x': 352, 'y': 566}),
+  (u'importance', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 367, 'y': 605})],
  {'dt': 0, 'show_time': 0.5, 'sim_spd': 0, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 4.0}) 
 ##############################
 ### Nengo Workspace layout ###
