@@ -51,7 +51,7 @@ VIVAE=$VIVAE:$N_HOME/../../vivae/vivaeplugin/build/libs/vivaeplugin-0.0.2-SNAPSH
 NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.3-SNAPSHOT.jar 
 NODES=$NODES:$N_HOME/../../demonodes/basic/build/libs/basic-0.0.5-SNAPSHOT.jar
 
-SARSA=$N_HOME/../../rl/sarsa/build/libs/sarsa-0.0.0-SNAPSHOT.jar
+SARSA=$N_HOME/../../rl/sarsa/build/libs/sarsa-0.0.3-SNAPSHOT.jar
 
 #java -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO ca.nengo.ui.NengoLauncher
 java -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$SARSA ca.nengo.ui.NengoLauncher

@@ -1,6 +1,5 @@
-({'state': 0, 'height': 787, 'width': 1191, 'x': 299, 'y': 22},
- [(u'map_GridWorld', None, {'label': False, 'height': 32, 'width': 150, 'x': 763, 'y': 5}),
-  (u'lambda', None, {'label': False, 'height': 32, 'width': 75, 'x': 172, 'y': 19}),
+({'state': 0, 'height': 787, 'width': 1191, 'x': 157, 'y': 22},
+ [(u'lambda', None, {'label': False, 'height': 32, 'width': 75, 'x': 172, 'y': 19}),
   (u'alpha', None, {'label': False, 'height': 32, 'width': 58, 'x': 5, 'y': 18}),
   (u'gamma', None, {'label': False, 'height': 32, 'width': 77, 'x': 70, 'y': 16}),
   (u'RL_QLambda', None, {'label': False, 'height': 32, 'width': 134, 'x': 427, 'y': 3}),
@@ -13,19 +12,20 @@
   (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [1], 'last_maxy': 1.0, 'sel_all': False, 'height': 165, 'width': 248, 'x': 386, 'fixed_y': None, 'autozoom': False, 'y': 187}),
   (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [2], 'last_maxy': 1.0, 'sel_all': False, 'height': 167, 'width': 252, 'x': 387, 'fixed_y': None, 'autozoom': False, 'y': 348}),
   (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [3], 'last_maxy': 1.0, 'sel_all': False, 'height': 160, 'width': 256, 'x': 385, 'fixed_y': None, 'autozoom': False, 'y': 516}),
-  (u'map_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 856, 'fixed_y': None, 'autozoom': False, 'y': 195}),
-  (u'map_GridWorld', u'XY plot|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 1.0000000000000007, 'height': 200, 'width': 200, 'x': 919, 'autohide': True, 'autozoom': True, 'y': 7}),
-  (u'map_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [0], 'last_maxy': 15.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 859, 'fixed_y': None, 'autozoom': False, 'y': 398}),
-  (u'RL_QLambda', u'value|conf/prosperity', {'label': True, 'sel_dim': [0, 1, 2], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 41, 'fixed_y': (0, 1), 'autozoom': False, 'y': 375})],
+  (u'RL_QLambda', u'value|conf/prosperity', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 41, 'fixed_y': (0, 0.2), 'autozoom': False, 'y': 375}),
+  (u'map_30x30_GridWorld', None, {'label': False, 'height': 32, 'width': 215, 'x': 776, 'y': 3}),
+  (u'map_30x30_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 690, 'fixed_y': None, 'autozoom': False, 'y': 231}),
+  (u'map_30x30_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [0], 'last_maxy': 15.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 689, 'fixed_y': None, 'autozoom': False, 'y': 436}),
+  (u'map_30x30_GridWorld', u'XY plot|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 1.0, 'height': 200, 'width': 200, 'x': 788, 'autohide': True, 'autozoom': True, 'y': 33})],
  {'dt': 0, 'show_time': 0.5, 'sim_spd': 0, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 4.0}) 
 ##############################
 ### Nengo Workspace layout ###
 ##############################
 # elasticmode=false
-# viewbounds=PBounds[x=-162.87418020191552,y=100.00000000000006,width=1376.7483909214093,height=852.3828125]
-# lambda (Function Input)=Point2D.Double[333.3333435058594, 200.0]
+# viewbounds=PBounds[x=-156.9119088604522,y=100.00000000000003,width=1364.8238482384822,height=845.0]
+# importance (Function Input)=Point2D.Double[333.3333435058594, 600.0]
 # RL_QLambda (Generic Node)=Point2D.Double[666.6666870117188, 666.6666870117188]
-# alpha (Function Input)=Point2D.Double[333.3333435058594, 600.0]
-# map_GridWorld (Generic Node)=Point2D.Double[666.6666870117188, 333.3333435058594]
-# importance (Function Input)=Point2D.Double[333.3333435058594, 800.0]
-# gamma (Function Input)=Point2D.Double[333.3333435058594, 400.0]
+# map_30x30_GridWorld (Generic Node)=Point2D.Double[666.6666870117188, 333.3333435058594]
+# lambda (Function Input)=Point2D.Double[333.3333435058594, 400.0]
+# alpha (Function Input)=Point2D.Double[333.3333435058594, 800.0]
+# gamma (Function Input)=Point2D.Double[333.3333435058594, 200.0]
