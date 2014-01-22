@@ -1,0 +1,1 @@
+/Users/j/Dropbox/workspace/nengoros/demonodes/../physiology/statespace/python/nr-demo/basic_configured.py

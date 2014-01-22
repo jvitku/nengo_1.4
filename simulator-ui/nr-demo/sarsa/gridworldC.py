@@ -1,6 +1,6 @@
 # Create the NeuralModule which implements discrete RL algorithm - Q(lambda) - Q-learning with eligibility traces
 #
-# Start the benchmark A
+# Start the benchmark B
 #
 # by Jaroslav Vitku [vitkujar@fel.cvut.cz]
 
@@ -15,15 +15,12 @@ from org.hanns.rl.discrete.ros.sarsa import QLambda
 import rl_sarsa
 import gridworld
 
-net=nef.Network('Demo of SARSA RL module interacting with the simulator of discrete 2D world with obstacles and one reward')
+net=nef.Network('Demo of SARSA RL module interacting with the simulator of discrete 2D world with obstacles and rewards')
 net.add_to_nengo()  
 
-#RosUtils.setAutorun(False)     # Do we want to autorun roscore and rxgraph? (tru by default)
-#RosUtils.prefferJroscore(True)  # preffer jroscore before the roscore? 
+rl = rl_sarsa.qlambdaConfigured("RL",net, 2 ,4, 20)   # 2 state variables, 5 actions, xsize=20
 
-rl = rl_sarsa.qlambdaConfigured("RL",net, 2 ,4, 30)   # 2 state variables, 5 actions, xsize=20
-
-world = gridworld.benchmarkA("map_30x30","BenchmarkGridWorldNodeA");
+world = gridworld.benchmarkA("map_20x20","BenchmarkGridWorldNodeC");
 net.add(world)
 
 # data

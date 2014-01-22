@@ -1,0 +1,17 @@
+({'state': 0, 'height': 600, 'width': 950, 'x': 4, 'y': 22},
+ [(u'RewardGenerator', None, {'label': False, 'height': 32, 'width': 169, 'x': 79, 'y': 12}),
+  (u'BasicMotivation_Motivation', None, {'label': False, 'height': 32, 'width': 251, 'x': 600, 'y': 32}),
+  (u'BasicMotivation_decay', None, {'label': False, 'height': 32, 'width': 213, 'x': 290, 'y': 339}),
+  (u'BasicMotivation_Motivation', u'value|io/MotivationReward', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 603, 'fixed_y': None, 'autozoom': True, 'y': 88}),
+  (u'RewardGenerator', 'value|origin', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 127, 'fixed_y': None, 'autozoom': True, 'y': 43}),
+  (u'RewardGenerator', 'control', {'label': True, 'range': 2.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 102, 'x': 24, 'y': 44}),
+  (u'BasicMotivation_decay', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 183, 'y': 280})],
+ {'dt': 0, 'show_time': 0.5, 'sim_spd': 3, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 4.0}) 
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=-70.18775927535886,y=-59.695293974424125,width=407.1458439193767,height=252.07519531250003]
+# BasicMotivation_Motivation (Generic Node)=Point2D.Double[201.45703125, 0.0]
+# RewardGenerator (Function Input)=Point2D.Double[-3.565941787347565, -33.56424471227151]
+# BasicMotivation_decay (Function Input)=Point2D.Double[-7.13188357469513, 55.27209770388726]
