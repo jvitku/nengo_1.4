@@ -48,7 +48,7 @@ VIVAE=$VIVAE:$N_HOME/../../vivae/vivaesimulator/lib/*									# vivae dependenci
 VIVAE=$VIVAE:$N_HOME/../../vivae/vivaeplugin/build/libs/vivaeplugin-0.0.2-SNAPSHOT.jar	# plugin in jar
 
 # dependencies for complete installation (with external rosjava nodes)
-NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.3-SNAPSHOT.jar 
+NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.4-SNAPSHOT.jar 
 NODES=$NODES:$N_HOME/../../demonodes/basic/build/libs/basic-0.0.5-SNAPSHOT.jar
 
 SARSA=$N_HOME/../../rl/sarsa/build/libs/sarsa-0.0.4-SNAPSHOT.jar
