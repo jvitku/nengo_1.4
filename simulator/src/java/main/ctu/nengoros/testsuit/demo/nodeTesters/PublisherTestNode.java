@@ -8,10 +8,10 @@ import org.ros.namespace.GraphName;
 import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Subscriber;
 
+import ctu.nengoros.network.node.testsuit.CommunicationAwareNode;
+import ctu.nengoros.network.node.testsuit.topicParticipant.ConnectedParticipantSubscriber;
+import ctu.nengoros.network.node.testsuit.topicParticipant.RegisteredTopicParticipant;
 import std_msgs.Float32MultiArray;
-import ctu.nengoros.nodes.CommunicationAwareNode;
-import ctu.nengoros.nodes.topicParticipant.RegisteredTopicParticipant;
-import ctu.nengoros.nodes.topicParticipant.ConnectedParticipantSubscriber;
 
 
 /**

@@ -1,6 +1,6 @@
 // @author Jaroslav Vitku [vitkujar@fel.cvut.cz]
 
-version    = '0.0.6-SNAPSHOT'
+version    = '0.0.7-SNAPSHOT'
 group      = 'ctu.nengoros'
 
 // Gradle uses different default folders for source files => remap them
@@ -37,8 +37,8 @@ dependencies {
     compile 'junit:junit:4.10'
     testCompile 'junit:junit:4.10'
 
-    compile 'ctu.nengoros:jroscore:0.0.6-SNAPSHOT'
-    testCompile 'ctu.nengoros:jroscore:0.0.6-SNAPSHOT'
+    compile 'ctu.nengoros:jroscore:0.0.7-SNAPSHOT'
+    testCompile 'ctu.nengoros:jroscore:0.0.7-SNAPSHOT'
 
     //compile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
     //testCompile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 

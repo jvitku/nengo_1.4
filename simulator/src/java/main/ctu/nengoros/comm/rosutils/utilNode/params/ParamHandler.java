@@ -3,7 +3,8 @@ package ctu.nengoros.comm.rosutils.utilNode.params;
 import org.ros.namespace.GraphName;
 import org.ros.node.ConnectedNode;
 
-import ctu.nengoros.rosparam.node.RosparamNode;
+import ctu.nengoros.network.node.infrastructure.rosparam.node.RosparamNode;
+
 /**
  * 
  * This is deprecated! Now used RosparamNode under jroscore project.

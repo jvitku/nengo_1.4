@@ -3,7 +3,8 @@ package ctu.nengoros.testsuit.demo.nodes.gate.util;
 import org.apache.commons.logging.Log;
 import org.ros.node.topic.Publisher;
 
-import ctu.nengoros.nodes.CommunicationAwareNode;
+import ctu.nengoros.network.node.testsuit.CommunicationAwareNode;
+
 
 /**
  * Abstract logical gate.

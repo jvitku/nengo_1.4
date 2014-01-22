@@ -14,7 +14,7 @@ import ctu.nengoros.comm.rosutils.ProcessLauncher;
 import ctu.nengoros.comm.rosutils.RosUtils;
 import ctu.nengoros.comm.rosutils.utilNode.time.RosTimeUtil;
 import ctu.nengoros.comm.rosutils.utilNode.time.RosTimeUtilFactory;
-import ctu.nengoros.rosparam.node.RosparamNode;
+import ctu.nengoros.network.node.infrastructure.rosparam.node.RosparamNode;
 
 /**
  * Here are utilities for simple launching and stopping (some) roscore 

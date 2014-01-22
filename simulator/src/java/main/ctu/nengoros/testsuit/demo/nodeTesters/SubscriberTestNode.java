@@ -8,10 +8,10 @@ import org.ros.namespace.GraphName;
 import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Publisher;
 
+import ctu.nengoros.network.node.testsuit.CommunicationAwareNode;
+import ctu.nengoros.network.node.testsuit.topicParticipant.ConnectedParticipantPublisher;
 import std_msgs.Float32MultiArray;
 
-import ctu.nengoros.nodes.CommunicationAwareNode;
-import ctu.nengoros.nodes.topicParticipant.ConnectedParticipantPublisher;
 
 /**
  * This demo shows how to test DemoSubscriber node. This means that we should create

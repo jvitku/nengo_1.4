@@ -7,7 +7,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import ctu.nengoros.RosRunner;
-import ctu.nengoros.nodes.RosCommunicationTest;
+import ctu.nengoros.network.node.testsuit.RosCommunicationTest;
 import ctu.nengoros.testsuit.demo.nodeTesters.PublisherTestNode;
 
 /**

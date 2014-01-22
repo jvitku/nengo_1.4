@@ -22,10 +22,11 @@
 ### Nengo Workspace layout ###
 ##############################
 # elasticmode=false
-# viewbounds=PBounds[x=-156.91190886045214,y=99.99999999999996,width=1364.8238482384822,height=845.0]
-# map_20x20_GridWorld (Generic Node)=Point2D.Double[0.0, 0.0]
-# RL_QLambda (Generic Node)=Point2D.Double[666.6666870117188, 666.6666870117188]
-# lambda (Function Input)=Point2D.Double[333.3333435058594, 200.0]
-# gamma (Function Input)=Point2D.Double[333.3333435058594, 600.0]
-# alpha (Function Input)=Point2D.Double[333.3333435058594, 800.0]
-# importance (Function Input)=Point2D.Double[333.3333435058594, 400.0]
+# viewbounds=PBounds[x=-173.58824626477207,y=135.6468205064163,width=1868.5544228589995,height=883.5799984061936]
+# data_noea_moo__0.txt (Generic Node)=Point2D.Double[750.0, 500.0]
+# RL_QLambda (Generic Node)=Point2D.Double[500.0, 500.0]
+# lambda (Function Input)=Point2D.Double[354.08967448425756, 502.4037882552036]
+# map_20x20_GridWorld (Generic Node)=Point2D.Double[494.6562317014238, 603.843010736697]
+# alpha (Function Input)=Point2D.Double[363.90359638976565, 346.1436811377968]
+# gamma (Function Input)=Point2D.Double[356.37070513819884, 404.35198536610943]
+# importance (Function Input)=Point2D.Double[355.5318978221423, 446.065503531224]
