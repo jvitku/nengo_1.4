@@ -33,13 +33,12 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 
 	protected final Node parent;
 	public final float DEF_W = 1;
-	
+
 	protected TimeSeries myValue;
 
 	// setup properties of my Terminations
 	protected final Integrator integ;
 	protected final DynamicalSystem lti;
-
 
 	public AbstractMultiTermination(NeuralModule parent, String name, /*int dimension,*/ Integrator integ, DynamicalSystem lti2){
 
@@ -53,19 +52,19 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 		this.myWeights = new HashMap<String, Float[]>();
 
 		this.dimensions = lti.getInputDimension();
-		
+
 		try {
 			this.addTermination();
 		} catch (StructuralException e) {
 			e.printStackTrace();
 		}	
 	}
-	
+
 	@Override
 	public HashMap<String,Termination> getTerminations(){
 		return this.myTerminations;
 	}
- 
+
 	/**
 	 * Connect data on all its Terminations, terminations are ran by 
 	 * the NeuralModule to which they are registered (too). 
@@ -77,7 +76,7 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 	public void run(float startTime, float endTime) 
 			throws SimulationException{
 
-		// terminatoins are ran by the NeuralModule
+		// terminations are ran by the NeuralModule
 		//this.runAllTerminations(startTime, endTime);
 
 		this.runCombineValues(startTime, endTime);
@@ -153,6 +152,25 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 					" of weights, dimension of this MultiTermination is "+this.dimensions);
 	}
 
+	/**
+	 * Check dimension of 2D transformation matrix 
+	 * @param weights transformation matrix
+	 * @throws StructuralException thrown if dimensions are incorrect
+	 * @see 
+	 */
+	protected void checkDimensions(final Float[][] weights) throws StructuralException{
+
+		if(weights.length==0)
+			throw new StructuralException(me+"incorrect dimensionality" +
+					" of weights, expected 2D matrix with first non-zero dimension" +
+					"and the second dimension of size: "+this.dimensions);
+
+		if(weights[0].length != this.dimensions)
+			throw new StructuralException(me+"incorrect dimensionality" +
+					" of weights, size of the second dimension of the weight " +
+					"matrix shoudl is "+this.dimensions);
+	}
+
 	protected Float[] readWeights(String name) throws SimulationException{
 
 		if(!this.myWeights.containsKey(name))
@@ -177,7 +195,7 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 		// this is how BasicTermination determines its dimension
 		return this.dimensions;	
 	}
-	
+
 
 	@Override
 	public TimeSeries getOutput() { return this.myValue; }

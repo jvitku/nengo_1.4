@@ -42,7 +42,7 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 
 	/**
 	 * Specify the weight of this newly created Termination, if the 
-	 * Terminaion is multi-dimensional, weight will be applied on all dimensions.
+	 * Termination is multi-dimensional, weight will be applied on all dimensions.
 	 *  
 	 * @param weight the termination can be weighter
 	 * @return new weighted Termination with auto-generated name 
@@ -58,7 +58,17 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 	 */
 	public Termination addTermination(Float[] weights) throws StructuralException;
 
-	
+	/**
+	 * Create new termination of dimension = weights.length and connect it to the 
+	 * current parent Encoder of dimension weights[0].length
+	 * 
+	 * @param weights array of weights where the first dimension corresponds to the 
+	 * dimension of an Origin to be connected and the second dimension corresponds to
+	 * the parent Encoder  
+	 * @return newly created Termination of dimension weights.length
+	 * @throws StructuralException thrown if the size of second dimension is not correct
+	 */
+	public Termination addTermination(Float[][] weights) throws StructuralException;
 	
 	public HashMap<String,Termination> getTerminations();
 	

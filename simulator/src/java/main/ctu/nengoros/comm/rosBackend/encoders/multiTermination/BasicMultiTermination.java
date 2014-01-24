@@ -25,7 +25,7 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 
 		super(parent, name, integ, lti);
 	}
-
+	
 	/**
 	 * Adds BasicTerminaiton of dimension 1 with auto-generated name. 
 	 * @param weight name of newly created termination
@@ -42,6 +42,28 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 		((PeripheralsRegisteringNode) parent).addTermination(t);
 
 		this.myWeights.put(t.getName(), weights.clone());
+		this.myTerminations.put(termName, t);
+		this.orderedTerminations.add(t);
+
+		return t;
+	}
+	
+	/**
+	 * Adds BasicTerminaiton of dimension 1 with auto-generated name. 
+	 * @param weight name of newly created termination
+	 * @return name of newly created Termination
+	 * @throws StructuralException 
+	 */
+	@Override
+	public Termination addTermination(Float [][] weights) throws StructuralException {
+
+		super.checkDimensions(weights);
+		String termName = this.generateName(); 
+
+		Termination t = new BasicTermination(parent, lti, integ, termName);
+		((PeripheralsRegisteringNode) parent).addTermination(t);
+
+		this.myWeights.put(t.getName(), weights.clone());//TODO use the Projection interface everywhere
 		this.myTerminations.put(termName, t);
 		this.orderedTerminations.add(t);
 

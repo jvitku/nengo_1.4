@@ -14,12 +14,11 @@ import ctu.nengoros.network.node.infrastructure.rosparam.node.RosparamNode;
  * This could be implemented as one ROS node, but due to problems with timeProvider
  * ( @see: ctu.nengoros.time.AbstractTimeNode , @see http://code.google.com/p/rosjava/issues/detail?id=148 )
  * both, Rosparam and RosTimeUtilFactory will be implemented as separate nodes, where RosTimeUtilFactory 
- * may not bee launched at all.  
+ * may not bee launched at all.
  * 
  * @author Jaroslav Vitku
  *
  */
-@Deprecated
 public class ParamHandler extends RosparamNode{
 	
 	public static final String name = "NengoParameterHandler";
@@ -32,7 +31,6 @@ public class ParamHandler extends RosparamNode{
 	public void onStart(ConnectedNode connectedNode){
 		super.onStart(connectedNode);
 		//l = connectedNode.getLog();
-	//	l.info(me+"launched! Waiting for commands..");
+		//l.info(me+"launched! Waiting for commands..");
 	}	
-
 }

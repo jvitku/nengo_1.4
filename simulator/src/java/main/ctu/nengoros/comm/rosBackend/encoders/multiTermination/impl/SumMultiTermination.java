@@ -45,7 +45,7 @@ public class SumMultiTermination extends BasicMultiTermination{
 
 		// initialize with zeros (turns out that there have to be two arrays)
 		myValue = this.initZeros(startTime, endTime);
-		
+
 		if(this.orderedTerminations.isEmpty()){
 			System.err.println(me+"Warning: no terminations registered");
 			return;
@@ -60,27 +60,15 @@ public class SumMultiTermination extends BasicMultiTermination{
 			weight = readWeights(t.getName());
 
 			super.checkInstance(t);
-			
+
 			TimeSeries out = ((BasicTermination)t).getOutput();
 			this.sumToMyValue((TimeSeriesImpl) out, weight);
 		}
 	}
-
-	public String toStr(float[][] f){
-		String out = "";
-
-		for(int i=0; i<f.length; i++){
-			for(int j=0; j<f[0].length; j++){
-				out = out+" "+f[i][j];
-			}
-			out = out+" | ";
-		}
-		return out;
-	}
-
+	
 	/**
 	 * Return time series with current simulation times and with zero values
-	 * @param startTime start time of sim. step
+	 * @param startTime start time of simulation step
 	 * @param endTime end times
 	 * @return initialized TimeSeriesImpl with zero data and correct getTimes() values
 	 */
@@ -91,7 +79,7 @@ public class SumMultiTermination extends BasicMultiTermination{
 			input[i] = 0;
 
 		float[] inputII = input.clone();
-		
+
 		TimeSeriesImpl inSeries = 
 				new TimeSeriesImpl(
 						new float[]{startTime, endTime}, 
@@ -119,20 +107,4 @@ public class SumMultiTermination extends BasicMultiTermination{
 			}
 		}
 	}
-
-	public String toStr(Float[] f){
-		String out = "";
-		for(int i=0; i<f.length; i++)
-			out = out+" "+f[i];
-		return out;
-	}
-
-	public String toStr(float[] f){
-		String out = "";
-		for(int i=0; i<f.length; i++)
-			out = out+" "+f[i];
-		return out;
-	}
-
-
 }

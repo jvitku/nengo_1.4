@@ -93,6 +93,20 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	 */
 	public Termination newTerminationFor(String name, Float[] weights) throws StructuralException;
 	
+	/**
+	 * The same as {@link ctu.nengoros.modules.NeuralModule#newTerminationFor(String,float)}, but here
+	 * the new termination implements transformation between some multi-dimensional Origin and the 
+	 * corresponding, potentially multi-dimensional Encoder.
+	 * 
+	 * @param name name of termination (encoder) to which the new Termination add
+	 * @param weights matrix of weights which represents the transformation, first dimension defines 
+	 * dimensionality of an Origin that can be connected, the second dimension has to correspond
+	 * to the dimension of this Encoder.   
+	 * @return newly created Termination
+	 * @throws StructuralException exception if the Termination could not be created (e.g. dimensions inconsistent)
+	 */
+	public Termination newTerminationFor(String name, Float[][] weights) throws StructuralException;
+	
 	
 	/**
 	 * <p>Turn synchronous communication on/off. Node is synchronous by default.

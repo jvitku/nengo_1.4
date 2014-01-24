@@ -402,16 +402,10 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public void setMode(SimulationMode mode) {
-		// TODO support simulation mode switching?
-		//System.out.println("Mode is not supported so far, will implement only one modem");
-		this.myMode=mode;
-	}
+	public void setMode(SimulationMode mode) { this.myMode=mode; }
 
 	@Override
-	public SimulationMode getMode() {
-		return this.myMode;
-	}
+	public SimulationMode getMode() { return this.myMode; }
 
 	@Override
 	public void addChangeListener(Listener listener) {
@@ -627,6 +621,12 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			throw new StructuralException(me+"requested MultiTermination not found!");		
 			
 		return this.myEncoders.get(name).getMultiTermination().addTermination(weights);
+	}
+
+	@Override
+	public Termination newTerminationFor(String name, Float[][] weights) throws StructuralException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
