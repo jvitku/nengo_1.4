@@ -1,9 +1,11 @@
-package ctu.nengoros.model.plasticity.multiTermination;
+package ctu.nengoros.model.multiTermination;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import ctu.nengoros.model.multiTermination.impl.PlasticMultiTermination;
+import ctu.nengoros.model.plasticity.PlasticTermination;
 import ctu.nengoros.modules.NeuralModule;
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
@@ -14,7 +16,13 @@ import ca.nengo.model.Termination;
 import ca.nengo.util.TimeSeries;
 
 /**
- * TODO modify this to support plastic terminations
+ * The main difference compared to the {@link ctu.nengoros.model.multiTermination.AbstractMultiTermination}
+ * is that this uses PlasticTerminations, which means that weights of these Terminations may, or may
+ * not change during the simulation run.
+ * 
+ *  
+ * TODO check modifications
+ * TODO add Thread features
  * 
  * @author Jaroslav Vitku
  *
@@ -24,7 +32,7 @@ public abstract class AbstractPlasticMultiTermination implements PlasticMultiTer
 	public static final String me = "[AbstractPlasticMultiTermination] ";
 	private static final long serialVersionUID = -5806553506661735678L;
 
-	protected final LinkedList <Termination> orderedTerminations;
+	protected final LinkedList <PlasticTermination> orderedTerminations;
 	protected final Map<String, Float[][]> myWeights;				// weight for each Termination
 	protected final HashMap<String, Termination> myTerminations;
 
@@ -49,7 +57,7 @@ public abstract class AbstractPlasticMultiTermination implements PlasticMultiTer
 
 		this.name = name;
 		this.parent = parent;
-		this.orderedTerminations = new LinkedList<Termination>();
+		this.orderedTerminations = new LinkedList<PlasticTermination>();
 		this.myTerminations = new HashMap<String, Termination>();
 		this.myWeights = new HashMap<String, Float[][]>();
 

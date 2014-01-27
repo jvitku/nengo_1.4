@@ -1,6 +1,6 @@
 package ctu.nengoros.model.plasticity;
 
-import ctu.nengoros.model.plasticity.multiTermination.AbstractPlasticMultiTermination;
+import ctu.nengoros.model.multiTermination.AbstractPlasticMultiTermination;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ca.nengo.model.plasticity.impl.PlasticEnsembleImpl;
