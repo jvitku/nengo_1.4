@@ -21,15 +21,17 @@ import ca.nengo.model.StructuralException;
 public abstract class AbstractPlasticTermination implements PlasticTermination{
 
 	private static final long serialVersionUID = -1178115852907379798L;
-	
+
 	private final String name;
-	private final int[] dimensionSizes;
-	
-	public AbstractPlasticTermination(String name, int[] dimensionSizes){
+	private final int inputDimension;	// size of vector on input to this Termination
+	private final int outputDimension;	// size of vector on output (of this Termination!)
+
+	public AbstractPlasticTermination(String name, int inputDim, int outputDim){
 		this.name = name;
-		this.dimensionSizes = dimensionSizes.clone();
+		this.inputDimension = inputDim;
+		this.outputDimension = outputDim;
 	}
-	
+
 	@Override
 	public String getName() { return this.name; }
 
@@ -43,7 +45,7 @@ public abstract class AbstractPlasticTermination implements PlasticTermination{
 	public void setValues(InstantaneousOutput values)
 			throws SimulationException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -61,7 +63,7 @@ public abstract class AbstractPlasticTermination implements PlasticTermination{
 	@Override
 	public void setTau(float tau) throws StructuralException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -73,13 +75,13 @@ public abstract class AbstractPlasticTermination implements PlasticTermination{
 	@Override
 	public void setModulatory(boolean modulatory) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void reset(boolean randomize) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -91,19 +93,19 @@ public abstract class AbstractPlasticTermination implements PlasticTermination{
 	@Override
 	public void setWeights(float[] weights, boolean save) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void modifyWeights(float[] change, boolean save) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void saveWeights() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -123,14 +125,14 @@ public abstract class AbstractPlasticTermination implements PlasticTermination{
 	public void updateTransform(float time, int start, int end)
 			throws StructuralException {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public PlasticNodeTermination clone() throws CloneNotSupportedException{
 		return null;	
 	}
-	
+
 	@Override
 	public PlasticNodeTermination clone(Node node)
 			throws CloneNotSupportedException {

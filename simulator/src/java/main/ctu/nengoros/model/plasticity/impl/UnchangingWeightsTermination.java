@@ -11,12 +11,13 @@ import ctu.nengoros.model.plasticity.AbstractPlasticTermination;
  * @author Jaroslav Vitku
  *
  */
-public class ConstantWeightsTermination extends AbstractPlasticTermination{
+public class UnchangingWeightsTermination extends AbstractPlasticTermination{
 
 	private static final long serialVersionUID = 2589578065949657511L;
 
-	public ConstantWeightsTermination(String name, int[] dimensionSizes) {
-		super(name, dimensionSizes);
+	public UnchangingWeightsTermination(String name, int inputDim, int outputDim) {
+		super(name, inputDim, outputDim);
+		//super(name, dimensionSizes);
 		// TODO Auto-generated constructor stub
 	}
 	

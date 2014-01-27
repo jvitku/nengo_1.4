@@ -1,7 +1,6 @@
-package ctu.nengoros.model.multiTermination.impl;
+package ctu.nengoros.model.multiTermination;
 
 import ca.nengo.util.TaskSpawner;
-import ctu.nengoros.model.multiTermination.MultiTermination;
 
 /**
  * This is {@link ctu.nengoros.model.plasticity.MultiTermination} which
@@ -13,6 +12,5 @@ import ctu.nengoros.model.multiTermination.MultiTermination;
  */
 public interface PlasticMultiTermination extends MultiTermination, TaskSpawner{
 
-	public void updateTransform();
 	
 }

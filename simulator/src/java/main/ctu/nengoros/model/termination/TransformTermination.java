@@ -1,0 +1,50 @@
+package ctu.nengoros.model.termination;
+
+import ca.nengo.model.StructuralException;
+import ca.nengo.model.Termination;
+
+/**
+ * <p>Compared to the {@link ca.nengo.model.Termination}, this one implements 
+ * also transformation of signal. The dimensionality of input signal is 
+ * converted to another one, expected by its parent. The transformation 
+ * is defined by the weight matrix. This means that compared to the 
+ * {@link ca.nengo.model.PlasticNodeTermination}, the weight matrix is 2D here.</p> 
+ * 
+ * <p>This Termination provides opportunity to connect two modules of 
+ * arbitrary dimensionality, the transformation matrix should be provided.</p>
+ * 
+ * <p>Note that for compatibility with the Nengo, the {@link #getDimensions()} method
+ * provides dimensionality of input to the termination.</p> 
+ *  
+ * @author Jaroslav Vitku
+ *
+ */
+public interface TransformTermination extends Termination{
+	
+	/**
+	 * The TransformTermination has input and output dimensions. The inputDimensions
+	 * specify dimensionality of input to the Termination, this is provided by the
+	 * {@link #getDimensions()}. The outputDimensions define dimensionality of 
+	 * output of the Termination, this has to be compatible with its parent Node. 
+	 * @return output dimensionality of this Termination, has to be compatible
+	 * with the parent nodes dimensionality.
+	 */
+	public int getOutputDimensions();
+	
+	/**
+	 * Returns the transformation matrix used to convert signal from input to output
+	 * on this Termination.
+	 * @return weight matrix which defines the transformation
+	 */
+	public float[][] getTransformationMatrix();
+	
+	
+	/**
+	 * Sets the Transformation matrix, which defines transformation of signal on
+	 * input to the output signal, possible with different dimensionality.  
+	 * @param matrix weight matrix
+	 * @throws StructuralException thrown in case that the matrix dimensions are incorrect
+	 */
+	public void setTransformationMatrix(float[][] matrix) throws StructuralException;
+
+}

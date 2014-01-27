@@ -61,14 +61,14 @@ public class BasicTermination implements Termination, Resettable {
 	private static Logger ourLogger = Logger.getLogger(BasicTermination.class);
 
 	private Node myNode;
-	private DynamicalSystem myDynamics;
-	private Integrator myIntegrator;
+	protected DynamicalSystem myDynamics;
+	protected Integrator myIntegrator;
 	private String myName;
-	private InstantaneousOutput myInput;
-	private TimeSeries myOutput;
+	protected InstantaneousOutput myInput;
+	protected TimeSeries myOutput;
 	private boolean myModulatory;
 	
-	private final float[] notConnectedInput;	///my
+	protected final float[] notConnectedInput;	///my
 	private final float defVal = 0;
 
 	/**

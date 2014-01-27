@@ -25,10 +25,29 @@ public class TerminationFactory {
 	 * @return created BasicTermination
 	 */
 	public static Termination buldBasicTermination(Node parent, String name, int dim){
-		IdentityLTISystem noLTI = new IdentityLTISystem(dim); 	
+		IdentityLTISystem noLTI = new IdentityLTISystem(dim); // TODO dynamics here 	
 		
 		Termination t = new BasicTermination(parent, noLTI, noInt, name);
 
 		return t;
+	}
+	
+	/**
+	 * Builds plastic Termination with no explicit rule(s) for changing the weights.
+	 * The Weights are specified in the constructor. 
+	 * 
+	 * @param parent
+	 * @param name
+	 * @param dim
+	 * @return
+	 */
+	public static Termination buildPlasticUniformTermination(Node parent, String name, int dim,
+			Float[][] weights){
+		
+		IdentityLTISystem noLTI = new IdentityLTISystem(dim); // TODO dynamics here
+		
+		// TODO this: Termination t = new UnchangingWeightsTermination(parent, noLTI, noInt, name);
+		
+		return null;
 	}
 }

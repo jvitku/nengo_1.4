@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import ctu.nengoros.model.multiTermination.impl.PlasticMultiTermination;
 import ctu.nengoros.model.plasticity.PlasticTermination;
 import ctu.nengoros.modules.NeuralModule;
 import ca.nengo.dynamics.DynamicalSystem;
@@ -16,9 +15,11 @@ import ca.nengo.model.Termination;
 import ca.nengo.util.TimeSeries;
 
 /**
- * The main difference compared to the {@link ctu.nengoros.model.multiTermination.AbstractMultiTermination}
+ * <p>The main difference compared to the {@link ctu.nengoros.model.multiTermination.AbstractMultiTermination}
  * is that this uses PlasticTerminations, which means that weights of these Terminations may, or may
- * not change during the simulation run.
+ * not change during the simulation run.</p>
+ * 
+ * <p>Each {@link ctu.nengoros.model.plasticity.PlasticTermination} extends 	 
  * 
  *  
  * TODO check modifications

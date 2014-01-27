@@ -4,13 +4,15 @@ import ca.nengo.model.PlasticNodeTermination;
 import ca.nengo.model.StructuralException;
 
 /**
- * PlasticTermination is the same as the {@link ca.nengo.model.PlasticNodeTermination}, 
- * but can be used also on non-neural-based nodes, such as HANNS ndoes. 
- * The method {@link #updateTransform(float, int, int)} is used from externally ran 
- * Thread for better efficiency.  
+ * <p>PlasticTermination is the same as the {@link ca.nengo.model.PlasticNodeTermination}, 
+ * but can be used also on non-neural-based nodes, such as HANNS nodes.</p>
+ * 
+ * <p>Each PlasticTermination may have associated the {@link ctu.nengoros.model.plasticity.HannsLearningTask}, 
+ * which is able to run learning in separate Thread by calling the {@link #updateTransform(float, int, int)}.</p>
+ * 
+ *  @see ca.nengo.sim.impl.LocalSimulator#step(float, float)
  * 
  * @author Jaroslav Vitku
- *
  */
 public interface PlasticTermination extends PlasticNodeTermination{
 

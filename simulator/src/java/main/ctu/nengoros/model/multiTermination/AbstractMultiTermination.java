@@ -156,6 +156,7 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 	 */
 	protected void checkDimensions(final Float[][] weights) throws StructuralException{
 
+		//TODO 2d support here
 		if(weights.length==0)
 			throw new StructuralException(me+"incorrect dimensionality" +
 					" of weights, expected 2D matrix with first non-zero dimension" +

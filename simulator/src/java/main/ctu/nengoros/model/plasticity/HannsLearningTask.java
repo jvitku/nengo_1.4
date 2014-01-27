@@ -10,7 +10,7 @@ import ca.nengo.util.ThreadTask;
  * The equivalent of {@link ca.nengo.util.impl.LearningTask} used for separating
  * learning process used for the HANNS nodes.  
  * 
- * "This task will seperate the learning calculations such as getDerivative into indepdent
+ * "This task will separate the learning calculations such as getDerivative into independent
  * threadable tasks."
  *
  * @author Jaroslav Vitku
