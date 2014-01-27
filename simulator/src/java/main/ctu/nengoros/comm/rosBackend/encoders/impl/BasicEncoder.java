@@ -10,9 +10,9 @@ import ca.nengo.model.Units;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.comm.rosBackend.encoders.Encoder;
-import ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination;
-import ctu.nengoros.comm.rosBackend.encoders.multiTermination.impl.SumMultiTermination;
 import ctu.nengoros.exceptions.ConnectionException;
+import ctu.nengoros.model.multiTermination.MultiTermination;
+import ctu.nengoros.model.multiTermination.impl.SumMultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 
 public class BasicEncoder implements Encoder{

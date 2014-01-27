@@ -1,6 +1,6 @@
 package ctu.nengoros.modules;
 
-import ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination;
+import ctu.nengoros.model.multiTermination.MultiTermination;
 import ca.nengo.model.Node;
 import ca.nengo.model.Probeable;
 import ca.nengo.model.StructuralException;
@@ -60,7 +60,7 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	 * name is used etc.)
 	 * 
 	 * {@link ctu.nengoros.comm.rosBackend.encoders.Encoder#getMultiTermination()}
-	 * {@link ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination#addTermination()}
+	 * {@link ctu.nengoros.model.multiTermination.MultiTermination#addTermination()}
 	 */
 	public Termination newTerminationFor(String name) throws StructuralException;
 	
@@ -74,7 +74,7 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	 * @throws StructuralException if the Termination could not be created
 	 * 
 	 * @see #newTerminationFor(String)
-	 * {@link ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination#addTermination(float)}
+	 * {@link ctu.nengoros.model.multiTermination.MultiTermination#addTermination(float)}
 	 */
 	public Termination newTerminationFor(String name, float weight) throws StructuralException;
 	
@@ -89,7 +89,7 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	 * of weight array provided is incorrect)
 	 * 
 	 *  @see #newTerminationFor(String)
-	 *  {@link ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination#addTermination(Float[])}
+	 *  {@link ctu.nengoros.model.multiTermination.MultiTermination#addTermination(Float[])}
 	 */
 	public Termination newTerminationFor(String name, Float[] weights) throws StructuralException;
 	

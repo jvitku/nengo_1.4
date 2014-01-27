@@ -1,6 +1,6 @@
-package ctu.nengoros.comm.rosBackend.encoders.plasticity.impl;
+package ctu.nengoros.model.plasticity.impl;
 
-import ctu.nengoros.comm.rosBackend.encoders.plasticity.AbstractPlasticTermination;
+import ctu.nengoros.model.plasticity.AbstractPlasticTermination;
 
 /**
  * <p>This implementation of the {@link ca.nengo.model.PlasticTermination} represents

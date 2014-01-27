@@ -1,4 +1,4 @@
-package ctu.nengoros.comm.rosBackend.encoders.plasticity.multiTermination;
+package ctu.nengoros.model.plasticity.multiTermination;
 
 import java.util.HashMap;
 import java.util.LinkedList;

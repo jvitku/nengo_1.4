@@ -1,4 +1,4 @@
-package ctu.nengoros.comm.rosBackend.encoders.multiTermination.impl;
+package ctu.nengoros.model.multiTermination.impl;
 
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
@@ -8,7 +8,7 @@ import ca.nengo.model.Units;
 import ca.nengo.model.impl.BasicTermination;
 import ca.nengo.util.TimeSeries;
 import ca.nengo.util.impl.TimeSeriesImpl;
-import ctu.nengoros.comm.rosBackend.encoders.multiTermination.BasicMultiTermination;
+import ctu.nengoros.model.multiTermination.BasicMultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 
 /**

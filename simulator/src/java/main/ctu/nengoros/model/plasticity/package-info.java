@@ -5,4 +5,4 @@
  * @author Jaroslav Vitku
  *
  */
-package ctu.nengoros.comm.rosBackend.encoders.plasticity;
+package ctu.nengoros.model.plasticity;

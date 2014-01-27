@@ -1,4 +1,4 @@
-package ctu.nengoros.comm.rosBackend.encoders.plasticity;
+package ctu.nengoros.model.plasticity;
 
 import ca.nengo.model.PlasticNodeTermination;
 import ca.nengo.model.StructuralException;

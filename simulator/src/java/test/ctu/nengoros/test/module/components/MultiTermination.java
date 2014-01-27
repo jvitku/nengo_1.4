@@ -18,11 +18,10 @@ import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.dynamics.IdentityLTISystem;
 import ctu.nengoros.dynamics.NoIntegrator;
 import ctu.nengoros.exceptions.ConnectionException;
+import ctu.nengoros.model.multiTermination.impl.SumMultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
-import ctu.nengoros.comm.rosBackend.encoders.multiTermination.impl.SumMultiTermination;
 import ctu.nengoros.comm.rosutils.Mess;
-
 import ctu.nengoros.test.module.*;
 
 public class MultiTermination extends NengorosTest{

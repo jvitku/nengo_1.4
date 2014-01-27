@@ -1,4 +1,4 @@
-package ctu.nengoros.comm.rosBackend.encoders.multiTermination;
+package ctu.nengoros.model.multiTermination;
 
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.PeripheralsRegisteringNode;

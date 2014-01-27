@@ -1,6 +1,6 @@
-package ctu.nengoros.comm.rosBackend.encoders.plasticity;
+package ctu.nengoros.model.plasticity;
 
-import ctu.nengoros.comm.rosBackend.encoders.plasticity.multiTermination.AbstractPlasticMultiTermination;
+import ctu.nengoros.model.plasticity.multiTermination.AbstractPlasticMultiTermination;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ca.nengo.model.plasticity.impl.PlasticEnsembleImpl;

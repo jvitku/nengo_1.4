@@ -1,10 +1,10 @@
-package ctu.nengoros.comm.rosBackend.encoders.plasticity.multiTermination;
+package ctu.nengoros.model.plasticity.multiTermination;
 
 import ca.nengo.util.TaskSpawner;
-import ctu.nengoros.comm.rosBackend.encoders.multiTermination.MultiTermination;
+import ctu.nengoros.model.multiTermination.MultiTermination;
 
 /**
- * This is {@link ctu.nengoros.comm.rosBackend.encoders.plasticity.MultiTermination} which
+ * This is {@link ctu.nengoros.model.plasticity.MultiTermination} which
  * supports plastic (and non-plastic) Terminations. For each plastic termination, 
  * there could be a Thread which implements the plasticity rule.
  *  

@@ -1,4 +1,4 @@
-package ctu.nengoros.comm.rosBackend.encoders.multiTermination;
+package ctu.nengoros.model.multiTermination;
 
 import java.io.Serializable;
 import java.util.HashMap;
