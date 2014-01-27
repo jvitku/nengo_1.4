@@ -35,13 +35,17 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 	@Override
 	public Termination addTermination(Float [] weights) throws StructuralException {
 
-		super.checkDimensions(weights);
+		super.checkDimensions(weights);	// TODO check this
 		String termName = this.generateName(); 
 
 		Termination t = new BasicTermination(parent, lti, integ, termName);
 		((PeripheralsRegisteringNode) parent).addTermination(t);
-
-		this.myWeights.put(t.getName(), weights.clone());
+		
+		Float[][] w = new Float[weights.length][1];
+		for(int i=0; i<weights.length; i++)
+			w[i][0] = weights[i];
+		
+		this.myWeights.put(t.getName(), w);
 		this.myTerminations.put(termName, t);
 		this.orderedTerminations.add(t);
 
@@ -63,7 +67,7 @@ public abstract class BasicMultiTermination extends AbstractMultiTermination {
 		Termination t = new BasicTermination(parent, lti, integ, termName);
 		((PeripheralsRegisteringNode) parent).addTermination(t);
 
-		this.myWeights.put(t.getName(), weights.clone());//TODO use the Projection interface everywhere
+		this.myWeights.put(t.getName(), weights.clone());//TODO use 
 		this.myTerminations.put(termName, t);
 		this.orderedTerminations.add(t);
 

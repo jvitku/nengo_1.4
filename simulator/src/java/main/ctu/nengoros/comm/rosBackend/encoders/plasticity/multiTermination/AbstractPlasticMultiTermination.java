@@ -1,4 +1,4 @@
-package ctu.nengoros.comm.rosBackend.encoders.multiTermination;
+package ctu.nengoros.comm.rosBackend.encoders.plasticity.multiTermination;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -14,13 +14,15 @@ import ca.nengo.model.Termination;
 import ca.nengo.util.TimeSeries;
 
 /**
+ * TODO modify this to support plastic terminations
+ * 
  * @author Jaroslav Vitku
  *
  */
-public abstract class AbstractMultiTermination implements MultiTermination{
+public abstract class AbstractPlasticMultiTermination implements PlasticMultiTermination{
 
-	public static final String me = "[AbstractMultiTermination] ";
-	private static final long serialVersionUID = -5806553506661735679L;
+	public static final String me = "[AbstractPlasticMultiTermination] ";
+	private static final long serialVersionUID = -5806553506661735678L;
 
 	protected final LinkedList <Termination> orderedTerminations;
 	protected final Map<String, Float[][]> myWeights;				// weight for each Termination
@@ -40,7 +42,7 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 	protected final Integrator integ;
 	protected final DynamicalSystem lti;
 
-	public AbstractMultiTermination(NeuralModule parent, String name, /*int dimension,*/ Integrator integ, DynamicalSystem lti2){
+	public AbstractPlasticMultiTermination(NeuralModule parent, String name, /*int dimension,*/ Integrator integ, DynamicalSystem lti2){
 
 		this.lti = lti2;
 		this.integ = integ;

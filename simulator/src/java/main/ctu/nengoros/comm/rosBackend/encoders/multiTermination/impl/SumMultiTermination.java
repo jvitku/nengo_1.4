@@ -51,18 +51,21 @@ public class SumMultiTermination extends BasicMultiTermination{
 			return;
 		}
 
-		Float[] weight; 
+		Float[][] weight; 
 
 		// add the rest of Terminations to it
 		for(int i=0; i<this.orderedTerminations.size(); i++){
 			Termination t = this.orderedTerminations.get(i);
 
-			weight = readWeights(t.getName());
+			weight = readWeights(t.getName()); 
+			Float[] w = new Float[weight.length];	// TODO use 2D weights here
+			for(int j=0; j<w.length; j++)
+				w[j] = weight[j][0];
 
 			super.checkInstance(t);
 
 			TimeSeries out = ((BasicTermination)t).getOutput();
-			this.sumToMyValue((TimeSeriesImpl) out, weight);
+			this.sumToMyValue((TimeSeriesImpl) out, w);
 		}
 	}
 	

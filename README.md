@@ -43,6 +43,9 @@ In order to install just standalone version of Nengoros, you can use the script 
 Changelog
 --------------
 
+###nengoros-master-v0.0.5
+* Added support for creating Projections to nodes, that are not neural Ensembles. During adding a Projection, new Termination which implements this transformation is added. 
+
 ###nengoros-master-v0.0.4
 * Added support for the [my modification](https://github.com/jvitku/vivae) of the [Vivae](http://cig.felk.cvut.cz/projects/robo/) simulator. More precisely: the old version of Vivae support was removed from the Nengoros and placed into the `vivae/vivaeplugin` project.
 

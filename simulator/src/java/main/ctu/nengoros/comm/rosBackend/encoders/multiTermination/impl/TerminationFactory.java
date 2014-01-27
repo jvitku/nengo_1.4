@@ -14,7 +14,6 @@ import ca.nengo.model.impl.BasicTermination;
  *
  */
 public class TerminationFactory {
-	
 
 	static Integrator noInt = new NoIntegrator();			// do not integrate termination values
 
