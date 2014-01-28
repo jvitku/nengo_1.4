@@ -1,7 +1,8 @@
 package ctu.nengoros.comm.rosBackend.encoders;
 
 
-import ctu.nengoros.model.multiTermination.MultiTermination;
+//import ctu.nengoros.model.multiTermination.MultiTermination;
+import ctu.nengoros.model.transformMultiTermination.MultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 import ca.nengo.model.Resettable;
 import ca.nengo.model.SimulationException;

@@ -14,9 +14,15 @@ public class BasicWeights implements WeightFactory{
 			return null;
 		}
 		float[][] out = new float[size][size];
-		for(int i=0; i<size; i++)
-			for(int j=0; j<size; j++)
-				out[i][j] = weight;
+		for(int i=0; i<size; i++){
+			for(int j=0; j<size; j++){
+				if(i==j){
+					out[i][j] = weight;
+				}else{
+					out[i][j] = 0;
+				}
+			}
+		}
 		return out;
 	}
 

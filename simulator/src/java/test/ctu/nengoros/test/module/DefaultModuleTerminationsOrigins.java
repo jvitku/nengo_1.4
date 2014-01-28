@@ -50,20 +50,20 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 
-		NeuralModule smartOne = null;
+		NeuralModule module = null;
 		try {
-			smartOne = new DefaultNeuralModule("SmartNeuron",g);
+			module = new DefaultNeuralModule("NeuralModule",g);
 		} catch (ConnectionException e) {
 			e.printStackTrace();
 			fail();
 		}
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 2); // one modem and one ROS node
 
-		smartOne.createDecoder("ros2annFloatArr", "int", 2);
-		smartOne.createEncoder("ann2rosFloatArr", "float", 4);
+		module.createDecoder("ros2annFloatArr", "int", 2);
+		module.createEncoder("ann2rosFloatArr", "float", 4);
 
 		try {
-			Origin o = smartOne.getOrigin("ros2annFloatArr");
+			Origin o = module.getOrigin("ros2annFloatArr");
 			System.out.println("OK, correct origin named: "+o.getName()+" found");
 		} catch (StructuralException e1) {
 			fail("The Origin `ros2annFloatArr` was not registered by the DefaultNeuralModule");
@@ -82,26 +82,26 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 
-		NeuralModule smartOne = null;
+		NeuralModule module = null;
 		try {
-			smartOne = new DefaultNeuralModule("SmartNeuron",g);
+			module = new DefaultNeuralModule("NeuralModule",g);
 		} catch (ConnectionException e2) {
 			e2.printStackTrace();
 			fail();
 		}
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 2); // one modem and one ROS node
 
-		smartOne.createDecoder("ros2annFloatArr", "int", 2);
-		smartOne.createEncoder("ann2rosFloatArr", "float", 4);
+		module.createDecoder("ros2annFloatArr", "int", 2);
+		module.createEncoder("ann2rosFloatArr", "float", 4);
 
 		try {
-			Termination t = smartOne.getTermination("ann2rosFloatArr");
+			Termination t = module.getTermination("ann2rosFloatArr");
 
 			System.out.println("Dimensionality of this Termination is: "+t.getDimensions());
 			assertTrue(t.getDimensions()==4);	// encoder encodes four float values
 
 		} catch (StructuralException e1) {
-			smartOne.printTerminationNames();
+			module.printTerminationNames();
 			fail("The termination `ros2annFloatArr` was not registerer");
 			e1.printStackTrace();
 		}

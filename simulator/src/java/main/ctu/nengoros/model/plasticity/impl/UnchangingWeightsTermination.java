@@ -8,6 +8,8 @@ import ctu.nengoros.model.plasticity.AbstractPlasticTermination;
  * 
  * <p>Here, no modification of connection weights occurs.</p> 
  *   
+ *   TODO implement this
+ *   
  * @author Jaroslav Vitku
  *
  */

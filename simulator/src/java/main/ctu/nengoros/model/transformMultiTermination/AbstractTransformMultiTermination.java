@@ -73,6 +73,7 @@ public abstract class AbstractTransformMultiTermination implements MultiTerminat
 		try {
 			this.addTermination();
 		} catch (StructuralException e) {
+			System.err.println("Could not add a default Termination!");
 			e.printStackTrace();
 		}	
 	}

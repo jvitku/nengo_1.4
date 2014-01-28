@@ -11,8 +11,10 @@ import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.comm.rosBackend.encoders.Encoder;
 import ctu.nengoros.exceptions.ConnectionException;
-import ctu.nengoros.model.multiTermination.MultiTermination;
-import ctu.nengoros.model.multiTermination.impl.SumMultiTermination;
+import ctu.nengoros.model.transformMultiTermination.MultiTermination;
+import ctu.nengoros.model.transformMultiTermination.impl.SumMultiTermination;
+//import ctu.nengoros.model.multiTermination.MultiTermination;
+//import ctu.nengoros.model.multiTermination.impl.SumMultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 
 public class BasicEncoder implements Encoder{
@@ -75,6 +77,8 @@ public class BasicEncoder implements Encoder{
 	 * @throws ConnectionException ROS network problem
 	 * 
 	 * @see ctu.nengoros.comm.rosBackend.backend.impl
+	 * 
+	 * TODO possibly remove dynamical system from here?
 	 */
 	public BasicEncoder(NeuralModule parent, int[] dimensionsizes, DynamicalSystem dynamics, Integrator integrator, 
 			String name, String dataType, Units u, ModemContainer modem, Backend ros) 
@@ -105,11 +109,11 @@ public class BasicEncoder implements Encoder{
 
 		this.ros = ros;	// get my ROS backend
 
+		System.out.println("my dimension is: "+this.dimensions);
 		// Here, add new MultiTermination which sums inputs on all own Terminations together.
 		multiTermination  = new SumMultiTermination(
-				this.parent, this.name, this.integrator, this.dynamics);
+				this.parent, this.name, this.integrator, this.dimensions);
 		
-		// one Termination with the corresponding is added automatically 
 	}
 
 

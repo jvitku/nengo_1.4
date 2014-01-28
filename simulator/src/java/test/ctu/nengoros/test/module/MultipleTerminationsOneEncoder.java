@@ -17,6 +17,7 @@ import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
 import ctu.nengoros.testsuit.demo.nodes.minmax.F2IPubSub;
+import ctu.nengoros.util.SL;
 
 /**
  * Extension of the  ctu.nengoros.test.module.DefaultModuleTerminationsOrigins .
@@ -48,7 +49,6 @@ public class MultipleTerminationsOneEncoder extends NengorosTest{
 		/**
 		 * setup the neural module, run the ROS MinMaxInt node
 		 */
-
 		NodeGroup g = new NodeGroup(name, false);
 		g.addNode(minimax,"NameX","java");
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
@@ -70,10 +70,17 @@ public class MultipleTerminationsOneEncoder extends NengorosTest{
 		 * setup the interface in the Nengo
 		 */
 
-		float weight = (float) 0.65;
-		Float[] weights = new Float[]{(float) 0.1,(float) 1,(float) 10,(float) -101};
+		float weight = 0.65f;
+		float[] weights = new float[]{0.1f,1f,10f,-101f};// place on diagonal
+		//float[] weights = new float[]{0f,0f,0f,0f};
+		float[][] diag = new float[weights.length][weights.length];
+		for(int i=0; i<weights.length; i++){
+			diag[i][i] = weights[i];
+		}
+		System.out.println("The weights are: \n"+SL.toStr(diag));
+		
 
-		Termination t0=null,t1=null,t2=null;
+		Termination t0=null, t1=null, t2=null;
 		Termination tDef = null;
 
 		try {
@@ -81,7 +88,7 @@ public class MultipleTerminationsOneEncoder extends NengorosTest{
 
 			t0 = module.newTerminationFor(F2IPubSub.ann2ros);
 			t1 = module.newTerminationFor(F2IPubSub.ann2ros,weight);	
-			t2 = module.newTerminationFor(F2IPubSub.ann2ros,weights);
+			t2 = module.newTerminationFor(F2IPubSub.ann2ros,diag);
 
 		} catch (StructuralException e) {
 			e.printStackTrace();

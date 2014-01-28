@@ -1,6 +1,5 @@
 package ctu.nengoros.model.transformMultiTermination.impl;
 
-import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.Termination;
@@ -8,7 +7,8 @@ import ca.nengo.model.Units;
 import ca.nengo.model.impl.BasicTermination;
 import ca.nengo.util.TimeSeries;
 import ca.nengo.util.impl.TimeSeriesImpl;
-import ctu.nengoros.model.multiTermination.BasicMultiTermination;
+import ctu.nengoros.model.transformMultiTermination.BasicMultiTermination;
+//import ctu.nengoros.model.multiTermination.BasicMultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 
 /**
@@ -36,8 +36,8 @@ public class SumMultiTermination extends BasicMultiTermination{
 
 	String mess = me+"Dimension sizes of particular Terminations differ!";
 
-	public SumMultiTermination(NeuralModule parent, String name, Integrator integ, DynamicalSystem myDynamics){
-		super(parent, name, integ, myDynamics);
+	public SumMultiTermination(NeuralModule parent, String name, Integrator integ, int outputDim){
+		super(parent, name, integ, outputDim);
 	}
 
 	/**
@@ -81,8 +81,8 @@ public class SumMultiTermination extends BasicMultiTermination{
 	 */
 	private TimeSeriesImpl initZeros(float startTime, float endTime){
 
-		float[] input = new float[this.dimensions];
-		for(int i=0; i<this.dimensions; i++)
+		float[] input = new float[this.outputDim];
+		for(int i=0; i<this.outputDim; i++)
 			input[i] = 0;
 
 		float[] inputII = input.clone();

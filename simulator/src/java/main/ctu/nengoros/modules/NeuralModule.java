@@ -1,6 +1,7 @@
 package ctu.nengoros.modules;
 
-import ctu.nengoros.model.multiTermination.MultiTermination;
+//import ctu.nengoros.model.multiTermination.MultiTermination;
+import ctu.nengoros.model.transformMultiTermination.MultiTermination;
 import ca.nengo.model.Node;
 import ca.nengo.model.Probeable;
 import ca.nengo.model.StructuralException;
@@ -91,7 +92,7 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	 *  @see #newTerminationFor(String)
 	 *  {@link ctu.nengoros.model.multiTermination.MultiTermination#addTermination(Float[])}
 	 */
-	public Termination newTerminationFor(String name, Float[] weights) throws StructuralException;
+	//public Termination newTerminationFor(String name, Float[] weights) throws StructuralException;
 	
 	/**
 	 * The same as {@link ctu.nengoros.modules.NeuralModule#newTerminationFor(String,float)}, but here
@@ -105,7 +106,7 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	 * @return newly created Termination
 	 * @throws StructuralException exception if the Termination could not be created (e.g. dimensions inconsistent)
 	 */
-	public Termination newTerminationFor(String name, Float[][] weights) throws StructuralException;
+	public Termination newTerminationFor(String name, float[][] weights) throws StructuralException;
 	
 	
 	/**

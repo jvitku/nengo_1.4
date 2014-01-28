@@ -20,7 +20,8 @@ import ctu.nengoros.dynamics.NoIntegrator;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.exceptions.MessageFormatException;
 import ctu.nengoros.exceptions.UnsupportedMessageFormatExc;
-import ctu.nengoros.model.multiTermination.MultiTermination;
+import ctu.nengoros.model.transformMultiTermination.MultiTermination;
+//import ctu.nengoros.model.multiTermination.MultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.util.sync.impl.SyncedUnit;
 import ca.nengo.dynamics.Integrator;
@@ -613,7 +614,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			
 		return this.myEncoders.get(name).getMultiTermination().addTermination(weight);
 	}
-
+/*
 	@Override
 	public Termination newTerminationFor(String name, Float[] weights) throws StructuralException {
 
@@ -622,11 +623,15 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			
 		return this.myEncoders.get(name).getMultiTermination().addTermination(weights);
 	}
+	*/
 
 	@Override
-	public Termination newTerminationFor(String name, Float[][] weights) throws StructuralException {
-		// TODO Auto-generated method stub
-		return null;
+	public Termination newTerminationFor(String name, float[][] weights) throws StructuralException {
+		
+		if(!this.myEncoders.containsKey(name))
+			throw new StructuralException(me+"requested MultiTermination not found!");
+		
+		return this.myEncoders.get(name).getMultiTermination().addTermination(weights);
 	}
 
 }

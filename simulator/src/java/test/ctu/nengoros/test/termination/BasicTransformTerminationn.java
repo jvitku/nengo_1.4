@@ -53,7 +53,7 @@ public class BasicTransformTerminationn {
 		BasicTransformTermination t = null;
 		try {
 			t = new BasicTransformTermination((Node)node, (DynamicalSystem)noLTI, 
-					noInt, outdim, name, weights);
+					noInt, name, weights);
 		} catch (StructuralException e1) {
 			e1.printStackTrace();
 			fail();
@@ -108,7 +108,7 @@ public class BasicTransformTerminationn {
 		BasicTransformTermination t = null;
 		try {
 			t = new BasicTransformTermination((Node)node, (DynamicalSystem)noLTI, 
-					noInt, outdim, name, weights);
+					noInt, name, weights);
 		} catch (StructuralException e1) {
 			e1.printStackTrace();
 			fail();
@@ -169,7 +169,7 @@ public class BasicTransformTerminationn {
 		BasicTransformTermination t = null;
 		try {
 			t = new BasicTransformTermination((Node)node, (DynamicalSystem)noLTI, 
-					noInt, outdim, name, w2);
+					noInt, name, w2);
 		} catch (StructuralException e1) {
 			e1.printStackTrace();
 			fail();
