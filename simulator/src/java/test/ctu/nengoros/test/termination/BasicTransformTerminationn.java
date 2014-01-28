@@ -3,15 +3,13 @@ package ctu.nengoros.test.termination;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.dynamics.IdentityLTISystem;
 import ctu.nengoros.dynamics.NoIntegrator;
-import ctu.nengoros.exceptions.ConnectionException;
+import ctu.nengoros.model.termination.impl.BasicTransformTermination;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.Node;
-import ca.nengo.model.Termination;
 
 /**
  * Test whether the Transformation works OK.
@@ -19,8 +17,11 @@ import ca.nengo.model.Termination;
  * @author Jaroslav Vitku
  *
  */
-public class BasicTransformTermination {
+public class BasicTransformTerminationn {
 
+	//@Mock
+	
+	
 	@Test
 	public void transfomr(){
 		
@@ -34,17 +35,18 @@ public class BasicTransformTermination {
 		Integrator noInt = new NoIntegrator();
 		IdentityLTISystem noLTI = new IdentityLTISystem(indim); 
 		
-		 DefaultNeuralModule test = Mockito.mock(DefaultNeuralModule.class);
+		 DefaultNeuralModule node = Mockito.mock(DefaultNeuralModule.class);
+		 
 		 
 		  // define return value for method getUniqueId()
-		 test.when(test.getUniqueId()).thenReturn(43);
+		 //test.when(test.getUniqueId()).thenReturn(43);
 		  
 		//Node node = (Node)new DefaultNeuralModule("NodeName", NodeGroup group);
 		
 		
-		BasicTransformTermination t = new BasicTransformTermination(node, (DynamicalSystem)noLTI, 
+		BasicTransformTermination t = new BasicTransformTermination((Node)node, (DynamicalSystem)noLTI, 
 				noInt, outdim, name, weights);
-		
+		System.out.println(t.getName());
 	}
 	
 }
