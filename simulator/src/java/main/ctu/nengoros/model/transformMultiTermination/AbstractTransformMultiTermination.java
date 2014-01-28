@@ -2,9 +2,8 @@ package ctu.nengoros.model.transformMultiTermination;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 
-import ctu.nengoros.model.multiTermination.MultiTermination;
+import ctu.nengoros.model.transformMultiTermination.impl.BasicWeights;
 import ctu.nengoros.modules.NeuralModule;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.Node;
@@ -28,7 +27,6 @@ public abstract class AbstractTransformMultiTermination implements MultiTerminat
 	private static final long serialVersionUID = -5806553506661735679L;
 
 	protected final LinkedList <Termination> orderedTerminations;
-	protected final Map<String, Float[][]> myWeights;				// weight for each Termination
 	protected final HashMap<String, Termination> myTerminations;
 
 	// number of registered terminations
@@ -44,6 +42,8 @@ public abstract class AbstractTransformMultiTermination implements MultiTerminat
 	// setup properties of my Terminations
 	protected final Integrator integ;
 	//protected final DynamicalSystem lti;
+	
+	protected final WeightFactory wg = new BasicWeights();	// define default weights
 
 	/**
 	 * Common part of TransformMultiTerminations, thing that has similar functionality
@@ -66,7 +66,6 @@ public abstract class AbstractTransformMultiTermination implements MultiTerminat
 		this.parent = parent;
 		this.orderedTerminations = new LinkedList<Termination>();
 		this.myTerminations = new HashMap<String, Termination>();
-		this.myWeights = new HashMap<String, Float[][]>();
 
 		//this.outputDim = lti.getInputDimension();
 		this.outputDim = outputDimension;
@@ -128,7 +127,6 @@ public abstract class AbstractTransformMultiTermination implements MultiTerminat
 	protected abstract void runCombineValues(float startTime, float endTime) 
 			throws SimulationException;
 
-
 	/**
 	 * This method generates unique name for my Termination based on
 	 * the name of MultiTermination. For the backwards compatibility, the
@@ -144,58 +142,38 @@ public abstract class AbstractTransformMultiTermination implements MultiTerminat
 		}
 		return name+"_"+((counter++)-1); // start from 0
 	}
-
-	@Override
-	public Termination addTermination(float weight) throws StructuralException{
-		return this.addTermination(this.generateWeights(weight));
-	}
-
-	// physically create and Register the termination
-	@Override
-	public abstract Termination addTermination(final Float[] weights) throws StructuralException;
-
+	
 	@Override
 	public Termination addTermination() throws StructuralException{
-		return this.addTermination(this.generateWeights(this.DEF_W));
+		return this.addTermination(wg.eye(this.outputDim));
 	}
+	
+	@Override
+	public Termination addTermination(float weight) throws StructuralException{
+		return this.addTermination(wg.eye(this.outputDim, weight));
+	}
+
+	@Override
+	public abstract Termination addTermination(final float[][] weights) throws StructuralException;
 
 	/**
 	 * Check dimension of 2D transformation matrix, this will be used inside the TransformTermination 
 	 * @param weights transformation matrix
-	 * @param inputDim number of input dimensions for newly created TranformTrmination
 	 * @throws StructuralException thrown if dimensions are incorrect
 	 * @see ctu.nengoros.model.termination.TransformTermination
 	 */
-	protected void checkDimensions(final Float[][] weights, int inputDim) throws StructuralException{
+	protected void checkDimensions(final float[][] weights) throws StructuralException{
 
+		/*
 		if(weights.length != inputDim)
 			throw new StructuralException(me+"incorrect dimensionality" +
 					" of weight matrix, expected 2D matrix should have the "
 					+ "first dimension of size: " +inputDim);
-
+		 */
 		if(weights[0].length != this.outputDim)
 			throw new StructuralException(me+"incorrect dimensionality" +
 					" of weight matrix, size of the second dimension of the weight " +
 					"matrix shoudl is "+this.outputDim);
-	}
-
-	protected Float[][] readWeights(String name) throws SimulationException{
-
-		if(!this.myWeights.containsKey(name))
-			throw new SimulationException(me+"ERROR: weight for this Termination not found: "+name);
-
-		return this.myWeights.get(name);
-	}
-
-	//protected float[][] generateWeights
-	
-	
-	protected Float[] generateWeights(float weight){
-		Float[] w = new Float[this.outputDim];
-		for(int i=0; i<w.length; i++){
-			w[i] = weight;
-		}
-		return w;
 	}
 
 	@Override
@@ -206,7 +184,6 @@ public abstract class AbstractTransformMultiTermination implements MultiTerminat
 		// this is how BasicTermination determines its dimension
 		return this.outputDim;	
 	}
-
 
 	@Override
 	public TimeSeries getOutput() { return this.myValue; }

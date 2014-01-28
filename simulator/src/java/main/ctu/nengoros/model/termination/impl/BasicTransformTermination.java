@@ -47,12 +47,13 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 	 * @param weights weight matrix if size [{@link #getDimensions()},{@link #getOutputDimensions()}]
 	 */
 	public BasicTransformTermination(Node node, DynamicalSystem dynamics, 
-			Integrator integrator, int outputDimension, String name, float[][] weights) throws
+			Integrator integrator, /*int outputDimension, */String name, float[][] weights) throws
 			StructuralException{
 		super(node, dynamics, integrator, name);
 
 		this.inputDimension = dynamics.getInputDimension();
-		this.outputDimension = outputDimension;
+		//this.outputDimension = outputDimension;
+		this.outputDimension = weights[0].length;
 
 		if(weights.length != this.inputDimension || weights[0].length != this.outputDimension)
 			throw new StructuralException("BasicTransformTermination: wrong size of transformation"
