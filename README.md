@@ -43,6 +43,10 @@ In order to install just standalone version of Nengoros, you can use the script 
 Changelog
 --------------
 
+###nenoros-master-v0.0.6
+* TODO: adding support for `ctu.nengoros.model.termination.TransformTermination`, which contains transformation matrix and is able to change dimension between input and output of the Termination. This (combined with dynamical adding of new Terminations) will provide ability to connect nodes of arbitrary dimensions together.
+
+
 ###nengoros-master-v0.0.5
 * Added support for creating Projections to nodes, that are not neural Ensembles. During adding a Projection, new Termination which implements this transformation is added. 
 
@@ -67,6 +71,10 @@ Changelog
 
 Technical Notes:
 -------------
+
+### TODO
+
+Implement the `ctu.nengoros.model.plasticity.*` in order to provide plastic TransformTerminations. This will be used for automatic determination of transformations and learning.
 
 ###Gradle tests
 
