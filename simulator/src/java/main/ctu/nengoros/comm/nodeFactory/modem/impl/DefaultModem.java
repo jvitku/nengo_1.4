@@ -54,6 +54,9 @@ public class DefaultModem implements Modem {
 	@Override
 	public void onShutdown(Node node) {
 		System.out.println(me+" shutting down started..!");
+		System.out.println(" me is null? "+(me==null));
+		System.out.println(" me is null? "+(log==null));
+		
 		log.info(me+" shutting down started..!");
 	}
 

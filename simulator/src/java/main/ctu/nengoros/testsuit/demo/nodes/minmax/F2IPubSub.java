@@ -26,13 +26,15 @@ public class F2IPubSub extends AbstractNodeMain {
 	private float min;
 	private float max;
 	
+	Log log;
+	
 	@Override
 	public GraphName getDefaultNodeName() { return GraphName.of("F2IPubSub"); }
 
 	@Override
 	public void onStart(final ConnectedNode connectedNode) {
 
-		final Log log = connectedNode.getLog();
+		log = connectedNode.getLog();
 
 		// define the publisher
 		final Publisher<std_msgs.Int32MultiArray> publisher = 

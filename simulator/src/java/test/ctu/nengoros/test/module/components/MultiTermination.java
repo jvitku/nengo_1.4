@@ -18,11 +18,12 @@ import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.dynamics.IdentityLTISystem;
 import ctu.nengoros.dynamics.NoIntegrator;
 import ctu.nengoros.exceptions.ConnectionException;
-import ctu.nengoros.model.multiTermination.impl.SumMultiTermination;
+import ctu.nengoros.model.transformMultiTermination.impl.SumMultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
 import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.test.module.*;
+import ctu.nengoros.util.SL;
 
 public class MultiTermination extends NengorosTest{
 
@@ -50,7 +51,8 @@ public class MultiTermination extends NengorosTest{
 		Integrator noInt = new NoIntegrator();
 		Termination t1=null,t2=null;
 
-		SumMultiTermination mt = new SumMultiTermination(module, name, noInt, noLTI);
+		//SumMultiTermination mt = new SumMultiTermination(module, name, noInt, noLTI);
+		SumMultiTermination mt = new SumMultiTermination(module, name, noInt, noLTI.getInputDimension());
 
 		assertTrue(mt.getDimension()==4);
 		// one Termination added by default
@@ -143,7 +145,14 @@ public class MultiTermination extends NengorosTest{
 			assertTrue(data[0][i]==zerovals[i]);
 		}
 
-		System.out.println("ending the test");
+		/*
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}*/
+		System.out.println("ending the test, number of nodes: "+NodeFactory.np.numOfRunningNodes());
+		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 		g.stopGroup();
 	}
 
@@ -151,7 +160,7 @@ public class MultiTermination extends NengorosTest{
 	/**
 	 * The same as the above, but this termination is weighted (check data)
 	 */
-	//@Ignore
+	@Ignore
 	@Test
 	public void runSingleWeightedTermination(){
 
@@ -177,7 +186,9 @@ public class MultiTermination extends NengorosTest{
 		Integrator noInt = new NoIntegrator();
 		Termination t0=null, t1=null,t2=null, t3=null;
 
-		SumMultiTermination mt = new SumMultiTermination(module, name, noInt, noLTI);
+		//SumMultiTermination mt = new SumMultiTermination(module, name, noInt, noLTI);
+		SumMultiTermination mt = new SumMultiTermination(module, name, noInt, noLTI.getInputDimension());
+		
 		/**
 		 * setup done
 		 */
@@ -186,8 +197,14 @@ public class MultiTermination extends NengorosTest{
 		//Float[] weights = new Float[]{(float) 1,(float)1,(float)1,(float)1};
 
 		float weight = (float) 0.65;
-		Float[] weights = new Float[]{(float) 0.1,(float) 1,(float) 10,(float) -101};
-
+		//float[] weights = new Float[]{0.1,(float) 1,(float) 10,(float) -101};
+		float[] weights = new float[]{0.1f,1f,10f,-101f};// place on diagonal
+		float[][] diag = new float[weights.length][weights.length];
+		for(int i=0; i<weights.length; i++){
+			diag[i][i] = weights[i];
+		}
+		System.out.println("The weights are: \n"+SL.toStr(diag));
+		
 		assertTrue(mt.getDimension()==4);
 		assertTrue(mt.getTerminations().size()==1); 
 		assertTrue(mt.getTerminations().get(name)!=null);
@@ -209,7 +226,7 @@ public class MultiTermination extends NengorosTest{
 			assertTrue(t2.getDimensions()==4);
 			assertTrue(t2.getName().equalsIgnoreCase(name+"_1"));
 
-			t3 = mt.addTermination(weights);			// t3 is weighted by weight matrix
+			t3 = mt.addTermination(diag);			// t3 is weighted by weight matrix
 			System.out.println("added this one: "+t3.getName());
 			assertTrue(mt.getTerminations().size()==4);
 			assertTrue(t3.getDimensions()==4);
@@ -317,7 +334,7 @@ public class MultiTermination extends NengorosTest{
 		assertTrue(times[1]==endTime);
 	}
 
-	//@Ignore
+	@Ignore
 	@Test
 	public void runEntireModule(){
 		String name = "fullModule";
@@ -338,7 +355,8 @@ public class MultiTermination extends NengorosTest{
 		Integrator noInt = new NoIntegrator();
 		Termination t0=null, t1=null,t2=null;
 
-		SumMultiTermination mt = new SumMultiTermination(module, name, noInt, noLTI);
+		//SumMultiTermination mt = new SumMultiTermination(module, name, noInt, noLTI);
+		SumMultiTermination mt = new SumMultiTermination(module, name, noInt, noLTI.getInputDimension());
 
 		t0 = mt.getTerminations().get(name);
 		// add some new terminations

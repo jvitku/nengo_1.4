@@ -1,4 +1,4 @@
-package ctu.nengoros.model.multiTermination.impl;
+package ctu.nengoros.model.transformMultiTermination.impl;
 
 import ctu.nengoros.dynamics.IdentityLTISystem;
 import ctu.nengoros.dynamics.NoIntegrator;

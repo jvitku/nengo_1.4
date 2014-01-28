@@ -23,6 +23,8 @@ public class F2FPubSub extends AbstractNodeMain {
 	private float min;
 	private float max;
 	
+	Log log;
+	
 	@Override
 	public GraphName getDefaultNodeName() { return GraphName.of("FloatArrPubSub"); }
 
@@ -30,7 +32,7 @@ public class F2FPubSub extends AbstractNodeMain {
 	public void onStart(final ConnectedNode connectedNode) {
 
 		System.out.println("Node started, initializing!");
-		final Log log = connectedNode.getLog();
+		log = connectedNode.getLog();
 
 		// define the publisher
 		final Publisher<std_msgs.Float32MultiArray> publisher = 

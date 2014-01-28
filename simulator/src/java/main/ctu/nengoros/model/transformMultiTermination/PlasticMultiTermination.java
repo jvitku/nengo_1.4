@@ -1,4 +1,4 @@
-package ctu.nengoros.model.multiTermination;
+package ctu.nengoros.model.transformMultiTermination;
 
 import ca.nengo.util.TaskSpawner;
 

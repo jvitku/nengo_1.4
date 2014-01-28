@@ -1,9 +1,10 @@
-package ctu.nengoros.model.multiTermination;
+package ctu.nengoros.model.transformMultiTermination;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import ctu.nengoros.model.plasticity.PlasticTermination;
 import ctu.nengoros.modules.NeuralModule;
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
@@ -14,16 +15,26 @@ import ca.nengo.model.Termination;
 import ca.nengo.util.TimeSeries;
 
 /**
+ * <p>The main difference compared to the {@link ctu.nengoros.model.multiTermination.AbstractMultiTermination}
+ * is that this uses PlasticTerminations, which means that weights of these Terminations may, or may
+ * not change during the simulation run.</p>
+ * 
+ * <p>Each {@link ctu.nengoros.model.plasticity.PlasticTermination} extends 	 
+ * 
+ *  
+ * TODO check modifications
+ * TODO add Thread features
+ * 
  * @author Jaroslav Vitku
  *
  */
-public abstract class AbstractMultiTermination implements MultiTermination{
+public abstract class AbstractPlasticMultiTermination implements PlasticMultiTermination{
 
-	public static final String me = "[AbstractMultiTermination] ";
-	private static final long serialVersionUID = -5806553506661735679L;
+	public static final String me = "[AbstractPlasticMultiTermination] ";
+	private static final long serialVersionUID = -5806553506661735678L;
 
-	protected final LinkedList <Termination> orderedTerminations;
-	protected final Map<String, Float[][]> myWeights;	// weight for each Termination
+	protected final LinkedList <PlasticTermination> orderedTerminations;
+	protected final Map<String, Float[][]> myWeights;				// weight for each Termination
 	protected final HashMap<String, Termination> myTerminations;
 
 	// number of registered terminations
@@ -40,15 +51,14 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 	protected final Integrator integ;
 	protected final DynamicalSystem lti;
 
-	public AbstractMultiTermination(NeuralModule parent, String name, /*int dimension,*/ 
-			Integrator integ, DynamicalSystem lti2){
+	public AbstractPlasticMultiTermination(NeuralModule parent, String name, /*int dimension,*/ Integrator integ, DynamicalSystem lti2){
 
 		this.lti = lti2;
 		this.integ = integ;
 
 		this.name = name;
 		this.parent = parent;
-		this.orderedTerminations = new LinkedList<Termination>();
+		this.orderedTerminations = new LinkedList<PlasticTermination>();
 		this.myTerminations = new HashMap<String, Termination>();
 		this.myWeights = new HashMap<String, Float[][]>();
 
@@ -133,8 +143,6 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 		return this.addTermination(this.generateWeights(weight));
 	}
 
-	// physically create and Register the termination
-	@Override
 	public abstract Termination addTermination(final Float[] weights) throws StructuralException;
 
 	@Override
@@ -157,7 +165,6 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 	 */
 	protected void checkDimensions(final Float[][] weights) throws StructuralException{
 
-		//TODO 2d support here
 		if(weights.length==0)
 			throw new StructuralException(me+"incorrect dimensionality" +
 					" of weights, expected 2D matrix with first non-zero dimension" +
