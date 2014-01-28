@@ -43,6 +43,9 @@ In order to install just standalone version of Nengoros, you can use the script 
 Changelog
 --------------
 
+###nenoros-master-v0.0.7
+* TODO: Improve DefaultModem and NeuralModule to implement the `awaitReady()` method from the `HannsNode`, by this way, the correct startup of all ROS components should be ensured. Therefore all waiting can be deleted (mostly in the unit tests).
+
 ###nenoros-master-v0.0.6
 * Added support for `ctu.nengoros.model.termination.TransformTermination`, which contains transformation matrix and is able to change dimension between input and output of the Termination. This (combined with dynamical adding of new Terminations) provides the ability to connect nodes of arbitrary dimensions together.
 
@@ -75,7 +78,7 @@ Technical Notes:
 ### TODO
 
 * Implement the `ctu.nengoros.model.plasticity.*` in order to provide plastic TransformTerminations. This will be used for automatic determination of transformations and learning.
-* Improve DefaultModem and NeuralModule to implement the `awaitReady()` method from the `HannsNode`, by this way, the correct startup of all ROS components should be ensured. Therefore all waiting, mostly in the  
+
 * Improve use of `RosUtils` .. `TimeUtil`, particularly in the `ca.nengo.util.impl.NodeThreadPool`.
 * Define Nengo ROS message for sending time series?
 
