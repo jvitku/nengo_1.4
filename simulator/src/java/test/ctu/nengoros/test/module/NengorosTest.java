@@ -42,6 +42,7 @@ public class NengorosTest {
 	public static void stopCore(){
 		RosUtils.utilsShallStop();
 	}
+	
 
 	private static int maxWait = 3000;
 

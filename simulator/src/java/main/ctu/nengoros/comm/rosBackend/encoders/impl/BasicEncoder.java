@@ -120,6 +120,8 @@ public class BasicEncoder implements Encoder{
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
 
+		System.out.println("hey, basic encoder, should run from to "+startTime+" "+endTime);
+		
 		// collect data on all my Terminations
 		multiTermination.run(startTime, endTime);
 

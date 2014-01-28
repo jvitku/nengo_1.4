@@ -47,7 +47,7 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 	 * @param weights weight matrix if size [{@link #getDimensions()},{@link #getOutputDimensions()}]
 	 */
 	public BasicTransformTermination(Node node, DynamicalSystem dynamics, 
-			Integrator integrator, /*int outputDimension, */String name, float[][] weights) throws
+			Integrator integrator, String name, float[][] weights) throws
 			StructuralException{
 		super(node, dynamics, integrator, name);
 
@@ -118,12 +118,14 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 		if(!(terminationInput instanceof TimeSeriesImpl)){
 			throw new SimulationException("BasicTransformTermination: ERROR: TimeSeriesImpl expected!");
 		}
-		if(terminationInput.getDimension() != this.getDimensions()){
+		if(terminationInput.getDimension() != this.getDimensions() && terminationInput.getDimension()!=0){
 			throw new SimulationException("BasicTransformTermination: ERROR: TimeSeries has "
 					+ "unexpected dimenion!, expected value: "+this.getDimensions()+", but found"
 					+ " "+terminationInput.getDimension());
 		}
 
+		System.out.println("adshfkadsjf adslf Time series is: "+terminationInput.getName()+" "+terminationInput.getDimension()
+				+" name "+this.getName());
 		myOutput = this.applyTransformation(startTime, endTime, terminationInput);
 	}
 
@@ -189,3 +191,4 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 		return inSeries;
 	}
 }
+
