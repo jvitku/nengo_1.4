@@ -52,7 +52,6 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 		super(node, dynamics, integrator, name);
 
 		this.inputDimension = dynamics.getInputDimension();
-		//this.outputDimension = outputDimension;
 		this.outputDimension = weights[0].length;
 
 		if(weights.length != this.inputDimension || weights[0].length != this.outputDimension)
@@ -96,9 +95,11 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 	public void run(float startTime, float endTime) throws SimulationException {
 
 		// the same processing as in the BasicTermination
-		float[] input = this.notConnectedInput;	
+		float[] input = this.notConnectedInput;
+		
 		if (myInput instanceof RealOutput) {
 			input = ((RealOutput) myInput).getValues();
+			
 		} else if (myInput instanceof SpikeOutput) {
 			boolean[] spikes = ((SpikeOutput) myInput).getValues();
 			input = new float[spikes.length];
@@ -108,24 +109,16 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 					input[i] = amplitude;
 				}
 			}
+		}else{
+			// if the Termination is not connected no values are received (dimension=0) so 
+			// set zeros of correct dimension to my output and return
+			myOutput = this.initZeros(startTime, endTime, this.outputDimension);
+			return;
 		}
 		// here, compute dynamics as the BasicTermination does
 		TimeSeries inSeries = new TimeSeriesImpl(new float[]{startTime, endTime}, 
 				new float[][]{input, input}, Units.uniform(Units.UNK, input.length));
 		TimeSeries terminationInput = myIntegrator.integrate(myDynamics, inSeries);
-
-		// check instance and dimensions..
-		if(!(terminationInput instanceof TimeSeriesImpl)){
-			throw new SimulationException("BasicTransformTermination: ERROR: TimeSeriesImpl expected!");
-		}
-		if(terminationInput.getDimension() != this.getDimensions() && terminationInput.getDimension()!=0){
-			throw new SimulationException("BasicTransformTermination: ERROR: TimeSeries has "
-					+ "unexpected dimenion!, expected value: "+this.getDimensions()+", but found"
-					+ " "+terminationInput.getDimension());
-		}
-
-		System.out.println("adshfkadsjf adslf Time series is: "+terminationInput.getName()+" "+terminationInput.getDimension()
-				+" name "+this.getName());
 		myOutput = this.applyTransformation(startTime, endTime, terminationInput);
 	}
 
@@ -147,7 +140,6 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 			throw new SimulationException("Wrong dimension of input TimeSeries! "
 					+ "Input dimension of this Termination is "+this.inputDimension);
 		}
-
 		// get blank TimeSeries with appropriate dimensionality
 		TimeSeriesImpl output = this.initZeros(startTime, endTime, this.outputDimension);
 
