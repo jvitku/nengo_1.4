@@ -344,7 +344,7 @@ public class RosUtils {
 
 	public static RosTimeUtil getTimeUtil(){
 		if(timeUnit==null){
-			System.err.println(me+"error! TimeUtil not initialized yet!");
+			//System.err.println(me+"error! TimeUtil not initialized yet!");
 		}
 		return timeUnit; 
 	}

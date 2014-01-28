@@ -74,7 +74,9 @@ Technical Notes:
 
 ### TODO
 
-Implement the `ctu.nengoros.model.plasticity.*` in order to provide plastic TransformTerminations. This will be used for automatic determination of transformations and learning.
+* Implement the `ctu.nengoros.model.plasticity.*` in order to provide plastic TransformTerminations. This will be used for automatic determination of transformations and learning.
+* Improve use of RosUtils .. TimeUtil, particulary in the `ca.nengo.util.impl.NodeThreadPool`.
+
 
 ###Gradle tests
 

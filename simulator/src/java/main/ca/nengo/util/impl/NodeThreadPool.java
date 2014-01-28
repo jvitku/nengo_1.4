@@ -38,7 +38,7 @@ public class NodeThreadPool {
 	protected Node[] myNodes;
 	protected SyncedUnit[] myUnits;	//list of all syncedUnits - note that SyncedUnit is also a node! 
 	protected Projection[] myProjections;
-    protected ThreadTask[] myTasks;
+	protected ThreadTask[] myTasks;
 
 	protected volatile int numThreadsComplete;
 	protected volatile int numThreadsWaiting;
@@ -47,14 +47,14 @@ public class NodeThreadPool {
 	protected volatile boolean runFinished;
 	protected float myStartTime;
 	protected float myEndTime;
-	
+
 	protected static boolean myCollectTimings;
 	protected long myRunStartTime;
 	protected double myAverageTimePerStep;
 	protected int myNumSteps;
 
 	private String me = "[Simulator] "; ///my
-	
+
 	public static int getNumJavaThreads(){
 		return myNumJavaThreads;
 	}
@@ -62,11 +62,11 @@ public class NodeThreadPool {
 	public static void setNumJavaThreads(int value){
 		myNumJavaThreads = value;
 	}
-	
+
 	public static int getMaxNumJavaThreads(){
 		return maxNumJavaThreads;
 	}
-	
+
 
 	public static boolean isMultithreading(){
 		return myNumJavaThreads != 0;
@@ -84,7 +84,7 @@ public class NodeThreadPool {
 	public static void setCollectTimings(boolean collectTimings) {
 		myCollectTimings = collectTimings;
 	}
-	
+
 	public float getStartTime(){
 		return myStartTime;
 	}
@@ -100,11 +100,11 @@ public class NodeThreadPool {
 	// Dummy default constructor.
 	protected NodeThreadPool(){
 	}
-	
+
 	public NodeThreadPool(Network network, List<ThreadTask> threadTasks, boolean interactive){
 		initialize(network, threadTasks, interactive);
 	}
-	
+
 	/**
 	 * 1. Checks whether the GPU is to be used for the simulation. If it is, creates
 	 * a GPU Thread, passes this thread the nodes and projections which are to be run on the GPU,
@@ -119,39 +119,39 @@ public class NodeThreadPool {
 	 * @author Eric Crawford
 	 */
 	protected void initialize(Network network, List<ThreadTask> threadTasks, boolean interactive){
-		
+
 		myLock = new Object();
-		
+
 		Node[] nodes = network.getNodes();
 		Projection[] projections = network.getProjections();
-		
+
 		List<Node> nodeList = collectNodes(nodes, false);
 		List<SyncedUnit> unitList = collectSyncedNodes(nodes);///my
 		List<Projection> projList = collectProjections(nodes, projections);
 		List<ThreadTask> taskList = collectTasks(nodes);
 		taskList.addAll(threadTasks);
-		
+
 		myUnits = unitList.toArray(new SyncedUnit[0]);///my
 		myNodes = nodeList.toArray(new Node[0]);
 		myProjections = projList.toArray(new Projection[0]);
 		myTasks = taskList.toArray(new ThreadTask[0]);
-		
+
 		threadsRunning = false;
 		runFinished = false;
 		numThreadsWaiting = 0;
 		numThreadsComplete = 0;
-		
+
 		boolean useGPU = NEFGPUInterface.getUseGPU();
-		
+
 		int numNonJavaThreads = 0;
 		GPUThread gpuThread = null;
 		if(useGPU){ 
 			gpuThread = new GPUThread(this, interactive);
-			
+
 			int myNodeslength = myNodes.length;
 			// The NEFGPUInterface removes from myNodes ensembles that are to be run on the GPU and returns the rest.
 			myNodes = gpuThread.getNEFGPUInterface().takeGPUNodes(myNodes);
-			
+
 			if(myNodes.length == myNodeslength){
 				//don't create a GPU thread if there are no nodes to run on the GPU.
 				gpuThread = null;
@@ -190,11 +190,11 @@ public class NodeThreadPool {
 
 		int nodesPerJavaThread = (int) Math.ceil((float) myNodes.length / (float) myCurrentNumJavaThreads);
 		int projectionsPerJavaThread = (int) Math.ceil((float) myProjections.length / (float) myCurrentNumJavaThreads);
-        int tasksPerJavaThread = (int) Math.ceil((float) myTasks.length / (float) myCurrentNumJavaThreads);
-        
+		int tasksPerJavaThread = (int) Math.ceil((float) myTasks.length / (float) myCurrentNumJavaThreads);
+
 		int nodeOffset = 0, projectionOffset = 0, taskOffset = 0;
 		int nodeStartIndex, nodeEndIndex, projectionStartIndex, projectionEndIndex, taskStartIndex, taskEndIndex;
-		
+
 		// Evenly distribute projections, nodes and tasks to the java threads.
 		for(int i = 0; i < myCurrentNumJavaThreads; i++){
 
@@ -219,14 +219,14 @@ public class NodeThreadPool {
 			myThreads[i] = new NodeThread(this, myNodes, nodeStartIndex,
 					nodeEndIndex, myProjections, projectionStartIndex,
 					projectionEndIndex, myTasks, taskStartIndex, taskEndIndex);
-			
+
 			myThreads[i].setCollectTimings(myCollectTimings);
 			myThreads[i].setName("JavaThread" + i);
 
 			myThreads[i].setPriority(Thread.MAX_PRIORITY);
 			myThreads[i].start();
 		}
-		
+
 		myRunStartTime = myCollectTimings ? new Date().getTime() : 0;
 		myAverageTimePerStep = 0;
 		myNumSteps = 0;
@@ -243,19 +243,20 @@ public class NodeThreadPool {
 	public void step(float startTime, float endTime) throws SimulationException {
 		myStartTime = startTime;
 		myEndTime = endTime;
-		
-		
+
 		long stepInterval = myCollectTimings ? new Date().getTime() : 0;
-		
+
 		try
 		{
 			///my
-			// time: publish to/read from the ROS network  
-			float[] result = RosUtils.getTimeUtil().handleTime(startTime, endTime);
-			startTime = result[0];
-			endTime = result[1];
+			// time: publish to/read from the ROS network
+			if(RosUtils.getTimeUtil()!=null){
+				float[] result = RosUtils.getTimeUtil().handleTime(startTime, endTime);
+				startTime = result[0];
+				endTime = result[1];
+			}
 			//System.out.println("simulating from: "+startTime+" to: "+endTime);
-			
+
 			int oldPriority = Thread.currentThread().getPriority();
 			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 
@@ -264,10 +265,10 @@ public class NodeThreadPool {
 			// start the node processing, wait for it to finish
 			///my: Here, nodes have values on inputs and node.run() sends values over the ROS network
 			startThreads();	
-			
+
 			// start the task processing, wait for it to finish
 			startThreads();
-			
+
 			///my: Here, it is expected that nodes finished processing and have origins set, 
 			// ..so wait for ROS messages to arrive, this (asynchronous) should set values to their origins
 			int poc=1;
@@ -296,20 +297,20 @@ public class NodeThreadPool {
 		catch(Exception e) {
 			throw new SimulationException(e);
 		}
-		
+
 		if(myCollectTimings){
 			stepInterval = new Date().getTime() - stepInterval;
 			myAverageTimePerStep = (myAverageTimePerStep * myNumSteps + stepInterval) / (myNumSteps + 1);
-            
-            myNumSteps++;
+
+			myNumSteps++;
 		}
 	}
-	
+
 	/// my
 	final int sleeptime=1;
 	final int printPeriod = 20;		// print out waiting warning each x ms
 	final int maxwait = 500;		// some messages can get lost in the network; 
-	
+
 
 	/**
 	 * Tells the threads to run for one phase (projections, nodes or tasks). 
@@ -321,11 +322,11 @@ public class NodeThreadPool {
 		synchronized(myLock){
 			if(runFinished)
 				throw new InterruptedException();
-			
+
 			numThreadsComplete = 0;
 			threadsRunning = true;
 			myLock.notifyAll();  //release all the threads from the threadWait() loop
-			
+
 			while(threadsRunning || numThreadsWaiting < myThreads.length) 
 				myLock.wait();  //we don't want the stepthread to be able to continue (and start threads) until all the threads are waiting to be started
 		}
@@ -342,10 +343,10 @@ public class NodeThreadPool {
 			numThreadsWaiting++;
 			if(numThreadsWaiting == myThreads.length)
 				myLock.notifyAll(); //all the threads are done the step and in a waiting state, so free the stepthread
-			
+
 			while(!threadsRunning) {
-                myLock.wait();
-            }
+				myLock.wait();
+			}
 		}
 	}
 
@@ -355,7 +356,7 @@ public class NodeThreadPool {
 	 * @author Eric Crawford
 	 */
 	public void threadFinished() throws InterruptedException{
-		
+
 		synchronized(myLock){
 			numThreadsComplete++;
 
@@ -368,7 +369,7 @@ public class NodeThreadPool {
 				while(threadsRunning) //threads wait here when they are finished, but others are still running (i.e. wait here until end of one step)
 					myLock.wait();
 			}
-	
+
 			threadWait(); //threads wait here when they're all finished (i.e. wait here between steps)
 		}
 	}
@@ -387,25 +388,25 @@ public class NodeThreadPool {
 			for(int i = 0; i < myThreads.length; i++){
 				myThreads[i].interrupt();
 			}
-			
+
 			if(myCollectTimings){
 				StringBuffer timingOutput = new StringBuffer();
 				timingOutput.append("Timings for NodeThreadPool:\n");
-				
+
 				long approxRunTime = new Date().getTime() - myRunStartTime;
 				timingOutput.append("Approximate total run time: " + approxRunTime + " ms\n");
-				
+
 				timingOutput.append("Average time per step: " + myAverageTimePerStep + " ms\n");
-				
+
 				System.out.print(timingOutput.toString());
 			}
 
 			myLock.notifyAll();
 		}
-		
-		
+
+
 	}
-	
+
 	/**
 	 * ///my
 	 * This method should find all Nodes which extend SyncedUnit class. These are typically neural modules
@@ -416,157 +417,157 @@ public class NodeThreadPool {
 	 * 
 	 * @author Jaroslav Vitku
 	 */
-    public static List<SyncedUnit> collectSyncedNodes(Node[] startingNodes){
-    	///my
-        ArrayList<SyncedUnit> nodes = new ArrayList<SyncedUnit>();
-        List<Node> nodesToProcess = new LinkedList<Node>();
-        
-        nodesToProcess.addAll(Arrays.asList(startingNodes));
+	public static List<SyncedUnit> collectSyncedNodes(Node[] startingNodes){
+		///my
+		ArrayList<SyncedUnit> nodes = new ArrayList<SyncedUnit>();
+		List<Node> nodesToProcess = new LinkedList<Node>();
 
-        Node workingNode;
+		nodesToProcess.addAll(Arrays.asList(startingNodes));
 
-        while(nodesToProcess.size() != 0)
-        {
-            workingNode = nodesToProcess.remove(0);
-            
-            // go down into sub-networks and collect all nodes
-            if(workingNode instanceof Network){
-            	List<Node> nodeList = new LinkedList<Node>(Arrays.asList(((Network) workingNode).getNodes()));
+		Node workingNode;
 
-                nodeList.addAll(nodesToProcess);
-                nodesToProcess = nodeList;
-            }
-            else if(workingNode instanceof SyncedUnit){
-            	//System.out.println("synced unit found, its name is: "+workingNode.getName());
-            	nodes.add((SyncedUnit)workingNode);
-            } 
-        }
-        return nodes;
-    }
-	
-    /**
-     * Return all the nodes in the network except subnetworks. Essentially returns a "flattened"
-     * version of the network. The breakDownNetworkArrays param lets the caller choose whether to include
-     * Network Arrays in the returned list (=false) or to return the NEFEnsembles in the network array (=true).
-     * This facility is provided because sometimes Network Arrays should be treated like Networks, which is what
-     * they are as far as java is concerned (they extend the NetworkImpl class), and sometimes it is better to 
-     * treat them like NEFEnsembles, which they are designed to emulate (they're supposed to be an 
-     * easier-to-build version of large NEFEnsembles).
-     * 
-     * @author Eric Crawford
-     */
-    public static List<Node> collectNodes(Node[] startingNodes, boolean breakDownNetworkArrays){
+		while(nodesToProcess.size() != 0)
+		{
+			workingNode = nodesToProcess.remove(0);
 
-        ArrayList<Node> nodes = new ArrayList<Node>();
+			// go down into sub-networks and collect all nodes
+			if(workingNode instanceof Network){
+				List<Node> nodeList = new LinkedList<Node>(Arrays.asList(((Network) workingNode).getNodes()));
 
-        List<Node> nodesToProcess = new LinkedList<Node>();
-        nodesToProcess.addAll(Arrays.asList(startingNodes));
+				nodeList.addAll(nodesToProcess);
+				nodesToProcess = nodeList;
+			}
+			else if(workingNode instanceof SyncedUnit){
+				//System.out.println("synced unit found, its name is: "+workingNode.getName());
+				nodes.add((SyncedUnit)workingNode);
+			} 
+		}
+		return nodes;
+	}
 
-        Node workingNode;
+	/**
+	 * Return all the nodes in the network except subnetworks. Essentially returns a "flattened"
+	 * version of the network. The breakDownNetworkArrays param lets the caller choose whether to include
+	 * Network Arrays in the returned list (=false) or to return the NEFEnsembles in the network array (=true).
+	 * This facility is provided because sometimes Network Arrays should be treated like Networks, which is what
+	 * they are as far as java is concerned (they extend the NetworkImpl class), and sometimes it is better to 
+	 * treat them like NEFEnsembles, which they are designed to emulate (they're supposed to be an 
+	 * easier-to-build version of large NEFEnsembles).
+	 * 
+	 * @author Eric Crawford
+	 */
+	public static List<Node> collectNodes(Node[] startingNodes, boolean breakDownNetworkArrays){
 
-        boolean isNetwork = false;
-        while(nodesToProcess.size() != 0)
-        {
-            workingNode = nodesToProcess.remove(0);
-            
-            //Decide whether to break the node into its subnodes
-            if((workingNode.getClass().getCanonicalName().contains("CCMModelNetwork"))){
-            	isNetwork = false;
-            }
-            else if(workingNode instanceof NetworkArrayImpl)
-            {
-            	if(breakDownNetworkArrays){
-            		isNetwork = true;
-            	}else{
-            		isNetwork = false;
-            	}
-            }
-            else if(workingNode instanceof Network){
-            	isNetwork = true;
-            }
-            else{
-                isNetwork = false;
-            }
-            
-            
-            if(isNetwork){
-            	List<Node> nodeList = new LinkedList<Node>(Arrays.asList(((Network) workingNode).getNodes()));
+		ArrayList<Node> nodes = new ArrayList<Node>();
 
-                nodeList.addAll(nodesToProcess);
-                nodesToProcess = nodeList;
-            }
-            else{
-            	nodes.add(workingNode);
-            } 
-        }
+		List<Node> nodesToProcess = new LinkedList<Node>();
+		nodesToProcess.addAll(Arrays.asList(startingNodes));
 
-        return nodes;
-    }
-    
+		Node workingNode;
 
-    /**
-     * Returns all the projections that would be in a "flattened" version of the network.
-     * 
-     * @author Eric Crawford
-     */
-    public static List<Projection> collectProjections(Node[] startingNodes, Projection[] startingProjections){
+		boolean isNetwork = false;
+		while(nodesToProcess.size() != 0)
+		{
+			workingNode = nodesToProcess.remove(0);
 
-        ArrayList<Projection> projections = new ArrayList<Projection>(Arrays.asList(startingProjections));
+			//Decide whether to break the node into its subnodes
+			if((workingNode.getClass().getCanonicalName().contains("CCMModelNetwork"))){
+				isNetwork = false;
+			}
+			else if(workingNode instanceof NetworkArrayImpl)
+			{
+				if(breakDownNetworkArrays){
+					isNetwork = true;
+				}else{
+					isNetwork = false;
+				}
+			}
+			else if(workingNode instanceof Network){
+				isNetwork = true;
+			}
+			else{
+				isNetwork = false;
+			}
 
-        List<Node> nodesToProcess = new LinkedList<Node>();
-        nodesToProcess.addAll(Arrays.asList(startingNodes));
 
-        Node workingNode;
+			if(isNetwork){
+				List<Node> nodeList = new LinkedList<Node>(Arrays.asList(((Network) workingNode).getNodes()));
 
-        while(nodesToProcess.size() != 0)
-        {
-            workingNode = nodesToProcess.remove(0);
+				nodeList.addAll(nodesToProcess);
+				nodesToProcess = nodeList;
+			}
+			else{
+				nodes.add(workingNode);
+			} 
+		}
 
-            if(workingNode instanceof Network) {
-                List<Node> nodeList = new LinkedList<Node>(Arrays.asList(((Network) workingNode).getNodes()));
+		return nodes;
+	}
 
-                nodeList.addAll(nodesToProcess);
-                nodesToProcess = nodeList;
 
-                projections.addAll(Arrays.asList(((Network) workingNode).getProjections()));
-            }
-        }
+	/**
+	 * Returns all the projections that would be in a "flattened" version of the network.
+	 * 
+	 * @author Eric Crawford
+	 */
+	public static List<Projection> collectProjections(Node[] startingNodes, Projection[] startingProjections){
 
-        return projections;
-    }
+		ArrayList<Projection> projections = new ArrayList<Projection>(Arrays.asList(startingProjections));
 
-    /**
-     * Returns all the tasks that would be in a "flattened" version of the network.
-     * 
-     * @author Eric Crawford
-     */
-    public static List<ThreadTask> collectTasks(Node[] startingNodes){
+		List<Node> nodesToProcess = new LinkedList<Node>();
+		nodesToProcess.addAll(Arrays.asList(startingNodes));
 
-        ArrayList<ThreadTask> tasks = new ArrayList<ThreadTask>();
+		Node workingNode;
 
-        List<Node> nodesToProcess = new LinkedList<Node>();
-        nodesToProcess.addAll(Arrays.asList(startingNodes));
+		while(nodesToProcess.size() != 0)
+		{
+			workingNode = nodesToProcess.remove(0);
 
-        Node workingNode;
+			if(workingNode instanceof Network) {
+				List<Node> nodeList = new LinkedList<Node>(Arrays.asList(((Network) workingNode).getNodes()));
 
-        while(nodesToProcess.size() != 0)
-        {
-            workingNode = nodesToProcess.remove(0);
+				nodeList.addAll(nodesToProcess);
+				nodesToProcess = nodeList;
 
-            if(workingNode instanceof Network && !(workingNode.getClass().getCanonicalName().contains("CCMModelNetwork")))
-            {
-                List<Node> nodeList = new LinkedList<Node>(Arrays.asList(((Network) workingNode).getNodes()));
+				projections.addAll(Arrays.asList(((Network) workingNode).getProjections()));
+			}
+		}
 
-                nodeList.addAll(nodesToProcess);
-                nodesToProcess = nodeList;
-            }
-            
-            if(workingNode instanceof TaskSpawner)
-            {
-                tasks.addAll(Arrays.asList(((TaskSpawner) workingNode).getTasks()));
-            }
-        }
+		return projections;
+	}
 
-        return tasks;
-    }
+	/**
+	 * Returns all the tasks that would be in a "flattened" version of the network.
+	 * 
+	 * @author Eric Crawford
+	 */
+	public static List<ThreadTask> collectTasks(Node[] startingNodes){
+
+		ArrayList<ThreadTask> tasks = new ArrayList<ThreadTask>();
+
+		List<Node> nodesToProcess = new LinkedList<Node>();
+		nodesToProcess.addAll(Arrays.asList(startingNodes));
+
+		Node workingNode;
+
+		while(nodesToProcess.size() != 0)
+		{
+			workingNode = nodesToProcess.remove(0);
+
+			if(workingNode instanceof Network && !(workingNode.getClass().getCanonicalName().contains("CCMModelNetwork")))
+			{
+				List<Node> nodeList = new LinkedList<Node>(Arrays.asList(((Network) workingNode).getNodes()));
+
+				nodeList.addAll(nodesToProcess);
+				nodesToProcess = nodeList;
+			}
+
+			if(workingNode instanceof TaskSpawner)
+			{
+				tasks.addAll(Arrays.asList(((TaskSpawner) workingNode).getTasks()));
+			}
+		}
+
+		return tasks;
+	}
 }
