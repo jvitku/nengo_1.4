@@ -47,11 +47,17 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 	 * @param weights weight matrix if size [{@link #getDimensions()},{@link #getOutputDimensions()}]
 	 */
 	public BasicTransformTermination(Node node, DynamicalSystem dynamics, 
-			Integrator integrator, int outputDimension, String name, float[][] weights) {
+			Integrator integrator, int outputDimension, String name, float[][] weights) throws
+			StructuralException{
 		super(node, dynamics, integrator, name);
 
 		this.inputDimension = dynamics.getInputDimension();
 		this.outputDimension = outputDimension;
+
+		if(weights.length != this.inputDimension || weights[0].length != this.outputDimension)
+			throw new StructuralException("BasicTransformTermination: wrong size of transformation"
+					+ "matrix! Expected dimensions are: ["+this.inputDimension+","+
+					this.outputDimension+"]");
 
 		this.matrix = weights.clone();
 	}
@@ -128,14 +134,20 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 	 * @param t TimeSeries on the Termination input with applied dynamics
 	 * @return transformed time series to the dimensionality of {@link #getOutputDimensions()} 
 	 */
-	private TimeSeries applyTransformation(float startTime, float endTime, TimeSeries t){
+	private TimeSeries applyTransformation(float startTime, float endTime, TimeSeries t) 
+			throws SimulationException {
 		TimeSeriesImpl ts = (TimeSeriesImpl)t;
 		// get array of values[timeSamples][dimensionVals]
-		float[][] values = ts.getValues();		
-		
+		float[][] values = ts.getValues();
+
+		if(values[0].length!=this.inputDimension){
+			throw new SimulationException("Wrong dimension of input TimeSeries! "
+					+ "Input dimension of this Termination is "+this.inputDimension);
+		}
+
 		// get blank TimeSeries with appropriate dimensionality
 		TimeSeriesImpl output = this.initZeros(startTime, endTime, this.outputDimension);
-		
+
 		// for all time samples
 		for(int i=0; i<values.length; i++){
 			// for all output dimensions
@@ -143,7 +155,7 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 				// compute weighted sum of all input values for this output value
 				float vv = 0;
 				for(int k=0; k<this.inputDimension; k++){
-					
+
 					vv = vv+ values[i][k] * matrix[k][j];
 				}
 				output.getValues()[i][j] = vv;
@@ -151,7 +163,6 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 		}
 		return output;
 	}
-
 
 	/**
 	 * Return time series with current simulation times and with values values set to zero
