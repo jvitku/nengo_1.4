@@ -19,7 +19,6 @@ public class BasicEncoder implements Encoder{
 
 	public static final String me = "[BasicEncoder] ";
 
-	// common properties of my Terminations
 	protected int dimensions;
 	protected DynamicalSystem dynamics; 
 	protected Integrator integrator;

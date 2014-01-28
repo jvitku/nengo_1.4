@@ -1,11 +1,11 @@
-package ctu.nengoros.model.multiTermination;
+package ctu.nengoros.model.transformMultiTermination;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import ctu.nengoros.model.multiTermination.MultiTermination;
 import ctu.nengoros.modules.NeuralModule;
-import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.Node;
 import ca.nengo.model.SimulationException;
@@ -14,22 +14,27 @@ import ca.nengo.model.Termination;
 import ca.nengo.util.TimeSeries;
 
 /**
+ * <p>The input to a Node which combines values of multiple own TransformTerminations.</p>
+ * 
+ * <p>TODO The problem is how to define dynamics for particular TransformTerminations, which can 
+ *  have potentially different dimensions.</p> 
+ * 
  * @author Jaroslav Vitku
  *
  */
-public abstract class AbstractMultiTermination implements MultiTermination{
+public abstract class AbstractTransformMultiTermination implements MultiTermination{
 
-	public static final String me = "[AbstractMultiTermination] ";
+	public static final String me = "[AbstractTransformMultiTermination] ";
 	private static final long serialVersionUID = -5806553506661735679L;
 
 	protected final LinkedList <Termination> orderedTerminations;
-	protected final Map<String, Float[][]> myWeights;	// weight for each Termination
+	protected final Map<String, Float[][]> myWeights;				// weight for each Termination
 	protected final HashMap<String, Termination> myTerminations;
 
 	// number of registered terminations
 	protected int counter = 0;	
 	protected final String name;
-	protected final int dimensions;
+	protected final int outputDim;
 
 	protected final Node parent;
 	public final float DEF_W = 1;
@@ -38,12 +43,23 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 
 	// setup properties of my Terminations
 	protected final Integrator integ;
-	protected final DynamicalSystem lti;
+	//protected final DynamicalSystem lti;
 
-	public AbstractMultiTermination(NeuralModule parent, String name, /*int dimension,*/ 
-			Integrator integ, DynamicalSystem lti2){
+	/**
+	 * Common part of TransformMultiTerminations, thing that has similar functionality
+	 * as an ordinary Termination, but its output combines values from multiple 
+	 * TransformTerminations. Since the TransformTerminations can implement transformation
+	 * from input of different dimension than the result has.
+	 * @param parent parent node (Encoder or Node probably)
+	 * @param name name of this MultiTermination (probably equals to the name of ROS topic)
+	 * @param integ integration applied to the inputs of particular MultiTerminations
+	 * @param outputDimension dimensionality of this MultiTermination, equals to the dimensionality
+	 * of Encoder (Node)
+	 */
+	public AbstractTransformMultiTermination(NeuralModule parent, String name,
+			Integrator integ, int outputDimension){
 
-		this.lti = lti2;
+		//this.lti = defaultDynamics;
 		this.integ = integ;
 
 		this.name = name;
@@ -52,7 +68,8 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 		this.myTerminations = new HashMap<String, Termination>();
 		this.myWeights = new HashMap<String, Float[][]>();
 
-		this.dimensions = lti.getInputDimension();
+		//this.outputDim = lti.getInputDimension();
+		this.outputDim = outputDimension;
 
 		try {
 			this.addTermination();
@@ -142,31 +159,24 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 		return this.addTermination(this.generateWeights(this.DEF_W));
 	}
 
-	protected void checkDimensions(final Float[] weights) throws StructuralException{
-
-		if(weights.length != this.dimensions)
-			throw new StructuralException(me+"incorrect dimensionality" +
-					" of weights, dimension of this MultiTermination is "+this.dimensions);
-	}
-
 	/**
-	 * Check dimension of 2D transformation matrix 
+	 * Check dimension of 2D transformation matrix, this will be used inside the TransformTermination 
 	 * @param weights transformation matrix
+	 * @param inputDim number of input dimensions for newly created TranformTrmination
 	 * @throws StructuralException thrown if dimensions are incorrect
-	 * @see 
+	 * @see ctu.nengoros.model.termination.TransformTermination
 	 */
-	protected void checkDimensions(final Float[][] weights) throws StructuralException{
+	protected void checkDimensions(final Float[][] weights, int inputDim) throws StructuralException{
 
-		//TODO 2d support here
-		if(weights.length==0)
+		if(weights.length != inputDim)
 			throw new StructuralException(me+"incorrect dimensionality" +
-					" of weights, expected 2D matrix with first non-zero dimension" +
-					"and the second dimension of size: "+this.dimensions);
+					" of weight matrix, expected 2D matrix should have the "
+					+ "first dimension of size: " +inputDim);
 
-		if(weights[0].length != this.dimensions)
+		if(weights[0].length != this.outputDim)
 			throw new StructuralException(me+"incorrect dimensionality" +
-					" of weights, size of the second dimension of the weight " +
-					"matrix shoudl is "+this.dimensions);
+					" of weight matrix, size of the second dimension of the weight " +
+					"matrix shoudl is "+this.outputDim);
 	}
 
 	protected Float[][] readWeights(String name) throws SimulationException{
@@ -177,8 +187,11 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 		return this.myWeights.get(name);
 	}
 
+	//protected float[][] generateWeights
+	
+	
 	protected Float[] generateWeights(float weight){
-		Float[] w = new Float[this.dimensions];
+		Float[] w = new Float[this.outputDim];
 		for(int i=0; i<w.length; i++){
 			w[i] = weight;
 		}
@@ -191,7 +204,7 @@ public abstract class AbstractMultiTermination implements MultiTermination{
 	@Override
 	public int getDimension(){
 		// this is how BasicTermination determines its dimension
-		return this.dimensions;	
+		return this.outputDim;	
 	}
 
 

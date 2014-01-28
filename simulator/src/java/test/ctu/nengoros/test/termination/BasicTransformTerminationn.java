@@ -176,7 +176,7 @@ public class BasicTransformTerminationn {
 		}
 		System.out.println(t.getName());
 		
-		float[] vals = new float[]{11,22,33,44};			// i
+		float[] vals = new float[]{11,22,33,44};		// i
 		float[] output = new float[]{187,154,33};		// o
 
 		InstantaneousOutput o = new RealOutputImpl(vals, Units.UNK, 0); // pass there previous output

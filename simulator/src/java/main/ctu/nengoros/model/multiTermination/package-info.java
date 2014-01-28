@@ -1,5 +1,5 @@
 /**
- * MultiTermination combines its input from multiple Nengo Terminations.  
+ * Similar to multiTermination, but uses TransformTerminations instead of storing weights.  
  */
 /**
  * @author Jaroslav Vitku
