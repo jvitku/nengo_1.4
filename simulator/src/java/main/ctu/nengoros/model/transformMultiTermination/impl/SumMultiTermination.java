@@ -8,7 +8,6 @@ import ca.nengo.model.impl.BasicTermination;
 import ca.nengo.util.TimeSeries;
 import ca.nengo.util.impl.TimeSeriesImpl;
 import ctu.nengoros.model.transformMultiTermination.BasicMultiTermination;
-//import ctu.nengoros.model.multiTermination.BasicMultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 
 /**
@@ -55,17 +54,10 @@ public class SumMultiTermination extends BasicMultiTermination{
 			return;
 		}
 
-		//Float[][] weight; 
-
 		// add the rest of Terminations to it
 		for(int i=0; i<this.orderedTerminations.size(); i++){
 			Termination t = this.orderedTerminations.get(i);
-/*
-			//weight = readWeights(t.getName()); 
-			//Float[] w = new Float[weight.length];	// TODO use 2D weights here
-			for(int j=0; j<w.length; j++)
-				w[j] = weight[j][0];
-*/
+			
 			super.checkInstance(t);
 
 			TimeSeries out = ((BasicTermination)t).getOutput();
@@ -109,7 +101,6 @@ public class SumMultiTermination extends BasicMultiTermination{
 		for(int i=0; i<values.length; i++){
 			// sum all dimensions
 			for(int j=0; j<values[0].length; j++){
-				//float vv = values[i][j] * weights[j];
 				myValue.getValues()[i][j] = myValue.getValues()[i][j] + values[i][j];
 			}
 		}

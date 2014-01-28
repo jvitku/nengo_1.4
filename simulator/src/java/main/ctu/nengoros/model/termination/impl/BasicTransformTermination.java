@@ -1,7 +1,6 @@
 package ctu.nengoros.model.termination.impl;
 
 import ctu.nengoros.model.termination.TransformTermination;
-import ctu.nengoros.util.SL;
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.Node;
@@ -62,7 +61,6 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 					this.outputDimension+"]");
 
 		this.matrix = weights.clone();
-		System.out.println("hey, basic transform terminatoin here: , my weights are: "+SL.toStr(matrix));
 	}
 
 	@Override

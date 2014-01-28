@@ -19,7 +19,7 @@ public class AnotherTalker extends AbstractNodeMain {
 
 	private int id;
 
-	private final java.lang.String ann2ros = "ann2ros";
+	//private final java.lang.String ann2ros = "ann2ros";
 	protected final java.lang.String ros2ann = "ros2ann";
 	
 	@Override
@@ -59,8 +59,7 @@ public class AnotherTalker extends AbstractNodeMain {
 	      }
 	    });
 	  
-		  
-	    System.out.println("heeeell.. o");
+	    System.out.println("hello");
 			
 	  }
 }

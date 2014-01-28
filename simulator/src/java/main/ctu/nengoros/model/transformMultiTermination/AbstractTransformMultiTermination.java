@@ -36,12 +36,10 @@ public abstract class AbstractTransformMultiTermination implements MultiTerminat
 
 	protected final Node parent;
 	public final float DEF_W = 1;
-
 	protected TimeSeries myValue;
 
 	// setup properties of my Terminations
 	protected final Integrator integ;
-	//protected final DynamicalSystem lti;
 	
 	protected final WeightFactory wg = new BasicWeights();	// define default weights
 
@@ -165,12 +163,6 @@ public abstract class AbstractTransformMultiTermination implements MultiTerminat
 	 */
 	protected void checkDimensions(final float[][] weights) throws StructuralException{
 
-		/*
-		if(weights.length != inputDim)
-			throw new StructuralException(me+"incorrect dimensionality" +
-					" of weight matrix, expected 2D matrix should have the "
-					+ "first dimension of size: " +inputDim);
-		 */
 		if(weights[0].length != this.outputDim)
 			throw new StructuralException(me+"incorrect dimensionality" +
 					" of weight matrix, size of the second dimension of the weight " +

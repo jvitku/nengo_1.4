@@ -2,6 +2,12 @@ package ctu.nengoros.model.transformMultiTermination.impl;
 
 import ctu.nengoros.model.transformMultiTermination.WeightFactory;
 
+/**
+ * Default implementation of matrix Matlab-style helper.
+ * 
+ * @author Jaroslav Vitku
+ *
+ */
 public class BasicWeights implements WeightFactory{
 
 	@Override
