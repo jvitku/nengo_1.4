@@ -23,8 +23,8 @@ public abstract class AbstractPlasticTermination implements PlasticTermination{
 	private static final long serialVersionUID = -1178115852907379798L;
 
 	private final String name;
-	private final int inputDimension;	// size of vector on input to this Termination
-	private final int outputDimension;	// size of vector on output (of this Termination!)
+	protected final int inputDimension;	// size of vector on input to this Termination
+	protected final int outputDimension;	// size of vector on output (of this Termination!)
 
 	public AbstractPlasticTermination(String name, int inputDim, int outputDim){
 		this.name = name;

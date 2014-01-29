@@ -15,7 +15,7 @@ import ca.nengo.model.impl.BasicTermination;
  */
 public class TerminationFactory {
 
-	static Integrator noInt = new NoIntegrator();			// do not integrate termination values
+	static Integrator noInt = new NoIntegrator();	// do not integrate termination values
 
 	/**
 	 * Builds BasicTermination which does not change input value.
@@ -28,7 +28,6 @@ public class TerminationFactory {
 		IdentityLTISystem noLTI = new IdentityLTISystem(dim); // TODO dynamics here 	
 		
 		Termination t = new BasicTermination(parent, noLTI, noInt, name);
-
 		return t;
 	}
 	
@@ -40,14 +39,13 @@ public class TerminationFactory {
 	 * @param name
 	 * @param dim
 	 * @return
-	 */
+	 *
 	public static Termination buildPlasticUniformTermination(Node parent, String name, int dim,
 			Float[][] weights){
 		
 		IdentityLTISystem noLTI = new IdentityLTISystem(dim); // TODO dynamics here
 		
-		// TODO this: Termination t = new UnchangingWeightsTermination(parent, noLTI, noInt, name);
-		
+		Termination t = new UnchangingWeightsTermination(parent, noLTI, noInt, name);
 		return null;
-	}
+	}*/
 }
