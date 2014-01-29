@@ -8,7 +8,6 @@ import ca.nengo.model.StructuralException;
 import ca.nengo.model.Termination;
 
 /**
- * 
  * <p>NeuralModule is similar to SimpleNode, but adds the support for ROS communication.</p>
  * 
  * <p>Each Module has own ROS modem. The Modem is a ROS node which provides access to 
@@ -20,7 +19,6 @@ import ca.nengo.model.Termination;
  * 
  * <p>Encoder has own ROS Publisher which publishes messages to given ROS topic.
  * Decoder has own ROS Subscriber which is subscribed to (receives) selected ROS messages.</p>
- * 
  * 
  * @author Jaroslav Vitku
  *

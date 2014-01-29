@@ -13,17 +13,14 @@ import ctu.nengoros.comm.rosBackend.decoders.Decoder;
 import ctu.nengoros.comm.rosBackend.decoders.impl.BasicDecoder;
 import ctu.nengoros.comm.rosBackend.encoders.Encoder;
 import ctu.nengoros.comm.rosBackend.encoders.impl.BasicEncoder;
-//import ctu.nengoros.comm.rosBackend.encoders.Encoder;
-//import ctu.nengoros.comm.rosBackend.encoders.impl.BasicEncoder;
 import ctu.nengoros.dynamics.IdentityLTISystem;
 import ctu.nengoros.dynamics.NoIntegrator;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.exceptions.MessageFormatException;
 import ctu.nengoros.exceptions.UnsupportedMessageFormatExc;
 import ctu.nengoros.model.transformMultiTermination.MultiTermination;
-//import ctu.nengoros.model.multiTermination.MultiTermination;
 import ctu.nengoros.modules.NeuralModule;
-import ctu.nengoros.util.sync.impl.SyncedUnit;
+import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.Node;
 import ca.nengo.model.Origin;
@@ -154,6 +151,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		
 		// try to obtain the modem (for ROS communication)
 		ModemContainer modContainer = group.getModem();
+		
 		if(modContainer == null){
 			String mess = me+"modem probably not initialized! NeuralModule not ready!";
 			System.err.println(mess);
@@ -458,7 +456,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public void setName(String name) throws StructuralException {
+	public void setName(String name){// throws StructuralException {
 		super.setName(name);
 		this.myName=name;
 	}

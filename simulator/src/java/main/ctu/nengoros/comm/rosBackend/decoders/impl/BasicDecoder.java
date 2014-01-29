@@ -13,7 +13,6 @@ import ctu.nengoros.comm.rosBackend.backend.BackendUtils;
 import ctu.nengoros.comm.rosBackend.decoders.Decoder;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.exceptions.MessageFormatException;
-import ctu.nengoros.util.sync.impl.SyncedUnit;
 import ca.nengo.config.ConfigUtil;
 import ca.nengo.config.Configuration;
 import ca.nengo.config.Property;
@@ -28,6 +27,7 @@ import ca.nengo.model.StructuralException;
 import ca.nengo.model.Units;
 import ca.nengo.model.impl.RealOutputImpl;
 import ctu.nengoros.modules.NeuralModule;
+import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
 
 /**
  * This is (the simplest version of) decoder, thing that receives messages

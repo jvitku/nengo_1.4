@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ctu.nengoros.comm.rosutils.RosUtils;
-import ctu.nengoros.util.sync.impl.SyncedUnit;
+import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
 import ca.nengo.model.Network;
 import ca.nengo.model.Node;
 import ca.nengo.model.Projection;

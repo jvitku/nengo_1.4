@@ -1,7 +1,7 @@
 package ctu.nengoros.comm.rosBackend.decoders;
 
 import ctu.nengoros.comm.rosBackend.backend.newMessageEvent.MyEventListenerInterface;
-import ctu.nengoros.util.sync.SyncedUnitInterface;
+import ctu.nengoros.network.node.synchedStart.SyncedUnitInterface;
 import ca.nengo.model.Origin;
 
 /**

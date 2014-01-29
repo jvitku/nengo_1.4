@@ -12,7 +12,7 @@ import org.ros.node.NodeMain;
  * @author Jaroslav Vitku
  *
  */
-public interface ROSNode extends NodeMain{
+public interface ROSNode extends /*ObjectReady,*/ NodeMain{ // TODO synch here
 
 	@Override
 	public GraphName getDefaultNodeName();

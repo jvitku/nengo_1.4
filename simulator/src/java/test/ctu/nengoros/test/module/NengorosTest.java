@@ -6,10 +6,9 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 import ca.nengo.model.SimulationException;
-
 import ctu.nengoros.comm.rosutils.RosUtils;
 import ctu.nengoros.modules.NeuralModule;
-import ctu.nengoros.util.sync.impl.SyncedUnit;
+import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
 
 /**
  * This is how the ROS core is started/stopped during the use of Nengoros.

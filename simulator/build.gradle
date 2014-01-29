@@ -37,8 +37,8 @@ dependencies {
     compile 'junit:junit:4.10'
     testCompile 'junit:junit:4.10'
 
-    compile 'ctu.nengoros:jroscore:0.0.7-SNAPSHOT'
-    testCompile 'ctu.nengoros:jroscore:0.0.7-SNAPSHOT'
+    compile 'ctu.nengoros:jroscore:0.0.8-SNAPSHOT'
+    testCompile 'ctu.nengoros:jroscore:0.0.8-SNAPSHOT'
 
     //compile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
     //testCompile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
