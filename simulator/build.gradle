@@ -7,10 +7,10 @@ group      = 'ctu.nengoros'
 sourceSets {
     test {
         java {
-	        //srcDir 'src/java/test'
+	        srcDir 'src/java/test'
 			// this ensures that all nengo tests will be ommited:
 			// but the eclipse pluin will have problem with this
-            srcDir 'src/java/test/ctu'
+            //srcDir 'src/java/test/ctu'
         }
         resources {
             srcDir 'src/resources'

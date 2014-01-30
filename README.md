@@ -45,7 +45,7 @@ Changelog
 
 ###nenoros-master-v0.0.7
 
-* TODO: Improve DefaultModem and NeuralModule to implement the `awaitReady()` method from the `HannsNode`, by this way, the correct startup of all ROS components should be ensured. Therefore all waiting can be deleted (mostly in the unit tests).
+* DefaultModem and NeuralModule Improved to implement the `awaitReady()` method from the `HannsNode`, by this way, the correct startup of all ROS components should be ensured. Therefore all waiting can be deleted (mostly in the unit tests).
 
 ###nenoros-master-v0.0.6
 * Added support for `ctu.nengoros.model.termination.TransformTermination`, which contains transformation matrix and is able to change dimension between input and output of the Termination. This (combined with dynamical adding of new Terminations) provides the ability to connect nodes of arbitrary dimensions together.
