@@ -199,9 +199,10 @@ public class MultiTermination extends NengorosTest{
 		//float weight = (float) 1;
 		//Float[] weights = new Float[]{(float) 1,(float)1,(float)1,(float)1};
 
-		float weight = (float) 0.65;
+		float weight = 0.65f;
 		//float[] weights = new Float[]{0.1,(float) 1,(float) 10,(float) -101};
 		float[] weights = new float[]{0.1f,1f,10f,-101f};// place on diagonal
+		
 		float[][] diag = new float[weights.length][weights.length];
 		for(int i=0; i<weights.length; i++){
 			diag[i][i] = weights[i];
@@ -217,7 +218,7 @@ public class MultiTermination extends NengorosTest{
 			// need to set values for all terminations!			
 			t0 = (BasicTermination) mt.getTerminations().get(name);
 
-			t1 = mt.addTermination();					// t1 has default weight 1=1
+			t1 = mt.addTermination();					// t1 has default weight=1
 			assertTrue(mt.getTerminations().size()==2);
 			System.out.println("added this one: "+t1.getName());
 			assertTrue(t1.getName().equalsIgnoreCase(name+"_0"));
@@ -259,7 +260,7 @@ public class MultiTermination extends NengorosTest{
 				onevals[2]	+	onevals[2] + onevals[2]*weight	+ onevals[2]*weights[2],
 				onevals[3]	+	onevals[3] + onevals[3]*weight	+ onevals[3]*weights[3],};
 
-		System.out.println("trying to compute this one: "+toStr(onevals)+" and the reult should be: "+toStr(result));
+		System.out.println("trying to compute this one: \n"+toStr(onevals)+"\nand the reult should be: \n"+toStr(result));
 		this.checkWeighting(onevals, result,t0,t1,t2,t3,module,mt);
 
 		g.stopGroup();
@@ -300,6 +301,7 @@ public class MultiTermination extends NengorosTest{
 		TimeSeries out = ((BasicTermination)t0).getOutput();
 		this.checkTimeandDim(out, 2, 4,(BasicTermination)t0,0,1); // check dimensions of all
 
+		/* inconistent with the current implementation of MultiTermination (wighting is done on terminations)
 		// check whether the Module has zeros on particular Terminations and on MultiTermination
 		float[][] d = ((BasicTermination)t0).getOutput().getValues();
 		for(int i=0; i<zerovals.length; i++){
@@ -316,9 +318,9 @@ public class MultiTermination extends NengorosTest{
 		d = ((BasicTermination)t3).getOutput().getValues();
 		for(int i=0; i<zerovals.length; i++){
 			assertTrue(d[1][i] == zerovals[i]);
-		}
+		}*/
 		// MultiTermination has summed weighted zeros?
-		d = mt.getOutput().getValues();
+		float[][] d = mt.getOutput().getValues();
 		System.out.println("result received is \n"+toStr(d)+" and should be \n"+toStr(result));
 		for(int i=0; i<zerovals.length; i++){
 			assertTrue(d[1][i]==result[i]);
@@ -378,7 +380,7 @@ public class MultiTermination extends NengorosTest{
 			fail();
 		}
 
-		float[] vals = new float[]{0};
+		float[] vals = new float[]{0,0,0,0};
 		RealOutputImpl io = new RealOutputImpl(vals,Units.UNK,0);
 		try {
 			t0.setValues(io);
