@@ -3,6 +3,8 @@ package ctu.nengoros.comm.nodeFactory.modem;
 import org.ros.node.ConnectedNode;
 
 import ctu.nengoros.exceptions.ConnectionException;
+import ctu.nengoros.network.common.exceptions.StartupDelayException;
+import ctu.nengoros.network.node.synchedStart.SyncedStartInterface;
 
 /**
  * modem is also a ROS node
@@ -16,12 +18,13 @@ import ctu.nengoros.exceptions.ConnectionException;
  * @author Jaroslav Vitku
  *
  */
-public interface Modem extends ROSNode{
+public interface Modem extends ROSNode, SyncedStartInterface{
 	
 	/**
 	 * Get factory for subscribers and publishers
-	 * @return
+	 * @return connectedNode - ROS factory for the ROS components
+	 * @throws StartupDelayException if a modem not started in a given time
 	 */
-	public ConnectedNode getConnectedNode() throws ConnectionException;
+	public ConnectedNode getConnectedNode() throws ConnectionException, StartupDelayException;
 
 }

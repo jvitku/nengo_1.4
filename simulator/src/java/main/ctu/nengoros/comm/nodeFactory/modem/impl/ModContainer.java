@@ -9,34 +9,37 @@ import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.nodeFactory.modem.Modem;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.exceptions.ConnectionException;
+import ctu.nengoros.network.common.exceptions.StartupDelayException;
+import ctu.nengoros.network.node.synchedStart.impl.SyncedStart;
 
-public class ModContainer implements ModemContainer {
+public class ModContainer extends SyncedStart implements ModemContainer {
 
 	private final NodeGroup myGroup;
-	
+
 	private Modem modem;
 	private final String name;
 	private boolean running = false;
-	
+
 	private final NodeConfiguration conf;
 	private final NodeMainExecutor nme;
-	
+
 	public ModContainer(NodeConfiguration nc, String name, NodeMainExecutor n, NodeGroup g){
 		nme = n;
 		this.name = name;
 		conf = nc;
-		
+
 		if(nc.getNodeName() != null)
 			name = nc.getNodeName().toString();
-		
+
 		myGroup = g;
 	}
-	
+
 	@Override
-	public ConnectedNode getConnectedNode() throws ConnectionException{
+	public ConnectedNode getConnectedNode() throws ConnectionException, StartupDelayException{
+		this.awaitStarted();
 		return modem.getConnectedNode();
 	}
-	
+
 	@Override
 	public void start() {
 		if(running){
@@ -61,7 +64,7 @@ public class ModContainer implements ModemContainer {
 			myGroup.stopGroup();
 		}
 	}
-	
+
 	@Override
 	public String getName() { return name; }
 
@@ -72,7 +75,7 @@ public class ModContainer implements ModemContainer {
 	public void reset() {
 		//System.err.println(name+": resetting may not be supported directly, but through the ROS service");
 	}
-	
+
 	@Override
 	public void resetModem(){
 		myGroup.reset();
@@ -82,8 +85,12 @@ public class ModContainer implements ModemContainer {
 	public Modem getModem() { return modem; }
 
 	@Override
-	public void setModem(Modem myModem) { modem = myModem; }
-	
+	public void setModem(Modem myModem) {
+		modem = myModem;
+		this.addChild(modem);	// add modem as a StartedSynch child
+		super.setStarted();		// indicate that I am ready (startup will be waiting for my child now)
+	}
+
 	@Override
 	public boolean isRunning() { return running; }
 
@@ -98,5 +105,8 @@ public class ModContainer implements ModemContainer {
 		return this.myGroup;
 	}
 
-	
+	@Override
+	public String getFullName() { return this.name; }
+
+
 }

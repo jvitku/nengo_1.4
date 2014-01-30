@@ -20,6 +20,7 @@ import ctu.nengoros.exceptions.MessageFormatException;
 import ctu.nengoros.exceptions.UnsupportedMessageFormatExc;
 import ctu.nengoros.model.transformMultiTermination.MultiTermination;
 import ctu.nengoros.modules.NeuralModule;
+import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.Node;
@@ -88,6 +89,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	protected SimulationMode myMode;
 
 	protected ModemContainer mc;
+	protected SyncedStartManager start;
 
 	/**
 	 * <p>The NeuralModule which features BasicEncoders (with BasicMultiTerminations),
@@ -145,6 +147,9 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	protected void init(String name, NodeGroup group) throws ConnectionException{
 		
+		this.myName=name;
+		start = new SyncedStartManager(this.myName);
+		
 		// group not running already? start it 
 		if(! group.isRunning())
 			group.startGroup();
@@ -161,7 +166,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		this.mc = modContainer;
 		
 		this.setReady(true);
-		this.myName=name;
 		this.myProperties = new Properties();
 		this.myTime=0;
 
@@ -176,7 +180,12 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		this.orderedOrigins = new LinkedList <Origin> ();
 		this.orderedTerminations = new LinkedList <Termination> ();
 		this.orderedEncoders = new LinkedList<Encoder>();
+		
+		start.setStarted();
 	}
+	
+	@Override
+	public void awaitStarted() throws StartupDelayException { start.awaitStarted(); }
 
 	@Override
 	public void setSynchronous(boolean synchronous) {
@@ -216,6 +225,9 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		} catch (ConnectionException e) {
 			System.err.println(me+"my modem was not connected. Probably ROS communication error!");
 			e.printStackTrace();
+		} catch (StartupDelayException e) {
+			System.err.println(me+"my modem was not started in a given time. Probably ROS communication error!");
+			e.printStackTrace();
 		}
 	}
 
@@ -247,6 +259,9 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			e.printStackTrace();
 		} catch (ConnectionException e) {
 			System.err.println(me+"my modem was not connected. Probably ROS communication error!");
+			e.printStackTrace();
+		} catch (StartupDelayException e) {
+			System.err.println(me+"my modem was not started in a given time. Probably ROS communication error!");
 			e.printStackTrace();
 		}
 	}
@@ -313,6 +328,9 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		} catch (ConnectionException e) {
 			System.err.println(me+"my modem was not connected. Probably ROS communication error!!");
 			e.printStackTrace();
+		} catch (StartupDelayException e) {
+			System.err.println(me+"my modem was not started in a given time. Probably ROS communication error!");
+			e.printStackTrace();
 		}
 	}
 
@@ -349,6 +367,9 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			e.printStackTrace();
 		} catch (ConnectionException e) {
 			System.err.println(me+"my modem was not connected. Probably ROS communication error!!");
+			e.printStackTrace();
+		} catch (StartupDelayException e) {
+			System.err.println(me+"my modem was not started in a given time. Probably ROS communication error!");
 			e.printStackTrace();
 		}
 	}
@@ -612,16 +633,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			
 		return this.myEncoders.get(name).getMultiTermination().addTermination(weight);
 	}
-/*
-	@Override
-	public Termination newTerminationFor(String name, Float[] weights) throws StructuralException {
-
-		if(!this.myEncoders.containsKey(name))
-			throw new StructuralException(me+"requested MultiTermination not found!");		
-			
-		return this.myEncoders.get(name).getMultiTermination().addTermination(weights);
-	}
-	*/
 
 	@Override
 	public Termination newTerminationFor(String name, float[][] weights) throws StructuralException {
@@ -631,5 +642,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		
 		return this.myEncoders.get(name).getMultiTermination().addTermination(weights);
 	}
+
 
 }

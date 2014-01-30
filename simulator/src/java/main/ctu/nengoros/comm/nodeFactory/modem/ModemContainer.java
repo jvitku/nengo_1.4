@@ -6,6 +6,7 @@ import org.ros.node.NodeConfiguration;
 import ctu.nengoros.comm.nodeFactory.ExternalNodeContainer;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.exceptions.ConnectionException;
+import ctu.nengoros.network.common.exceptions.StartupDelayException;
 
 public interface ModemContainer extends ExternalNodeContainer{
 
@@ -34,8 +35,9 @@ public interface ModemContainer extends ExternalNodeContainer{
 	 * has to be already launched.
 	 * 
 	 * @return factory for ROS publishers/subscribers
+	 * @throws StartupDelayException if the node not started in a predefined time
 	 */
-	public ConnectedNode getConnectedNode() throws ConnectionException; 
+	public ConnectedNode getConnectedNode() throws ConnectionException, StartupDelayException; 
 	
 	/**
 	 * This calls (typical Nengo method) reset on modem in the container.

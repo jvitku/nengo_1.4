@@ -7,56 +7,50 @@ import org.ros.node.Node;
 
 import ctu.nengoros.comm.nodeFactory.modem.Modem;
 import ctu.nengoros.exceptions.ConnectionException;
+import ctu.nengoros.network.common.exceptions.StartupDelayException;
+import ctu.nengoros.network.node.synchedStart.impl.SyncedStart;
 
 /**
- * This is an implementation of ROS part of Modem.
+ * <p>This is an implementation of ROS part of Modem.
  * Practically it does nothing, all message listening and publishing is done 
  * in Encoders and Decoders. The task for this one is only to register into the ROS 
- * network and get the ConnectedNode class (factory for everything ROS-related..).
+ * network and get the ConnectedNode class (factory for everything ROS-related..).</p>
  * 
- * Note: encoders and decoders use ConnectedNode obtained from here for everything 
+ * <p>Note: encoders and decoders use ConnectedNode obtained from here for everything.
+ * The method {@link #awaitStarted()} is used for waiting for the ROS node (modem) 
+ * to start.</p> 
  *  
  * @author Jaroslav Vitku
- *
  */
-public class DefaultModem implements Modem {
+public class DefaultModem extends SyncedStart implements Modem {
 
-	public final String me = "[DefaultModem] ";
-	
-	private final int sleepTime = 300;
+	public static final String DEF_NAME = "Modem";
+	public final String me = "["+DEF_NAME+"] ";
 	
 	private String myName;
 	private Log log;
 	private ConnectedNode myRosSide;
 
-	private final int maxWait=17000; // wait 17 seconds for my modem, then throw connection exception
-	
-	public DefaultModem(){
-		myName = "Modem";
-	}
-	
-	public DefaultModem(String name){
-		myName = name;
-	}
+	public DefaultModem(){ myName = DEF_NAME; }
+	public DefaultModem(String name){ myName = name; }
 
 	@Override
 	public GraphName getDefaultNodeName() { return GraphName.of(myName); }
 
 	@Override
-	public void onStart(ConnectedNode connectedNode) { // TODO awaitReady() synchronization all here!
+	public void onStart(ConnectedNode connectedNode) { 
 		log = connectedNode.getLog();
 		myRosSide = connectedNode;
 		
 		System.out.println(me+" starting..!");
 		log.info(me+" starting..!");
+		// indicate the modem has successfully started
+		this.setStarted();				
 	}
 
 	@Override
 	public void onShutdown(Node node) {
 		System.out.println(me+" shutting down started..!");
-		//System.out.println(" me is null? "+(me==null));
-		//System.out.println(" me is null? "+(log==null));
-		
 		log.info(me+" shutting down started..!");
 	}
 
@@ -72,31 +66,13 @@ public class DefaultModem implements Modem {
 		log.info(me+" called on error..!");
 	}
 
-	/**
-	 * This could pass null pointer, so methods that are using this have to check it.
-	 */
 	@Override
-	public ConnectedNode getConnectedNode() throws ConnectionException {
-		int poc =0;
-		// Here we wait for node to be launched to get access to it's resources
-		while(!nodeLaunched()){
-			try {
-				Thread.sleep(sleepTime);
-			} catch (InterruptedException e) {e.printStackTrace();}
-			if(poc++ > 2)
-				System.out.println("Waiting for MyModem to initialize:" +
-					" ..Logger inited: "+ (log!=null)+ 
-					" ..myRosSide inited: "+(myRosSide!=null));
-			if(poc*sleepTime>maxWait)
-				throw new ConnectionException(me+" Giving up waiting for myModem to initialize!"); 
-		}
-		log.info("MyModem: giving myConnectedNode to someone..");
+	public ConnectedNode getConnectedNode() throws ConnectionException, StartupDelayException {
+		this.awaitStarted();
+		log.info(me+" returning myConnectedNode to someone..");
 		return myRosSide;
 	}
-	
-	private boolean nodeLaunched(){
-		if(log!=null && myRosSide!=null)
-			return true;
-		return false;
-	}
+
+	@Override
+	public String getFullName() { return myName; }
 }

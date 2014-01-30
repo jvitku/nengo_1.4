@@ -1,7 +1,7 @@
 package ctu.nengoros.modules;
 
-//import ctu.nengoros.model.multiTermination.MultiTermination;
 import ctu.nengoros.model.transformMultiTermination.MultiTermination;
+import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ca.nengo.model.Node;
 import ca.nengo.model.Probeable;
 import ca.nengo.model.StructuralException;
@@ -20,11 +20,25 @@ import ca.nengo.model.Termination;
  * <p>Encoder has own ROS Publisher which publishes messages to given ROS topic.
  * Decoder has own ROS Subscriber which is subscribed to (receives) selected ROS messages.</p>
  * 
+ * <p>Also, a neural module should be able to indicate whether is properly started, this
+ * is done by means of the {@link ctu.nengoros.network.node.synchedStart.SynchedStartInterface}, the
+ * method {@link ctu.nengoros.modules.impl.SyncedStartManager#setStarted()} should be called
+ * after successful initialization.</p> 
+ * 
  * @author Jaroslav Vitku
  *
  */
 public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeable{
 
+	/**
+	 * NeuralModule uses asynchronously launched {@link ctu.nengoros.comm.nodeFactory.modem.Modem}
+	 * and other ROS nodes. Therefore it should be able to indicate that the crucial components
+	 * are ready to operate.
+	 * @throws StartupDelayException thrown if the maximum startup time is exceeded
+	 * @see ctu.nengoros.network.node.synchedStart.impl.SyncedStart
+	 */
+	public void awaitStarted() throws StartupDelayException; 
+	
 	/**
 	 * <p>This NeuralModule supports connecting multiple "inputs" to one Encoder.
 	 * It is accomplished by the fact that each Encoder has MultiTermination, where

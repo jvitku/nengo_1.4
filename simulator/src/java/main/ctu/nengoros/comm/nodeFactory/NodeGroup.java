@@ -1,8 +1,10 @@
 package ctu.nengoros.comm.nodeFactory;
 
 import java.util.ArrayList;
+
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosutils.RosUtils;
+import ctu.nengoros.network.node.synchedStart.impl.SyncedStart;
 
 
 /**
@@ -20,11 +22,21 @@ import ctu.nengoros.comm.rosutils.RosUtils;
  * Each group has min. 0, max. 1 modem, encoders and decoders (terminations
  * and origins on Nengo side) can be added to each modem.  
  *  
+ *  // TODO use the {@link ctu.nengoros.network.node.synchedStart.SyncedStartInterface}
+ *  appropriately here.
+ *  
  * @author Jaroslav Vitku
  *
  */
-public class NodeGroup{
+public class NodeGroup extends SyncedStart{
 
+	
+	public static final String NATIVE = "native";
+	public static final String JAVA = "java";
+	public static final String MODEM = "modem";
+	public static final String DEF_MODEM = "defaultModem";
+	public static final String defaultModem = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
+	
 	// Every group of nodes can contain up to one modem 
 	// The modem can be empty, but should belong to some Neural Module, 
 	// in order to add possibility of deleting this group from GUI
@@ -32,7 +44,6 @@ public class NodeGroup{
 	private ModemContainer myModem;
 	private MyNodeConfig modemConfig;
 	private boolean modemIsSet = false;
-	private final String defaultModem = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
 	
 	// Array of prepared external nodes created by the NodeFactory
 	public ExternalNodeContainer[] nodes;
@@ -131,7 +142,7 @@ public class NodeGroup{
 
 	public void startGroup(){
 		if(!modemIsSet){
-			this.addNode(defaultModem, "defaultModem", "modem");
+			this.addNode(defaultModem, DEF_MODEM, MODEM);
 		}
 		if(nodes == null){
 			// OK, user probably forgot to init this group, so do it now..
@@ -143,6 +154,9 @@ public class NodeGroup{
 				myModem = (ModemContainer)nodes[i];
 		}
 		this.groupRunning = true;
+		// indicate that the group of nodes run OK 
+		// TODO: add checking all Publishers/subscribers of modem connected here
+		super.setStarted();			
 	}
 	
 	public void reset(){
@@ -152,11 +166,11 @@ public class NodeGroup{
 	}
 
 	public void addNode(String command, String name, String what){
-		if(what.equalsIgnoreCase("native")){
+		if(what.equalsIgnoreCase(NATIVE)){
 			this.addNode(command, name, true, false);
-		}else if(what.equalsIgnoreCase("java")){
+		}else if(what.equalsIgnoreCase(JAVA)){
 			this.addNode(command, name, false, false);
-		}else if(what.equalsIgnoreCase("modem")){
+		}else if(what.equalsIgnoreCase(MODEM)){
 			this.addNode(command, name, false, true);
 		}else{
 			System.err.println(groupName+" : addNC() node of unknown type, "+
@@ -165,11 +179,11 @@ public class NodeGroup{
 	}
 	
 	public void addNode(String[] command, String name, String what){
-		if(what.equalsIgnoreCase("native")){
+		if(what.equalsIgnoreCase(NATIVE)){
 			this.addNode(command, name, true, false);
-		}else if(what.equalsIgnoreCase("java")){
+		}else if(what.equalsIgnoreCase(JAVA)){
 			this.addNode(command, name, false, false);
-		}else if(what.equalsIgnoreCase("modem")){
+		}else if(what.equalsIgnoreCase(MODEM)){
 			this.addNode(command, name, false, true);
 		}else{
 			System.err.println(groupName+" : addNC() node of unknown type, "+
@@ -177,7 +191,7 @@ public class NodeGroup{
 		}
 	}
 		
-	public boolean modemSet(){ return modemIsSet; }
+	public boolean getModemIsSet(){ return modemIsSet; }
 	
 	public void addNode(String command, String name, boolean isNative, boolean modem){
 		if(modem){
@@ -255,5 +269,7 @@ public class NodeGroup{
 			this.ismodem = ismodem;
 		}
 	}
-	// mber of running nodes
+
+	@Override
+	public String getFullName() { return this.groupName; }
 }

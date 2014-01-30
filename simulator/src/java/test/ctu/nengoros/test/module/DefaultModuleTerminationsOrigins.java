@@ -17,6 +17,7 @@ import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
+import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengoros.testsuit.demo.nodes.gate.OR;
 import ca.nengo.model.impl.RealOutputImpl;
 
@@ -41,7 +42,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 	public static String minimax = "ctu.nengoros.testsuit.demo.nodes.minmax.F2IPubSub";
 	public static String ORR 		= "ctu.nengoros.testsuit.demo.nodes.gate.OR";
 
-	//@Ignore
+	@Ignore
 	@Test
 	public void registersOrigins(){
 
@@ -73,7 +74,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 	}
 
-	//@Ignore
+	@Ignore
 	@Test
 	public void registersTerminations(){
 
@@ -158,9 +159,18 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 			e.printStackTrace();
 			fail();
 		}
+		//System.out.println("started??? "+module.) // TOD use isStarted() here
 		// note that it is not guaranteed that the external ROS node is started
 		// already, so wait for it several milliseconds
-		Mess.waitms(100);	 
+		try {
+			module.awaitStarted();
+		} catch (StartupDelayException e) {
+			e.printStackTrace();
+			System.out.println("waited too long to module to start, probably modem not inited");
+			fail();
+		}
+		System.out.println("inited");
+		//Mess.waitms(100);
 
 		this.checkComputation(new float[]{-10,10,11,230}, 	module, t, o);
 		this.checkComputation(new float[]{0,0,0,0}, 		module, t, o);
@@ -239,7 +249,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 	 * Test whether values are actually passed by the components - simple test with
 	 * single-valued Terminations and Origins.
 	 */
-	//@Ignore
+	@Ignore
 	@Test
 	public void SISOCommunication(){
 
@@ -287,7 +297,15 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 
 		// note that it is not guaranteed that the external ROS node is started
 		// already, so wait for it several milliseconds
-		Mess.waitms(100); 
+		try {
+			module.awaitStarted();
+		} catch (StartupDelayException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		// TODO: add support for waiting for all modems connections to be connected
+		Mess.waitms(100);	// the ROS node not started fast enough,  
 
 		// compute the OR truth table over the ROS network by means of Neural module
 		assertFalse(this.makeSimulationStep(false, false, 	module, inTA, inTB, outA));

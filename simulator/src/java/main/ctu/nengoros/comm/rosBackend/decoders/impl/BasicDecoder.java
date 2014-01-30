@@ -27,6 +27,7 @@ import ca.nengo.model.StructuralException;
 import ca.nengo.model.Units;
 import ca.nengo.model.impl.RealOutputImpl;
 import ctu.nengoros.modules.NeuralModule;
+import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
 
 /**
@@ -83,7 +84,7 @@ public class BasicDecoder extends SyncedUnit implements Decoder {
 		super(synchronous,name);
 		this.init(node,name,dataType,dimensionSizes,units,modem,ros);
 	}
-	
+
 	private void init(Node node, String name, String dataType, 
 			int[] dimensionSizes, Units units, ModemContainer modem, Backend ros) 
 					throws MessageFormatException, StructuralException{
@@ -99,12 +100,17 @@ public class BasicDecoder extends SyncedUnit implements Decoder {
 		this.modem = modem;		
 		if(modem == null)
 			System.err.println(myName+" error: modem not inited or set..");
+		// here it can wait until ROS node is ready
 		try {
 			myRosNode = modem.getConnectedNode();
 		} catch (ConnectionException e) {
 			System.err.println("BasicDecoder: my modem was not connected. Probably ROS communication error!!");
 			e.printStackTrace();
-		}	// here it can wait until ROS node is ready
+		}catch (StartupDelayException e) { // TODO this is probably redundant exception
+			System.err.println("BasicDecoder: my modem was not started in a given time."
+					+ " Probably ROS communication error!!");
+			e.printStackTrace();
+		}
 
 		// ROS stuff - subscribe to new ROS messages
 		this.ros = ros;
@@ -113,7 +119,7 @@ public class BasicDecoder extends SyncedUnit implements Decoder {
 		((NeuralModule)myNode).addOrigin(this);
 		super.setReady(true);
 	}
-	
+
 	/**
 	 * ROS fires onNewRosMessage events, so here is my subscription:
 	 * each new ROS message accept, decode and update my values to them.

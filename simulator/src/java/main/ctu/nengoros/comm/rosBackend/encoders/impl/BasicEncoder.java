@@ -16,6 +16,7 @@ import ctu.nengoros.model.transformMultiTermination.impl.SumMultiTermination;
 //import ctu.nengoros.model.multiTermination.MultiTermination;
 //import ctu.nengoros.model.multiTermination.impl.SumMultiTermination;
 import ctu.nengoros.modules.NeuralModule;
+import ctu.nengoros.network.common.exceptions.StartupDelayException;
 
 public class BasicEncoder implements Encoder{
 
@@ -105,6 +106,11 @@ public class BasicEncoder implements Encoder{
 			String mess = "my modem was not connected. Probably ROS communication error!!";
 			System.err.println(me+mess);
 			throw new ConnectionException(me+mess, e);
+		}catch (StartupDelayException e) { // TODO this is probably redundant exception
+			System.err.println("BasicDecoder: my modem was not started in a given time."
+					+ " Probably ROS communication error!!");
+			e.printStackTrace();
+			throw new ConnectionException(e);
 		}
 
 		this.ros = ros;	// get my ROS backend
@@ -113,7 +119,7 @@ public class BasicEncoder implements Encoder{
 		// Here, add new MultiTermination which sums inputs on all own Terminations together.
 		multiTermination  = new SumMultiTermination(
 				this.parent, this.name, this.integrator, this.dimensions);
-		
+
 	}
 
 
