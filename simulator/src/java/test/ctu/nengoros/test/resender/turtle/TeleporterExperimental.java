@@ -1,15 +1,9 @@
 package ctu.nengoros.test.resender.turtle;
 
 
-import org.ros.exception.RosRuntimeException;
-import org.ros.exception.ServiceNotFoundException;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
-import org.ros.node.service.ServiceClient;
-import org.ros.node.topic.Publisher;
-
-
 
 /**
  * 
@@ -18,7 +12,7 @@ import org.ros.node.topic.Publisher;
  */
 public class TeleporterExperimental extends AbstractNodeMain {
 
-	private final java.lang.String ann2rrs = turtlesim.TeleportAbsolute._TYPE;
+	//private final java.lang.String ann2rrs = turtlesim.TeleportAbsolute._TYPE;
 	//	private final java.lang.String ann2ros = "turtle1/command_velocity";
 	private final java.lang.String me = "TurtleCommander";
 
@@ -27,6 +21,7 @@ public class TeleporterExperimental extends AbstractNodeMain {
 
 	@Override
 	public void onStart(final ConnectedNode connectedNode) {
+		/*
 		final Publisher<turtlesim.TeleportAbsoluteRequest> publisher =
 				connectedNode.newPublisher(ann2rrs, turtlesim.TeleportAbsolute._TYPE);
 
@@ -35,7 +30,7 @@ public class TeleporterExperimental extends AbstractNodeMain {
 			sc = connectedNode.newServiceClient("teleport", turtlesim.TeleportAbsolute._TYPE);
 		} catch (ServiceNotFoundException e) {
 			throw new RosRuntimeException(e);
-		}
+		}*/
 
 		// this does not work, turtlesim_node does not provide teleporting service..
 	}

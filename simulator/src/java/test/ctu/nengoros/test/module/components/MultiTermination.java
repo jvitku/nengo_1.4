@@ -63,7 +63,6 @@ public class MultiTermination extends NengorosTest{
 		assertTrue(mt.getTerminations().size()==1); 
 		assertTrue(mt.getTerminations().get(name)!=null);
 
-
 		// add some new terminations
 		try {
 			t1 = mt.addTermination();
@@ -164,7 +163,7 @@ public class MultiTermination extends NengorosTest{
 	/**
 	 * The same as the above, but this termination is weighted (check data)
 	 */
-	@Ignore
+	//@Ignore
 	@Test
 	public void runSingleWeightedTermination(){
 
@@ -338,7 +337,7 @@ public class MultiTermination extends NengorosTest{
 		assertTrue(times[1]==endTime);
 	}
 
-	@Ignore
+	//@Ignore
 	@Test
 	public void runEntireModule(){
 		String name = "fullModule";

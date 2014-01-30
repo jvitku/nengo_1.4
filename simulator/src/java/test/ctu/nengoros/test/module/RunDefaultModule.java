@@ -10,7 +10,6 @@ import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.comm.rosutils.RosUtils;
-import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
 

@@ -14,7 +14,6 @@ import ca.nengo.model.Units;
 import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.rosutils.Mess;
-import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
