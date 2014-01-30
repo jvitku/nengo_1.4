@@ -94,15 +94,12 @@ public class RunDefaultModule{
 		System.out.println("Names of running nodes are: " +
 				Mess.toAr(NodeFactory.np.namesOfRunningNodes()));
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 2); // one modem and one ROS node
+		
 		try {
 			Thread.sleep(300);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
-		try {
-			Thread.sleep(300);
-		} catch (InterruptedException e) { e.printStackTrace(); }
 		
 		g.stopGroup();
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node

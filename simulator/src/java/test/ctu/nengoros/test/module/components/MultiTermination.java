@@ -147,13 +147,6 @@ public class MultiTermination extends NengorosTest{
 			assertTrue(data[1][i]==zerovals[i]);
 			assertTrue(data[0][i]==zerovals[i]);
 		}
-
-		/**/
-		try {
-			Thread.sleep(100); // TODO: really get rid of this..
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}/**/
 		System.out.println("ending the test, number of nodes: "+NodeFactory.np.numOfRunningNodes());
 		
 		g.stopGroup();
@@ -244,7 +237,7 @@ public class MultiTermination extends NengorosTest{
 		/**
 		 * run
 		 */
-		Mess.waitms(100);	// to ROS nodes to start
+		Mess.waitms(100);	// to ROS nodes to start, TODO: checking all Modem connections to be connected
 
 		float[] zerovals = new float[]{0,0,0,0};
 		float[] result = new float[]{0,0,0,0};
