@@ -44,6 +44,7 @@ Changelog
 --------------
 
 ###nenoros-master-v0.0.7
+
 * TODO: Improve DefaultModem and NeuralModule to implement the `awaitReady()` method from the `HannsNode`, by this way, the correct startup of all ROS components should be ensured. Therefore all waiting can be deleted (mostly in the unit tests).
 
 ###nenoros-master-v0.0.6
@@ -77,6 +78,7 @@ Technical Notes:
 
 ### TODO
 
+* Implement `awaitReady()` for the NeuralModule, so that the module waits until all ROS IO (publishers/subscribers) are connected
 * Implement the `ctu.nengoros.model.plasticity.*` in order to provide plastic TransformTerminations. This will be used for automatic determination of transformations and learning.
 
 * Improve use of `RosUtils` .. `TimeUtil`, particularly in the `ca.nengo.util.impl.NodeThreadPool`.

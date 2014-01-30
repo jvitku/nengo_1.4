@@ -71,7 +71,7 @@ public class NengorosTest {
 	 * Decoder is ready when it receives the ROS message (each time step, the ready state of
 	 * all decoders is discarded).
 	 */
-	private static void waitForModuleReady(NeuralModule module){
+	private static void waitForModuleReady(NeuralModule module){ // TODO get rid of this
 		int waited = 0;
 		System.out.print("\n waiting for the ROS message to be received");
 		while(!((SyncedUnit)module).isReady()){
