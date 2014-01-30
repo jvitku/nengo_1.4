@@ -25,7 +25,7 @@ public class SocketException {
 		
 		try {
 			module = new DefaultNeuralModule(name+"_OR", g);
-		} catch (ConnectionException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}

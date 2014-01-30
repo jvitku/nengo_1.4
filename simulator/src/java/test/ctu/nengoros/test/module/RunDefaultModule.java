@@ -38,7 +38,6 @@ public class RunDefaultModule{
 		RosUtils.utilsShallStop();
 	}
 	
-	
 	@Test
 	public void runDemo(){
 
@@ -50,7 +49,7 @@ public class RunDefaultModule{
 		NeuralModule smartOne = null;
 		try {
 			smartOne = new DefaultNeuralModule("SmartNeuron",g);
-		} catch (ConnectionException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 			fail();
 		}
@@ -67,7 +66,6 @@ public class RunDefaultModule{
 		} catch (InterruptedException e) { e.printStackTrace(); }
 
 		g.stopGroup(); 
-
 	}
 
 	/**
@@ -84,8 +82,8 @@ public class RunDefaultModule{
 
 		NeuralModule smartOne = null;
 		try {
-			smartOne = new DefaultNeuralModule("SmartNeuron",g);
-		} catch (ConnectionException e1) {
+			smartOne = new DefaultNeuralModule("NeuralModule",g);
+		} catch (Exception e1) {
 			e1.printStackTrace();
 			fail();
 		}

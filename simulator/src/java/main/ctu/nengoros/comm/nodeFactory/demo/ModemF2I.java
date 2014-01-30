@@ -60,7 +60,7 @@ public class ModemF2I {
 		NeuralModule smartOne = null;
 		try {
 			smartOne = new DefaultNeuralModule("SmartNeuron",g);
-		} catch (ConnectionException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}

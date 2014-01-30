@@ -104,18 +104,20 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	 * ROS and Nengo)
 	 * @throws ConnectionException group of running ROS nodes should already contain
 	 * the Modem, if no Modem is found, ROS communication will not be available 
+	 * @throws StartupDelayException 
 	 * 
 	 *  @see ctu.nengoros.comm.nodeFactory.modem.Modem
 	 *  @see ctu.nengoros.util.sync.impl.SyncedUnit
 	 *  @see ctu.nengoros.comm.rosBackend.decoders.impl.BasicDecoder
 	 *  @see ctu.nengoros.comm.rosBackend.encoders.impl.BasicEncoder
 	 */
-	public DefaultNeuralModule(String name, NodeGroup group) throws ConnectionException{
+	public DefaultNeuralModule(String name, NodeGroup group) throws ConnectionException,
+	StartupDelayException{
 		super(name);	// make this unit synchronous by default
 
 		this.init(name, group);
 	}
-
+	
 	/**
 	 * <p>The NeuralModule which features BasicEncoders (with BasicMultiTerminations),
 	 * BasicDecoders (which are synchronous by default, that means they wait for
@@ -138,33 +140,33 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	 *  @see ctu.nengoros.comm.rosBackend.encoders.impl.BasicEncoder
 	 */
 	public DefaultNeuralModule(String name, NodeGroup group, boolean synchronous)
-		throws ConnectionException{
-		
+			throws ConnectionException, StartupDelayException{
+
 		super(synchronous,name);	// choose whether to be synchronous or not
-		
+
 		this.init(name, group);
 	}
 
-	protected void init(String name, NodeGroup group) throws ConnectionException{
-		
+	protected void init(String name, NodeGroup group) throws ConnectionException, StartupDelayException{
+
 		this.myName=name;
 		start = new SyncedStartManager(this.myName);
-		
+
 		// group not running already? start it 
 		if(! group.isRunning())
 			group.startGroup();
-		
+
 		// try to obtain the modem (for ROS communication)
 		ModemContainer modContainer = group.getModem();
-		
+
 		if(modContainer == null){
-			String mess = me+"modem probably not initialized! NeuralModule not ready!";
+			String mess = me+" modem probably not initialized! NeuralModule not ready!";
 			System.err.println(mess);
 			this.setReady(false); // stop the simulation..
 			throw new ConnectionException(mess);
 		}
 		this.mc = modContainer;
-		
+
 		this.setReady(true);
 		this.myProperties = new Properties();
 		this.myTime=0;
@@ -180,10 +182,13 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		this.orderedOrigins = new LinkedList <Origin> ();
 		this.orderedTerminations = new LinkedList <Termination> ();
 		this.orderedEncoders = new LinkedList<Encoder>();
-		
+
+		// TODO solve this better, probably should wait for all encoders/terminations, 
+		// but these are not known so far
+		mc.getModem().awaitStarted();	
 		start.setStarted();
 	}
-	
+
 	@Override
 	public void awaitStarted() throws StartupDelayException { start.awaitStarted(); }
 
@@ -379,7 +384,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		myTime = endTime;
 
 		this.runAllTerminations(startTime, endTime);	// run all terminations to collect input values
-		
+
 		this.runAllEncoders(startTime, endTime);	// encode data on registered Terminations and send to ROS
 
 		super.discardChildsReady(); // wait for all registered synchronous decoders to receive message
@@ -408,12 +413,12 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	@Override
 	public void reset(boolean randomize) {
-		
+
 		mc.resetModem();	// should call reset() for all nodes in the group (including modem itself)
 
 		for(int i=0; i<this.orderedEncoders.size(); i++)
 			this.orderedEncoders.get(i).reset(randomize);
-		
+
 		for(int i=0; i<this.orderedTerminations.size(); i++)
 			this.orderedTerminations.get(i).reset(randomize);
 
@@ -584,14 +589,14 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	public MultiTermination getMultiTermination(String name) throws StructuralException {
 		return this.myEncoders.get(name).getMultiTermination();
 	}
-	
+
 	protected void addEncoder(Encoder e) throws StructuralException {
-		
+
 		System.out.println(me+"adding encoder named "+e.getName());
-		
+
 		if(this.myEncoders.containsKey(e.getName()))
 			throw new StructuralException(me+"Encoder named "+e.getName()+" is already registered here!");
-				
+
 		myProperties.setProperty("enc__"+e.getName(), "Encoder named: "+e.getName());
 		this.myEncoders.put(e.getName(), e);
 		this.orderedEncoders.add(e);
@@ -618,28 +623,28 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	@Override
 	public Termination newTerminationFor(String name)	throws StructuralException {
-		
+
 		if(!this.myEncoders.containsKey(name))
 			throw new StructuralException(me+"requested MultiTermination not found!");
-		
+
 		return this.myEncoders.get(name).getMultiTermination().addTermination();
 	}
 
 	@Override
 	public Termination newTerminationFor(String name, float weight) throws StructuralException {
-		
+
 		if(!this.myEncoders.containsKey(name))
 			throw new StructuralException(me+"requested MultiTermination not found!");		
-			
+
 		return this.myEncoders.get(name).getMultiTermination().addTermination(weight);
 	}
 
 	@Override
 	public Termination newTerminationFor(String name, float[][] weights) throws StructuralException {
-		
+
 		if(!this.myEncoders.containsKey(name))
 			throw new StructuralException(me+"requested MultiTermination not found!");
-		
+
 		return this.myEncoders.get(name).getMultiTermination().addTermination(weights);
 	}
 

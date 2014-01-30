@@ -56,7 +56,7 @@ public class MultipleTerminationsOneEncoder extends NengorosTest{
 		NeuralModule module = null;
 		try {
 			module = new DefaultNeuralModule(name,g);
-		} catch (ConnectionException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}

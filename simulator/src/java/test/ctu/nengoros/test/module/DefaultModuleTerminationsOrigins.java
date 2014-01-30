@@ -42,7 +42,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 	public static String minimax = "ctu.nengoros.testsuit.demo.nodes.minmax.F2IPubSub";
 	public static String ORR 		= "ctu.nengoros.testsuit.demo.nodes.gate.OR";
 
-	@Ignore
+	//@Ignore
 	@Test
 	public void registersOrigins(){
 
@@ -54,7 +54,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		NeuralModule module = null;
 		try {
 			module = new DefaultNeuralModule("NeuralModule",g);
-		} catch (ConnectionException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
@@ -74,7 +74,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 0); // one modem and one ROS node
 	}
 
-	@Ignore
+	//@Ignore
 	@Test
 	public void registersTerminations(){
 
@@ -86,7 +86,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		NeuralModule module = null;
 		try {
 			module = new DefaultNeuralModule("NeuralModule",g);
-		} catch (ConnectionException e2) {
+		} catch (Exception e2) {
 			e2.printStackTrace();
 			fail();
 		}
@@ -132,7 +132,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		NeuralModule module = null;
 		try {
 			module = new DefaultNeuralModule(name+"_MM", g);
-		} catch (ConnectionException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 			fail();
 		}
@@ -159,9 +159,6 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 			e.printStackTrace();
 			fail();
 		}
-		//System.out.println("started??? "+module.) // TOD use isStarted() here
-		// note that it is not guaranteed that the external ROS node is started
-		// already, so wait for it several milliseconds
 		try {
 			module.awaitStarted();
 		} catch (StartupDelayException e) {
@@ -169,8 +166,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 			System.out.println("waited too long to module to start, probably modem not inited");
 			fail();
 		}
-		System.out.println("inited");
-		//Mess.waitms(100);
+		Mess.waitms(100);
 
 		this.checkComputation(new float[]{-10,10,11,230}, 	module, t, o);
 		this.checkComputation(new float[]{0,0,0,0}, 		module, t, o);
@@ -260,7 +256,7 @@ public class DefaultModuleTerminationsOrigins extends NengorosTest/*extends RosC
 		NeuralModule module = null;
 		try {
 			module = new DefaultNeuralModule(name+"_OR", g);
-		} catch (ConnectionException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 			fail();
 		}

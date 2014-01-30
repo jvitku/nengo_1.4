@@ -13,8 +13,6 @@ import ctu.nengoros.comm.rosBackend.encoders.Encoder;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.model.transformMultiTermination.MultiTermination;
 import ctu.nengoros.model.transformMultiTermination.impl.SumMultiTermination;
-//import ctu.nengoros.model.multiTermination.MultiTermination;
-//import ctu.nengoros.model.multiTermination.impl.SumMultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 
@@ -53,7 +51,7 @@ public class BasicEncoder implements Encoder{
 	 */
 	public BasicEncoder(NeuralModule parent, DynamicalSystem dynamics, Integrator integrator, 
 			String name, String dataType, Units u, ModemContainer modem, Backend ros) 
-					throws StructuralException, ConnectionException{
+					throws StructuralException, ConnectionException, StartupDelayException{
 
 		init(parent, new int[]{ros.gedNumOfDimensions()}, dynamics, integrator, name, dataType, u, modem, ros);	
 	}
@@ -83,14 +81,14 @@ public class BasicEncoder implements Encoder{
 	 */
 	public BasicEncoder(NeuralModule parent, int[] dimensionsizes, DynamicalSystem dynamics, Integrator integrator, 
 			String name, String dataType, Units u, ModemContainer modem, Backend ros) 
-					throws StructuralException, ConnectionException{
+					throws StructuralException, ConnectionException, StartupDelayException{
 
 		init(parent, dimensionsizes, dynamics, integrator, name, dataType, u, modem, ros);
 	}
 
 	private void init(NeuralModule parent, int[] dimensionSizes, DynamicalSystem dynamics, Integrator integrator, 
 			String name, String dataType, Units u, ModemContainer modem, Backend ros) 
-					throws ConnectionException, StructuralException{
+					throws ConnectionException, StructuralException, StartupDelayException{
 
 		this.parent = parent;
 		this.name = name;
@@ -106,11 +104,6 @@ public class BasicEncoder implements Encoder{
 			String mess = "my modem was not connected. Probably ROS communication error!!";
 			System.err.println(me+mess);
 			throw new ConnectionException(me+mess, e);
-		}catch (StartupDelayException e) { // TODO this is probably redundant exception
-			System.err.println("BasicDecoder: my modem was not started in a given time."
-					+ " Probably ROS communication error!!");
-			e.printStackTrace();
-			throw new ConnectionException(e);
 		}
 
 		this.ros = ros;	// get my ROS backend

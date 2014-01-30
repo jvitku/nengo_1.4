@@ -63,7 +63,6 @@ public class DefaultModem extends SyncedStart implements Modem {
 	@Override
 	public void onError(Node node, Throwable throwable) {
 		System.err.println(me+" called on error..!");
-		log.info(me+" called on error..!");
 	}
 
 	@Override

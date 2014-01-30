@@ -21,6 +21,7 @@ import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.model.transformMultiTermination.impl.SumMultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.impl.DefaultNeuralModule;
+import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.test.module.*;
 import ctu.nengoros.util.SL;
@@ -42,6 +43,9 @@ public class MultiTermination extends NengorosTest{
 		try {
 			module = new DefaultNeuralModule(name,g);
 		} catch (ConnectionException e) {
+			e.printStackTrace();
+			fail();
+		} catch (StartupDelayException e) {
 			e.printStackTrace();
 			fail();
 		}
@@ -176,7 +180,7 @@ public class MultiTermination extends NengorosTest{
 		NeuralModule module = null;
 		try {
 			module = new DefaultNeuralModule(name,g);
-		} catch (ConnectionException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
@@ -345,7 +349,7 @@ public class MultiTermination extends NengorosTest{
 		NeuralModule module = null;
 		try {
 			module = new DefaultNeuralModule(name,g);
-		} catch (ConnectionException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}

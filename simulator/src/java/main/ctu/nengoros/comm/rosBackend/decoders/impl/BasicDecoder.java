@@ -70,7 +70,7 @@ public class BasicDecoder extends SyncedUnit implements Decoder {
 
 	public BasicDecoder(Node node, String name, String dataType, 
 			int[] dimensionSizes, Units units, ModemContainer modem, Backend ros) 
-					throws MessageFormatException, StructuralException{
+					throws MessageFormatException, StructuralException, StartupDelayException{
 		super(name);
 		this.init(node, name, dataType, dimensionSizes, units, modem, ros);
 	}
@@ -80,14 +80,14 @@ public class BasicDecoder extends SyncedUnit implements Decoder {
 	 */
 	public BasicDecoder(Node node, String name, String dataType, 
 			int[] dimensionSizes, Units units, ModemContainer modem, Backend ros,boolean synchronous) 
-					throws MessageFormatException, StructuralException{
+					throws MessageFormatException, StructuralException, StartupDelayException{
 		super(synchronous,name);
 		this.init(node,name,dataType,dimensionSizes,units,modem,ros);
 	}
 
 	private void init(Node node, String name, String dataType, 
 			int[] dimensionSizes, Units units, ModemContainer modem, Backend ros) 
-					throws MessageFormatException, StructuralException{
+					throws MessageFormatException, StructuralException, StartupDelayException{
 		myNode = node;
 		myName = name;
 		myUnits = units;
@@ -106,12 +106,7 @@ public class BasicDecoder extends SyncedUnit implements Decoder {
 		} catch (ConnectionException e) {
 			System.err.println("BasicDecoder: my modem was not connected. Probably ROS communication error!!");
 			e.printStackTrace();
-		}catch (StartupDelayException e) { // TODO this is probably redundant exception
-			System.err.println("BasicDecoder: my modem was not started in a given time."
-					+ " Probably ROS communication error!!");
-			e.printStackTrace();
 		}
-
 		// ROS stuff - subscribe to new ROS messages
 		this.ros = ros;
 		this.ros.addEventListener(this);	
