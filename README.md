@@ -78,6 +78,7 @@ Technical Notes:
 
 ### TODO
 
+* `AbstractHannsNode`: add some better logger, which can select between ROS logger, console logger and file logger.
 * Implement `awaitReady()` for the NeuralModule, so that the module waits until all ROS IO (publishers/subscribers) are connected
 * Implement the `ctu.nengoros.model.plasticity.*` in order to provide plastic TransformTerminations. This will be used for automatic determination of transformations and learning.
 

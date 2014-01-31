@@ -40,12 +40,12 @@ ROSJAVA=$RJ/rosjava-0.0.0-SNAPSHOT.jar:$RJ/rosjava_bootstrap-0.0.0-SNAPSHOT.jar:
 #FROMJARS=$HO/simulator-ui-0.0.0-SNAPSHOT.jar:$HO/simulator-0.0.0-SNAPSHOT.jar
 
 # jroscore
-Jroscore=$N_HOME/../../jroscore/build/libs/jroscore-0.0.7-SNAPSHOT.jar 
+Jroscore=$N_HOME/../../jroscore/build/libs/jroscore-0.0.9-SNAPSHOT.jar 
 
 # vivae simulator
-VIVAE=$N_HOME/../../vivae/vivaesimulator/build/libs/vivaesimulator-0.0.2-SNAPSHOT.jar	# simulator in jar
+VIVAE=$N_HOME/../../vivae/vivaesimulator/build/libs/vivaesimulator-0.0.3-SNAPSHOT.jar	# simulator in jar
 VIVAE=$VIVAE:$N_HOME/../../vivae/vivaesimulator/lib/*									# vivae dependencies
-VIVAE=$VIVAE:$N_HOME/../../vivae/vivaeplugin/build/libs/vivaeplugin-0.0.2-SNAPSHOT.jar	# plugin in jar
+VIVAE=$VIVAE:$N_HOME/../../vivae/vivaeplugin/build/libs/vivaeplugin-0.0.3-SNAPSHOT.jar	# plugin in jar
 
 # dependencies for complete installation (with external rosjava nodes)
 NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.4-SNAPSHOT.jar 
