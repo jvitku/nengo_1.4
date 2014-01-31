@@ -19,18 +19,13 @@ import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
  * in a way that they will be unique in the ROS network, namespace 
  * if the nodes will remain unchanged. 
  *  
- *  
  * Each group has min. 0, max. 1 modem, encoders and decoders (terminations
  * and origins on Nengo side) can be added to each modem.  
- *  
- *  // TODO use the {@link ctu.nengoros.network.node.synchedStart.SyncedStartInterface}
- *  appropriately here.
  *  
  * @author Jaroslav Vitku
  *
  */
 public class NodeGroup implements StartedObject{
-
 	
 	public static final String NATIVE = "native";
 	public static final String JAVA = "java";
@@ -66,7 +61,7 @@ public class NodeGroup implements StartedObject{
 	private boolean groupRunning = false;
 	
 	private StartupManager startup = new BasicStartupManager(this);
-	private boolean isReady = false;
+	private boolean isStarted = false;
 
 	/**
 	 * Setup of non-independent group with predefned namespace.
@@ -158,7 +153,8 @@ public class NodeGroup implements StartedObject{
 		this.groupRunning = true;
 		// indicate that the group of nodes run OK 
 		// TODO: add checking all Publishers/subscribers of modem connected here
-		this.isReady = true;
+		// actually: add each pub/sub as a child and indicate if is connected
+		this.isStarted = true;
 	}
 	
 	public void reset(){
@@ -279,5 +275,5 @@ public class NodeGroup implements StartedObject{
 	public StartupManager getStartupManager() { return this.startup; }
 
 	@Override
-	public boolean isReady() { return this.isReady; }
+	public boolean isStarted() { return this.isStarted; }
 }

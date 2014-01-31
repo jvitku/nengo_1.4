@@ -91,6 +91,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	protected SimulationMode myMode;
 
 	protected ModemContainer mc;
+	private volatile boolean isStarted = false;
 	protected StartupManager startup = new BasicStartupManager(this);
 
 	/**
@@ -184,17 +185,20 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		this.orderedTerminations = new LinkedList <Termination> ();
 		this.orderedEncoders = new LinkedList<Encoder>();
 
+		
+		startup.addChild(mc.getStartupManager());
 		// TODO solve this better, probably should wait for all encoders/terminations, 
-		// but these are not known so far
-		mc.getModem().getStartupManager().awaitStarted();
+		// but these are not known so far..
+		mc.getModem().getStartupManager().awaitStarted(); // TODO: this should not be like this
 		//this.us
 		//mc.getModem().awaitStarted();
 		//this.is
-		start.setStarted();
+		//startup.setStarted();
+		this.isStarted = true;
 	}
 
 	@Override
-	public void awaitStarted() throws StartupDelayException { start.awaitStarted(); }
+	public void awaitStarted() throws StartupDelayException { startup.awaitStarted(); }
 
 	@Override
 	public void setSynchronous(boolean synchronous) {
@@ -654,5 +658,8 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	@Override
 	public StartupManager getStartupManager() { return this.startup; }
+
+	@Override
+	public boolean isStarted() { return this.isStarted; }
 
 }

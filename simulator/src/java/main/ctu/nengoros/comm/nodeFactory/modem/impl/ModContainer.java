@@ -25,7 +25,7 @@ public class ModContainer implements ModemContainer, StartedObject{
 	private final NodeConfiguration conf;
 	private final NodeMainExecutor nme;
 	
-	private boolean isReady = false;
+	private volatile boolean isStarted = false;
 	private StartupManager startup = new BasicStartupManager(this);
 
 	public ModContainer(NodeConfiguration nc, String name, NodeMainExecutor n, NodeGroup g){
@@ -93,7 +93,7 @@ public class ModContainer implements ModemContainer, StartedObject{
 	public void setModem(Modem myModem) {
 		modem = myModem;
 		this.startup.addChild(modem.getStartupManager());	// add modem as a child
-		this.isReady = true;								// indicate that I am now ready
+		this.isStarted = true;								// indicate that I am now ready
 	}
 
 	@Override
@@ -117,7 +117,8 @@ public class ModContainer implements ModemContainer, StartedObject{
 	public StartupManager getStartupManager() { return this.startup; }
 
 	@Override
-	public boolean isReady() { return this.isReady;	}
+	public boolean isStarted() { return this.isStarted; }
+
 
 
 }

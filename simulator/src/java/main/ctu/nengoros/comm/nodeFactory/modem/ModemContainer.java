@@ -7,8 +7,9 @@ import ctu.nengoros.comm.nodeFactory.ExternalNodeContainer;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
+import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
 
-public interface ModemContainer extends ExternalNodeContainer{
+public interface ModemContainer extends ExternalNodeContainer, StartedObject{
 
 	/**
 	 * This may not be supported so far

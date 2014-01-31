@@ -81,8 +81,7 @@ public class DefaultModem implements Modem, StartedObject {
 	public StartupManager getStartupManager() { return this.startup; }
 
 	@Override
-	public boolean isReady() { 
-		// ready if everything initialized in the #onStart()
-		return (this.myRosSide != null && this.log != null); 
+	public boolean isStarted() {
+		return (this.myRosSide != null && this.log != null);
 	}
 }
