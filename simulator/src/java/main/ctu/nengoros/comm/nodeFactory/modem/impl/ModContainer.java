@@ -10,9 +10,11 @@ import ctu.nengoros.comm.nodeFactory.modem.Modem;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
-import ctu.nengoros.network.node.synchedStart.impl.SyncedStart;
+import ctu.nengoros.network.node.synchedStart.StartupManager;
+import ctu.nengoros.network.node.synchedStart.impl.BasicStartupManager;
+import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
 
-public class ModContainer extends SyncedStart implements ModemContainer {
+public class ModContainer implements ModemContainer, StartedObject{
 
 	private final NodeGroup myGroup;
 
@@ -22,6 +24,9 @@ public class ModContainer extends SyncedStart implements ModemContainer {
 
 	private final NodeConfiguration conf;
 	private final NodeMainExecutor nme;
+	
+	private boolean isReady = false;
+	private StartupManager startup = new BasicStartupManager(this);
 
 	public ModContainer(NodeConfiguration nc, String name, NodeMainExecutor n, NodeGroup g){
 		nme = n;
@@ -36,7 +41,7 @@ public class ModContainer extends SyncedStart implements ModemContainer {
 
 	@Override
 	public ConnectedNode getConnectedNode() throws ConnectionException, StartupDelayException{
-		this.awaitStarted();
+		startup.awaitStarted();
 		return modem.getConnectedNode();
 	}
 
@@ -87,8 +92,8 @@ public class ModContainer extends SyncedStart implements ModemContainer {
 	@Override
 	public void setModem(Modem myModem) {
 		modem = myModem;
-		this.addChild(modem);	// add modem as a StartedSynch child
-		super.setStarted();		// indicate that I am ready (startup will be waiting for my child now)
+		this.startup.addChild(modem.getStartupManager());	// add modem as a child
+		this.isReady = true;								// indicate that I am now ready
 	}
 
 	@Override
@@ -107,6 +112,12 @@ public class ModContainer extends SyncedStart implements ModemContainer {
 
 	@Override
 	public String getFullName() { return this.name; }
+
+	@Override
+	public StartupManager getStartupManager() { return this.startup; }
+
+	@Override
+	public boolean isReady() { return this.isReady;	}
 
 
 }

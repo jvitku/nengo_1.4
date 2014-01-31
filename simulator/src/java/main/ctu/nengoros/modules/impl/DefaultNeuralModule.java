@@ -21,6 +21,8 @@ import ctu.nengoros.exceptions.UnsupportedMessageFormatExc;
 import ctu.nengoros.model.transformMultiTermination.MultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
+import ctu.nengoros.network.node.synchedStart.StartupManager;
+import ctu.nengoros.network.node.synchedStart.impl.BasicStartupManager;
 import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.Node;
@@ -89,7 +91,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	protected SimulationMode myMode;
 
 	protected ModemContainer mc;
-	protected SyncedStartManager start;
+	protected StartupManager startup = new BasicStartupManager(this);
 
 	/**
 	 * <p>The NeuralModule which features BasicEncoders (with BasicMultiTerminations),
@@ -150,7 +152,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	protected void init(String name, NodeGroup group) throws ConnectionException, StartupDelayException{
 
 		this.myName=name;
-		start = new SyncedStartManager(this.myName);
 
 		// group not running already? start it 
 		if(! group.isRunning())
@@ -185,7 +186,10 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 		// TODO solve this better, probably should wait for all encoders/terminations, 
 		// but these are not known so far
-		mc.getModem().awaitStarted();	
+		mc.getModem().getStartupManager().awaitStarted();
+		//this.us
+		//mc.getModem().awaitStarted();
+		//this.is
 		start.setStarted();
 	}
 
@@ -647,5 +651,8 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 		return this.myEncoders.get(name).getMultiTermination().addTermination(weights);
 	}
+
+	@Override
+	public StartupManager getStartupManager() { return this.startup; }
 
 }

@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosutils.RosUtils;
-import ctu.nengoros.network.node.synchedStart.impl.SyncedStart;
-
+import ctu.nengoros.network.node.synchedStart.StartupManager;
+import ctu.nengoros.network.node.synchedStart.impl.BasicStartupManager;
+import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
 
 /**
  * Group of nodes typically corresponds to one smart neuron. 
@@ -28,7 +29,7 @@ import ctu.nengoros.network.node.synchedStart.impl.SyncedStart;
  * @author Jaroslav Vitku
  *
  */
-public class NodeGroup extends SyncedStart{
+public class NodeGroup implements StartedObject{
 
 	
 	public static final String NATIVE = "native";
@@ -64,7 +65,8 @@ public class NodeGroup extends SyncedStart{
 
 	private boolean groupRunning = false;
 	
-	
+	private StartupManager startup = new BasicStartupManager(this);
+	private boolean isReady = false;
 
 	/**
 	 * Setup of non-independent group with predefned namespace.
@@ -156,7 +158,7 @@ public class NodeGroup extends SyncedStart{
 		this.groupRunning = true;
 		// indicate that the group of nodes run OK 
 		// TODO: add checking all Publishers/subscribers of modem connected here
-		super.setStarted();			
+		this.isReady = true;
 	}
 	
 	public void reset(){
@@ -272,4 +274,10 @@ public class NodeGroup extends SyncedStart{
 
 	@Override
 	public String getFullName() { return this.groupName; }
+
+	@Override
+	public StartupManager getStartupManager() { return this.startup; }
+
+	@Override
+	public boolean isReady() { return this.isReady; }
 }

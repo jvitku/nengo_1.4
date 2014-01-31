@@ -8,7 +8,9 @@ import org.ros.node.Node;
 import ctu.nengoros.comm.nodeFactory.modem.Modem;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
-import ctu.nengoros.network.node.synchedStart.impl.SyncedStart;
+import ctu.nengoros.network.node.synchedStart.StartupManager;
+import ctu.nengoros.network.node.synchedStart.impl.BasicStartupManager;
+import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
 
 /**
  * <p>This is an implementation of ROS part of Modem.
@@ -22,17 +24,19 @@ import ctu.nengoros.network.node.synchedStart.impl.SyncedStart;
  *  
  * @author Jaroslav Vitku
  */
-public class DefaultModem extends SyncedStart implements Modem {
+public class DefaultModem implements Modem, StartedObject {
 
 	public static final String DEF_NAME = "Modem";
 	public final String me = "["+DEF_NAME+"] ";
-	
+
 	private String myName;
 	private Log log;
 	private ConnectedNode myRosSide;
 
 	public DefaultModem(){ myName = DEF_NAME; }
 	public DefaultModem(String name){ myName = name; }
+
+	private StartupManager startup = new BasicStartupManager(this);
 
 	@Override
 	public GraphName getDefaultNodeName() { return GraphName.of(myName); }
@@ -41,11 +45,10 @@ public class DefaultModem extends SyncedStart implements Modem {
 	public void onStart(ConnectedNode connectedNode) { 
 		log = connectedNode.getLog();
 		myRosSide = connectedNode;
-		
+
 		System.out.println(me+" starting..!");
 		log.info(me+" starting..!");
 		// indicate the modem has successfully started
-		this.setStarted();				
 	}
 
 	@Override
@@ -67,11 +70,19 @@ public class DefaultModem extends SyncedStart implements Modem {
 
 	@Override
 	public ConnectedNode getConnectedNode() throws ConnectionException, StartupDelayException {
-		this.awaitStarted();
+		this.startup.awaitStarted();
 		log.info(me+" returning myConnectedNode to someone..");
 		return myRosSide;
 	}
 
 	@Override
 	public String getFullName() { return myName; }
+	@Override
+	public StartupManager getStartupManager() { return this.startup; }
+
+	@Override
+	public boolean isReady() { 
+		// ready if everything initialized in the #onStart()
+		return (this.myRosSide != null && this.log != null); 
+	}
 }

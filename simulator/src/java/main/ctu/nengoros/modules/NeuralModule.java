@@ -2,6 +2,7 @@ package ctu.nengoros.modules;
 
 import ctu.nengoros.model.transformMultiTermination.MultiTermination;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
+import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
 import ca.nengo.model.Node;
 import ca.nengo.model.Probeable;
 import ca.nengo.model.StructuralException;
@@ -28,7 +29,7 @@ import ca.nengo.model.Termination;
  * @author Jaroslav Vitku
  *
  */
-public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeable{
+public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeable, StartedObject{
 
 	/**
 	 * NeuralModule uses asynchronously launched {@link ctu.nengoros.comm.nodeFactory.modem.Modem}
