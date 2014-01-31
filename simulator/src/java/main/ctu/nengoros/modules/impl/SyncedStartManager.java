@@ -20,4 +20,7 @@ public class SyncedStartManager extends SyncedStart{
 	@Override
 	public String getFullName() { return this.name; }
 
+	@Override
+	public void setFullName(String name) { this.name =name; }
+
 }

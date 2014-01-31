@@ -648,5 +648,4 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		return this.myEncoders.get(name).getMultiTermination().addTermination(weights);
 	}
 
-
 }
