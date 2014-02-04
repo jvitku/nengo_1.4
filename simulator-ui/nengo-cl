@@ -40,30 +40,26 @@ ROSJAVA=$RJ/rosjava-0.0.0-SNAPSHOT.jar:$RJ/rosjava_bootstrap-0.0.0-SNAPSHOT.jar:
 #FROMJARS=$HO/simulator-ui-0.0.0-SNAPSHOT.jar:$HO/simulator-0.0.0-SNAPSHOT.jar
 
 # jroscore
-Jroscore=$N_HOME/../../jroscore/build/libs/jroscore-0.0.5-SNAPSHOT.jar 
+Jroscore=$N_HOME/../../jroscore/build/libs/jroscore-0.0.9-SNAPSHOT.jar 
 
 # vivae simulator
-VIVAE=$N_HOME/../../vivae/vivaesimulator/build/libs/vivaesimulator-0.0.2-SNAPSHOT.jar	# simulator in jar
+VIVAE=$N_HOME/../../vivae/vivaesimulator/build/libs/vivaesimulator-0.0.3-SNAPSHOT.jar	# simulator in jar
 VIVAE=$VIVAE:$N_HOME/../../vivae/vivaesimulator/lib/*									# vivae dependencies
-VIVAE=$VIVAE:$N_HOME/../../vivae/vivaeplugin/build/libs/vivaeplugin-0.0.2-SNAPSHOT.jar	# plugin in jar
+VIVAE=$VIVAE:$N_HOME/../../vivae/vivaeplugin/build/libs/vivaeplugin-0.0.3-SNAPSHOT.jar	# plugin in jar
 
 # dependencies for complete installation (with external rosjava nodes)
-NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.3-SNAPSHOT.jar 
+NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.4-SNAPSHOT.jar 
 NODES=$NODES:$N_HOME/../../demonodes/basic/build/libs/basic-0.0.5-SNAPSHOT.jar
-# example how to link maven repository:
-#NODES=$NODES:$HOME/.m2/repository/org/hanns/projectTemplate/0.0.1-SNAPSHOT/projectTemplate-0.0.1-SNAPSHOT.jar 
 
-# example how to link projectTemplate, uncomment in order to use this initialized project (under nengoros/ folder)
-#NODES=$NODES:$N_HOME/../../projectTemplate/build/libs/projectTemplate-0.0.1-SNAPSHOT.jar
-
-
+SARSA=$N_HOME/../../rl/sarsa/build/libs/sarsa-0.0.4-SNAPSHOT.jar
+PHYSIOLOGY=$N_HOME/../../physiology/statespace/build/libs/statespace-0.0.1-SNAPSHOT.jar
 
 if [[ $# < 1 ]]; then
-    java -Xms100m -Xmx800m -cp $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE org.python.util.jython -i ./python/startup_cl.py
+    java -Xms100m -Xmx800m -cp $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$SARSA:$PHYSIOLOGY org.python.util.jython -i ./python/startup_cl.py
 else
 	# original one (does not work)
 	#java -Xms100m -Xmx800m -cp $THEIR_PATH:$MY_PATH:$MODLELS_PATH:$LOG:$PROJECTS org.python.util.jython -c "execfile('./python/startup_cl.py'); execfile('$1')"
-	java -Xms100m -Xmx800m -cp $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$Jrosparam:$JRP:$VIVAE org.python.util.jython -c "import sys; sys.argv=['./python/startup_cl.py','$1']; execfile('./python/startup_cl.py')"
+	java -Xms100m -Xmx800m -cp $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$SARSA:$PHYSIOLOGY org.python.util.jython -c "import sys; sys.argv=['./python/startup_cl.py','$1']; execfile('./python/startup_cl.py')"
 
 fi
 
