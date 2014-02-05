@@ -78,6 +78,12 @@ Technical Notes:
 
 ### TODO
 
+* Nengo simulator is unable to handle entire Evolutionary Algorithm because of the following reasons:
+ 
+	* The simulation is getting slower in time
+	* The Nengo creates too many Threads ?
+
+* When launching scripts which repeatedly create `net` by means of `nengo-cl`, the old NeuralModules are probably not deleted as in case of `nengo` script. TODO solve this.
 * `AbstractHannsNode`: add some better logger, which can select between ROS logger, console logger and file logger.
 * Implement `awaitReady()` for the NeuralModule, so that the module waits until all ROS IO (publishers/subscribers) are connected
 * Implement the `ctu.nengoros.model.plasticity.*` in order to provide plastic TransformTerminations. This will be used for automatic determination of transformations and learning.
