@@ -1,6 +1,15 @@
 # Find RL parameters by the EA.
 #
 # This one starts several models in a row (evaluates a quality of given individuals). 
+#
+# Found out:
+#   -nengo-cl is able to evaluate about 8 individuals before runnign out of threads.
+#   -nengo is able to evaluate 48 inddividuals before running out of threads
+#
+# Possible solutions:
+#   -add nef.delete Node
+#   -run the same model more times, just change the connection weights!
+# 
 # 
 # by Jaroslav Vitku [vitkujar@fel.cvut.cz]
 
@@ -80,7 +89,7 @@ def evalConfiguration(alpha,gamma, lambdaa, importance,t,dt,name,indNo=1):
 
 ###################################### set the simulation parameters
 #t = 20	# 20/0.001= 20 000 steps ~ 10 000 RL steps 
-t = 4#000
+t = 40#000
 dt = 0.1
 # t = 50
 # dt = 0.001
@@ -105,9 +114,13 @@ ea.setProbabilities(pMut, pCross);
 prevgen=0
 
 filename = 'prosperities.txt'
+evaluated = 0
 
 # now run the EA, store the course of the prosperity (per time step) only for the first one (best one)
 while(ea.wantsEval()):
+    
+    evaluated = evaluated+1
+    print "----------------------------------- gen: "+str(ea.generation())+" ind: "+str(ea.currentOne())+ "------------ evaluated "+str(evaluated)
     
     if(prevgen!=ea.generation()):
         prevgen=ea.generation()

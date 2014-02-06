@@ -1,0 +1,1 @@
+/Users/j/Dropbox/workspace/nengoros/demonodes/../designer/basicea//python/scripts/02_paramsNOEA_MOO.py

@@ -58,5 +58,5 @@ DESIGNER=$N_HOME/../../designer/basicea/build/libs/basicea-0.0.2-SNAPSHOT.jar
 #LIBRARIES = $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$SARSA:$PHYSIOLOGY
 
 #java -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO ca.nengo.ui.NengoLauncher
-java -Xmx6000m -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$SARSA:$PHYSIOLOGY:$DESIGNER ca.nengo.ui.NengoLauncher
+java -Xmx1000m -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$SARSA:$PHYSIOLOGY:$DESIGNER ca.nengo.ui.NengoLauncher
 
