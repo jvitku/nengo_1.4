@@ -70,7 +70,8 @@ public class ModemResetTest extends NengorosTest{
 		assertTrue(rr.getNode() instanceof ConfigurableHannsNode); // TODO multiple definitions of this?
 		ConfigurableHannsNode node = (ConfigurableHannsNode)rr.getNode();
 		
-		sleep(300);	// wait for rr to be started
+		// wait for rr to be started and ROS communication initialized (will send messages immediately)
+		sleep(300);	
 		
 		assertFalse(node.softResetted);
 		assertFalse(node.hardResetted);
@@ -114,7 +115,8 @@ public class ModemResetTest extends NengorosTest{
 		assertTrue(rr.getNode() instanceof ConfigurableHannsNode); // TODO multiple definitions of this?
 		ConfigurableHannsNode node = (ConfigurableHannsNode)rr.getNode();
 		
-		sleep(300);	// wait for rr to be started
+		// wait for rr to be started and ROS communication initialized (will send messages immediately)
+		sleep(300);	
 		
 		assertFalse(node.softResetted);
 		assertFalse(node.hardResetted);
