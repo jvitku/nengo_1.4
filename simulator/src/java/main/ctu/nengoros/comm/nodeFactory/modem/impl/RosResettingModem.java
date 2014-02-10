@@ -55,5 +55,11 @@ public class RosResettingModem extends DefaultModem{
 		System.out.println(myName+" resetting my nodes now.");
 		this.controller.callHardReset(randomize);
 	}
+	
+
+	@Override
+	public boolean isStarted() {
+		return (this.myRosSide != null && this.log != null && this.controller!=null);
+	}
 
 }

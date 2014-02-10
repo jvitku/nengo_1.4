@@ -85,6 +85,7 @@ Technical Notes:
 * When launching scripts which repeatedly create `net` by means of `nengo-cl`, the old NeuralModules are probably not deleted as in case of `nengo` script. TODO solve this.
 * `AbstractHannsNode`: add some better logger, which can select between ROS logger, console logger and file logger.
 * Extend the `awaitReady()` method in the `NeuralModule` with the `communicationAwareNode`, so that the module waits until all ROS IO (publishers/subscribers) are connected
+* Unit tests: add some simple way how to get runtime of ROS java nodes launched in the `NodeGroup`
 * Implement the `ctu.nengoros.model.plasticity.*` in order to provide plastic TransformTerminations. This will be used for automatic determination of transformations and learning.
 
 * Improve use of `RosUtils` .. `TimeUtil`, particularly in the `ca.nengo.util.impl.NodeThreadPool`.

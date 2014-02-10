@@ -187,15 +187,10 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		this.orderedTerminations = new LinkedList <Termination> ();
 		this.orderedEncoders = new LinkedList<Encoder>();
 
-
 		startup.addChild(mc.getStartupManager());
 		// TODO solve this better, probably should wait for all encoders/terminations, 
 		// but these are not known so far..
-		mc.getModem().getStartupManager().awaitStarted(); // TODO: this should not be like this
-		//this.us
-		//mc.getModem().awaitStarted();
-		//this.is
-		//startup.setStarted();
+		mc.getModem().getStartupManager().awaitStarted(); 
 		this.isStarted = true;
 	}
 
