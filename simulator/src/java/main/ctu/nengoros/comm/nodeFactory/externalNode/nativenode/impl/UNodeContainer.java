@@ -1,4 +1,4 @@
-package ctu.nengoros.comm.nodeFactory.nativenode.impl;
+package ctu.nengoros.comm.nodeFactory.externalNode.nativenode.impl;
 
 import java.util.List;
 

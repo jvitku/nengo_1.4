@@ -3,18 +3,20 @@ package ctu.nengoros.comm.nodeFactory.modem;
 import org.ros.node.ConnectedNode;
 import org.ros.node.NodeConfiguration;
 
-import ctu.nengoros.comm.nodeFactory.ExternalNodeContainer;
+import ca.nengo.model.Resettable;
+
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
+import ctu.nengoros.comm.nodeFactory.externalNode.ExternalNodeContainer;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
 
-public interface ModemContainer extends ExternalNodeContainer, StartedObject{
+public interface ModemContainer extends ExternalNodeContainer, StartedObject, Resettable{
 
 	/**
 	 * This may not be supported so far
 	 */
-	public void reset();
+	//public void reset();
 
 	/**
 	 * Modem is interface for a ROS/Nengo modem
@@ -45,7 +47,7 @@ public interface ModemContainer extends ExternalNodeContainer, StartedObject{
 	 * This method should call myGroup.reset() method, which resets all 
 	 * nodes in the group, including this one
 	 */
-	public void resetModem();
+	//public void resetModem();
 	
 	
 	/**

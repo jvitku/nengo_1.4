@@ -1,7 +1,5 @@
 # THe same as previous one, but here, the experiments are made for different values of importance
-# with default alpha, gamma, lambda parameters. 
-#
-# Everything is printed to files,
+# with default alpha, gamma, lambda parameters
 # 
 # by Jaroslav Vitku [vitkujar@fel.cvut.cz]
 
@@ -30,7 +28,7 @@ class ProsperitySaver(nef.SimpleNode):
 		f.close()
 
 # build configuration of the experiment with given RL parameters
-def buildSimulation(alpha, gamma, lambdaa, importance, expName='test0'):
+def buildSimulation(alpha, gamma, lambdaa, importance,expName='test0'):
 	net=nef.Network('HandWired parameters of RL node to bias')
 	net.add_to_nengo()  
 
@@ -80,7 +78,8 @@ dt = 0.001
 runs = 5
 base = 'noea_importance'
 #vals = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-vals = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
+vals = [0.9, 1]
+#vals = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
 # run the experiment several times, plot average in the matlab
 for j in range(len(vals)):
 	print 'xxxxxxx testing the value: '+str(vals[j])

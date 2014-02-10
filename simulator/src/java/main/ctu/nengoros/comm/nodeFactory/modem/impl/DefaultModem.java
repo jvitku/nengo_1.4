@@ -24,14 +24,14 @@ import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
  *  
  * @author Jaroslav Vitku
  */
-public class DefaultModem implements Modem, StartedObject {
+public class DefaultModem implements Modem, StartedObject{
 
 	public static final String DEF_NAME = "Modem";
 	public final String me = "["+DEF_NAME+"] ";
 
-	private String myName;
-	private Log log;
-	private ConnectedNode myRosSide;
+	protected String myName;
+	protected Log log;
+	protected ConnectedNode myRosSide;
 
 	public DefaultModem(){ myName = DEF_NAME; }
 	public DefaultModem(String name){ myName = name; }
@@ -48,7 +48,6 @@ public class DefaultModem implements Modem, StartedObject {
 
 		System.out.println(me+" starting..!");
 		log.info(me+" starting..!");
-		// indicate the modem has successfully started
 	}
 
 	@Override
@@ -77,11 +76,19 @@ public class DefaultModem implements Modem, StartedObject {
 
 	@Override
 	public String getFullName() { return myName; }
+	
 	@Override
 	public StartupManager getStartupManager() { return this.startup; }
 
 	@Override
 	public boolean isStarted() {
 		return (this.myRosSide != null && this.log != null);
+	}
+	
+	/**
+	 * This does nothing during the reset.
+	 */
+	@Override
+	public void reset(boolean randomize) {
 	}
 }

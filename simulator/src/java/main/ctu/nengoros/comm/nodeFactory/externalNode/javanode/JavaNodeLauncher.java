@@ -1,4 +1,4 @@
-package ctu.nengoros.comm.nodeFactory.javanode;
+package ctu.nengoros.comm.nodeFactory.externalNode.javanode;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
-import ctu.nengoros.comm.nodeFactory.javanode.impl.JNodeContainer;
+import ctu.nengoros.comm.nodeFactory.externalNode.javanode.impl.JNodeContainer;
 import ctu.nengoros.comm.nodeFactory.modem.Modem;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.nodeFactory.modem.impl.ModContainer;
@@ -40,7 +40,7 @@ public class JavaNodeLauncher {
 		}
 
 		Preconditions.checkState(launchedOne != null);
-		ModemContainer mod = new ModContainer(nc, name, nme,g);
+		ModemContainer mod = new ModContainer(nc, name, nme, g);
 		mod.setModem((Modem)launchedOne);
 		
 		return mod;

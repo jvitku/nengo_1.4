@@ -1,9 +1,9 @@
-# THe same as previous one, but here, the experiments are made for different values of importance
-# with default alpha, gamma, lambda parameters. 
+# The same as the previous one, but here, the forgetting coverage and reward are combined into the prosperity.
 #
-# Everything is printed to files,
+# All values are printed into files.
 # 
 # by Jaroslav Vitku [vitkujar@fel.cvut.cz]
+
 
 import nef
 from ca.nengo.math.impl import FourierFunction
@@ -29,13 +29,35 @@ class ProsperitySaver(nef.SimpleNode):
 		f.write('%1.3f %s\n'%(self.t,' '.join(map(str, self.val))))
 		f.close()
 
+# this method is taken from (and modified to use custom class) the rl/sarsa/python/rosnodes/rl_sarsa.py
+classMOO = "org.hanns.rl.discrete.ros.sarsa.config.QlambdaCoverageReward" 
+#  Publishes: {composed prosperity, BinaryCoverageForgetting, BinaryRewardPerStep}
+
+def qlambdaMOO(name, noStateVars=2, noActions=4, noValues=5, logPeriod=100, maxDelay=1):
+	command = [classMOO, '_'+QLambda.noInputsConf+ ':=' + str(noStateVars), 
+	'_'+QLambda.noOutputsConf+':='+str(noActions),
+	'_'+QLambda.sampleCountConf+':='+str(noValues),
+	'_'+QLambda.logPeriodConf+':='+str(logPeriod),
+	'_'+QLambda.filterConf+':='+str(maxDelay)]
+	g = NodeGroup("RL", True);
+	g.addNode(command, "RL", "java");
+	module = NeuralModule(name+'_QLambda', g, False)
+	module.createEncoder(QLambda.topicAlpha,"float",1); 				# alpha config
+	module.createEncoder(QLambda.topicGamma,"float",1);
+	module.createEncoder(QLambda.topicLambda,"float",1);
+	module.createEncoder(QLambda.topicImportance,"float",1);
+	module.createDecoder(QLambda.topicProsperity,"float", 3);			# float[]{prosperity, coverage, reward/step}
+	module.createDecoder(QLambda.topicDataOut, "float", noActions)  	# decode actions
+	module.createEncoder(QLambda.topicDataIn, "float", noStateVars+1) 	# encode states (first is reward)
+	return module
+
 # build configuration of the experiment with given RL parameters
-def buildSimulation(alpha, gamma, lambdaa, importance, expName='test0'):
+def buildSimulation(alpha, gamma, lambdaa, importance,expName='test0'):
 	net=nef.Network('HandWired parameters of RL node to bias')
 	net.add_to_nengo()  
 
 	#rl = rl_sarsa.qlambda("RL", noStateVars=2, noActions=4, noValues=20, logPeriod=2000)
-	rl = rl_sarsa.qlambdaMOO("RL", noStateVars=2, noActions=4, noValues=20, logPeriod=2000)
+	rl = qlambdaMOO("RL", noStateVars=2, noActions=4, noValues=20, logPeriod=2000)	
 	world = gridworld.benchmarkA("map_20x20","BenchmarkGridWorldNodeC",10000);
 	net.add(rl)									    # place them into the network
 	net.add(world)
@@ -75,12 +97,12 @@ def evalConfiguration(alpha,gamma, lambdaa, importance,t,dt,name):
 
 
 #t = 20	# 20/0.001= 20 000 steps ~ 10 000 RL steps 
-t = 80
+t = 8#0
 dt = 0.001
-runs = 5
+runs = 1
 base = 'noea_importance'
-#vals = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-vals = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
+vals = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+#vals = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
 # run the experiment several times, plot average in the matlab
 for j in range(len(vals)):
 	print 'xxxxxxx testing the value: '+str(vals[j])
@@ -92,6 +114,7 @@ for j in range(len(vals)):
 		
 	
 #prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,QLambda.DEF_IMPORTANCE,t,dt)#0.01)#
+
 
 
 

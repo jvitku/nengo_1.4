@@ -6,8 +6,8 @@ import org.ros.node.NodeMain;
 
 import ctu.nengoros.comm.nodeFactory.NodeFactory;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
-import ctu.nengoros.comm.nodeFactory.javanode.JavaNodeContainer;
-import ctu.nengoros.comm.nodeFactory.nativenode.impl.RunnableNode;
+import ctu.nengoros.comm.nodeFactory.externalNode.javanode.JavaNodeContainer;
+import ctu.nengoros.comm.nodeFactory.externalNode.nativenode.impl.RunnableNode;
 import ctu.nengoros.comm.rosutils.Jroscore;
 import ctu.nengoros.comm.rosutils.Mess;
 import ctu.nengoros.comm.rosutils.ProcessLauncher;

@@ -92,6 +92,8 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	protected ModemContainer mc;
 	private volatile boolean isStarted = false;
+	public static final boolean DEF_RESETNODES = true;
+	private boolean shouldResetRosNodes = DEF_RESETNODES;
 	protected StartupManager startup = new BasicStartupManager(this);
 
 	/**
@@ -120,7 +122,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 		this.init(name, group);
 	}
-	
+
 	/**
 	 * <p>The NeuralModule which features BasicEncoders (with BasicMultiTerminations),
 	 * BasicDecoders (which are synchronous by default, that means they wait for
@@ -185,7 +187,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		this.orderedTerminations = new LinkedList <Termination> ();
 		this.orderedEncoders = new LinkedList<Encoder>();
 
-		
+
 		startup.addChild(mc.getStartupManager());
 		// TODO solve this better, probably should wait for all encoders/terminations, 
 		// but these are not known so far..
@@ -421,8 +423,10 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	@Override
 	public void reset(boolean randomize) {
-
-		mc.resetModem();	// should call reset() for all nodes in the group (including modem itself)
+		
+		// reset modem (potentially reset/restart ROS nodes) 
+		if(this.shouldResetRosNodes)
+			mc.reset(randomize);
 
 		for(int i=0; i<this.orderedEncoders.size(); i++)
 			this.orderedEncoders.get(i).reset(randomize);
@@ -431,7 +435,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 			this.orderedTerminations.get(i).reset(randomize);
 
 		// System.out.println("reset");
-		// TODO: delete history, kill and restart myNode (modem can stay..)?
+		// TODO: delete history here
 	}
 
 	@Override
@@ -541,7 +545,8 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	public DefaultNeuralModule clone(){
-		// TODO
+		// TODO 
+		System.err.println("ERROR: cloning not suported so far!");
 		return null;
 	}
 
@@ -661,5 +666,10 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	@Override
 	public boolean isStarted() { return this.isStarted; }
+
+	@Override
+	public void setShouldResetNodes(boolean shouldReset) {
+		this.shouldResetRosNodes = shouldReset;
+	}
 
 }

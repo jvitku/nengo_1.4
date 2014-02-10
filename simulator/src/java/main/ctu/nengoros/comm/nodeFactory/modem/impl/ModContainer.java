@@ -76,14 +76,17 @@ public class ModContainer implements ModemContainer, StartedObject{
 	@Override
 	public NodeConfiguration getConfiguration() { return conf;	}
 
-	@Override
-	public void reset() {
+	//@Override
+	//public void reset() {
 		//System.err.println(name+": resetting may not be supported directly, but through the ROS service");
-	}
+	//}
 
 	@Override
-	public void resetModem(){
-		myGroup.reset();
+	public void reset(boolean randomize){
+		//myGroup.reset(randomize);
+		// here only the modem is reseted, the modem
+		// will send reset message to all own ROS nodes
+		modem.reset(randomize);		
 	}
 
 	@Override
@@ -118,7 +121,5 @@ public class ModContainer implements ModemContainer, StartedObject{
 
 	@Override
 	public boolean isStarted() { return this.isStarted; }
-
-
 
 }

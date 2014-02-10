@@ -1,7 +1,4 @@
-# THe same as previous one, but here, the experiments are made for different values of importance
-# with default alpha, gamma, lambda parameters. 
-#
-# Everything is printed to files,
+# the same as previous, but here, the coverage and reward are combined into the prosperity
 # 
 # by Jaroslav Vitku [vitkujar@fel.cvut.cz]
 
@@ -30,7 +27,7 @@ class ProsperitySaver(nef.SimpleNode):
 		f.close()
 
 # build configuration of the experiment with given RL parameters
-def buildSimulation(alpha, gamma, lambdaa, importance, expName='test0'):
+def buildSimulation(alpha, gamma, lambdaa, importance,expName='test0'):
 	net=nef.Network('HandWired parameters of RL node to bias')
 	net.add_to_nengo()  
 
@@ -77,19 +74,14 @@ def evalConfiguration(alpha,gamma, lambdaa, importance,t,dt,name):
 #t = 20	# 20/0.001= 20 000 steps ~ 10 000 RL steps 
 t = 80
 dt = 0.001
-runs = 5
-base = 'noea_importance'
-#vals = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-vals = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
+runs = 10
+base = 'noea_moo_'
 # run the experiment several times, plot average in the matlab
-for j in range(len(vals)):
-	print 'xxxxxxx testing the value: '+str(vals[j])
-	for i in range(runs):
-		name = base + '_%d'%i;
-		print '----------------- starting experiment named: '+name
-		prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,vals[j],t,dt,name+"_"+str(vals[j]))
-		print '----------------- exp named: '+name+' done, the value is '+str(prosp[0])
-		
+for i in range(runs):
+	name = base + '_%d'%i;
+	print '----------------- starting experiment named: '+name
+	prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,QLambda.DEF_IMPORTANCE,t,dt,name)
+	print '----------------- exp named: '+name+' done, the value is '+str(prosp[0])
 	
 #prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,QLambda.DEF_IMPORTANCE,t,dt)#0.01)#
 

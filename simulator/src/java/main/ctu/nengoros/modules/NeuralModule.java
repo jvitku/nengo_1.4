@@ -41,6 +41,17 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	public void awaitStarted() throws StartupDelayException; 
 	
 	/**
+	 * Set whether to reset also own ROS nodes. The resetting technique
+	 * is determined by the particular {@link ctu.nengoros.comm.nodeFactory.modem.Modem} used.
+	 * 
+	 * @param shouldReset if true, the Module call reset also for own modem, 
+	 * which should handle the resetting
+	 * 
+	 * @see ctu.nengoros.comm.nodeFactory.modem.impl.RosResettingModem#reset(boolean)
+	 */
+	public void setShouldResetNodes(boolean shouldReset);
+	
+	/**
 	 * <p>This NeuralModule supports connecting multiple "inputs" to one Encoder.
 	 * It is accomplished by the fact that each Encoder has MultiTermination, where
 	 * the MultiTermination can have several own Terminations, whose values are

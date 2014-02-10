@@ -2,6 +2,8 @@ package ctu.nengoros.comm.nodeFactory.modem;
 
 import org.ros.node.ConnectedNode;
 
+import ca.nengo.model.Resettable;
+
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
@@ -18,7 +20,7 @@ import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
  * @author Jaroslav Vitku
  *
  */
-public interface Modem extends ROSNode, StartedObject{
+public interface Modem extends ROSNode, StartedObject, Resettable{
 	
 	/**
 	 * Get factory for subscribers and publishers

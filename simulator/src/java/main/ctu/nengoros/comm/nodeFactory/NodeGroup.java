@@ -2,6 +2,7 @@ package ctu.nengoros.comm.nodeFactory;
 
 import java.util.ArrayList;
 
+import ctu.nengoros.comm.nodeFactory.externalNode.ExternalNodeContainer;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosutils.RosUtils;
 import ctu.nengoros.network.node.synchedStart.StartupManager;
@@ -31,7 +32,8 @@ public class NodeGroup implements StartedObject{
 	public static final String JAVA = "java";
 	public static final String MODEM = "modem";
 	public static final String DEF_MODEM = "defaultModem";
-	public static final String defaultModem = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
+	//public static final String defaultModem = "ctu.nengoros.comm.nodeFactory.modem.impl.DefaultModem";
+	public static final String defaultModem = "ctu.nengoros.comm.nodeFactory.modem.impl.RosResettingModem";
 	
 	// Every group of nodes can contain up to one modem 
 	// The modem can be empty, but should belong to some Neural Module, 
@@ -157,11 +159,14 @@ public class NodeGroup implements StartedObject{
 		this.isStarted = true;
 	}
 	
-	public void reset(){
+	/*
+	 * // resetting of nodes is now done by means of modem
+	@Override
+	public void reset(boolean randomize){
 		for(int i=0; i<nodes.length; i++){
-			nodes[i].reset();
+			nodes[i].reset(randomize);
 		}
-	}
+	}*/
 
 	public void addNode(String command, String name, String what){
 		if(what.equalsIgnoreCase(NATIVE)){

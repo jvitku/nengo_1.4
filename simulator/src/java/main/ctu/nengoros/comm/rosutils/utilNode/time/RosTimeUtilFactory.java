@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.ros.node.DefaultNodeMainExecutor;
 import org.ros.node.NodeMainExecutor;
 
-import ctu.nengoros.comm.nodeFactory.javanode.JavaNodeContainer;
-import ctu.nengoros.comm.nodeFactory.javanode.JavaNodeLauncher;
+import ctu.nengoros.comm.nodeFactory.externalNode.javanode.JavaNodeContainer;
+import ctu.nengoros.comm.nodeFactory.externalNode.javanode.JavaNodeLauncher;
 import ctu.nengoros.comm.rosutils.utilNode.params.ParamHandler;
 import ctu.nengoros.comm.rosutils.utilNode.time.impl.DefaultTimeMaster;
 import ctu.nengoros.comm.rosutils.utilNode.time.impl.DefaultTimeSlave;

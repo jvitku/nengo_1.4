@@ -1,6 +1,6 @@
-package ctu.nengoros.comm.nodeFactory.nativenode;
+package ctu.nengoros.comm.nodeFactory.externalNode.nativenode;
 
-import ctu.nengoros.comm.nodeFactory.ExternalNodeContainer;
+import ctu.nengoros.comm.nodeFactory.externalNode.ExternalNodeContainer;
 
 
 

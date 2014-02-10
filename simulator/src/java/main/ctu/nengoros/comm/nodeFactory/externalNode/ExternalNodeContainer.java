@@ -1,5 +1,4 @@
-package ctu.nengoros.comm.nodeFactory;
-
+package ctu.nengoros.comm.nodeFactory.externalNode;
 
 /**
  * This is container for all nodes that can be ran externally and need
@@ -27,7 +26,7 @@ public interface ExternalNodeContainer {
 	/**
 	 * Call reset on the node in container.
 	 */
-	public void reset();
+	//public void reset();
 		
 	/**
 	 * Get name which somehow identifies this node.

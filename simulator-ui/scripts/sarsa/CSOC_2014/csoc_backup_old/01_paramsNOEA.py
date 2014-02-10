@@ -1,7 +1,9 @@
-# THe same as previous one, but here, the experiments are made for different values of importance
-# with default alpha, gamma, lambda parameters. 
+# Architecture containing gridWorld simulator and RL nodes. 
+# The RL node has configuration connected by weighted connections to bias. 
 #
-# Everything is printed to files,
+# In this script, the default values of parameters are used.
+#
+# The values of the paramters will be determined by the EA, based on the prosperity measure.
 # 
 # by Jaroslav Vitku [vitkujar@fel.cvut.cz]
 
@@ -20,8 +22,8 @@ import gridworld
 
 class ProsperitySaver(nef.SimpleNode):
 	def init(self):
-		self.val = [0,0,0];
-	def termination_data(self, values, dimensions=3):
+		self.val = [0];
+	def termination_data(self,values):
 		self.val = values;
 	def tick(self):
 		#f=file('data.txt','a+')
@@ -30,12 +32,11 @@ class ProsperitySaver(nef.SimpleNode):
 		f.close()
 
 # build configuration of the experiment with given RL parameters
-def buildSimulation(alpha, gamma, lambdaa, importance, expName='test0'):
+def buildSimulation(alpha, gamma, lambdaa, importance,expName='test0'):
 	net=nef.Network('HandWired parameters of RL node to bias')
 	net.add_to_nengo()  
 
-	#rl = rl_sarsa.qlambda("RL", noStateVars=2, noActions=4, noValues=20, logPeriod=2000)
-	rl = rl_sarsa.qlambdaMOO("RL", noStateVars=2, noActions=4, noValues=20, logPeriod=2000)
+	rl = rl_sarsa.qlambda("RL", noStateVars=2, noActions=4, noValues=20, logPeriod=2000)
 	world = gridworld.benchmarkA("map_20x20","BenchmarkGridWorldNodeC",10000);
 	net.add(rl)									    # place them into the network
 	net.add(world)
@@ -77,19 +78,14 @@ def evalConfiguration(alpha,gamma, lambdaa, importance,t,dt,name):
 #t = 20	# 20/0.001= 20 000 steps ~ 10 000 RL steps 
 t = 80
 dt = 0.001
-runs = 5
-base = 'noea_importance'
-#vals = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-vals = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
+runs = 10
+base = 'noea'
 # run the experiment several times, plot average in the matlab
-for j in range(len(vals)):
-	print 'xxxxxxx testing the value: '+str(vals[j])
-	for i in range(runs):
-		name = base + '_%d'%i;
-		print '----------------- starting experiment named: '+name
-		prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,vals[j],t,dt,name+"_"+str(vals[j]))
-		print '----------------- exp named: '+name+' done, the value is '+str(prosp[0])
-		
+for i in range(runs):
+	name = base + '_%d'%i;
+	print '----------------- starting experiment named: '+name
+	prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,QLambda.DEF_IMPORTANCE,t,dt,name)
+	print '----------------- exp named: '+name+' done, the value is '+str(prosp[0])
 	
 #prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,QLambda.DEF_IMPORTANCE,t,dt)#0.01)#
 

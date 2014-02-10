@@ -1,10 +1,10 @@
-package ctu.nengoros.comm.nodeFactory.javanode;
+package ctu.nengoros.comm.nodeFactory.externalNode.javanode;
 
 
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMain;
 
-import ctu.nengoros.comm.nodeFactory.ExternalNodeContainer;
+import ctu.nengoros.comm.nodeFactory.externalNode.ExternalNodeContainer;
 
 
 /**
@@ -18,7 +18,7 @@ public interface JavaNodeContainer extends ExternalNodeContainer{
 	/**
 	 * reset called by Nengo
 	 */
-	public void reset();
+	//public void reset();
 
 	/**
 	 * NodeMain is interface for a ROS communication-enabled class

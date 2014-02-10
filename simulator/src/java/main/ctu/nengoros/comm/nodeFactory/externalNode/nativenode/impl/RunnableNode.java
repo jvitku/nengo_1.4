@@ -1,4 +1,4 @@
-package ctu.nengoros.comm.nodeFactory.nativenode.impl;
+package ctu.nengoros.comm.nodeFactory.externalNode.nativenode.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import ctu.nengoros.comm.nodeFactory.nativenode.NativeNodeContainer;
+import ctu.nengoros.comm.nodeFactory.externalNode.nativenode.NativeNodeContainer;
 import ctu.nengoros.comm.rosutils.RosUtils;
 
 /**
@@ -277,14 +277,6 @@ public class RunnableNode implements NativeNodeContainer{
 				//ex.printStackTrace ();
 			}
 		}
-	}
-
-	/**
-	 * Called on each Nengo reset (open sim. window etc..)
-	 */
-	@Override
-	public void reset() {
-		//System.out.println(me+" unable to reset, could start/stop me though...");
 	}
 }
 
