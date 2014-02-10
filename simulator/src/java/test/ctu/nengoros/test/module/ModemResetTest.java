@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import ctu.nengoros.RosRunner;
@@ -43,7 +42,7 @@ public class ModemResetTest extends NengorosTest{
 		RosUtils.utilsShallStop();
 	}
 	
-	@Ignore
+	//@Ignore
 	@Test
 	public void testReset(){
 
@@ -65,7 +64,7 @@ public class ModemResetTest extends NengorosTest{
 		}
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 2); // one modem and one ROS node
 		
-		RosRunner rr = this.runNode(new String[]{tst,"_ns:=resetTest"});		
+		RosRunner rr = this.runNode(new String[]{tst});// default namespace is none, turns out..
 		assertTrue(rr.isRunning());
 		
 		assertTrue(rr.getNode() instanceof ConfigurableHannsNode); // TODO multiple definitions of this?
@@ -109,7 +108,7 @@ public class ModemResetTest extends NengorosTest{
 		}
 		assertTrue(NodeFactory.np.numOfRunningNodes() == 2); // one modem and one ROS node
 		
-		RosRunner rr = this.runNode(new String[]{tst,"_ns:=resetTestWRONGNS"});		
+		RosRunner rr = this.runNode(new String[]{tst,"__ns:=resetTestWrongNS"}); // "_ns:=resetTestWrongNS"		
 		assertTrue(rr.isRunning());
 		
 		assertTrue(rr.getNode() instanceof ConfigurableHannsNode); // TODO multiple definitions of this?
@@ -126,6 +125,7 @@ public class ModemResetTest extends NengorosTest{
 		sleep(300);							// wait for deliver
 		assertFalse(node.softResetted);	
 		// here, the ROS node should be in different namespace
+		//assertTrue(node.hardResetted);
 		assertFalse(node.hardResetted);		
 		
 		rr.stop();							// stop the ROS node

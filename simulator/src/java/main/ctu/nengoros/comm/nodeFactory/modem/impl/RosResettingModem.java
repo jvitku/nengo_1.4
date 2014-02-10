@@ -52,7 +52,7 @@ public class RosResettingModem extends DefaultModem{
 					"to initialize! not resetting!");
 			return;
 		}
-		System.out.println(myName+" resetting my nodes now.");
+		//System.out.println(myName+" resetting my nodes now.");
 		this.controller.callHardReset(randomize);
 	}
 	

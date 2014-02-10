@@ -33,7 +33,6 @@ public interface PeripheralsRegisteringNode {
 	 * @throws StructuralException is thrown if there already is term. with this name
 	 */
 	public void addTermination(Termination t) throws StructuralException;
-
 	
 	public void printTerminationNames();
 	public void printOriginNames();
