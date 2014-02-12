@@ -1,8 +1,12 @@
 # Create the NeuralModule which implements discrete source of motivation.
 #
-# the source of motivaiton has:
+# the source of motivaiton has the following data IO:
 #   -n inputs, these are summed, if the value is equal or more  than threshold (1 now), the reinforcement is received, state variable is set back to limbo
 #   -2 outputs defining: {reward just received, size of the current motivation}
+#
+# and the followig config IO:
+# 	-one input defining the speed of linear decay (per one step)
+#	-one output defining the prosperity of node (1-MSD where MSD is Mean State Distance to limbo area)
 #
 # by Jaroslav Vitku [vitkujar@fel.cvut.cz]
 

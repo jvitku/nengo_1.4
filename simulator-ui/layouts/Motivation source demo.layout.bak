@@ -1,11 +1,12 @@
-({'state': 0, 'height': 600, 'width': 950, 'x': 4, 'y': 22},
- [(u'RewardGenerator', None, {'label': False, 'height': 32, 'width': 169, 'x': 79, 'y': 12}),
+({'state': 0, 'height': 612, 'width': 937, 'x': 618, 'y': 306},
+ [(u'RewardGenerator', None, {'label': False, 'height': 32, 'width': 169, 'x': 85, 'y': 11}),
   (u'BasicMotivation_Motivation', None, {'label': False, 'height': 32, 'width': 251, 'x': 600, 'y': 32}),
-  (u'BasicMotivation_decay', None, {'label': False, 'height': 32, 'width': 213, 'x': 290, 'y': 339}),
-  (u'BasicMotivation_Motivation', u'value|io/MotivationReward', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 603, 'fixed_y': None, 'autozoom': True, 'y': 88}),
+  (u'BasicMotivation_decay', None, {'label': False, 'height': 32, 'width': 213, 'x': 8, 'y': 271}),
+  (u'BasicMotivation_Motivation', u'value|io/MotivationReward', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 524, 'fixed_y': None, 'autozoom': True, 'y': 73}),
   (u'RewardGenerator', 'value|origin', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 127, 'fixed_y': None, 'autozoom': True, 'y': 43}),
   (u'RewardGenerator', 'control', {'label': True, 'range': 2.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 102, 'x': 24, 'y': 44}),
-  (u'BasicMotivation_decay', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 183, 'y': 280})],
+  (u'BasicMotivation_decay', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 156, 'x': 30, 'y': 308}),
+  (u'BasicMotivation_Motivation', u'value|conf/prosperity', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 526, 'fixed_y': None, 'autozoom': False, 'y': 280})],
  {'dt': 0, 'show_time': 0.5, 'sim_spd': 3, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 4.0}) 
 ##############################
 ### Nengo Workspace layout ###

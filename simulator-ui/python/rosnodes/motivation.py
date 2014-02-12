@@ -39,6 +39,8 @@ rewVal=Motivation.DEF_REWARD, rewThr=Motivation.DEF_REWTHRESHOLD):
 
 	module.createDecoder(Motivation.topicDataOut, "float", 2)           # decode float[]{reward,motivation}
 	module.createEncoder(Motivation.topicDataIn, "float", noInputs) 	# encode input data (sum rewards here)
+	
+	module.createDecoder(Motivation.topicProsperity,"float", 1);			# float[]{prosperity}
 
 	return module
 

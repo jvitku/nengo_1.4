@@ -1,0 +1,31 @@
+({'state': 0, 'height': 775, 'width': 1026, 'x': 115, 'y': 51},
+ [(u'RL_QLambda', None, {'label': False, 'height': 32, 'width': 134, 'x': 439, 'y': 15}),
+  (u'lambda', None, {'label': False, 'height': 32, 'width': 75, 'x': 226, 'y': 14}),
+  (u'alpha', None, {'label': False, 'height': 32, 'width': 58, 'x': 19, 'y': 12}),
+  (u'importance', None, {'label': False, 'height': 32, 'width': 109, 'x': 313, 'y': 13}),
+  (u'gamma', None, {'label': False, 'height': 32, 'width': 77, 'x': 115, 'y': 12}),
+  (u'alpha', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 41, 'y': 52}),
+  (u'gamma', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 139, 'y': 47}),
+  (u'lambda', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 236, 'y': 44}),
+  (u'importance', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 336, 'y': 41}),
+  (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': False, 'height': 144, 'width': 216, 'x': 431, 'fixed_y': None, 'autozoom': False, 'y': 54}),
+  (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [1], 'last_maxy': 1.0, 'sel_all': False, 'height': 144, 'width': 217, 'x': 434, 'fixed_y': None, 'autozoom': False, 'y': 199}),
+  (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [2], 'last_maxy': 1.0, 'sel_all': False, 'height': 142, 'width': 218, 'x': 434, 'fixed_y': None, 'autozoom': False, 'y': 348}),
+  (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [3], 'last_maxy': 1.0, 'sel_all': False, 'height': 145, 'width': 218, 'x': 434, 'fixed_y': None, 'autozoom': False, 'y': 498}),
+  (u'RL_QLambda', u'value|conf/prosperity', {'label': True, 'sel_dim': [0, 1, 2], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 64, 'fixed_y': (0, 0.5), 'autozoom': True, 'y': 300}),
+  (u'map_20x20_GridWorld', None, {'label': False, 'height': 32, 'width': 215, 'x': 717, 'y': 11}),
+  (u'map_20x20_GridWorld', u'XY plot|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 1.0, 'height': 200, 'width': 200, 'x': 732, 'autohide': True, 'autozoom': True, 'y': 59}),
+  (u'map_20x20_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 15.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 694, 'fixed_y': (-1, 1), 'autozoom': False, 'y': 267}),
+  (u'map_20x20_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [0], 'last_maxy': 15.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 694, 'fixed_y': None, 'autozoom': False, 'y': 464})],
+ {'dt': 0, 'show_time': 0.5, 'sim_spd': 0, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 4.0}) 
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=-156.91190886045194,y=100.00000000000003,width=1364.8238482384822,height=845.0]
+# RL_QLambda (Generic Node)=Point2D.Double[666.6666870117188, 333.3333435058594]
+# lambda (Function Input)=Point2D.Double[333.3333435058594, 800.0]
+# alpha (Function Input)=Point2D.Double[333.3333435058594, 600.0]
+# importance (Function Input)=Point2D.Double[333.3333435058594, 200.0]
+# gamma (Function Input)=Point2D.Double[333.3333435058594, 400.0]
+# map_30x30_GridWorld (Generic Node)=Point2D.Double[666.6666870117188, 666.6666870117188]
