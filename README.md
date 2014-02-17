@@ -78,10 +78,7 @@ Technical Notes:
 
 ### TODO
 
-* Nengo simulator is unable to handle entire Evolutionary Algorithm because of the following reasons:
- 
-	* The simulation is getting slower in time because the Nengo creates too many Threads (better Thread management?)
-
+* Modem: not-connected Origins produce default value parsed from the NeuralModule?
 * When launching scripts which repeatedly create `net` by means of `nengo-cl`, the old NeuralModules are probably not deleted as in case of `nengo` script. TODO solve this.
 * `AbstractHannsNode`: add some better logger, which can select between ROS logger, console logger and file logger.
 * Extend the `awaitReady()` method in the `NeuralModule` with the `communicationAwareNode`, so that the module waits until all ROS IO (publishers/subscribers) are connected
