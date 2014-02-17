@@ -27,12 +27,13 @@
 ### Nengo Workspace layout ###
 ##############################
 # elasticmode=false
-# viewbounds=PBounds[x=243.16165606691794,y=362.66741943359375,width=1198.1059060018572,height=566.5462036132814]
-# gamma (Function Input)=Point2D.Double[740.66455078125, 767.725341796875]
-# BasicMotivation_Motivation (Generic Node)=Point2D.Double[766.55078125, 481.16741943359375]
-# x_decay (Function Input)=Point2D.Double[625.7605003542507, 463.77398540240074]
-# RL_QLambda (Generic Node)=Point2D.Double[912.2928466796875, 632.7968139648438]
-# importance (Function Input)=Point2D.Double[741.1349487304688, 640.691162109375]
-# lambda (Function Input)=Point2D.Double[738.0589599609375, 575.817138671875]
-# map_20x20_GridWorld (Generic Node)=Point2D.Double[972.148193359375, 468.5465393066406]
-# alpha (Function Input)=Point2D.Double[742.9076538085938, 703.5863647460938]
+# viewbounds=PBounds[x=172.39697691386877,y=-7.901697483815665,width=859.2239374424282,height=675.3899787338157]
+# x_decay (Function Input)=Point2D.Double[320.1845782818843, 220.08262043620448]
+# gamma (Function Input)=Point2D.Double[435.4152603850132, 499.127882389132]
+# map_20x20_GridWorld (Generic Node)=Point2D.Double[571.3204737191776, 92.59830251618423]
+# BasicMotivation_Motivation (Generic Node)=Point2D.Double[482.02326606015436, 218.3170224147846]
+# alpha (Function Input)=Point2D.Double[434.28244868738284, 294.10800266504805]
+# RL_QLambda (Generic Node)=Point2D.Double[666.6666870117188, 500.0]
+# lambda (Function Input)=Point2D.Double[432.73848352848034, 428.8216666180039]
+# importance (Function Input)=Point2D.Double[437.247348263977, 359.1760392256237]
+# x.txt (Generic Node)=Point2D.Double[833.3333129882812, 500.0]
