@@ -43,6 +43,11 @@ In order to install just standalone version of Nengoros, you can use the script 
 Changelog
 --------------
 
+###nenoros-master-v0.0.9
+
+* Modems are now able to reset corresponding ROS nodes. Now, the method `callHardReset(boolean randomize)` resets all corresponding ROS nodes (which support resetting). The method is called from the Nengo method `reset(boolean randomize)`. Calling the reset is asynchronous so far. @see `ctu.nengoros.comm.nodeFactory.modem.impl.RosResettingModem`.
+
+
 ###nenoros-master-v0.0.7
 
 * DefaultModem and NeuralModule Improved to implement the `awaitReady()` method from the `HannsNode`, by this way, the correct startup of all ROS components should be ensured. Therefore all waiting can be deleted (mostly in the unit tests).
@@ -78,6 +83,7 @@ Technical Notes:
 
 ### TODO
 
+* Improve the nengo launch scripts
 * Modem: not-connected Origins produce default value parsed from the NeuralModule?
 * When launching scripts which repeatedly create `net` by means of `nengo-cl`, the old NeuralModules are probably not deleted as in case of `nengo` script. TODO solve this.
 * `AbstractHannsNode`: add some better logger, which can select between ROS logger, console logger and file logger.

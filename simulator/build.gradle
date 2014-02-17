@@ -40,6 +40,10 @@ dependencies {
     compile 'ctu.nengoros:jroscore:0.0.10-SNAPSHOT'
     testCompile 'ctu.nengoros:jroscore:0.0.10-SNAPSHOT'
 
+	// these are used by the corresponding jython scripts which use rl or physiology
+	runtime 'ctu.hanns.physiology:statespace:0.0.1-SNAPSHOT'
+	runtime 'ctu.hanns.rl:sarsa:0.0.4-SNAPSHOT'
+
     //compile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
     //testCompile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
     //runtime 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT'
