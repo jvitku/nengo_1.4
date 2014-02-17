@@ -40,19 +40,19 @@ ROSJAVA=$RJ/rosjava-0.0.0-SNAPSHOT.jar:$RJ/rosjava_bootstrap-0.0.0-SNAPSHOT.jar:
 #FROMJARS=$HO/simulator-ui-0.0.0-SNAPSHOT.jar:$HO/simulator-0.0.0-SNAPSHOT.jar
 
 # jroscore
-Jroscore=$N_HOME/../../jroscore/build/libs/jroscore-0.0.10-SNAPSHOT.jar 
+Jroscore=$N_HOME/../../jroscore/build/libs/jroscore-0.0.11-SNAPSHOT.jar 
 
 # vivae simulator
-VIVAE=$N_HOME/../../vivae/vivaesimulator/build/libs/vivaesimulator-0.0.3-SNAPSHOT.jar	# simulator in jar
+VIVAE=$N_HOME/../../vivae/vivaesimulator/build/libs/vivaesimulator-0.0.4-SNAPSHOT.jar	# simulator in jar
 VIVAE=$VIVAE:$N_HOME/../../vivae/vivaesimulator/lib/*									# vivae dependencies
-VIVAE=$VIVAE:$N_HOME/../../vivae/vivaeplugin/build/libs/vivaeplugin-0.0.3-SNAPSHOT.jar	# plugin in jar
+VIVAE=$VIVAE:$N_HOME/../../vivae/vivaeplugin/build/libs/vivaeplugin-0.0.4-SNAPSHOT.jar	# plugin in jar
 
 # dependencies for complete installation (with external rosjava nodes)
 NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.4-SNAPSHOT.jar 
 NODES=$NODES:$N_HOME/../../demonodes/basic/build/libs/basic-0.0.5-SNAPSHOT.jar
 
-SARSA=$N_HOME/../../rl/sarsa/build/libs/sarsa-0.0.4-SNAPSHOT.jar
-PHYSIOLOGY=$N_HOME/../../physiology/statespace/build/libs/statespace-0.0.1-SNAPSHOT.jar
+SARSA=$N_HOME/../../rl/sarsa/build/libs/sarsa-0.0.5-SNAPSHOT.jar
+PHYSIOLOGY=$N_HOME/../../physiology/statespace/build/libs/statespace-0.0.2-SNAPSHOT.jar
 DESIGNER=$N_HOME/../../designer/basicea/build/libs/basicea-0.0.2-SNAPSHOT.jar
 
 #LIBRARIES = $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$SARSA:$PHYSIOLOGY
