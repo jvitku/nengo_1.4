@@ -18,6 +18,7 @@ import ctu.nengoros.dynamics.NoIntegrator;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.exceptions.MessageFormatException;
 import ctu.nengoros.exceptions.UnsupportedMessageFormatExc;
+import ctu.nengoros.model.termination.TransformTermination;
 import ctu.nengoros.model.transformMultiTermination.MultiTermination;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
@@ -344,6 +345,52 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		}
 	}
 
+	@Override
+	public void createConfigEncoder(String topicName, String dataType, float[] defaultValues) {
+		int dim;
+		Backend ros;
+		try {
+			this.checkEncoderAvailable(topicName);
+			int[] dimSizes = new int[]{defaultValues.length};
+
+			ros = BackendUtils.select(topicName, dataType, dimSizes, mc.getConnectedNode(), true);
+			dim = BackendUtils.countNengoDimension(dimSizes);
+
+			IdentityLTISystem noLTI = new IdentityLTISystem(dim); 	// do not use any decay..
+
+			Encoder enc = new BasicEncoder(this, dimSizes, noLTI, noInt, topicName, dataType, Units.UNK, mc, ros);
+			// set default values for the first TransformTermination
+			((TransformTermination)enc.getMultiTermination().getOrderedTerminations().get(0)).
+			setDefaultOutputValues(defaultValues);
+
+			this.addEncoder(enc);
+			//new BasicEncoder(this, noLTI, noInt, topicName, dimensionSizes, dataType, Units.UNK, mc, ros);
+
+		} catch (MessageFormatException e1) {
+			System.err.println(me+"Bad message format.");
+			e1.printStackTrace();
+		} catch (UnsupportedMessageFormatExc e) {
+			System.err.println(me+"Message format is not supported so far");
+			e.printStackTrace();
+		} catch (StructuralException e) {
+			System.err.println(me+"Could not add the corresponding termination to Nengo network");
+			e.printStackTrace();
+		} catch (ConnectionException e) {
+			System.err.println(me+"my modem was not connected. Probably ROS communication error!!");
+			e.printStackTrace();
+		} catch (StartupDelayException e) {
+			System.err.println(me+"my modem was not started in a given time. Probably ROS communication error!");
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void createConfigEncoder(String topicName, String dataType, float defaultValue) {
+		this.createConfigEncoder(topicName, dataType, new float[]{defaultValue});
+	}
+
+
 	public void createEncoder(String topicName, String dataType, int dimensionSize){
 		this.createEncoder(topicName, dataType, new int[]{dimensionSize});
 	}
@@ -418,7 +465,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	@Override
 	public void reset(boolean randomize) {
-		
+
 		// reset modem (potentially reset/restart ROS nodes) 
 		if(this.shouldResetRosNodes)
 			mc.reset(randomize);

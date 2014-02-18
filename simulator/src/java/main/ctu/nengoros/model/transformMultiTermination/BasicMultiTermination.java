@@ -1,6 +1,7 @@
 package ctu.nengoros.model.transformMultiTermination;
 
 import ctu.nengoros.dynamics.IdentityLTISystem;
+import ctu.nengoros.model.termination.TransformTermination;
 import ctu.nengoros.model.termination.impl.BasicTransformTermination;
 import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.PeripheralsRegisteringNode;
@@ -27,7 +28,11 @@ public abstract class BasicMultiTermination extends AbstractTransformMultiTermin
 	}
 
 	/**
-	 * Adds BasicTerminaiton of dimension 1 with auto-generated name. 
+	 * Adds BasicTerminaiton of dimension 1 with auto-generated name. By default, the first Termination
+	 * is added in the constructor. The Encoder can be created as configEncoder ({@link }, so that 
+	 * output of the Termination is set to default values. Calling this method causes that the
+	 * default values for the Termination 0 are set back to zero.
+	 * 
 	 * @param weight matrix for newly created termination, determines the terminations dimensionality
 	 * @return name of newly created Termination
 	 * @throws StructuralException if output dimension of weight matrix is incorrect
@@ -44,6 +49,10 @@ public abstract class BasicMultiTermination extends AbstractTransformMultiTermin
 		Termination t = new BasicTransformTermination(parent, noLTI, integ, termName, weights);
 		((PeripheralsRegisteringNode) parent).addTermination(t);
 
+		// if a default value is set to the Termination 0, discard it now
+		if(this.orderedTerminations.size()>0)
+			((TransformTermination)this.orderedTerminations.get(0)).resetDefaultOutputValues();
+		
 		this.myTerminations.put(termName, t);
 		this.orderedTerminations.add(t);
 

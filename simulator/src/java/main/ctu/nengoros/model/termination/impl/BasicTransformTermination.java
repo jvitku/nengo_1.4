@@ -27,6 +27,13 @@ import ca.nengo.util.impl.TimeSeriesImpl;
  */
 public class BasicTransformTermination extends BasicTermination implements TransformTermination{
 
+	/**
+	 * The default value to be placed on output if no input is received. 
+	 * @see #setDefaultOutputValues(float[]) 	
+	 */
+	public static final float DEF_OUTVAL = 0f;
+	private final float[] defOutputValues;
+
 	private static final long serialVersionUID = -9130566431178179544L;
 
 	protected final int inputDimension;
@@ -58,6 +65,10 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 			throw new StructuralException("BasicTransformTermination: wrong size of transformation"
 					+ "matrix! Expected dimensions are: ["+this.inputDimension+","+
 					this.outputDimension+"]");
+
+		this.defOutputValues = new float[this.outputDimension];
+		for(int i=0; i>this.outputDimension; i++)
+			this.defOutputValues[i] = DEF_OUTVAL;
 
 		this.matrix = weights.clone();
 	}
@@ -96,10 +107,10 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 
 		// the same processing as in the BasicTermination
 		float[] input = this.notConnectedInput;
-		
+
 		if (myInput instanceof RealOutput) {
 			input = ((RealOutput) myInput).getValues();
-			
+
 		} else if (myInput instanceof SpikeOutput) {
 			boolean[] spikes = ((SpikeOutput) myInput).getValues();
 			input = new float[spikes.length];
@@ -110,9 +121,9 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 				}
 			}
 		}else{
-			// if the Termination is not connected no values are received (dimension=0) so 
-			// set zeros of correct dimension to my output and return
-			myOutput = this.initZeros(startTime, endTime, this.outputDimension);
+			// if the Termination is not connected no values are received, so 
+			// set default output values to my output and return
+			myOutput = this.initDefaultValues(startTime, endTime);
 			return;
 		}
 		// here, compute dynamics as the BasicTermination does
@@ -160,7 +171,7 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 	}
 
 	/**
-	 * Return time series with current simulation times and with values values set to zero
+	 * Return time series with current simulation times and with values values set to default
 	 * 
 	 * @param startTime start time of simulation step
 	 * @param endTime end times
@@ -182,5 +193,48 @@ public class BasicTransformTermination extends BasicTermination implements Trans
 
 		return inSeries;
 	}
+
+	/**
+	 * Create time series with default values set in the {@link #DEF_OUTVAL} or 
+	 * by the method {@link #setDefaultOutputValues(float[])}
+	 * @param startTime
+	 * @param endTime
+	 * @return timeSeries which contains default values
+	 */
+	private TimeSeriesImpl initDefaultValues(float startTime, float endTime){
+
+		float[] input = new float[this.outputDimension];
+		for(int i=0; i<this.outputDimension; i++)
+			input[i] = this.defOutputValues[i];
+
+		float[] inputII = input.clone();
+
+		TimeSeriesImpl inSeries = 
+				new TimeSeriesImpl(
+						new float[]{startTime, endTime}, 
+						new float[][]{input, inputII}, 
+						Units.uniform(Units.UNK, input.length));
+
+		return inSeries;
+	}
+
+	@Override
+	public void setDefaultOutputValues(float[] defaultValues) throws StructuralException {
+		if(this.getOutputDimensions() != defaultValues.length){
+			throw new StructuralException("BasicTransformTermination#setDefaultValues ERROR: "
+					+ "given array has incorrect length of: "+defaultValues.length+
+					" expected: "+this.notConnectedInput.length);
+		}
+		for(int i=0; i<this.getOutputDimensions(); i++)
+			this.defOutputValues[i] = defaultValues[i];
+	}
+
+	@Override
+	public void resetDefaultOutputValues() {
+		for(int i=0; i<this.outputDimension; i++)
+			this.defOutputValues[i] = DEF_OUTVAL;
+	}
+
+
 }
 

@@ -37,8 +37,7 @@ public interface TransformTermination extends Termination{
 	 * @return weight matrix which defines the transformation
 	 */
 	public float[][] getTransformationMatrix();
-	
-	
+
 	/**
 	 * Sets the Transformation matrix, which defines transformation of signal on
 	 * input to the output signal, possible with different dimensionality.  
@@ -46,5 +45,21 @@ public interface TransformTermination extends Termination{
 	 * @throws StructuralException thrown in case that the matrix dimensions are incorrect
 	 */
 	public void setTransformationMatrix(float[][] matrix) throws StructuralException;
+	
+	/**
+	 * If no input is received, these default values are placed on output of this 
+	 * TransformTermination.
+	 * @param defaultValues array of default values of type float to be returned by the 
+	 * getOutput method if no input received
+	 * @throws StructuralException thrown if the dimensionality of defaultValues is different
+	 * from the dimensionality of the output of this TransformTermination
+	 */
+	public void setDefaultOutputValues(float[] defaultValues) throws StructuralException;
 
+	/**
+	 * If the Encoder has only one TransformTermination, the defaultOutputValue can be set
+	 * to non-zero. But during adding of new TranformTermination to the parent MultiTermination,
+	 * the default values should be set back to zero.  
+	 */
+	public void resetDefaultOutputValues();
 }

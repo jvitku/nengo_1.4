@@ -180,5 +180,9 @@ public abstract class AbstractTransformMultiTermination implements MultiTerminat
 
 	@Override
 	public TimeSeries getOutput() { return this.myValue; }
+	
+
+	@Override
+	public LinkedList<Termination> getOrderedTerminations() { return this.orderedTerminations; }
 }
 

@@ -2,6 +2,7 @@ package ctu.nengoros.model.transformMultiTermination;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import ca.nengo.model.Node;
 import ca.nengo.model.Resettable;
@@ -62,6 +63,12 @@ public interface MultiTermination  extends Serializable, Resettable, Cloneable{
 	public Termination addTermination(float[][] weights) throws StructuralException;
 	
 	public HashMap<String,Termination> getTerminations();
+	
+	/**
+	 * In order to get access to the Terminations that are used. 
+	 * @return Linked list containing all (Multi)Terminations
+	 */
+	public LinkedList<Termination> getOrderedTerminations();
 	
 	/**
 	 * This supposed that all my Terminations were ran before, so 

@@ -191,6 +191,31 @@ public interface NeuralModule extends PeripheralsRegisteringNode, Node, Probeabl
 	public void createEncoder(String topicName, String dataType);
 
 	/**
+	 * Similar to the {@link #createEncoder(String, String, int[])}, but here, the last parameter
+	 * sets default values for non-connected Terminations. If this Termination is not connected, 
+	 * given default values are used (sent to the ROS node). The dimensionality of Termination is 
+	 * determined by the defaultValues array. 
+	 * 
+	 * Note: if the {@link #newTerminationFor(String)} method is used to add new Termination for the 
+	 * configEncoder, the default values are discarded?? this is TODO
+	 *   
+	 * @param topicName name of the Termination and name of the ROS topic to be created
+	 * @param dataType type of data sent to the corresponding ROS node
+	 * @param defaultValues array of float default values to be sent to the ROS node if the Termination
+	 * is not connected in the Nengo network.
+	 */
+	public void createConfigEncoder(String topicName, String dataType, float[] defaultValues);
+	
+	/**
+	 * @see #createConfigEncoder(String, String, float[])
+	 * 
+	 * @param topicName name of the Termination and name of the ROS topic to be created
+	 * @param dataType type of data sent to the corresponding ROS node
+	 * @param defaultValue default value which is used if the Termination is not connected in the Nengo
+	 */
+	public void createConfigEncoder(String topicName, String dataType, float defaultValue);
+	
+	/**
 	 * <p>The same as createDecoder, but the parameter synchronous tells whether 
 	 * the created Decoder will be synchronous. Nengo simulator will wait for all
 	 * SynchedUnits each simulation step until they are ready.</p>

@@ -43,6 +43,8 @@ In order to install just standalone version of Nengoros, you can use the script 
 Changelog
 --------------
 
+* `NeuralModule`: added support for `CreateConfigEncoder()` which specifies default values of Termination output. These values are placed on the Terminations output if the MultiTermination has only one Termination and this Termination is not connected in the Nengo. This ensures that config Encoders do not have to be connected in order to Module to work. 
+
 ###nenoros-master-v0.0.9
 
 * Modems are now able to reset corresponding ROS nodes. Now, the method `callHardReset(boolean randomize)` resets all corresponding ROS nodes (which support resetting). The method is called from the Nengo method `reset(boolean randomize)`. Calling the reset is asynchronous so far. @see `ctu.nengoros.comm.nodeFactory.modem.impl.RosResettingModem`.

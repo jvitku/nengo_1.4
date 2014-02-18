@@ -68,7 +68,7 @@ public class BasicTermination implements Termination, Resettable {
 	protected TimeSeries myOutput;
 	private boolean myModulatory;
 	
-	protected final float[] notConnectedInput;	///my
+	protected final float[] notConnectedInput;	///my @author Jaroslav Vitku
 	private final float defVal = 0;
 
 	/**
@@ -121,7 +121,7 @@ public class BasicTermination implements Termination, Resettable {
 	 */
 	public void run(float startTime, float endTime) throws SimulationException {
 		//float[] input = null;
-		float[] input = this.notConnectedInput;	///my
+		float[] input = this.notConnectedInput;	///my @author Jaroslav Vitku
 		if (myInput instanceof RealOutput) {
 			input = ((RealOutput) myInput).getValues();
 		} else if (myInput instanceof SpikeOutput) {

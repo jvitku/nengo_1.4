@@ -115,7 +115,6 @@ public class BasicEncoder implements Encoder{
 
 	}
 
-
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
 
