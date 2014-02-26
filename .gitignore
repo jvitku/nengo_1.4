@@ -57,3 +57,5 @@ simulator-ui/data/*.csv
 
 # linux
 *~
+
+simulator-ui/ea_*
