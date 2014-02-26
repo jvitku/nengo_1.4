@@ -22,10 +22,10 @@
 ### Nengo Workspace layout ###
 ##############################
 # elasticmode=false
-# viewbounds=PBounds[x=-156.91190886045194,y=100.00000000000003,width=1364.8238482384822,height=845.0]
+# viewbounds=PBounds[x=152.27503669809494,y=153.74065844978566,width=1043.4133178747693,height=493.3969952741157]
+# alpha (Function Input)=Point2D.Double[443.33660802599013, 418.81815255507854]
+# map_30x30_GridWorld (Generic Node)=Point2D.Double[658.5782116793563, 456.3663283702926]
 # RL_QLambda (Generic Node)=Point2D.Double[666.6666870117188, 333.3333435058594]
-# lambda (Function Input)=Point2D.Double[333.3333435058594, 800.0]
-# alpha (Function Input)=Point2D.Double[333.3333435058594, 600.0]
-# importance (Function Input)=Point2D.Double[333.3333435058594, 200.0]
-# gamma (Function Input)=Point2D.Double[333.3333435058594, 400.0]
-# map_30x30_GridWorld (Generic Node)=Point2D.Double[666.6666870117188, 666.6666870117188]
+# gamma (Function Input)=Point2D.Double[464.3666438901327, 194.5527265579911]
+# lambda (Function Input)=Point2D.Double[449.80738829188005, 343.809991254752]
+# importance (Function Input)=Point2D.Double[453.0427784248252, 264.7078026589005]

@@ -1,4 +1,4 @@
-({'state': 0, 'height': 791, 'width': 1370, 'x': 33, 'y': 22},
+({'state': 0, 'height': 718, 'width': 1390, 'x': 552, 'y': 79},
  [(u'RL_QLambda', None, {'label': False, 'height': 32, 'width': 134, 'x': 820, 'y': 17}),
   (u'lambda', None, {'label': False, 'height': 32, 'width': 75, 'x': 226, 'y': 14}),
   (u'alpha', None, {'label': False, 'height': 32, 'width': 58, 'x': 19, 'y': 12}),
@@ -13,27 +13,27 @@
   (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [2], 'last_maxy': 1.0, 'sel_all': False, 'height': 142, 'width': 218, 'x': 783, 'fixed_y': None, 'autozoom': True, 'y': 360}),
   (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [3], 'last_maxy': 1.0, 'sel_all': False, 'height': 145, 'width': 218, 'x': 783, 'fixed_y': None, 'autozoom': True, 'y': 502}),
   (u'RL_QLambda', u'value|conf/prosperity', {'label': True, 'sel_dim': [0, 1, 2], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 14, 'fixed_y': (0, 1), 'autozoom': True, 'y': 283}),
-  (u'map_20x20_GridWorld', None, {'label': False, 'height': 32, 'width': 215, 'x': 1121, 'y': 10}),
-  (u'map_20x20_GridWorld', u'XY plot|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 1.0, 'height': 200, 'width': 200, 'x': 1131, 'autohide': True, 'autozoom': True, 'y': 56}),
-  (u'map_20x20_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 15.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 1048, 'fixed_y': (-1, 1), 'autozoom': False, 'y': 262}),
-  (u'map_20x20_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [0], 'last_maxy': 15.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 1046, 'fixed_y': None, 'autozoom': False, 'y': 465}),
   (u'BasicMotivation_Motivation', None, {'label': False, 'height': 32, 'width': 251, 'x': 447, 'y': 50}),
   (u'BasicMotivation_Motivation', u'value|conf/prosperity', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 427, 'fixed_y': None, 'autozoom': True, 'y': 328}),
   (u'BasicMotivation_Motivation', u'value|io/MotivationReward', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 340, 'x': 414, 'fixed_y': (-1, 1), 'autozoom': False, 'y': 125}),
-  (u'x_decay', None, {'label': False, 'height': 32, 'width': 84, 'x': 317, 'y': 270}),
-  (u'x_decay', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 333, 'y': 308})],
+  (u'map_15x15_GridWorld', None, {'label': False, 'height': 32, 'width': 215, 'x': 1073, 'y': 3}),
+  (u'map_15x15_GridWorld', u'XY plot|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 1.0000000000000007, 'height': 200, 'width': 200, 'x': 1074, 'autohide': True, 'autozoom': True, 'y': 62}),
+  (u'map_15x15_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 1044, 'fixed_y': None, 'autozoom': False, 'y': 268}),
+  (u'map_15x15_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [0], 'last_maxy': 15.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 1049, 'fixed_y': None, 'autozoom': False, 'y': 463}),
+  (u'decay', None, {'label': False, 'height': 32, 'width': 63, 'x': 347, 'y': 284}),
+  (u'decay', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 339, 'y': 316})],
  {'dt': 0, 'show_time': 0.5, 'sim_spd': 0, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 4.0}) 
 ##############################
 ### Nengo Workspace layout ###
 ##############################
 # elasticmode=false
-# viewbounds=PBounds[x=328.1119493318084,y=387.9872463149512,width=1163.4955407469065,height=550.180061903576]
-# alpha (Function Input)=Point2D.Double[742.9076538085938, 703.5863647460938]
-# lambda (Function Input)=Point2D.Double[738.0589599609375, 575.817138671875]
-# RL_QLambda (Generic Node)=Point2D.Double[912.2928466796875, 632.7968139648438]
-# gamma (Function Input)=Point2D.Double[740.66455078125, 767.725341796875]
-# x_decay (Function Input)=Point2D.Double[625.760498046875, 463.77398681640625]
-# x.txt (Generic Node)=Point2D.Double[1071.4982189204072, 653.000598062605]
-# BasicMotivation_Motivation (Generic Node)=Point2D.Double[766.55078125, 481.16741943359375]
+# viewbounds=PBounds[x=103.12093964613196,y=275.70916748046875,width=1516.7256618839367,height=653.5044555664062]
+# decay (Function Input)=Point2D.Double[628.9513291736572, 439.55121300204496]
 # importance (Function Input)=Point2D.Double[741.1349487304688, 640.691162109375]
-# map_20x20_GridWorld (Generic Node)=Point2D.Double[972.148193359375, 468.5465393066406]
+# map_15x15_GridWorld (Generic Node)=Point2D.Double[913.2356567382812, 376.20916748046875]
+# BasicMotivation_Motivation (Generic Node)=Point2D.Double[766.55078125, 494.1738586425781]
+# lambda (Function Input)=Point2D.Double[738.0589599609375, 575.817138671875]
+# gamma (Function Input)=Point2D.Double[740.66455078125, 767.725341796875]
+# RL_QLambda (Generic Node)=Point2D.Double[912.2928466796875, 632.7968139648438]
+# alpha (Function Input)=Point2D.Double[742.9076538085938, 703.5863647460938]
+# name.txt (Generic Node)=Point2D.Double[1038.1270518462932, 628.951329173658]

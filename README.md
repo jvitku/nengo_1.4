@@ -85,6 +85,13 @@ Technical Notes:
 
 ### TODO
 
+* Generally better integration with Nengo: 
+
+	* test add/delete from sub-networks
+	* toscript
+	* gethistory
+	* add listener..	
+	
 * Improve the nengo launch scripts
 * Modem: not-connected Origins produce default value parsed from the NeuralModule?
 * When launching scripts which repeatedly create `net` by means of `nengo-cl`, the old NeuralModules are probably not deleted as in case of `nengo` script. TODO solve this.

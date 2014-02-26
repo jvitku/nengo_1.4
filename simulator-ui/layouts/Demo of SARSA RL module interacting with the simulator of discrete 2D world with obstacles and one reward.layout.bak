@@ -18,3 +18,14 @@
   (u'map_30x30_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [0], 'last_maxy': 15.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 688, 'fixed_y': None, 'autozoom': False, 'y': 446}),
   (u'RL_QLambda', u'value|conf/prosperity', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 64, 'fixed_y': (0, 0.2), 'autozoom': False, 'y': 300})],
  {'dt': 0, 'show_time': 0.5, 'sim_spd': 0, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 4.0}) 
+##############################
+### Nengo Workspace layout ###
+##############################
+# elasticmode=false
+# viewbounds=PBounds[x=152.27503669809494,y=153.74065844978566,width=1043.4133178747693,height=493.3969952741157]
+# alpha (Function Input)=Point2D.Double[443.33660802599013, 418.81815255507854]
+# map_30x30_GridWorld (Generic Node)=Point2D.Double[658.5782116793563, 456.3663283702926]
+# RL_QLambda (Generic Node)=Point2D.Double[666.6666870117188, 333.3333435058594]
+# gamma (Function Input)=Point2D.Double[464.3666438901327, 194.5527265579911]
+# lambda (Function Input)=Point2D.Double[449.80738829188005, 343.809991254752]
+# importance (Function Input)=Point2D.Double[453.0427784248252, 264.7078026589005]
