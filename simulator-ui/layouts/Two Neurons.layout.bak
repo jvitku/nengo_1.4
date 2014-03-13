@@ -1,12 +1,14 @@
-({'height': 469, 'x': 0, 'width': 800, 'state': 0, 'y': 25},
- [('input', None, {'x': 124, 'height': 34, 'label': 0, 'width': 60, 'y': 127}),
-  ('neuron', None, {'x': 419, 'height': 34, 'label': 0, 'width': 77, 'y': 126}),
-  ('input', 'control', {'x': 40, 'height': 200, 'range': 1.0, 'label': 0, 'limits': 1, 'width': 80, 'limits_w': 0, 'y': 67}),
-  ('neuron', 'voltage grid', {'x': 407, 'height': 54, 'auto_improve': 0, 'label': 0, 'width': 94, 'y': 60}),
-  ('neuron', 'voltage graph', {'x': 338, 'height': 117, 'sel_dim': [0, 1], 'label': 0, 'width': 176, 'autozoom': 0, 'last_maxy': 1.0000000000000007, 'y': 169}),
-  ('neuron', 'spike raster', {'x': 517, 'height': 162, 'label': 0, 'width': 268, 'sample': 1, 'y': 1}),
-  ('neuron', 'value|X', {'x': 516, 'height': 180, 'sel_dim': [0], 'label': 0, 'width': 270, 'autozoom': 0, 'last_maxy': 2.0000000000000013, 'y': 172})],
- {'sim_spd': 4, 'rcd_time': 4.0, 'filter': 0.03, 'dt': 0, 'show_time': 0.5})
+({'state': 0, 'height': 470, 'width': 895, 'x': 352, 'y': 421},
+ [(u'input', None, {'label': 0, 'height': 32, 'width': 53, 'x': 111, 'y': 152}),
+  (u'neuron', None, {'label': 0, 'height': 32, 'width': 72, 'x': 494, 'y': 130}),
+  (u'input', 'control', {'label': 0, 'range': 8.0, 'limits_w': 0, 'limits': 1, 'height': 339, 'width': 102, 'x': 9, 'y': 16}),
+  (u'neuron', 'voltage grid', {'label': 0, 'rows': None, 'height': 54, 'width': 94, 'x': 482, 'y': 65, 'cols': None, 'max': 1, 'auto_improve': 0}),
+  (u'neuron', 'voltage graph', {'label': 0, 'sel_dim': [0, 1], 'last_maxy': 1.0000000000000007, 'sel_all': True, 'height': 144, 'width': 216, 'x': 378, 'fixed_y': None, 'autozoom': 0, 'y': 188}),
+  (u'neuron', 'spike raster', {'label': 0, 'sample': 1, 'height': 162, 'width': 268, 'x': 592, 'y': 6}),
+  (u'neuron', 'value|X', {'label': 0, 'sel_dim': [0], 'last_maxy': 2.344546671184326, 'sel_all': True, 'height': 180, 'width': 270, 'x': 591, 'fixed_y': None, 'autozoom': 0, 'y': 177}),
+  (u'neuron', 'firing rate', {'label': True, 'rows': None, 'height': 145, 'width': 145, 'x': 253, 'y': -1, 'cols': None, 'auto_improve': False}),
+  (u'neuron', 'tuning curves', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 99.99999237060547, 'sel_all': True, 'height': 142, 'width': 215, 'x': 167, 'fixed_y': None, 'autozoom': False, 'y': 188})],
+ {'dt': 0, 'show_time': 0.5, 'sim_spd': 4, 'update_freq': 30.303030303030305, 'filter': 0.03, 'rcd_time': 4.0}) 
 ##############################
 ### Nengo Workspace layout ###
 ##############################

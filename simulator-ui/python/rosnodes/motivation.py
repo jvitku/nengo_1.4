@@ -19,7 +19,7 @@ classs = "org.hanns.physiology.statespace.ros.BasicMotivation"
 
 # Synchronous NeuralModule implementing simple source of agents motivation
 def basic(name, noInputs=Motivation.DEF_NOINPUTS, decay=Motivation.DEF_DECAY, logPeriod=Motivation.DEF_LOGPERIOD,
-rewVal=Motivation.DEF_REWARD, rewThr=Motivation.DEF_REWTHRESHOLD):
+rewVal=Motivation.DEF_REWARD, rewThr=Motivation.DEF_REWTHRESHOLD, synchronous=True):
 
     # configure the node during startup from "the commandline"
 	command = [classs, '_'+Motivation.noInputsConf+ ':=' + str(noInputs), 
@@ -28,7 +28,7 @@ rewVal=Motivation.DEF_REWARD, rewThr=Motivation.DEF_REWTHRESHOLD):
 
 	g = NodeGroup("Motivation", True);
 	g.addNode(command, "Motivation", "java");
-	module = NeuralModule(name+'_Motivation', g, True)
+	module = NeuralModule(name+'_Motivation', g, synchronous)
 
     # connect the decay parameter to the Nengoros network (changed online)
 	module.createConfigEncoder(Motivation.topicDecay,"float", 1); 		# decay config (unconneced=Motivation.DEF_DECAY)
@@ -42,10 +42,10 @@ rewVal=Motivation.DEF_REWARD, rewThr=Motivation.DEF_REWTHRESHOLD):
 
 # adds to the network MotivationSource and constant source of config signal, returns the source
 def basicConfigured(name, net, noInputs=Motivation.DEF_NOINPUTS, decay=Motivation.DEF_DECAY, logPeriod=Motivation.DEF_LOGPERIOD, 
-rewVal=Motivation.DEF_REWARD, rewThr=Motivation.DEF_REWTHRESHOLD):
+rewVal=Motivation.DEF_REWARD, rewThr=Motivation.DEF_REWTHRESHOLD, synchronous=True): 
 
 	# build the node
-	bb = basic(name, noInputs, decay, logPeriod,rewThr,rewVal)
+	bb = basic(name, noInputs, decay, logPeriod,rewThr,rewVal,synchronous)
 	net.add(bb)
 
 	# define the signal source which provides value of the default decay

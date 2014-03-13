@@ -9,3 +9,7 @@ User.config
 external
 
 commandhistory.dat
+
+generated-data/*
+TEST_ea_data/*
+14/*

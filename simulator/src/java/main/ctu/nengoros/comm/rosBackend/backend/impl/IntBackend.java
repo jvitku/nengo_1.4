@@ -14,6 +14,7 @@ import ctu.nengoros.comm.rosBackend.transformations.IntegerTransform;
 import ctu.nengoros.comm.rosBackend.transformations.impl.IntegerSimpleRounding;
 import ctu.nengoros.exceptions.MessageFormatException;
 //import std_msgs.MultiArrayLayout; // TODO
+import ctu.nengoros.util.SL;
 
 /**
  * 
@@ -126,7 +127,8 @@ public class IntBackend extends OnNewRosMessageSource implements Backend{
 		if(mess.getData().length != this.messageLength)
 			System.err.println("ROS message format exception!! " +
 					"Expected message with: "+this.messageLength+
-					" and found message with length "+mess.getData().length);
+					" and found message with length "+mess.getData().length+
+					" message is: "+SL.toStr(mess.getData()));
 	}
 
 	/**
