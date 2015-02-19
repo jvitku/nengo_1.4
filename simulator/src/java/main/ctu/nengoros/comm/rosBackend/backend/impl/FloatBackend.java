@@ -13,6 +13,7 @@ import ctu.nengoros.comm.rosBackend.backend.BackendUtils;
 import ctu.nengoros.comm.rosBackend.backend.newMessageEvent.OnNewRosMessageSource;
 import ctu.nengoros.exceptions.MessageFormatException;
 //import std_msgs.MultiArrayLayout;
+import ctu.nengoros.util.SL;
 
 /**
  * This serves as a backend for direct communication with ROS nodes. 
@@ -127,7 +128,8 @@ public class FloatBackend extends OnNewRosMessageSource implements Backend{
 		if(mess.getData().length != this.messageLength)
 			System.err.println("ROS message format exception!! " +
 					"Expected message with: "+this.messageLength+
-					" and found message with length "+mess.getData().length);
+					" and found message with length "+mess.getData().length+
+					" message is: "+SL.toStr(mess.getData()));
 	}
 
 	/**

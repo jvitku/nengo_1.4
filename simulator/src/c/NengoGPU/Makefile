@@ -1,7 +1,11 @@
 CUDA_INC_PATH=/usr/local/cuda/include
 CUDA_LIB_PATH=/usr/local/cuda/lib64
-JAVA_INC=/usr/lib/jvm/java-6-sun/include
-JAVA_INC_LINUX=/usr/lib/jvm/java-6-sun/include/linux
+#JAVA_INC=/usr/lib/jvm/java-6-sun/include
+#JAVA_INC_LINUX=/usr/lib/jvm/java-6-sun/include/linux
+
+JAVA_INC=/usr/lib/jvm/java-6-openjdk/include
+JAVA_INC_LINUX=/usr/lib/jvm/java-6-openjdk/include/linux
+
 
 CUDA_INCLUDES= -I${CUDA_INC_PATH} 
 #-I${HOME}/NVIDIA_GPU_Computing_SDK/C/common/inc
@@ -10,8 +14,8 @@ LIBPATH=-L${CUDA_LIB_PATH}
 
 LIBS=-lcudart -lm -lc
 
-GCC_PATH=/usr/bin/gcc-4.4
-
+#GCC_PATH=/usr/bin/gcc-4.4
+GCC_PATH=/usr/bin/gcc-4.6
 CC=gcc-4.4
 CUDA_CC=nvcc
 CFLAGS=-fPIC -c -m64 -Wall -I. ${CUDA_INCLUDES} ${JAVA_INCLUDES}

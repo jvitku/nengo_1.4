@@ -59,3 +59,5 @@ simulator-ui/data/*.csv
 *~
 
 simulator-ui/ea_*
+
+simulator/src/c/NengoGPU/*.o

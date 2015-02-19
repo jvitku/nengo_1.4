@@ -85,6 +85,11 @@ Technical Notes:
 
 ### TODO
 
+* Add possibility to encode/decode spiking inputs?
+	* received spikes: apply DS and pass the value to the encoder
+	* received message-> spikes, use LIF neuron
+		* TODO: how the spiking outputs are used? transformation?
+
 * Generally better integration with Nengo: 
 
 	* test add/delete from sub-networks

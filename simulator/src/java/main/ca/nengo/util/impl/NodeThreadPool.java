@@ -308,8 +308,8 @@ public class NodeThreadPool {
 
 	/// my
 	final int sleeptime=1;
-	final int printPeriod = 20;		// print out waiting warning each x ms
-	final int maxwait = 500;		// some messages can get lost in the network; 
+	final int printPeriod = 10;		// print out waiting warning each x ms
+	final int maxwait = 50;		// some messages can get lost in the network; 
 
 
 	/**

@@ -1,0 +1,13 @@
+({'state': 0, 'height': 700, 'width': 950, 'x': 712, 'y': 274},
+ [(u'Agent controller', None, {'label': False, 'height': 32, 'width': 150, 'x': 179, 'y': -4}),
+  (u'Agent controller', u'value|outputs', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 162, 'fixed_y': None, 'autozoom': False, 'y': 28}),
+  (u'Summator', None, {'label': False, 'height': 32, 'width': 103, 'x': 260, 'y': 228}),
+  (u'Summator', u'value|outputs', {'label': True, 'sel_dim': [0, 1], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 162, 'fixed_y': None, 'autozoom': False, 'y': 257}),
+  (u'VivaeSimulator', None, {'label': False, 'height': 32, 'width': 143, 'x': 506, 'y': -1}),
+  (u'VivaeSimulator', u'value|a_pub', {'label': True, 'sel_dim': [2, 3], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 481, 'fixed_y': None, 'autozoom': True, 'y': 34}),
+  (u'bias1', None, {'label': False, 'height': 32, 'width': 57, 'x': 84, 'y': 4}),
+  (u'bias1', 'control', {'label': True, 'range': 2.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 75, 'y': 40}),
+  (u'bias2', None, {'label': False, 'height': 32, 'width': 57, 'x': 84, 'y': 239}),
+  (u'bias2', 'control', {'label': True, 'range': 2.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 78, 'y': 272}),
+  (u'VivaeSimulator', u'value|a_pub', {'label': True, 'sel_dim': [8], 'last_maxy': 48.000003814697266, 'sel_all': False, 'height': 200, 'width': 300, 'x': 475, 'fixed_y': None, 'autozoom': False, 'y': 247})],
+ {'dt': 1, 'show_time': 0.5, 'sim_spd': 0, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 2.0}) 

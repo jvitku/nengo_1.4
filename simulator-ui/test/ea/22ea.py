@@ -1,4 +1,5 @@
 # First EA whic approximates sum(abs(x1)+abs(x2)), by FF SNN, which is ismple..
+
 import nef
 import random
 from ca.nengo.math.impl import FourierFunction

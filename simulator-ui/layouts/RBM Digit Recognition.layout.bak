@@ -1,0 +1,13 @@
+({'state': 0, 'width': 950, 'height': 700, 'x': 0, 'y': 28},
+ [(u'input', None, {'label': False, 'width': 60, 'height': 33, 'x': 75, 'y': 8}),
+  (u'input', u'value (grid)|image', {'label': True, 'width': 200, 'height': 200, 'x': 7, 'y': 40}),
+  (u'layer1', None, {'label': False, 'width': 69, 'height': 33, 'x': 267, 'y': 12}),
+  (u'layer2', None, {'label': False, 'width': 69, 'height': 33, 'x': 402, 'y': 10}),
+  (u'layer3', None, {'label': False, 'width': 69, 'height': 33, 'x': 563, 'y': 12}),
+  (u'layer4', None, {'label': False, 'width': 69, 'height': 33, 'x': 780, 'y': 15}),
+  (u'layer1', 'spike raster', {'label': True, 'width': 148, 'height': 519, 'sample': 10, 'x': 214, 'y': 49}),
+  (u'layer2', 'spike raster', {'label': True, 'width': 147, 'height': 519, 'sample': 5, 'x': 371, 'y': 49}),
+  (u'layer3', 'spike raster', {'label': True, 'width': 147, 'height': 511, 'sample': 5, 'x': 525, 'y': 50}),
+  (u'layer4', 'semantic pointer', {'label': True, 'sel_dim': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 'normalize': True, 'last_maxy': 5.0000000000000036, 'width': 267, 'height': 272, 'x': 677, 'fixed_y': (-0.5, 1), 'smooth_normalize': False, 'y': 274, 'autozoom': False, 'show_pairs': False}),
+  (u'layer4', 'firing rate', {'label': True, 'rows': None, 'width': 200, 'height': 200, 'x': 715, 'y': 51, 'cols': None})],
+ {'dt': 0, 'sim_spd': 4, 'show_time': 0.1, 'rcd_time': 4.0, 'filter': 0.01}) 

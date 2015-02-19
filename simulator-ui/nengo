@@ -54,9 +54,10 @@ NODES=$NODES:$N_HOME/../../demonodes/basic/build/libs/basic-0.0.5-SNAPSHOT.jar
 SARSA=$N_HOME/../../rl/sarsa/build/libs/sarsa-0.0.5-SNAPSHOT.jar
 PHYSIOLOGY=$N_HOME/../../physiology/statespace/build/libs/statespace-0.0.2-SNAPSHOT.jar
 DESIGNER=$N_HOME/../../designer/basicea/build/libs/basicea-0.0.2-SNAPSHOT.jar
+DESIGNER_OLD=$N_HOME/../../designer/annvshnn/build/libs/basicea-0.0.0-SNAPSHOT.jar
 
 #LIBRARIES = $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$SARSA:$PHYSIOLOGY
 
 #java -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO ca.nengo.ui.NengoLauncher
-java -Xmx1000m -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$SARSA:$PHYSIOLOGY:$DESIGNER ca.nengo.ui.NengoLauncher
+java -Xmx1000m -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$SARSA:$PHYSIOLOGY:$DESIGNER:$DESIGNER_OLD ca.nengo.ui.NengoLauncher
 
