@@ -35,7 +35,7 @@ import rl_sarsa
 import gridworld
 import motivation
 
-from org.hanns.rl.discrete.ros.sarsa import QLambda as QLambda
+from org.hanns.rl.discrete.ros.srp import QLambda as QLambda
 from org.hanns.physiology.statespace.ros import BasicMotivation as Motivation
 
 import random

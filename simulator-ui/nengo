@@ -51,7 +51,10 @@ VIVAE=$VIVAE:$N_HOME/../../vivae/vivaeplugin/build/libs/vivaeplugin-0.0.4-SNAPSH
 NODES=$N_HOME/../../logic/gates/build/libs/gates-0.0.4-SNAPSHOT.jar 
 NODES=$NODES:$N_HOME/../../demonodes/basic/build/libs/basic-0.0.5-SNAPSHOT.jar
 
-SARSA=$N_HOME/../../rl/sarsa/build/libs/sarsa-0.0.5-SNAPSHOT.jar
+#SARSA=$N_HOME/../../rl/sarsa/build/libs/sarsa-0.0.5-SNAPSHOT.jar
+MDP=$N_HOME/../../rl/mdp/build/libs/mdp-0.0.5-SNAPSHOT.jar
+SMDP=$N_HOME/../../rl/smdp/build/libs/smdp-0.0.5-SNAPSHOT.jar
+
 PHYSIOLOGY=$N_HOME/../../physiology/statespace/build/libs/statespace-0.0.2-SNAPSHOT.jar
 DESIGNER=$N_HOME/../../designer/basicea/build/libs/basicea-0.0.2-SNAPSHOT.jar
 DESIGNER_OLD=$N_HOME/../../designer/annvshnn/build/libs/basicea-0.0.0-SNAPSHOT.jar
@@ -59,5 +62,5 @@ DESIGNER_OLD=$N_HOME/../../designer/annvshnn/build/libs/basicea-0.0.0-SNAPSHOT.j
 #LIBRARIES = $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$SARSA:$PHYSIOLOGY
 
 #java -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO ca.nengo.ui.NengoLauncher
-java -Xmx1000m -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$SARSA:$PHYSIOLOGY:$DESIGNER:$DESIGNER_OLD ca.nengo.ui.NengoLauncher
+java -Xmx1000m -classpath $GPU:$CLASSES:$MYLIB:$ROSJAVALIB:$ROSJAVA:$OO:$NODES:$Jroscore:$JRP:$VIVAE:$MDP:$SMDP:$PHYSIOLOGY:$DESIGNER:$DESIGNER_OLD ca.nengo.ui.NengoLauncher
 

@@ -1,4 +1,4 @@
-({'state': 0, 'height': 718, 'width': 1093, 'x': 74, 'y': 22},
+({'state': 0, 'height': 830, 'width': 1093, 'x': 846, 'y': 40},
  [(u'RL_QLambda', None, {'label': False, 'height': 32, 'width': 134, 'x': 429, 'y': 15}),
   (u'importance', None, {'label': False, 'height': 32, 'width': 109, 'x': 298, 'y': 43}),
   (u'importance', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 327, 'y': 72}),
@@ -8,15 +8,15 @@
   (u'gamma', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 132, 'y': 65}),
   (u'lambda', None, {'label': False, 'height': 32, 'width': 75, 'x': 211, 'y': 37}),
   (u'lambda', 'control', {'label': True, 'range': 1.0, 'limits_w': 0, 'limits': True, 'height': 200, 'width': 80, 'x': 229, 'y': 62}),
-  (u'RL_QLambda', u'value|conf/prosperity', {'label': True, 'sel_dim': [0, 1, 2], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 60, 'fixed_y': (0, 0.5), 'autozoom': False, 'y': 385}),
+  (u'RL_QLambda', u'value|conf/prosperity', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': True, 'height': 200, 'width': 300, 'x': 60, 'fixed_y': (0, 0.5), 'autozoom': False, 'y': 385}),
   (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': False, 'height': 162, 'width': 243, 'x': 425, 'fixed_y': None, 'autozoom': False, 'y': 58}),
   (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [1], 'last_maxy': 1.0, 'sel_all': False, 'height': 162, 'width': 243, 'x': 421, 'fixed_y': None, 'autozoom': False, 'y': 221}),
   (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [2], 'last_maxy': 1.0, 'sel_all': False, 'height': 160, 'width': 238, 'x': 428, 'fixed_y': None, 'autozoom': False, 'y': 380}),
-  (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [3], 'last_maxy': 1.0, 'sel_all': False, 'height': 166, 'width': 253, 'x': 436, 'fixed_y': None, 'autozoom': False, 'y': 542}),
-  (u'map_GridWorld', None, {'label': False, 'height': 32, 'width': 150, 'x': 750, 'y': 8}),
-  (u'map_GridWorld', u'XY plot|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 1.0, 'height': 200, 'width': 200, 'x': 745, 'autohide': True, 'autozoom': True, 'y': 55}),
-  (u'map_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 724, 'fixed_y': None, 'autozoom': False, 'y': 254}),
-  (u'map_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [0], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 727, 'fixed_y': None, 'autozoom': False, 'y': 458})],
+  (u'RL_QLambda', u'value|io/outActions', {'label': True, 'sel_dim': [3], 'last_maxy': 1.0, 'sel_all': False, 'height': 166, 'width': 253, 'x': 427, 'fixed_y': None, 'autozoom': False, 'y': 541}),
+  (u'map_20x20_GridWorld', None, {'label': False, 'height': 32, 'width': 215, 'x': 776, 'y': 18}),
+  (u'map_20x20_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 1.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 717, 'fixed_y': (0, 1), 'autozoom': True, 'y': 52}),
+  (u'map_20x20_GridWorld', u'XY plot|io/inStates', {'label': True, 'sel_dim': [1, 2], 'last_maxy': 1.0, 'height': 200, 'width': 200, 'x': 769, 'autohide': True, 'autozoom': True, 'y': 275}),
+  (u'map_20x20_GridWorld', u'value|io/inStates', {'label': True, 'sel_dim': [0], 'last_maxy': 15.0, 'sel_all': False, 'height': 200, 'width': 300, 'x': 728, 'fixed_y': None, 'autozoom': False, 'y': 491})],
  {'dt': 0, 'show_time': 0.5, 'sim_spd': 0, 'update_freq': 30.303030303030305, 'filter': 0.0, 'rcd_time': 4.0}) 
 ##############################
 ### Nengo Workspace layout ###
