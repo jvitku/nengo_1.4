@@ -66,7 +66,7 @@ public class NodeGroup implements StartedObject{
 	private boolean isStarted = false;
 
 	/**
-	 * Setup of non-independent group with predefned namespace.
+	 * Setup of non-independent group with predefined namespace.
 	 * If namespace is not important, use another constructor. 
 	 * 
 	 * @param groupName name of a group
@@ -80,7 +80,7 @@ public class NodeGroup implements StartedObject{
 	}
 
 	/**
-	 * Group of nodes can be either independent, non-nedependent
+	 * Group of nodes can be either independent, non-independent
 	 * (namespace is generated automatically) or with predefined
 	 * namespace, therefore not independent.
 	 *  
@@ -263,15 +263,14 @@ public class NodeGroup implements StartedObject{
 		}
 
 		public MyNodeConfig(String[] command, String name, boolean isNative, boolean ismodem){
-			if(!isNative && command.length>1)
-				System.err.println("MyNodeConfig: Java nodes class name should" +
-						" consist of only one String!");
 			this.name = name;
 			this.isNative =isNative;
 			this.command = command;
 			this.ismodem = ismodem;
 		}
 	}
+	
+	
 
 	@Override
 	public String getFullName() { return this.groupName; }

@@ -437,9 +437,10 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 		this.runAllTerminations(startTime, endTime);	// run all terminations to collect input values
 
+		super.discardChildsReady(); 	// wait for all registered synchronous decoders to receive message
+		
 		this.runAllEncoders(startTime, endTime);	// encode data on registered Terminations and send to ROS
 
-		super.discardChildsReady(); // wait for all registered synchronous decoders to receive message
 	}
 
 	private void runAllTerminations(float startTime, float endTime) throws SimulationException{

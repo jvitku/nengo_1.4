@@ -43,6 +43,8 @@ In order to install just standalone version of Nengoros, you can use the script 
 Changelog
 --------------
 
+* Outdated warning about launching java nodes without parameters deleted
+
 * `NeuralModule`: added support for `CreateConfigEncoder()` which specifies default values of Termination output. These values are placed on the Terminations output if the MultiTermination has only one Termination and this Termination is not connected in the Nengo. This ensures that config Encoders do not have to be connected in order to Module to work. 
 
 ###nenoros-master-v0.0.9
