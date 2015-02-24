@@ -125,7 +125,7 @@ public class IntBackend extends OnNewRosMessageSource implements Backend{
 	
 	public void checkDimensionSizes(std_msgs.Int32MultiArray mess){
 		if(mess.getData().length != this.messageLength)
-			System.err.println("ROS message format exception!! " +
+			System.err.println("IntBackend: ROS message format exception!! " +
 					"Expected message with: "+this.messageLength+
 					" and found message with length "+mess.getData().length+
 					" message is: "+SL.toStr(mess.getData()));

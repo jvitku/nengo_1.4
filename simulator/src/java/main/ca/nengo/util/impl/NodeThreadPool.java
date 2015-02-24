@@ -279,7 +279,7 @@ public class NodeThreadPool {
 					if(!u.isReady()){			///TODO: request for re-sending the message?
 						allready=false;
 						if((poc*sleeptime) % printPeriod == 0)
-							System.out.println(me+"node: "+((Node)u).getName()+ " not ready, waiting..");
+							System.out.println(me+"node: "+((Node)u).getName()+ " not ready, waiting.. (start time: "+myStartTime+", endTime: "+myEndTime+")");
 					}
 				}
 				if((poc*sleeptime) % printPeriod == 0)

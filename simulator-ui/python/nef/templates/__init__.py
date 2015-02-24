@@ -26,6 +26,7 @@ import logic_fuzzy_member_trapezoid
 import demoSubscriber
 import demoPublisher
 import vivae
+import rl_mdp_sarsa
 
 templates=[
     networkarray,
@@ -53,5 +54,6 @@ templates=[
 	logic_fuzzy_member_linearInc,
 	logic_fuzzy_member_triangular,
 	logic_fuzzy_member_trapezoid,
-	vivae	
+	vivae,
+	rl_mdp_sarsa		
     ]
