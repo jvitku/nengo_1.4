@@ -2,7 +2,6 @@ package ctu.nengorosHeadless.network.modules;
 
 import ca.nengo.model.StructuralException;
 
-import ctu.nengoros.modules.PeripheralsRegisteringNode;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
 import ctu.nengorosHeadless.network.modules.io.MultiTermination;

@@ -5,12 +5,9 @@ import java.util.LinkedList;
 import java.util.Map;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
-
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
-
 import ctu.nengoros.exceptions.ConnectionException;
-
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengoros.network.node.synchedStart.StartupManager;
 import ctu.nengoros.network.node.synchedStart.impl.BasicStartupManager;
@@ -25,7 +22,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
 	public static final String me = "[DefaultNeuralModule] ";
 
-	private static final long serialVersionUID = -5590968314570316769L;
 	protected float myTime;
 
 	// map of origins used (used by Decoders)
