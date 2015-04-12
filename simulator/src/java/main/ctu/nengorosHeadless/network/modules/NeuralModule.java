@@ -1,13 +1,14 @@
 package ctu.nengorosHeadless.network.modules;
 
 import ca.nengo.model.StructuralException;
-import ca.nengo.model.Termination;
-import ctu.nengoros.model.transformMultiTermination.MultiTermination;
+
 import ctu.nengoros.modules.PeripheralsRegisteringNode;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
+import ctu.nengorosHeadless.network.modules.io.MultiTermination;
+import ctu.nengorosHeadless.network.modules.io.Terminaiton;
 
-public interface NeuralModule extends HeadlessNode, PeripheralsRegisteringNode, StartedObject{
+public interface NeuralModule extends HeadlessNode, StartedObject{
 
 	/**
 	 * NeuralModule uses asynchronously launched {@link ctu.nengoros.comm.nodeFactory.modem.Modem}
@@ -46,9 +47,9 @@ public interface NeuralModule extends HeadlessNode, PeripheralsRegisteringNode, 
 	 */
 	public MultiTermination getMultiTermination(String name) throws StructuralException;
 	
-	public Termination newTerminationFor(String name) throws StructuralException;
-	public Termination newTerminationFor(String name, float weight) throws StructuralException;
-	public Termination newTerminationFor(String name, float[][] weights) throws StructuralException;
+	public Terminaiton newTerminationFor(String name) throws StructuralException;
+	public Terminaiton newTerminationFor(String name, float weight) throws StructuralException;
+	public Terminaiton newTerminationFor(String name, float[][] weights) throws StructuralException;
 	
 	public void setSynchronous(boolean synchronous);
 

@@ -1,10 +1,11 @@
 package ctu.nengorosHeadless.network.modules;
 
-import ca.nengo.model.Origin;
+import ctu.nengorosHeadless.network.modules.io.Origin;
+import ctu.nengorosHeadless.network.modules.io.Terminaiton;
 import ca.nengo.model.Resettable;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
-import ca.nengo.model.Termination;
+
 
 /**
  * Headless version of the ca.nengo.model.Node
@@ -41,6 +42,14 @@ public interface HeadlessNode extends Resettable{
 	public Origin[] getOrigins();
 
 	/**
+	 * TODO this is new 
+	 * @param o
+	 * @throws StructuralException
+	 */
+	public void addOrigin(Origin o) throws StructuralException;
+
+	
+	/**
 	 * @param name Name of an Origin on this Node
 	 * @return The named Origin if it exists
 	 * @throws StructuralException if the named Origin does not exist
@@ -51,14 +60,14 @@ public interface HeadlessNode extends Resettable{
 	 * @return Sets of input channels (these have the same dimension as corresponding Origins
 	 * 		to which they are connected).
 	 */
-	public Termination[] getTerminations();
+	public Terminaiton[] getTerminations();
 
 	/**
 	 * @param name Name of a Termination onto this Node
 	 * @return The named Termination if it exists
 	 * @throws StructuralException if the named Termination does not exist
 	 */
-	public Termination getTermination(String name) throws StructuralException;
+	public Terminaiton getTermination(String name) throws StructuralException;
 	
 
 	/**

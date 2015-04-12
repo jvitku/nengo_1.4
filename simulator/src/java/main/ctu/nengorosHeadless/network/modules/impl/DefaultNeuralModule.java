@@ -3,25 +3,23 @@ package ctu.nengorosHeadless.network.modules.impl;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Properties;
-
-import ca.nengo.model.Origin;
 import ca.nengo.model.SimulationException;
-import ca.nengo.model.SimulationMode;
 import ca.nengo.model.StructuralException;
-import ca.nengo.model.Termination;
-import ca.nengo.model.impl.BasicTermination;
+
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
-import ctu.nengoros.comm.rosBackend.encoders.Encoder;
+
 import ctu.nengoros.exceptions.ConnectionException;
-import ctu.nengoros.model.transformMultiTermination.MultiTermination;
+
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengoros.network.node.synchedStart.StartupManager;
 import ctu.nengoros.network.node.synchedStart.impl.BasicStartupManager;
 import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
-import ctu.nengorosHeadless.network.modules.HeadlessNode;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
+import ctu.nengorosHeadless.network.modules.io.MultiTermination;
+import ctu.nengorosHeadless.network.modules.io.Origin;
+import ctu.nengorosHeadless.network.modules.io.Terminaiton;
+import ctu.nengorosHeadless.rosBackend.encoders.Encoder;
 
 public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 
@@ -35,8 +33,8 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	protected LinkedList <Origin> orderedOrigins;		
 
 	// map of terminations used (are registered by Encoders)
-	protected Map<String, Termination> myTerminations;	
-	protected LinkedList <Termination> orderedTerminations;
+	protected Map<String, Terminaiton> myTerminations;	
+	protected LinkedList <Terminaiton> orderedTerminations;
 
 	// run all these Encoders after Terminations
 	protected Map<String, Encoder> myEncoders;		
@@ -135,11 +133,12 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		this.t=0;
 		
 		this.myOrigins = new HashMap<String, Origin>(5);
-		this.myTerminations = new HashMap<String, Termination>(5);
+		this.myTerminations = new HashMap<String, Terminaiton>(5);
+		
 		this.myEncoders = new HashMap<String,Encoder>(5);
 
 		this.orderedOrigins = new LinkedList <Origin> ();
-		this.orderedTerminations = new LinkedList <Termination> ();
+		this.orderedTerminations = new LinkedList <Terminaiton> ();
 		this.orderedEncoders = new LinkedList<Encoder>();
 
 		startup.addChild(mc.getStartupManager());
@@ -174,11 +173,11 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	private void runAllTerminations(float startTime, float endTime) throws SimulationException{
-		Termination t;
+		Terminaiton t;
 		for(int i=0; i<orderedTerminations.size(); i++){
 			t=orderedTerminations.get(i);
-			if(t instanceof BasicTermination)
-				((BasicTermination)t).run(startTime, endTime);
+			if(t instanceof Terminaiton)
+				((Terminaiton)t).run(startTime, endTime);
 			else{
 				throw new SimulationException(me+"only BasicTerminations are supporeted here!");
 			}
@@ -222,13 +221,13 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public Termination[] getTerminations() {
+	public Terminaiton[] getTerminations() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Termination getTermination(String name) throws StructuralException {
+	public Terminaiton getTermination(String name) throws StructuralException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -259,24 +258,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public void addTermination(Termination t) throws StructuralException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void printTerminationNames() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void printOriginNames() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void setShouldResetNodes(boolean shouldReset) {
 		// TODO Auto-generated method stub
 		
@@ -290,21 +271,21 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public Termination newTerminationFor(String name)
+	public Terminaiton newTerminationFor(String name)
 			throws StructuralException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Termination newTerminationFor(String name, float weight)
+	public Terminaiton newTerminationFor(String name, float weight)
 			throws StructuralException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Termination newTerminationFor(String name, float[][] weights)
+	public Terminaiton newTerminationFor(String name, float[][] weights)
 			throws StructuralException {
 		// TODO Auto-generated method stub
 		return null;
@@ -384,6 +365,6 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 
 }
