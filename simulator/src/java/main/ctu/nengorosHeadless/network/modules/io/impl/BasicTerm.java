@@ -3,38 +3,35 @@ package ctu.nengorosHeadless.network.modules.io.impl;
 import java.util.Random;
 
 import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
-import ctu.nengorosHeadless.network.modules.io.Orig;
+import ctu.nengorosHeadless.network.modules.io.Term;
 
-public abstract class BasicOrig extends SyncedUnit implements Orig{
+public abstract class BasicTerm extends SyncedUnit implements Term{
 
 	public static final float DEF_VAL = 0;
-
+	
 	private final int size;
 	private final float[] values;
-
-	public BasicOrig(int size, String name){
+	
+	public BasicTerm(int size, String name){
 		super.setFullName(name);
 		
 		if(size<=0){
-			System.err.println("Incorrect size of Origin");
+			System.err.println("Cannot set zero size of size!");
 			size = 1;
 		}
 		this.size = size;
 		this.values = new float[size];
 	}
 
+	@Override
+	public int getSize() { return this.size; }
+
 	/**
-	 * Should wait for all ROS messages, decode them to vector of floats and store the values.
+	 * This should encode data, send and clear own input
 	 */
 	@Override
 	public abstract void run(float startTime, float endTime);
-
-	@Override
-	public float[] getValues() { return this.values; }
-
-	@Override
-	public int getSize() { return size; }
-
+	
 	@Override
 	public void reset(boolean randomize) {
 		if(randomize){
@@ -45,7 +42,16 @@ public abstract class BasicOrig extends SyncedUnit implements Orig{
 		}else{
 			for(int i=0; i<size; i++){
 				values[i] = DEF_VAL;
-			}			
+			}
 		}
+	}
+
+	@Override
+	public void sendValue(float value, int index) {
+		if(index >= size || size<0){
+			System.err.println("Index out of range!");
+			return;
+		}
+		values[index] += value; 
 	}
 }
