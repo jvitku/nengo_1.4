@@ -20,7 +20,7 @@ import ctu.nengorosHeadless.network.modules.ioTmp.Terminaiton;
 import ctu.nengorosHeadless.network.modules.ioTmp.impl.BasicTermination;
 import ctu.nengorosHeadless.rosBackend.encoders.Encoder;
 
-public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
+public class DefaultNeuralModule extends SyncedUnit implements NeuralModuleOld{
 
 	public static final String me = "[DefaultNeuralModule] ";
 
