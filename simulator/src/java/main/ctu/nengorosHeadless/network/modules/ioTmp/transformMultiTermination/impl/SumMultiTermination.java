@@ -1,4 +1,4 @@
-package ctu.nengorosHeadless.network.modules.io.transformMultiTermination.impl;
+package ctu.nengorosHeadless.network.modules.ioTmp.transformMultiTermination.impl;
 
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.model.SimulationException;

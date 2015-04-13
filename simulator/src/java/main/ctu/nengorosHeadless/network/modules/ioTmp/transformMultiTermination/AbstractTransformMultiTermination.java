@@ -1,11 +1,10 @@
-package ctu.nengorosHeadless.network.modules.io.transformMultiTermination;
+package ctu.nengorosHeadless.network.modules.ioTmp.transformMultiTermination;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 
 import ctu.nengorosHeadless.network.modules.NeuralModule;
-import ctu.nengorosHeadless.network.modules.io.transformMultiTermination.impl.BasicWeights;
-
+import ctu.nengorosHeadless.network.modules.ioTmp.transformMultiTermination.impl.BasicWeights;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ca.nengo.model.Termination;

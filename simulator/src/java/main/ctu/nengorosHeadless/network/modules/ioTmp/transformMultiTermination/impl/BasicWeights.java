@@ -1,6 +1,6 @@
-package ctu.nengorosHeadless.network.modules.io.transformMultiTermination.impl;
+package ctu.nengorosHeadless.network.modules.ioTmp.transformMultiTermination.impl;
 
-import ctu.nengorosHeadless.network.modules.io.transformMultiTermination.WeightFactory;
+import ctu.nengorosHeadless.network.modules.ioTmp.transformMultiTermination.WeightFactory;
 
 
 /**

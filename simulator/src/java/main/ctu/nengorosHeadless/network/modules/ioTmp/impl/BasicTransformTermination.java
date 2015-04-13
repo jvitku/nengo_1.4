@@ -1,7 +1,7 @@
-package ctu.nengorosHeadless.network.modules.io.impl;
+package ctu.nengorosHeadless.network.modules.ioTmp.impl;
 
 import ctu.nengorosHeadless.network.modules.NeuralModule;
-import ctu.nengorosHeadless.network.modules.io.TransformTermination;
+import ctu.nengorosHeadless.network.modules.ioTmp.TransformTermination;
 //import ca.nengo.model.RealOutput;
 import ca.nengo.model.SimulationException;
 //import ca.nengo.model.SpikeOutput;

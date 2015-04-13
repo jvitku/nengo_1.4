@@ -1,11 +1,10 @@
 package ctu.nengorosHeadless.network.modules;
 
 import ca.nengo.model.StructuralException;
-
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
-import ctu.nengorosHeadless.network.modules.io.MultiTermination;
-import ctu.nengorosHeadless.network.modules.io.Terminaiton;
+import ctu.nengorosHeadless.network.modules.ioTmp.MultiTermination;
+import ctu.nengorosHeadless.network.modules.ioTmp.Terminaiton;
 
 public interface NeuralModule extends HeadlessNode, StartedObject{
 

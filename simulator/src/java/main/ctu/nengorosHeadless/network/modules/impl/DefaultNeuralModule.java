@@ -3,6 +3,7 @@ package ctu.nengorosHeadless.network.modules.impl;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
@@ -13,10 +14,10 @@ import ctu.nengoros.network.node.synchedStart.StartupManager;
 import ctu.nengoros.network.node.synchedStart.impl.BasicStartupManager;
 import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
-import ctu.nengorosHeadless.network.modules.io.MultiTermination;
-import ctu.nengorosHeadless.network.modules.io.Origin;
-import ctu.nengorosHeadless.network.modules.io.Terminaiton;
-import ctu.nengorosHeadless.network.modules.io.impl.BasicTermination;
+import ctu.nengorosHeadless.network.modules.ioTmp.MultiTermination;
+import ctu.nengorosHeadless.network.modules.ioTmp.Origin;
+import ctu.nengorosHeadless.network.modules.ioTmp.Terminaiton;
+import ctu.nengorosHeadless.network.modules.ioTmp.impl.BasicTermination;
 import ctu.nengorosHeadless.rosBackend.encoders.Encoder;
 
 public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{

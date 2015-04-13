@@ -1,4 +1,4 @@
-package ctu.nengorosHeadless.network.modules.io.transformMultiTermination;
+package ctu.nengorosHeadless.network.modules.ioTmp.transformMultiTermination;
 
 /**
  * <p>Serves as a factory for generating (default/initial) weights for transformation matrixes

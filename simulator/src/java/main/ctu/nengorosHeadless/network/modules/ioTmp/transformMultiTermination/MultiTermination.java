@@ -1,4 +1,4 @@
-package ctu.nengorosHeadless.network.modules.io.transformMultiTermination;
+package ctu.nengorosHeadless.network.modules.ioTmp.transformMultiTermination;
 
 import java.util.HashMap;
 import java.util.LinkedList;

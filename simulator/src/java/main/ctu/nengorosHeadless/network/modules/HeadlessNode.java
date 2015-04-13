@@ -1,7 +1,7 @@
 package ctu.nengorosHeadless.network.modules;
 
-import ctu.nengorosHeadless.network.modules.io.Origin;
-import ctu.nengorosHeadless.network.modules.io.Terminaiton;
+import ctu.nengorosHeadless.network.modules.ioTmp.Origin;
+import ctu.nengorosHeadless.network.modules.ioTmp.Terminaiton;
 import ca.nengo.model.Resettable;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;

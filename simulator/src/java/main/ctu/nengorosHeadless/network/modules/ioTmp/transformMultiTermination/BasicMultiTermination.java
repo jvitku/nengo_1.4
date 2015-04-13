@@ -1,9 +1,10 @@
-package ctu.nengorosHeadless.network.modules.io.transformMultiTermination;
+package ctu.nengorosHeadless.network.modules.ioTmp.transformMultiTermination;
 
 import ctu.nengoros.modules.PeripheralsRegisteringNode;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
-import ctu.nengorosHeadless.network.modules.io.TransformTermination;
-import ctu.nengorosHeadless.network.modules.io.impl.BasicTransformTermination;
+import ctu.nengorosHeadless.network.modules.ioTmp.Terminaiton;
+import ctu.nengorosHeadless.network.modules.ioTmp.TransformTermination;
+import ctu.nengorosHeadless.network.modules.ioTmp.impl.BasicTransformTermination;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 
@@ -33,14 +34,14 @@ public abstract class BasicMultiTermination extends AbstractTransformMultiTermin
 	 * @throws StructuralException if output dimension of weight matrix is incorrect
 	 */
 	@Override
-	public Termination addTermination(float [][] weights) throws StructuralException {
+	public Terminaiton addTermination(float [][] weights) throws StructuralException {
 		super.checkDimensions(weights);
 
 		int dim = weights.length;
 
 		String termName = this.generateName(); 
 
-		Termination t = new BasicTransformTermination(parent, termName, weights);
+		BasicTransformTermination t = new BasicTransformTermination(parent, termName, weights);
 		((PeripheralsRegisteringNode) parent).addTermination(t);
 
 		// if a default value is set to the Termination 0, discard it now
