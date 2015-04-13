@@ -3,7 +3,6 @@ package ctu.nengorosHeadless.network.modules;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
@@ -17,7 +16,7 @@ import ctu.nengorosHeadless.network.modules.io.Orig;
 import ctu.nengorosHeadless.network.modules.io.Term;
 import ctu.nengorosHeadless.rosBackend.encoders.Encoder;
 
-public class NeuralModule extends SyncedUnit implements HeadlessNode{
+public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 
 	// map of origins used (used by Decoders)
 	protected Map<String, Orig> myOrigins;			
@@ -155,21 +154,12 @@ public class NeuralModule extends SyncedUnit implements HeadlessNode{
 	public boolean isStarted() { return this.isStarted; }
 
 	@Override
-	public void createDecoder(String topicName, String dataType, int dimensionSize) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void createDecoder(String topicName, String dataType, int dimensionSize);
 
 	@Override
-	public void createEncoder(String topicName, String dataType, int dimensionSize) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void createEncoder(String topicName, String dataType, int dimensionSize);
 
 	@Override
-	public void createConfigEncoder(String topicName, String dataType, float defValue) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void createConfigEncoder(String topicName, String dataType, float defValue);
 
 }
