@@ -1,15 +1,11 @@
-package ctu.nengoros.model.transformMultiTermination;
+package ctu.nengorosHeadless.network.modules.io.transformMultiTermination;
 
-import ctu.nengoros.dynamics.IdentityLTISystem;
-import ctu.nengoros.model.termination.TransformTermination;
-import ctu.nengoros.model.termination.impl.BasicTransformTermination;
-import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.modules.PeripheralsRegisteringNode;
-import ca.nengo.dynamics.Integrator;
+import ctu.nengorosHeadless.network.modules.NeuralModule;
+import ctu.nengorosHeadless.network.modules.io.TransformTermination;
+import ctu.nengorosHeadless.network.modules.io.impl.BasicTransformTermination;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
-import ca.nengo.model.Termination;
-import ca.nengo.model.impl.BasicTermination;
 
 /**
  * MultiTermination which supports only BasicTransformTerminations.
@@ -19,12 +15,11 @@ import ca.nengo.model.impl.BasicTermination;
  */
 public abstract class BasicMultiTermination extends AbstractTransformMultiTermination {
 
-	private static final long serialVersionUID = 7943836551919849111L;
 	public final String me = "[BasicMultiTerminationSImple] ";
 
-	public BasicMultiTermination(NeuralModule parent, String name, Integrator integ, int outputDimension) {
+	public BasicMultiTermination(NeuralModule parent, String name, int outputDimension) {
 
-		super(parent, name, integ, outputDimension);
+		super(parent, name, outputDimension);
 	}
 
 	/**
@@ -42,11 +37,10 @@ public abstract class BasicMultiTermination extends AbstractTransformMultiTermin
 		super.checkDimensions(weights);
 
 		int dim = weights.length;
-		IdentityLTISystem noLTI = new IdentityLTISystem(dim);
 
 		String termName = this.generateName(); 
 
-		Termination t = new BasicTransformTermination(parent, noLTI, integ, termName, weights);
+		Termination t = new BasicTransformTermination(parent, termName, weights);
 		((PeripheralsRegisteringNode) parent).addTermination(t);
 
 		// if a default value is set to the Termination 0, discard it now

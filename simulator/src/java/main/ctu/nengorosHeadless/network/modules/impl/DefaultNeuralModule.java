@@ -16,6 +16,7 @@ import ctu.nengorosHeadless.network.modules.NeuralModule;
 import ctu.nengorosHeadless.network.modules.io.MultiTermination;
 import ctu.nengorosHeadless.network.modules.io.Origin;
 import ctu.nengorosHeadless.network.modules.io.Terminaiton;
+import ctu.nengorosHeadless.network.modules.io.impl.BasicTermination;
 import ctu.nengorosHeadless.rosBackend.encoders.Encoder;
 
 public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
@@ -121,7 +122,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		}
 		this.mc = modContainer;
 
-		this.setReady(true);
+		this.setReady(true); // TODO is this OK here?
 		this.myTime=0;
 
 		this.t_start=0;
@@ -172,9 +173,10 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 		Terminaiton t;
 		for(int i=0; i<orderedTerminations.size(); i++){
 			t=orderedTerminations.get(i);
-			if(t instanceof Terminaiton)
-				((Terminaiton)t).run(startTime, endTime);
+			if(t instanceof BasicTermination)
+				((BasicTermination)t).run(startTime, endTime);
 			else{
+				// TODO: why?
 				throw new SimulationException(me+"only BasicTerminations are supporeted here!");
 			}
 		}
@@ -260,43 +262,37 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public MultiTermination getMultiTermination(String name)
-			throws StructuralException {
+	public MultiTermination getMultiTermination(String name) throws StructuralException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Terminaiton newTerminationFor(String name)
-			throws StructuralException {
+	public Terminaiton newTerminationFor(String name) throws StructuralException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Terminaiton newTerminationFor(String name, float weight)
-			throws StructuralException {
+	public Terminaiton newTerminationFor(String name, float weight) throws StructuralException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Terminaiton newTerminationFor(String name, float[][] weights)
-			throws StructuralException {
+	public Terminaiton newTerminationFor(String name, float[][] weights) throws StructuralException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void createDecoder(String topicName, String dataType,
-			int[] dimensionSizes) {
+	public void createDecoder(String topicName, String dataType, int[] dimensionSizes) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void createDecoder(String topicName, String dataType,
-			int dimensionSize) {
+	public void createDecoder(String topicName, String dataType, int dimensionSize) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -308,8 +304,7 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public void createEncoder(String topicName, String dataType,
-			int[] dimensionSizes) {
+	public void createEncoder(String topicName, String dataType, int[] dimensionSizes) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -328,36 +323,31 @@ public class DefaultNeuralModule extends SyncedUnit implements NeuralModule{
 	}
 
 	@Override
-	public void createConfigEncoder(String topicName, String dataType,
-			float[] defaultValues) {
+	public void createConfigEncoder(String topicName, String dataType, float[] defaultValues) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void createConfigEncoder(String topicName, String dataType,
-			float defaultValue) {
+	public void createConfigEncoder(String topicName, String dataType, float defaultValue) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void createDecoder(String topicName, String dataType,
-			int[] dimensionSizes, boolean synchronous) {
+	public void createDecoder(String topicName, String dataType, int[] dimensionSizes, boolean synchronous) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void createDecoder(String topicName, String dataType,
-			int dimensionSize, boolean synchronous) {
+	public void createDecoder(String topicName, String dataType, int dimensionSize, boolean synchronous) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void createDecoder(String topicName, String dataType,
-			boolean synchronous) {
+	public void createDecoder(String topicName, String dataType, boolean synchronous) {
 		// TODO Auto-generated method stub
 		
 	}
