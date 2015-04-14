@@ -7,11 +7,9 @@ import ctu.nengoros.comm.rosBackend.backend.BackendUtils;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.exceptions.MessageFormatException;
 import ctu.nengoros.exceptions.UnsupportedMessageFormatExc;
-import ctu.nengoros.model.termination.TransformTermination;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
 import ctu.nengorosHeadless.network.modules.io.Orig;
-import ctu.nengorosHeadless.network.modules.io.Term;
 import ctu.nengorosHeadless.rosBackend.decoders.Decoder;
 import ctu.nengorosHeadless.rosBackend.decoders.impl.BasicDec;
 import ctu.nengorosHeadless.rosBackend.encoders.Encoder;
@@ -35,6 +33,7 @@ public class DefaultNeuralModule extends NeuralModule{
 			
 			// register as child (will or will not block the simulation if is not set to be synchronous)
 			super.addChild(d);
+			this.addOrigin((Orig)d);
 
 		} catch (Exception e) {
 			this.catchException(e);
@@ -48,12 +47,10 @@ public class DefaultNeuralModule extends NeuralModule{
 	public void createEncoder(String topicName, String dataType, int dimensionSize) {
 		Backend ros;
 		try {
-
 			this.checkEncoderAvailable(topicName);
 
-			ros = BackendUtils.select(topicName, dataType, /*dimensionSizes,*/ mc.getConnectedNode(), true);
-			int dim = ros.gedNumOfDimensions();
-
+			ros = BackendUtils.select(topicName, dataType, mc.getConnectedNode(), true);
+			
 			Encoder enc = new BasicEnc(this, topicName, dataType, mc, ros);
 			this.addEncoder(enc);
 
@@ -64,20 +61,19 @@ public class DefaultNeuralModule extends NeuralModule{
 
 	@Override
 	public void createConfigEncoder(String topicName, String dataType, float defValue) {
-		int dim;
+		//int dim;
 		Backend ros;
 		try {
 			this.checkEncoderAvailable(topicName);
 			
-			int[] dimSizes = new int[]{defValue};
+			ros = BackendUtils.select(topicName, dataType, new int[]{1}, mc.getConnectedNode(), true);
+			//dim = BackendUtils.countNengoDimension(dimSizes);
 
-			ros = BackendUtils.select(topicName, dataType, dimSizes, mc.getConnectedNode(), true);
-			dim = BackendUtils.countNengoDimension(dimSizes);
-
-			Encoder enc = new BasicEnc(this, dimSizes, topicName, dataType, mc, ros);
+			//Encoder enc = new BasicEnc(this, new int[]{1}, topicName, dataType, mc, ros, defValue);
+			Encoder enc = new BasicEnc(this, topicName, dataType, mc, ros, defValue);
 			// set default values for the first TransformTermination
-			((TransformTermination)enc.getMultiTermination().getOrderedTerminations().get(0)).
-			setDefaultOutputValues(defaultValues);
+			//((TransformTermination)enc.getMultiTermination().getOrderedTerminations().get(0)).
+			//setDefaultOutputValues(defaultValues);
 
 			this.addEncoder(enc);
 
@@ -103,25 +99,6 @@ public class DefaultNeuralModule extends NeuralModule{
 		}
 		myOrigins.put(name, o);
 		orderedOrigins.add(o);
-	}
-
-	/**
-	 * Called by the Encoders, who are Terminations.
-	 * @param t
-	 * @throws StructuralException
-	 */
-	@Override
-	public void addTermination(Term t) throws StructuralException {
-
-		System.out.println(super.getFullName()+" adding termination named "+t.getName());
-		String name = t.getName();
-
-		if(myTerminations.containsKey(name)){
-			System.err.println("Termination with this name already here, ignoring!");
-			throw new StructuralException("Termination iwth this name already here, ignoring! " + name);
-		}
-		myTerminations.put(name,t);
-		orderedTerminations.add(t);
 	}
 
 	/**

@@ -10,12 +10,15 @@ import ctu.nengorosHeadless.network.modules.io.Orig;
 public abstract class BasicOrig extends SyncedUnit implements Orig{
 
 	public static final float DEF_VAL = 0;
+	public float def_val = DEF_VAL;
 
 	protected final int size;
 	private final float[] values;
 
 	public BasicOrig(int size, String name){
 		super.setFullName(name);
+		
+		this.def_val = DEF_VAL;
 		
 		if(size<=0){
 			System.err.println("Incorrect size of Origin");
@@ -28,8 +31,8 @@ public abstract class BasicOrig extends SyncedUnit implements Orig{
 	/**
 	 * Should wait for all ROS messages, decode them to vector of floats and store the values.
 	 */
-	@Override
-	public abstract void run(float startTime, float endTime) throws SimulationException;
+	//@Override
+	//public abstract void run(float startTime, float endTime) throws SimulationException;
 
 	@Override
 	public float[] getValues() { return this.values; }
@@ -46,7 +49,7 @@ public abstract class BasicOrig extends SyncedUnit implements Orig{
 			}
 		}else{
 			for(int i=0; i<size; i++){
-				values[i] = DEF_VAL;
+				values[i] = def_val;
 			}			
 		}
 	}

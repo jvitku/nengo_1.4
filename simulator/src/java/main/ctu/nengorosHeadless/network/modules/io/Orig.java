@@ -24,8 +24,10 @@ public interface Orig extends Resettable{
 	 * Wait for all ROS messages (in the Synchronous case), decode them and 
 	 * put the values to my output.
 	 * 
+	 * The method will return control after the ROS message is received (in the synchronous mode).
+	 * 
 	 * @param startTime
 	 * @param endTime
 	 */
-	public void run(float startTime, float endTime)  throws SimulationException;
+	//public void run(float startTime, float endTime)  throws SimulationException;
 }

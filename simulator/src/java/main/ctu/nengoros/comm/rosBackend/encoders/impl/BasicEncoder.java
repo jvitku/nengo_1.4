@@ -140,11 +140,11 @@ public class BasicEncoder implements Encoder{
 	public String getName() { return this.name; }
 
 	@Override
-	public int getDimensions() { return dimensions; }
-
-	@Override
 	public MultiTermination getMultiTermination() throws StructuralException {
 		return multiTermination;
 	}
 
+	// TODO test this change
+	@Override
+	public int getSize() { return this.dimensions; }
 }

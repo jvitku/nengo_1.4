@@ -10,4 +10,5 @@ public interface Encoder extends CommonEncoder{
 	 * @return my parent to whom I register my Terminations 
 	 */
 	NeuralModule getParent();
+	
 }

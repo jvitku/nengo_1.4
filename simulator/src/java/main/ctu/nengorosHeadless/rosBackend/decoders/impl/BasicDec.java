@@ -12,6 +12,7 @@ import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.exceptions.MessageFormatException;
 
+import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
@@ -163,12 +164,6 @@ public class BasicDec extends BasicOrig implements Decoder {
 	@Override
 	public float getEndTime() {
 		return this.myTime;
-	}
-
-	@Override
-	public void run(float startTime, float endTime) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

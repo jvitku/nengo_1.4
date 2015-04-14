@@ -77,14 +77,6 @@ public interface HeadlessNode extends Resettable, StartedObject{
 	 * @throws StructuralException if the named Termination does not exist
 	 */
 	public Term getTermination(String name) throws StructuralException;
-
-	/**
-	 * Called by the Encoders, who are Terminations.
-	 * @param t
-	 * @throws StructuralException
-	 */
-	
-	public void addTermination(Term t) throws StructuralException;
 	
 	/**
 	 * This method tells the Node (network) that is being deleted from Nengo, 

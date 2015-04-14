@@ -11,22 +11,6 @@ import ca.nengo.model.SimulationException;
  */
 public interface CommonEncoder extends Resettable{
 
-
-	/**
-	 * Return the name of Encoder, this name corresponds
-	 * to ROS Topic on which the messages are published and 
-	 * is used to generate names for own Terminations.
-	 * 
-	 * @return returns the name of Encoder
-	 */
-	String getName();
-
-	/**
-	 * Get dimensions of this encoder.
-	 * @return number of dimensions of my encoded input 
-	 */
-	public int getSize();
-	
 	/**
 	 * Run encoder for a given time, that is
 	 * <ul>
@@ -44,5 +28,20 @@ public interface CommonEncoder extends Resettable{
 	 * @param endTime
 	 */
 	public void run(float startTime, float endTime) throws SimulationException;
+
+	/**
+	 * Return the name of Encoder, this name corresponds
+	 * to ROS Topic on which the messages are published and 
+	 * is used to generate names for own Terminations.
+	 * 
+	 * @return returns the name of Encoder
+	 */
+	String getName();
+
+	/**
+	 * Get dimensions of this encoder.
+	 * @return number of dimensions of my encoded input 
+	 */
+	public int getSize();
 
 }

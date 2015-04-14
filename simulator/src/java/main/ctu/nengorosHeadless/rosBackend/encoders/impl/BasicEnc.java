@@ -7,22 +7,17 @@ import ca.nengo.model.StructuralException;
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.exceptions.ConnectionException;
-
-
-import ctu.nengoros.model.transformMultiTermination.MultiTermination;
-
-
+//import ctu.nengoros.model.transformMultiTermination.MultiTermination;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
-import ctu.nengorosHeadless.network.modules.io.impl.BasicOrig;
+import ctu.nengorosHeadless.network.modules.io.impl.BasicTerm;
 import ctu.nengorosHeadless.rosBackend.encoders.Encoder;
 
-public class BasicEnc extends BasicOrig implements Encoder {
+public class BasicEnc extends BasicTerm implements Encoder {
 
 	protected NeuralModule parent;
-	
 	protected ConnectedNode myRosNode;			// factory for subscriber
-	protected MultiTermination multiTermination;// this combines values on all Terminations
+	//protected MultiTermination multiTermination;// this combines values on all Terminations
 
 	public Backend ros;							// Nengo interfaced with ROS here
 
@@ -59,7 +54,15 @@ public class BasicEnc extends BasicOrig implements Encoder {
 		
 		super(ros.gedNumOfDimensions(), name);
 		
-		init(parent, new int[]{size}, name, dataType, modem, ros);	
+		init(parent, new int[]{super.getSize()}, name, dataType, modem, ros);	
+	}
+	
+	public BasicEnc(NeuralModule parent, String name, String dataType, ModemContainer modem, Backend ros, float defVal) 
+			throws StructuralException, ConnectionException, StartupDelayException{
+		
+		super(ros.gedNumOfDimensions(), name, defVal);
+		
+		init(parent, new int[]{super.getSize()}, name, dataType, modem, ros);	
 	}
 
 	private void init(NeuralModule parent, int[] dimensionSizes, String name, String dataType, ModemContainer modem, Backend ros) 
@@ -78,28 +81,25 @@ public class BasicEnc extends BasicOrig implements Encoder {
 
 		this.ros = ros;	// get my ROS backend
 
-		System.out.println("my size is: "+this.size);
-		// Here, add new MultiTermination which sums inputs on all own Terminations together.
-		
-		//multiTermination  = new SumMultiTermination(this.parent, this.name, this.dimensions);
+		System.out.println("my size is: "+this.getSize());
 	}
 
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
 
 		// collect data on all my Terminations
-		multiTermination.run(startTime, endTime);
+		//multiTermination.run(startTime, endTime);
 
-		float[][] ff_series = multiTermination.getOutput().getValues();
+		//float[][] ff_series = multiTermination.getOutput().getValues();
 
 		// publish as a ROS message with the last data sample available
-		ros.publish(ff_series[ff_series.length-1]);
+		ros.publish(super.getValues());
 	}
 
 	@Override
 	public NeuralModule getParent() { return parent; }
 
+	//@Override
+	//public void reset(boolean randomize) { multiTermination.reset(randomize); }
 
-	@Override
-	public void reset(boolean randomize) { multiTermination.reset(randomize); }
 }

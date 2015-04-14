@@ -23,8 +23,8 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 	protected LinkedList <Orig> orderedOrigins;		
 
 	// map of terminations used (are registered by Encoders)
-	protected Map<String, Term> myTerminations;	
-	protected LinkedList <Term> orderedTerminations;
+//	protected Map<String, Term> myTerminations;	
+//	protected LinkedList <Term> orderedTerminations;
 
 	// run all these Encoders after Terminations
 	protected Map<String, Encoder> myEncoders;		
@@ -63,33 +63,34 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 		this.mc = modContainer;
 
 		this.setReady(true);
+
+		//this.myTerminations = new HashMap<String, Term>(5);
+		//this.orderedTerminations = new LinkedList <Term> ();
 		
 		this.myOrigins = new HashMap<String, Orig>(5);
-		this.myTerminations = new HashMap<String, Term>(5);
+		this.orderedOrigins = new LinkedList <Orig> ();
 		
 		this.myEncoders = new HashMap<String,Encoder>(5);
-
-		this.orderedOrigins = new LinkedList <Orig> ();
-		this.orderedTerminations = new LinkedList <Term> ();
 		this.orderedEncoders = new LinkedList<Encoder>();
 
 		startup.addChild(mc.getStartupManager());
 		mc.getModem().getStartupManager().awaitStarted(); 
 		this.isStarted = true;
 	}
-	
 
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
 		myTime = endTime;
 
-		this.runAllTerminations(startTime, endTime);	// run all terminations to collect input values
+		//this.runAllTerminations(startTime, endTime);	// run all terminations to collect input values
 
 		super.discardChildsReady(); 	// wait for all registered synchronous decoders to receive message
 		
 		this.runAllEncoders(startTime, endTime);	// encode data on registered Terminations and send to ROS
+		
+		this.resetAllEncoders();	// clear the received values
 	}
-
+/*
 	private void runAllTerminations(float startTime, float endTime) throws SimulationException{
 		Term t;
 		for(int i=0; i<orderedTerminations.size(); i++){
@@ -101,7 +102,13 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 			}
 		}
 	}
-
+*/
+	private void resetAllEncoders(){
+		for(int i=0; i<orderedEncoders.size(); i++){
+			orderedEncoders.get(i).reset(false);
+		}
+	}
+	
 	private void runAllEncoders(float startTime, float endTime) throws SimulationException{
 		Encoder e;
 		for(int i=0; i<orderedEncoders.size(); i++){
@@ -111,6 +118,15 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 		}
 	}
 
+	protected void addEncoder(Encoder enc){
+		if(this.myEncoders.containsKey(enc.getName())){
+			System.err.println("error: encoder already registered!");
+			return;
+		}
+		myEncoders.put(enc.getName(), enc);
+		orderedEncoders.add(enc);
+	}
+	
 	@Override
 	public Orig getOrigin(String name) throws StructuralException {
 		if ( !myOrigins.containsKey(name) ) {
@@ -121,10 +137,11 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 
 	@Override
 	public Term getTermination(String name) throws StructuralException {
-		if ( !myTerminations.containsKey(name) ) {
+		if ( !myOrigins.containsKey(name) ) {
+		//if ( !myTerminations.containsKey(name) ) {
 			throw new StructuralException("There is no Termination named " + name);
 		}
-		return myTerminations.get(name);
+		return (Term)myOrigins.get(name);
 	}
 
 	@Override
@@ -143,8 +160,8 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 		for(int i=0; i<this.orderedEncoders.size(); i++)
 			this.orderedEncoders.get(i).reset(randomize);
 
-		for(int i=0; i<this.orderedTerminations.size(); i++)
-			this.orderedTerminations.get(i).reset(randomize);
+		//for(int i=0; i<this.orderedTerminations.size(); i++)
+//			this.orderedTerminations.get(i).reset(randomize);
 	}
 
 	@Override

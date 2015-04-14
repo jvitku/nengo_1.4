@@ -26,6 +26,7 @@ import ca.nengo.model.StructuralException;
  */
 public interface Encoder extends CommonEncoder{
 
+	
 	/**
 	 * Get the parent of Encoder
 	 * @return my parent to whom I register my Terminations 

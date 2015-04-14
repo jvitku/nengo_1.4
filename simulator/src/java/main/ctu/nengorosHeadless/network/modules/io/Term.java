@@ -27,10 +27,7 @@ public interface Term extends Resettable {
 	public int getSize();
 	
 	/**
-	 * Encode received values and send as the ROS message
-	 *  
-	 * @param startTime
-	 * @param endTime
+	 * @return vector of float values collected on inputs
 	 */
-	public void run(float startTime, float endTime);
+	public float[] getValues();
 }
