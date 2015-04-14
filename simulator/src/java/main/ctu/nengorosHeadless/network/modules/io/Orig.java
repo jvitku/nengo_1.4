@@ -21,13 +21,10 @@ public interface Orig extends Resettable{
 	public int getSize();
 	
 	/**
-	 * Wait for all ROS messages (in the Synchronous case), decode them and 
-	 * put the values to my output.
-	 * 
-	 * The method will return control after the ROS message is received (in the synchronous mode).
-	 * 
+	 * For the ROS stuff, this does nothing. For the custom nodes (as inputs) this implements its function
+	 * . 
 	 * @param startTime
 	 * @param endTime
 	 */
-	//public void run(float startTime, float endTime)  throws SimulationException;
+	public void run(float startTime, float endTime)  throws SimulationException;
 }

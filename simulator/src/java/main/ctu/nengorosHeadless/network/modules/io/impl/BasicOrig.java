@@ -31,8 +31,8 @@ public abstract class BasicOrig extends SyncedUnit implements Orig{
 	/**
 	 * Should wait for all ROS messages, decode them to vector of floats and store the values.
 	 */
-	//@Override
-	//public abstract void run(float startTime, float endTime) throws SimulationException;
+	@Override
+	public abstract void run(float startTime, float endTime) throws SimulationException;
 
 	@Override
 	public float[] getValues() { return this.values; }

@@ -6,7 +6,7 @@ package ctu.nengorosHeadless.network.modules.io;
  * @author Jaroslav Vitku
  *
  */
-public interface Connection {
+public interface Connection{
 
 	/**
 	 * Called each simulation step

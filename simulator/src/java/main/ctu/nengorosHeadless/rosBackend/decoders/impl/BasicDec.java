@@ -166,4 +166,7 @@ public class BasicDec extends BasicOrig implements Decoder {
 		return this.myTime;
 	}
 
+	@Override
+	public void run(float startTime, float endTime) throws SimulationException {}
+
 }

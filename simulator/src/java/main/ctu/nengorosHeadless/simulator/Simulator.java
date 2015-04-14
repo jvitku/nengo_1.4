@@ -6,7 +6,7 @@ public interface Simulator extends Resettable{
 	
 	public void setDt(float step);
 	
-	public void simulate(float from, float to);
+	public void simulate(float startTime, float endTime);
 	
 	public void defineNetwork();
 

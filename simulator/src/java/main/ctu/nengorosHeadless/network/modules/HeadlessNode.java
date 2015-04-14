@@ -1,5 +1,6 @@
 package ctu.nengorosHeadless.network.modules;
 
+import ctu.nengoros.network.node.synchedStart.SyncedUnitInterface;
 import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
 import ctu.nengorosHeadless.network.modules.io.Orig;
 import ctu.nengorosHeadless.network.modules.io.Term;
@@ -13,7 +14,7 @@ import ca.nengo.model.StructuralException;
  * @author Jaroslav Vitku
  *
  */
-public interface HeadlessNode extends Resettable, StartedObject{
+public interface HeadlessNode extends Resettable, StartedObject, SyncedUnitInterface{
 
 	/**
 	 * Runs the Node (including all its components), updating internal state and outputs as needed.
