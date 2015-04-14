@@ -2,7 +2,6 @@ package ctu.nengoros.comm.rosBackend.encoders;
 
 import ca.nengo.model.Resettable;
 import ca.nengo.model.SimulationException;
-import ctu.nengoros.modules.NeuralModule;
 
 /**
  * @see the ctu.nengoros.comm.rosBackend.encoders.Encoder
@@ -12,12 +11,6 @@ import ctu.nengoros.modules.NeuralModule;
  */
 public interface CommonEncoder extends Resettable{
 
-
-	/**
-	 * Get the parent of Encoder
-	 * @return my parent to whom I register my Terminations 
-	 */
-	NeuralModule getParent();
 
 	/**
 	 * Return the name of Encoder, this name corresponds
@@ -32,7 +25,7 @@ public interface CommonEncoder extends Resettable{
 	 * Get dimensions of this encoder.
 	 * @return number of dimensions of my encoded input 
 	 */
-	public int getDimensions();
+	public int getSize();
 	
 	/**
 	 * Run encoder for a given time, that is

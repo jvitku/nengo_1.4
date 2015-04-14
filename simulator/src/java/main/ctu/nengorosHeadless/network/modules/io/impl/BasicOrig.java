@@ -2,6 +2,8 @@ package ctu.nengorosHeadless.network.modules.io.impl;
 
 import java.util.Random;
 
+import ca.nengo.model.SimulationException;
+
 import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
 import ctu.nengorosHeadless.network.modules.io.Orig;
 
@@ -9,7 +11,7 @@ public abstract class BasicOrig extends SyncedUnit implements Orig{
 
 	public static final float DEF_VAL = 0;
 
-	private final int size;
+	protected final int size;
 	private final float[] values;
 
 	public BasicOrig(int size, String name){
@@ -27,7 +29,7 @@ public abstract class BasicOrig extends SyncedUnit implements Orig{
 	 * Should wait for all ROS messages, decode them to vector of floats and store the values.
 	 */
 	@Override
-	public abstract void run(float startTime, float endTime);
+	public abstract void run(float startTime, float endTime) throws SimulationException;
 
 	@Override
 	public float[] getValues() { return this.values; }

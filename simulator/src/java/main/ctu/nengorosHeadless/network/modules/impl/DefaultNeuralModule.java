@@ -1,15 +1,9 @@
 package ctu.nengorosHeadless.network.modules.impl;
 
-import ca.nengo.model.Origin;
 import ca.nengo.model.StructuralException;
-import ca.nengo.model.Termination;
-import ca.nengo.model.Units;
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.comm.rosBackend.backend.BackendUtils;
-import ctu.nengoros.comm.rosBackend.encoders.Encoder;
-import ctu.nengoros.comm.rosBackend.encoders.impl.BasicEncoder;
-import ctu.nengoros.dynamics.IdentityLTISystem;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.exceptions.MessageFormatException;
 import ctu.nengoros.exceptions.UnsupportedMessageFormatExc;
@@ -20,6 +14,8 @@ import ctu.nengorosHeadless.network.modules.io.Orig;
 import ctu.nengorosHeadless.network.modules.io.Term;
 import ctu.nengorosHeadless.rosBackend.decoders.Decoder;
 import ctu.nengorosHeadless.rosBackend.decoders.impl.BasicDec;
+import ctu.nengorosHeadless.rosBackend.encoders.Encoder;
+import ctu.nengorosHeadless.rosBackend.encoders.impl.BasicEnc;
 
 public class DefaultNeuralModule extends NeuralModule{
 
@@ -78,7 +74,7 @@ public class DefaultNeuralModule extends NeuralModule{
 			ros = BackendUtils.select(topicName, dataType, dimSizes, mc.getConnectedNode(), true);
 			dim = BackendUtils.countNengoDimension(dimSizes);
 
-			Encoder enc = new BasicEncoder(this, dimSizes, topicName, dataType, mc, ros);
+			Encoder enc = new BasicEnc(this, dimSizes, topicName, dataType, mc, ros);
 			// set default values for the first TransformTermination
 			((TransformTermination)enc.getMultiTermination().getOrderedTerminations().get(0)).
 			setDefaultOutputValues(defaultValues);
@@ -90,9 +86,6 @@ public class DefaultNeuralModule extends NeuralModule{
 		}
 	}
 	
-
-
-
 	/**
 	 * Called by the Decoders, who add themselves.
 	 * 
@@ -130,7 +123,6 @@ public class DefaultNeuralModule extends NeuralModule{
 		myTerminations.put(name,t);
 		orderedTerminations.add(t);
 	}
-	
 
 	/**
 	 * Check whether an encoder to the same topicName is not already registered here.
@@ -145,7 +137,6 @@ public class DefaultNeuralModule extends NeuralModule{
 
 	private void catchException(Exception e){
 		if(e instanceof MessageFormatException){
-		//catch (MessageFormatException e) {
 			System.err.println(super.getFullName()+" Bad message format.");
 			e.printStackTrace();
 		}else if(e instanceof UnsupportedMessageFormatExc) {

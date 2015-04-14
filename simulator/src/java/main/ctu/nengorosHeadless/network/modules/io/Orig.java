@@ -1,6 +1,7 @@
 package ctu.nengorosHeadless.network.modules.io;
 
 import ca.nengo.model.Resettable;
+import ca.nengo.model.SimulationException;
 
 public interface Orig extends Resettable{
 
@@ -26,5 +27,5 @@ public interface Orig extends Resettable{
 	 * @param startTime
 	 * @param endTime
 	 */
-	public void run(float startTime, float endTime);
+	public void run(float startTime, float endTime)  throws SimulationException;
 }

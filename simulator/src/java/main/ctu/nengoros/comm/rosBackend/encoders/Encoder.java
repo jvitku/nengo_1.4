@@ -1,6 +1,7 @@
 package ctu.nengoros.comm.rosBackend.encoders;
 
 import ctu.nengoros.model.transformMultiTermination.MultiTermination;
+import ctu.nengoros.modules.NeuralModule;
 import ca.nengo.model.StructuralException;
 
 /**
@@ -25,6 +26,12 @@ import ca.nengo.model.StructuralException;
  */
 public interface Encoder extends CommonEncoder{
 
+	/**
+	 * Get the parent of Encoder
+	 * @return my parent to whom I register my Terminations 
+	 */
+	NeuralModule getParent();
+	
 	/**
 	 * Return own MultiTermination, this allows user to add new Terminations
 	 * to it.

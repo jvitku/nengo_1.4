@@ -3,7 +3,6 @@ package ctu.nengorosHeadless.rosBackend.decoders;
 import ctu.nengoros.comm.rosBackend.backend.newMessageEvent.MyEventListenerInterface;
 import ctu.nengoros.comm.rosBackend.decoders.CommonDecoder;
 import ctu.nengoros.network.node.synchedStart.SyncedUnitInterface;
-import ctu.nengorosHeadless.network.modules.io.Orig;
 
 /**
  * this is decoder of ROS messages, it does:
