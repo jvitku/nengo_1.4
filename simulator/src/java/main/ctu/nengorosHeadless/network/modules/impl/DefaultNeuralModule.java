@@ -33,7 +33,7 @@ public class DefaultNeuralModule extends NeuralModule{
 			
 			// register as child (will or will not block the simulation if is not set to be synchronous)
 			super.addChild(d);
-			this.addOrigin((Orig)d);
+			//this.addOrigin((Orig)d);
 
 		} catch (Exception e) {
 			this.catchException(e);
@@ -52,8 +52,7 @@ public class DefaultNeuralModule extends NeuralModule{
 			ros = BackendUtils.select(topicName, dataType, mc.getConnectedNode(), true);
 			
 			Encoder enc = new BasicEnc(this, topicName, dataType, mc, ros);
-			this.addEncoder(enc);
-
+			//this.addEncoder(enc);
 		} catch (Exception e) {
 			this.catchException(e);
 		}
@@ -75,30 +74,11 @@ public class DefaultNeuralModule extends NeuralModule{
 			//((TransformTermination)enc.getMultiTermination().getOrderedTerminations().get(0)).
 			//setDefaultOutputValues(defaultValues);
 
-			this.addEncoder(enc);
+			//this.addEncoder(enc);
 
 		} catch (Exception e){
 			this.catchException(e);
 		}
-	}
-	
-	/**
-	 * Called by the Decoders, who add themselves.
-	 * 
-	 * @param o
-	 * @throws StructuralException
-	 */
-	@Override
-	public void addOrigin(Orig o) throws StructuralException {
-
-		String name = o.getName();
-
-		if(myOrigins.containsKey(name)){
-			System.err.println("Origin with the same name already here, ignoring!");
-			throw new StructuralException("Origin with this name already connected! "+name);
-		}
-		myOrigins.put(name, o);
-		orderedOrigins.add(o);
 	}
 
 	/**

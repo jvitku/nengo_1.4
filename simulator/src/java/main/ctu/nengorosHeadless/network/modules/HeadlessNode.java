@@ -4,6 +4,7 @@ import ctu.nengoros.network.node.synchedStart.SyncedUnitInterface;
 import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
 import ctu.nengorosHeadless.network.modules.io.Orig;
 import ctu.nengorosHeadless.network.modules.io.Term;
+import ctu.nengorosHeadless.rosBackend.encoders.Encoder;
 import ca.nengo.model.Resettable;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
@@ -78,6 +79,8 @@ public interface HeadlessNode extends Resettable, StartedObject, SyncedUnitInter
 	 * @throws StructuralException if the named Termination does not exist
 	 */
 	public Term getTermination(String name) throws StructuralException;
+	
+	public void addEncoder(Encoder enc) throws StructuralException;
 	
 	/**
 	 * This method tells the Node (network) that is being deleted from Nengo, 

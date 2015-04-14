@@ -80,7 +80,9 @@ public class BasicEnc extends BasicTerm implements Encoder {
 		}
 
 		this.ros = ros;	// get my ROS backend
-
+	
+		parent.addEncoder(this);
+		
 		System.out.println("my size is: "+this.getSize());
 	}
 

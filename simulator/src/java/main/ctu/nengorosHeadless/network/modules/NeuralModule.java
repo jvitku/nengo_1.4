@@ -118,13 +118,24 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 		}
 	}
 
-	protected void addEncoder(Encoder enc){
+	@Override
+	public void addEncoder(Encoder enc) throws StructuralException{
 		if(this.myEncoders.containsKey(enc.getName())){
 			System.err.println("error: encoder already registered!");
 			return;
 		}
 		myEncoders.put(enc.getName(), enc);
 		orderedEncoders.add(enc);
+	}
+	
+	@Override
+	public void addOrigin(Orig o) throws StructuralException{
+		if(this.myOrigins.containsKey(o.getName())){
+			System.err.println("error: Origin already registered!");
+			return;
+		}
+		myOrigins.put(o.getName(), o);
+		orderedOrigins.add(o);
 	}
 	
 	@Override
