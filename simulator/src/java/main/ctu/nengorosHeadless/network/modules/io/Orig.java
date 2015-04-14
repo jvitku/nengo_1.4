@@ -5,6 +5,12 @@ import ca.nengo.model.Resettable;
 public interface Orig extends Resettable{
 
 	/**
+	 * Should correspond to the owned ROS topic.
+	 * @return name of this origin
+	 */
+	public String getName();
+	
+	/**
 	 * Values that are sent through the network.
 	 * 
 	 * @return array of values that is sent through the Connection

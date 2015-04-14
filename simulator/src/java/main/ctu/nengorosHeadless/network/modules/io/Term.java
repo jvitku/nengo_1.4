@@ -12,6 +12,11 @@ import ca.nengo.model.Resettable;
 public interface Term extends Resettable {
 
 	/**
+	 * @return name which corresponds to the owned ROS topic
+	 */
+	public String getName();
+	
+	/**
 	 * By default, sums all values sent here (e.g. from multiple origins).
 	 * 
 	 * @param value value to be added

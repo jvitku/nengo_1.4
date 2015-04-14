@@ -63,6 +63,13 @@ public interface HeadlessNode extends Resettable, StartedObject{
 	public Orig getOrigin(String name) throws StructuralException;
 
 	/**
+	 * Called by the Origin/Decoder
+	 * @param o
+	 * @throws StructuralException
+	 */
+	public void addOrigin(Orig o) throws StructuralException;
+	
+	/**
 	 * Used for connecting two NeuralModules.
 	 * 
 	 * @param name Name of a Termination onto this Node
@@ -71,6 +78,13 @@ public interface HeadlessNode extends Resettable, StartedObject{
 	 */
 	public Term getTermination(String name) throws StructuralException;
 
+	/**
+	 * Called by the Encoders, who are Terminations.
+	 * @param t
+	 * @throws StructuralException
+	 */
+	
+	public void addTermination(Term t) throws StructuralException;
 	
 	/**
 	 * This method tells the Node (network) that is being deleted from Nengo, 

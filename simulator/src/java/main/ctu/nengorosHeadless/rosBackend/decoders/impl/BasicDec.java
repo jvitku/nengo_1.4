@@ -8,22 +8,14 @@ import org.ros.node.topic.Subscriber;
 
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
-import ctu.nengoros.comm.rosBackend.backend.BackendUtils;
 
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.exceptions.MessageFormatException;
 
-import ca.nengo.config.Configuration;
-import ca.nengo.model.InstantaneousOutput;
-import ca.nengo.model.Node;
-import ca.nengo.model.Origin;
-import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
-import ca.nengo.model.Units;
-import ca.nengo.model.impl.RealOutputImpl;
-import ctu.nengoros.modules.NeuralModule;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
-import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
+import ctu.nengorosHeadless.network.modules.NeuralModule;
+import ctu.nengorosHeadless.network.modules.io.impl.BasicOrig;
 import ctu.nengorosHeadless.rosBackend.decoders.Decoder;
 
 /**
@@ -35,17 +27,15 @@ import ctu.nengorosHeadless.rosBackend.decoders.Decoder;
  * 
  * @author Jaroslav Vitku
  */
-public class BasicDecoder extends SyncedUnit implements Decoder {
+public class BasicDec extends BasicOrig implements Decoder {
 
 	protected static final long serialVersionUID = 1L;
 
-	protected static Logger ourLogger = Logger.getLogger(BasicDecoder.class);
+	protected static Logger ourLogger = Logger.getLogger(BasicDec.class);
 
-	protected Node myNode;
+	protected NeuralModule myNode;
 	protected java.lang.String myName;
 	protected int myDimension;
-	protected Units myUnits;
-	protected InstantaneousOutput myValues;
 	
 	protected ModemContainer modem;
 
@@ -53,40 +43,38 @@ public class BasicDecoder extends SyncedUnit implements Decoder {
 	protected Subscriber<std_msgs.Float32MultiArray> mySubscription; // !!!
 	protected MessageListener<std_msgs.Float32MultiArray> myListener;
 
-	// TODO: deal somehow with these start/stop times..
-	protected float fcn=0;
-	protected float startTime=0;
-	private float stopTime = 0;
+	private float myTime = 0;
 
-	public Backend ros;	// TODO: this should have been final.. 
+	public Backend ros;
+	
+	protected float[] myValues;
 
-	public BasicDecoder(Node node, String name, String dataType, 
-			int[] dimensionSizes, Units units, ModemContainer modem, Backend ros) 
+	public BasicDec(NeuralModule node, String name, String dataType, int size, ModemContainer modem, Backend ros) 
 					throws MessageFormatException, StructuralException, StartupDelayException{
-		super(name);
-		this.init(node, name, dataType, dimensionSizes, units, modem, ros);
+		
+		super(size, name);
+
+		this.init(node, name, dataType, size, modem, ros);
 	}
 
 	/**
 	 * The same, but we can choose whether the Decoder will be synchronous or not
 	 */
-	public BasicDecoder(Node node, String name, String dataType, 
-			int[] dimensionSizes, Units units, ModemContainer modem, Backend ros,boolean synchronous) 
+	public BasicDec(NeuralModule node, String name, String dataType, int size, ModemContainer modem, Backend ros,boolean synchronous) 
 					throws MessageFormatException, StructuralException, StartupDelayException{
-		super(synchronous,name);
-		this.init(node,name,dataType,dimensionSizes,units,modem,ros);
+		super(size, name);
+		super.setSynchronous(synchronous);
+		
+		this.init(node,name,dataType,size,modem,ros);
 	}
 
-	private void init(Node node, String name, String dataType, 
-			int[] dimensionSizes, Units units, ModemContainer modem, Backend ros) 
+	private void init(NeuralModule node, String name, String dataType, int size, ModemContainer modem, Backend ros) 
 					throws MessageFormatException, StructuralException, StartupDelayException{
 		myNode = node;
 		myName = name;
-		myUnits = units;
-
-		// get length of vector for Nengo
-		myDimension = BackendUtils.countNengoDimension(dimensionSizes);
-		myValues = new RealOutputImpl(new float[myDimension], units, 0);
+		myDimension = size;
+		
+		myValues = new float[myDimension];
 
 		//get modem and subscribe for events denoting the incoming ROS messages 
 		this.modem = modem;		
@@ -101,8 +89,8 @@ public class BasicDecoder extends SyncedUnit implements Decoder {
 		}
 		// ROS stuff - subscribe to new ROS messages
 		this.ros = ros;
-		this.ros.addEventListener(this);	
-		// Nengo stuff
+		this.ros.addEventListener(this);
+		
 		((NeuralModule)myNode).addOrigin(this);
 		super.setReady(true);
 	}
@@ -113,18 +101,8 @@ public class BasicDecoder extends SyncedUnit implements Decoder {
 	 */
 	@Override
 	public void onNewRosMessage(Message rosMessage) {
-		this.setValues(startTime, stopTime, ros.decodeMessage(rosMessage));
+		this.setValues(ros.decodeMessage(rosMessage));
 		super.setReady(true);	// message received => I am ready
-	}
-
-	protected void initConfiguration() {
-	}
-
-	/**
-	 * @see ca.nengo.config.Configurable#getConfiguration()
-	 */
-	public Configuration getConfiguration() {
-		return null;
 	}
 
 	/**
@@ -135,19 +113,19 @@ public class BasicDecoder extends SyncedUnit implements Decoder {
 	 * read by other nodes from getValues(). If the Noise model has been set, noise is applied to the
 	 * given values.
 	 *
-	 * @param startTime Start time of step for which outputs are being defined
 	 * @param endTime End time of step for which outputs are being defined
 	 * @param values Values underlying RealOutput that is to be output by this Origin in subsequent
 	 * 		calls to getValues()
 	 */
-	public void setValues(float startTime, float endTime, float[] values) {
+	public void setValues(float endTime, float[] values) {
 		assert values.length == myDimension;
 		/*
 		System.out.println("BasicDecoder, setting these vals: "
 					+startTime+" "+endTime+ " value: " +values[0]);
 		 */	
-		float[] v = values;
-		myValues = new RealOutputImpl(v, myUnits, endTime);
+		//float[] v = values;
+		//myValues = new RealOutputImpl(v, myUnits, endTime);
+		myValues = values.clone();
 	}
 
 	/**
@@ -159,89 +137,38 @@ public class BasicDecoder extends SyncedUnit implements Decoder {
 	 *
 	 * @param values Values to be output by this Origin in subsequent calls to getValues()
 	 */
-	public void setValues(InstantaneousOutput values) {
-		assert values.getDimension() == myDimension;
+	public void setValues(float[] values) {
+		assert values.length == myDimension;
 		System.out.println("--------------------- ");
-		myValues = values;
+		myValues = values.clone();
 	}
 
-	/**
-	 * @see ca.nengo.model.Origin#getDimensions()
-	 */
-	public int getDimensions() {
-		return myDimension;
-	}
+	public int getDimensions() { return myDimension; }
 
-	/**
-	 * @param dim Origin dimensionality
-	 */
-	public void setDimensions(int dim) {
-		myDimension = dim;
-		reset(false);
-	}
-
-	/**
-	 * @see ca.nengo.model.Origin#getName()
-	 */
+	@Override
 	public String getName() { return myName; }
-	/**
-	 * @param name Origin name
-	 */
-	public void setName(String name) { myName = name; }
-	/**
-	 * @return Units used by this origin
-	 */
-	public Units getUnits() { return myUnits; }
-	/**
-	 * @param units Units used by this origin
-	 */
-	public void setUnits(Units units) { myUnits = units; }
-	/**
-	 * @see ca.nengo.model.Origin#getValues()
-	 */
-	public InstantaneousOutput getValues() throws SimulationException { return myValues; }
-
+	
 	/**
 	 * @see ca.nengo.model.Origin#getNode()
 	 */
-	public Node getNode() { return myNode; }
+	public NeuralModule getNode() { return myNode; }
 
-	/**
-	 * @see ca.nengo.model.Resettable#reset(boolean)
-	 */
 	public void reset(boolean randomize) {
-
-		myValues = new RealOutputImpl(new float[myDimension], myUnits, 0);
+		myValues = new float[myDimension];
 	}
 
-	public void setRequiredOnCPU(boolean val){
-	}
-
-	public boolean getRequiredOnCPU(){
-		return false;
-	}
-	
-	public BasicDecoder clone(){
-		System.err.println("cloning not supported!");
-		return null;
-	}
-	
 
 	/////////// ROS part
-/*
-	@Override
-	public float getStartTime() {
-		return this.stopTime;
-	}
 
 	@Override
 	public float getEndTime() {
-		return this.stopTime;
+		return this.myTime;
 	}
-*/
+
 	@Override
-	public Origin clone(Node node) throws CloneNotSupportedException {
+	public void run(float startTime, float endTime) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
+
 }

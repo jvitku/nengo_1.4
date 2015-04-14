@@ -48,4 +48,7 @@ public abstract class BasicOrig extends SyncedUnit implements Orig{
 			}			
 		}
 	}
+	
+	@Override
+	public String getName(){ return super.getFullName(); }
 }

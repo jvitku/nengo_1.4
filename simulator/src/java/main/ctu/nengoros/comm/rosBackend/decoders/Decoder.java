@@ -1,7 +1,5 @@
 package ctu.nengoros.comm.rosBackend.decoders;
 
-import ctu.nengoros.comm.rosBackend.backend.newMessageEvent.MyEventListenerInterface;
-import ctu.nengoros.network.node.synchedStart.SyncedUnitInterface;
 import ca.nengo.model.Origin;
 
 /**
@@ -17,7 +15,7 @@ import ca.nengo.model.Origin;
  * @author Jaroslav Vitku
  *
  */
-public interface Decoder extends SyncedUnitInterface, Origin, MyEventListenerInterface{
+public interface Decoder extends CommonDecoder, Origin{
 
 	/**
 	 * get name of the termination 

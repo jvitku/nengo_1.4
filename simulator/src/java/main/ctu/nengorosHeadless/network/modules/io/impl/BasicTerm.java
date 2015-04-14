@@ -54,4 +54,7 @@ public abstract class BasicTerm extends SyncedUnit implements Term{
 		}
 		values[index] += value; 
 	}
+	
+	@Override
+	public String getName(){ return super.getFullName(); }
 }
