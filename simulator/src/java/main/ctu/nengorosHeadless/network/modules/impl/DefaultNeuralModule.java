@@ -9,10 +9,8 @@ import ctu.nengoros.exceptions.MessageFormatException;
 import ctu.nengoros.exceptions.UnsupportedMessageFormatExc;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
-import ctu.nengorosHeadless.network.modules.io.Orig;
 import ctu.nengorosHeadless.rosBackend.decoders.Decoder;
 import ctu.nengorosHeadless.rosBackend.decoders.impl.BasicDec;
-import ctu.nengorosHeadless.rosBackend.encoders.Encoder;
 import ctu.nengorosHeadless.rosBackend.encoders.impl.BasicEnc;
 
 public class DefaultNeuralModule extends NeuralModule{
@@ -49,9 +47,10 @@ public class DefaultNeuralModule extends NeuralModule{
 		try {
 			this.checkEncoderAvailable(topicName);
 
-			ros = BackendUtils.select(topicName, dataType, mc.getConnectedNode(), true);
+			ros = BackendUtils.select(topicName, dataType, new int[]{dimensionSize}, mc.getConnectedNode(), true);
 			
-			Encoder enc = new BasicEnc(this, topicName, dataType, mc, ros);
+			new BasicEnc(this, topicName, dataType, mc, ros);
+			//Encoder enc = new BasicEnc(this, topicName, dataType, mc, ros);
 			//this.addEncoder(enc);
 		} catch (Exception e) {
 			this.catchException(e);
@@ -69,7 +68,9 @@ public class DefaultNeuralModule extends NeuralModule{
 			//dim = BackendUtils.countNengoDimension(dimSizes);
 
 			//Encoder enc = new BasicEnc(this, new int[]{1}, topicName, dataType, mc, ros, defValue);
-			Encoder enc = new BasicEnc(this, topicName, dataType, mc, ros, defValue);
+			//Encoder enc = new BasicEnc(this, topicName, dataType, mc, ros, defValue);
+			new BasicEnc(this, topicName, dataType, mc, ros, defValue);
+			
 			// set default values for the first TransformTermination
 			//((TransformTermination)enc.getMultiTermination().getOrderedTerminations().get(0)).
 			//setDefaultOutputValues(defaultValues);
