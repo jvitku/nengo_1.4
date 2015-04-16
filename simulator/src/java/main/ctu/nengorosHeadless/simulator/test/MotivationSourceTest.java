@@ -29,19 +29,12 @@ public class MotivationSourceTest{
 				NeuralModule mr = NodeBuilder.buildBasicMotivationReceiver("motReceiver", true);
 				this.nodes.add(mr);
 
-				
-<<<<<<< HEAD
-				Connection c = new BasicConnection(
-						ms.getOrigin(BasicMotivation.topicDataOut),
-						mr.getTermination(BasicMotivation.topicDataIn));
-=======
 				System.out.println("origiin null? "+(ms.getOrigin(BasicMotivation.topicDataOut)==null));
 				System.out.println("term null? "+(mr.getTermination(BasicMotivation.topicDataOut)==null));
 				Connection c;
 					c = new BasicConnection(
 							ms.getOrigin(BasicMotivation.topicDataOut),
 							mr.getTermination(BasicMotivation.topicDataOut));
->>>>>>> ef20d07f6030192bf68041eaa90ecbcc3f21e1ef
 
 				this.connections.add(c);
 
@@ -50,11 +43,6 @@ public class MotivationSourceTest{
 						ms.getTermination(BasicMotivation.topicDataIn));
 
 				this.connections.add(cc);
-<<<<<<< HEAD
-				
-=======
-
->>>>>>> ef20d07f6030192bf68041eaa90ecbcc3f21e1ef
 
 			} catch (ConnectionException e) {
 				e.printStackTrace();
