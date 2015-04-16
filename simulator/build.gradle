@@ -3,6 +3,14 @@
 version    = '0.0.10-SNAPSHOT'
 group      = 'ctu.nengoros'
 
+////////////////
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+mainClassName       = 'ctu.nengorosHeadless.simulator.test.MotivationSourceTest'
+////////////////
+
 // Gradle uses different default folders for source files => remap them
 sourceSets {
     test {
@@ -37,10 +45,12 @@ dependencies {
     compile 'junit:junit:4.10'
     testCompile 'junit:junit:4.10'
 
-    compile 'ctu.nengoros:jroscore:0.0.11-SNAPSHOT'
-    testCompile 'ctu.nengoros:jroscore:0.0.11-SNAPSHOT'
+    compile 'ctu.nengoros:jroscore:0.0.12-SNAPSHOT'
+    testCompile 'ctu.nengoros:jroscore:0.0.12-SNAPSHOT'
+    runtime 'ctu.nengoros:jroscore:0.0.12-SNAPSHOT'
 
 	// these are used by the corresponding jython scripts which use rl or physiology
+	compile 'ctu.hanns.physiology:statespace:0.0.2-SNAPSHOT'
 	runtime 'ctu.hanns.physiology:statespace:0.0.2-SNAPSHOT'
 	runtime 'ctu.hanns.rl:sarsa:0.0.5-SNAPSHOT'
 

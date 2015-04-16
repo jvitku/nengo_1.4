@@ -13,7 +13,7 @@ public abstract class BasicOrig extends SyncedUnit implements Orig{
 	public float def_val = DEF_VAL;
 
 	protected final int size;
-	private final float[] values;
+	protected float[] values;
 
 	public BasicOrig(int size, String name){
 		super.setFullName(name);

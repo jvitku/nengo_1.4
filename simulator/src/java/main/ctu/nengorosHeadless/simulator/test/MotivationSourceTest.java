@@ -3,12 +3,11 @@ package ctu.nengorosHeadless.simulator.test;
 import org.hanns.physiology.statespace.ros.BasicMotivation;
 
 import ca.nengo.model.StructuralException;
-
 import ctu.nengoros.exceptions.ConnectionException;
+import ctu.nengoros.model.transformMultiTermination.impl.BasicWeights;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
 import ctu.nengorosHeadless.network.modules.io.Connection;
-import ctu.nengorosHeadless.network.modules.io.impl.BasicConnection;
 import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractSimulator;
 
@@ -29,21 +28,19 @@ public class MotivationSourceTest{
 				NeuralModule mr = NodeBuilder.buildBasicMotivationReceiver("motReceiver", log, true);
 				this.nodes.add(mr);
 
-				System.out.println("origiin null? "+(ms.getOrigin(BasicMotivation.topicDataOut)==null));
-				System.out.println("term null? "+(mr.getTermination(BasicMotivation.topicDataOut)==null));
-				Connection c;
-					c = new BasicConnection(
+				Connection c = this.connect(
 							ms.getOrigin(BasicMotivation.topicDataOut),
 							mr.getTermination(BasicMotivation.topicDataOut));
-
-				this.connections.add(c);
-
-				Connection cc = new BasicConnection(
+				
+				float[][] w = c.getWeights();
+				BasicWeights.pseudoEye(w);
+				
+				Connection cd = this.connect(
 						mr.getOrigin(BasicMotivation.topicDataIn),
 						ms.getTermination(BasicMotivation.topicDataIn));
-
-				this.connections.add(cc);
-
+				w = cd.getWeights();
+				BasicWeights.pseudoEye(w);
+				
 			} catch (ConnectionException e) {
 				e.printStackTrace();
 			} catch (StartupDelayException e) {
@@ -68,7 +65,17 @@ public class MotivationSourceTest{
 		System.out.println("starting the simulation now");
 		
 		sim.run(0, 100);
-		System.out.println("all done, simulaiton here.. :-)");
+		System.out.println("all done, reset, waiting");
+		sim.reset(false);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println("starting the simulation again");
+		sim.run(0, 100);
+
 		sim.cleanup();
 	}
 }
+

@@ -3,10 +3,13 @@ package ctu.nengorosHeadless.simulator.impl;
 import java.util.ArrayList;
 
 import ca.nengo.model.SimulationException;
-
+import ctu.nengoros.comm.rosutils.RosUtils;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengorosHeadless.network.modules.HeadlessNode;
 import ctu.nengorosHeadless.network.modules.io.Connection;
+import ctu.nengorosHeadless.network.modules.io.Orig;
+import ctu.nengorosHeadless.network.modules.io.Term;
+import ctu.nengorosHeadless.network.modules.io.impl.BasicConnection;
 import ctu.nengorosHeadless.simulator.Simulator;
 
 public abstract class AbstractSimulator implements Simulator {
@@ -88,6 +91,8 @@ public abstract class AbstractSimulator implements Simulator {
 			slept = 0;
 			while(!nodes.get(i).isReady()){
 				try {
+					System.out.println("waiting for the node named: "+nodes.get(i).getFullName());
+					
 					Thread.sleep(sleeptime);
 					if(sleeptime*slept++ > maxSleepCycles){
 						System.err.println("ERROR: waited for the node named "+nodes.get(i).getFullName()
@@ -123,6 +128,22 @@ public abstract class AbstractSimulator implements Simulator {
 		for(int i=0; i<nodes.size(); i++){
 			nodes.get(i).notifyAboutDeletion();
 		}
+		RosUtils.utilsShallStop();
+	}
+	
+	@Override
+	public Connection connect(Orig o, Term t){
+		if(o==null){
+			System.err.println("Orig o is null, ignoring this connection!");
+			return null;
+		}
+		if(t==null){
+			System.err.println("Term t is null, ignoring this connection!");
+			return null;
+		}
+		Connection c = new BasicConnection(o,t);
+		this.connections.add(c);
+		return c;
 	}
 	
 	@Override

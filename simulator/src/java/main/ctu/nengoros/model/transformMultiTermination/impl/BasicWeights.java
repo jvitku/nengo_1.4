@@ -1,6 +1,7 @@
 package ctu.nengoros.model.transformMultiTermination.impl;
 
 import ctu.nengoros.model.transformMultiTermination.WeightFactory;
+import ctu.nengoros.util.SL;
 
 /**
  * Default implementation of matrix Matlab-style helper.
@@ -42,6 +43,34 @@ public class BasicWeights implements WeightFactory{
 		for(int i=0; i<inputDim; i++)
 			for(int j=0; j<outputDim; j++)
 				out[i][j] = 0;
+		return out;
+	}
+	
+	/**
+	 * Tries to make identity matrix, starts from indexes 0,0 and places ones onto the diagonal.
+	 * 
+	 * 2D matrix does not have to be square 
+	 * @param w matrix to be changed for 
+	 */
+	public static void pseudoEye(float[][] w){
+		if(w==null)
+			return;
+		for(int i=0; i<w.length; i++){
+			for(int j=0; j<w[0].length; j++){
+				if(i==j){
+					w[i][j] = 1;
+				}else{
+					w[i][j] = 0;
+				}
+			}
+		}
+	}
+	
+	public static String printMatrix(float[][] w){
+		String out = "";
+		for(int i=0; i<w.length; i++){
+			out+=SL.toStr(w[i])+"\n";
+		}
 		return out;
 	}
 

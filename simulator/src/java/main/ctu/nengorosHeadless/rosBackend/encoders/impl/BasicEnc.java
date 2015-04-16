@@ -9,6 +9,7 @@ import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.exceptions.ConnectionException;
 //import ctu.nengoros.model.transformMultiTermination.MultiTermination;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
+import ctu.nengoros.util.SL;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
 import ctu.nengorosHeadless.network.modules.io.impl.BasicTerm;
 import ctu.nengorosHeadless.rosBackend.encoders.Encoder;
@@ -95,6 +96,9 @@ public class BasicEnc extends BasicTerm implements Encoder {
 		//float[][] ff_series = multiTermination.getOutput().getValues();
 
 		// publish as a ROS message with the last data sample available
+		System.out.println("xxx publishing these values "+SL.toStr(super.getValues())+
+				super.getFullName());
+		
 		ros.publish(super.getValues());
 	}
 

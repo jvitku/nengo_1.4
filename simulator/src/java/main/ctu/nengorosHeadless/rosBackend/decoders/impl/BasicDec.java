@@ -8,13 +8,12 @@ import org.ros.node.topic.Subscriber;
 
 import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
-
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.exceptions.MessageFormatException;
-
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
+import ctu.nengoros.util.SL;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
 import ctu.nengorosHeadless.network.modules.io.impl.BasicOrig;
 import ctu.nengorosHeadless.rosBackend.decoders.Decoder;
@@ -35,8 +34,8 @@ public class BasicDec extends BasicOrig implements Decoder {
 	protected static Logger ourLogger = Logger.getLogger(BasicDec.class);
 
 	protected NeuralModule myNode;
-	protected java.lang.String myName;
-	protected int myDimension;
+	//protected java.lang.String myName;
+	//protected int myDimension;
 	
 	protected ModemContainer modem;
 
@@ -48,7 +47,7 @@ public class BasicDec extends BasicOrig implements Decoder {
 
 	public Backend ros;
 	
-	protected float[] myValues;
+	//protected float[] myValues;
 
 	public BasicDec(NeuralModule node, String name, String dataType, int size, ModemContainer modem, Backend ros) 
 					throws MessageFormatException, StructuralException, StartupDelayException{
@@ -72,15 +71,15 @@ public class BasicDec extends BasicOrig implements Decoder {
 	private void init(NeuralModule node, String name, String dataType, int size, ModemContainer modem, Backend ros) 
 					throws MessageFormatException, StructuralException, StartupDelayException{
 		myNode = node;
-		myName = name;
-		myDimension = size;
+		//myName = name;
+		//myDimension = size;
 		
-		myValues = new float[myDimension];
+		//myValues = new float[myDimension];
 
 		//get modem and subscribe for events denoting the incoming ROS messages 
 		this.modem = modem;		
 		if(modem == null)
-			System.err.println(myName+" error: modem not inited or set..");
+			System.err.println(super.getFullName()+" error: modem not inited or set..");
 		// here it can wait until ROS node is ready
 		try {
 			myRosNode = modem.getConnectedNode();
@@ -119,14 +118,14 @@ public class BasicDec extends BasicOrig implements Decoder {
 	 * 		calls to getValues()
 	 */
 	public void setValues(float endTime, float[] values) {
-		assert values.length == myDimension;
+		assert values.length == super.getSize();
 		/*
 		System.out.println("BasicDecoder, setting these vals: "
 					+startTime+" "+endTime+ " value: " +values[0]);
 		 */	
 		//float[] v = values;
 		//myValues = new RealOutputImpl(v, myUnits, endTime);
-		myValues = values.clone();
+		this.values = values.clone();
 	}
 
 	/**
@@ -139,15 +138,15 @@ public class BasicDec extends BasicOrig implements Decoder {
 	 * @param values Values to be output by this Origin in subsequent calls to getValues()
 	 */
 	public void setValues(float[] values) {
-		assert values.length == myDimension;
-		System.out.println("--------------------- ");
-		myValues = values.clone();
+		assert values.length == super.getSize();
+		System.out.println("------- name: "+this.getFullName()+" decoded "+SL.toStr(values)+ " parent "+myNode.getFullName());
+		this.values = values.clone();
 	}
 
-	public int getDimensions() { return myDimension; }
+	public int getDimensions() { return super.getSize(); }
 
 	@Override
-	public String getName() { return myName; }
+	public String getName() { return super.getFullName(); }
 	
 	/**
 	 * @see ca.nengo.model.Origin#getNode()
@@ -155,7 +154,7 @@ public class BasicDec extends BasicOrig implements Decoder {
 	public NeuralModule getNode() { return myNode; }
 
 	public void reset(boolean randomize) {
-		myValues = new float[myDimension];
+		this.values = new float[super.getSize()];
 	}
 
 
