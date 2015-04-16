@@ -97,7 +97,7 @@ public class BasicEnc extends BasicTerm implements Encoder {
 
 		// publish as a ROS message with the last data sample available
 		System.out.println("xxx publishing these values "+SL.toStr(super.getValues())+
-				super.getFullName());
+				super.getFullName()+" parent "+this.getParent().getFullName());
 		
 		ros.publish(super.getValues());
 	}

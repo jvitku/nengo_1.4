@@ -47,18 +47,18 @@ public class BasicWeights implements WeightFactory{
 	}
 	
 	/**
-	 * Tries to make identity matrix, starts from indexes 0,0 and places ones onto the diagonal.
+	 * Tries to make identity (scale) matrix, starts from indexes 0,0 and places ones onto the diagonal.
 	 * 
 	 * 2D matrix does not have to be square 
 	 * @param w matrix to be changed for 
 	 */
-	public static void pseudoEye(float[][] w){
+	public static void pseudoEye(float[][] w, float diagValue){
 		if(w==null)
 			return;
 		for(int i=0; i<w.length; i++){
 			for(int j=0; j<w[0].length; j++){
 				if(i==j){
-					w[i][j] = 1;
+					w[i][j] = diagValue;
 				}else{
 					w[i][j] = 0;
 				}

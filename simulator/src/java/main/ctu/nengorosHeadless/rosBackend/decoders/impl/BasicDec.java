@@ -94,6 +94,7 @@ public class BasicDec extends BasicOrig implements Decoder {
 		((NeuralModule)myNode).addOrigin(this);
 		super.setReady(true);
 	}
+	
 
 	/**
 	 * ROS fires onNewRosMessage events, so here is my subscription:

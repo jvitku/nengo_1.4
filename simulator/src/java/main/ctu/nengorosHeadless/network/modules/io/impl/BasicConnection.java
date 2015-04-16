@@ -1,7 +1,5 @@
 package ctu.nengorosHeadless.network.modules.io.impl;
 
-import ctu.nengoros.model.transformMultiTermination.impl.BasicWeights;
-import ctu.nengoros.util.SL;
 import ctu.nengorosHeadless.network.modules.io.Connection;
 import ctu.nengorosHeadless.network.modules.io.Orig;
 import ctu.nengorosHeadless.network.modules.io.Term;
