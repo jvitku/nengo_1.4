@@ -91,8 +91,9 @@ public abstract class AbstractSimulator implements Simulator {
 			slept = 0;
 			while(!nodes.get(i).isReady()){
 				try {
-					System.out.println("waiting for the node named: "+nodes.get(i).getFullName());
-					
+					if(slept>=3){
+						System.out.println("waiting for the node named: "+nodes.get(i).getFullName());
+					}
 					Thread.sleep(sleeptime);
 					if(sleeptime*slept++ > maxSleepCycles){
 						System.err.println("ERROR: waited for the node named "+nodes.get(i).getFullName()

@@ -13,7 +13,6 @@ import ctu.nengoros.exceptions.MessageFormatException;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
-import ctu.nengoros.util.SL;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
 import ctu.nengorosHeadless.network.modules.io.impl.BasicOrig;
 import ctu.nengorosHeadless.rosBackend.decoders.Decoder;
@@ -34,11 +33,7 @@ public class BasicDec extends BasicOrig implements Decoder {
 	protected static Logger ourLogger = Logger.getLogger(BasicDec.class);
 
 	protected NeuralModule myNode;
-	//protected java.lang.String myName;
-	//protected int myDimension;
-	
 	protected ModemContainer modem;
-
 	protected ConnectedNode myRosNode;	// factory for subscriber
 	protected Subscriber<std_msgs.Float32MultiArray> mySubscription; // !!!
 	protected MessageListener<std_msgs.Float32MultiArray> myListener;
@@ -47,13 +42,9 @@ public class BasicDec extends BasicOrig implements Decoder {
 
 	public Backend ros;
 	
-	//protected float[] myValues;
-
 	public BasicDec(NeuralModule node, String name, String dataType, int size, ModemContainer modem, Backend ros) 
 					throws MessageFormatException, StructuralException, StartupDelayException{
-		
 		super(size, name);
-
 		this.init(node, name, dataType, size, modem, ros);
 	}
 
@@ -64,17 +55,12 @@ public class BasicDec extends BasicOrig implements Decoder {
 					throws MessageFormatException, StructuralException, StartupDelayException{
 		super(size, name);
 		super.setSynchronous(synchronous);
-		
 		this.init(node,name,dataType,size,modem,ros);
 	}
 
 	private void init(NeuralModule node, String name, String dataType, int size, ModemContainer modem, Backend ros) 
 					throws MessageFormatException, StructuralException, StartupDelayException{
 		myNode = node;
-		//myName = name;
-		//myDimension = size;
-		
-		//myValues = new float[myDimension];
 
 		//get modem and subscribe for events denoting the incoming ROS messages 
 		this.modem = modem;		
@@ -120,12 +106,6 @@ public class BasicDec extends BasicOrig implements Decoder {
 	 */
 	public void setValues(float endTime, float[] values) {
 		assert values.length == super.getSize();
-		/*
-		System.out.println("BasicDecoder, setting these vals: "
-					+startTime+" "+endTime+ " value: " +values[0]);
-		 */	
-		//float[] v = values;
-		//myValues = new RealOutputImpl(v, myUnits, endTime);
 		this.values = values.clone();
 	}
 
@@ -140,7 +120,6 @@ public class BasicDec extends BasicOrig implements Decoder {
 	 */
 	public void setValues(float[] values) {
 		assert values.length == super.getSize();
-		System.out.println("------- name: "+this.getFullName()+" decoded "+SL.toStr(values)+ " parent "+myNode.getFullName());
 		this.values = values.clone();
 	}
 

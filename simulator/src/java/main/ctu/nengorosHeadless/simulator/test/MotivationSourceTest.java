@@ -33,13 +33,13 @@ public class MotivationSourceTest{
 							mr.getTermination(BasicMotivation.topicDataOut));
 				
 				float[][] w = c.getWeights();
-				BasicWeights.pseudoEye(w,2);
+				BasicWeights.pseudoEye(w,1);
 				
 				Connection cd = this.connect(
 						mr.getOrigin(BasicMotivation.topicDataIn),
 						ms.getTermination(BasicMotivation.topicDataIn));
 				w = cd.getWeights();
-				BasicWeights.pseudoEye(w,2);
+				BasicWeights.pseudoEye(w,1);
 				
 			} catch (ConnectionException e) {
 				e.printStackTrace();
@@ -64,7 +64,7 @@ public class MotivationSourceTest{
 		sim.defineNetwork();
 		System.out.println("starting the simulation now");
 		
-		sim.run(0, 10);
+		sim.run(0, 100);
 		System.out.println("all done, reset, waiting");
 		sim.reset(false);
 		try {
@@ -72,18 +72,8 @@ public class MotivationSourceTest{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		//System.out.println("starting the simulation again");
-		//sim.run(0, 100);
-		
-		/*
-		System.out.println("sleeping");
-		try {
-			Thread.sleep(40000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		System.out.println("ending");
-		*/
+		System.out.println("ending the simulation");
+
 		sim.cleanup();
 	}
 }

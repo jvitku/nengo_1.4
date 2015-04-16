@@ -22,10 +22,6 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 	protected Map<String, Orig> myOrigins;			
 	protected LinkedList <Orig> orderedOrigins;		
 
-	// map of terminations used (are registered by Encoders)
-//	protected Map<String, Term> myTerminations;	
-//	protected LinkedList <Term> orderedTerminations;
-
 	// run all these Encoders after Terminations
 	protected Map<String, Encoder> myEncoders;		
 	protected LinkedList<Encoder> orderedEncoders;	
@@ -64,9 +60,6 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 
 		this.setReady(true);
 
-		//this.myTerminations = new HashMap<String, Term>(5);
-		//this.orderedTerminations = new LinkedList <Term> ();
-		
 		this.myOrigins = new HashMap<String, Orig>(5);
 		this.orderedOrigins = new LinkedList <Orig> ();
 		
@@ -88,24 +81,12 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 		
 		this.runAllEncoders(startTime, endTime);	// encode data on registered Terminations and send to ROS
 		
-		this.resetAllEncoders();	// clear the received values
+		this.resetAllDecoders();	// clear the received values
 	}
-/*
-	private void runAllTerminations(float startTime, float endTime) throws SimulationException{
-		Term t;
-		for(int i=0; i<orderedTerminations.size(); i++){
-			t=orderedTerminations.get(i);
-			if(t instanceof Term)
-				((Term)t).run(startTime, endTime);
-			else{
-				throw new SimulationException(super.getFullName()+" only BasicTerminations are supporeted here!");
-			}
-		}
-	}
-*/
-	private void resetAllEncoders(){
-		for(int i=0; i<orderedEncoders.size(); i++){
-			orderedEncoders.get(i).reset(false);
+	
+	private void resetAllDecoders(){
+		for(int i=0; i<this.orderedOrigins.size(); i++){
+			orderedOrigins.get(i).reset(false);
 		}
 	}
 	
@@ -149,10 +130,8 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 	@Override
 	public Term getTermination(String name) throws StructuralException {
 		if ( !myEncoders.containsKey(name) ) {
-		//if ( !myTerminations.containsKey(name) ) {
 			throw new StructuralException("There is no Termination named " + name);
 		}
-		//return (Term)myOrigins.get(name);
 		return (Term)this.myEncoders.get(name);
 	}
 
@@ -171,9 +150,6 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 
 		for(int i=0; i<this.orderedEncoders.size(); i++)
 			this.orderedEncoders.get(i).reset(randomize);
-
-		//for(int i=0; i<this.orderedTerminations.size(); i++)
-//			this.orderedTerminations.get(i).reset(randomize);
 	}
 
 	@Override

@@ -25,9 +25,6 @@ public class BasicConnection implements Connection {
 		for(int i=0; i<target.getSize(); i++){
 			val=0;
 			
-			//System.out.println("transfering this array: "+SL.toStr(source.getValues()));
-			//System.out.println("weight matrix is: \n"+BasicWeights.printMatrix(weights));
-			
 			for(int j=0; j<source.getSize(); j++){
 				
 				val += source.getValues()[j] * weights[j][i];
