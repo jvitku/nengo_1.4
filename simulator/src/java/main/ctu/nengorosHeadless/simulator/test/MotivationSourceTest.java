@@ -29,7 +29,7 @@ public class MotivationSourceTest{
 				NeuralModule mr = NodeBuilder.buildBasicMotivationReceiver("motReceiver", true);
 				this.nodes.add(mr);
 
-				/*
+				
 				Connection c = new BasicConnection(
 						ms.getOrigin(BasicMotivation.topicDataOut),
 						mr.getTermination(BasicMotivation.topicDataIn));
@@ -41,14 +41,14 @@ public class MotivationSourceTest{
 						ms.getTermination(BasicMotivation.topicDataIn));
 
 				this.connections.add(cc);
-				*/
+				
 
 			} catch (ConnectionException e) {
 				e.printStackTrace();
 			} catch (StartupDelayException e) {
 				e.printStackTrace();
-			//} catch (StructuralException e) {
-				//e.printStackTrace();
+			} catch (StructuralException e) {
+				e.printStackTrace();
 			}
 		}
 	}

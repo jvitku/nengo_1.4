@@ -49,7 +49,7 @@ public class DefaultNeuralModule extends NeuralModule{
 		try {
 			this.checkEncoderAvailable(topicName);
 
-			ros = BackendUtils.select(topicName, dataType, mc.getConnectedNode(), true);
+			ros = BackendUtils.select(topicName, dataType, new int[]{dimensionSize}, mc.getConnectedNode(), true);
 			
 			Encoder enc = new BasicEnc(this, topicName, dataType, mc, ros);
 			//this.addEncoder(enc);
