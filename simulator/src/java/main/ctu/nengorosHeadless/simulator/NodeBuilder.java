@@ -1,7 +1,6 @@
 package ctu.nengorosHeadless.simulator;
 
 import org.hanns.physiology.statespace.ros.BasicMotivation;
-import org.hanns.physiology.statespace.ros.testnodes.MotivationReceiver;
 
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.exceptions.ConnectionException;
@@ -33,10 +32,11 @@ public class NodeBuilder {
 		return module;
 	}
 	
-	public static NeuralModule buildBasicMotivationReceiver(String name, boolean synchronous) throws ConnectionException, StartupDelayException{
+	public static NeuralModule buildBasicMotivationReceiver(String name, int logPeriod, boolean synchronous) throws ConnectionException, StartupDelayException{
 		
-		String className = "org.hanns.physiology.statespace.ros.testnodes.MotivationReceiver";
-		String[] command = new String[]{className};
+		String className = "org.hanns.physiology.statespace.ros.testnodes.MotivationReceiverAutoStart";
+		String[] command = new String[]{className,
+				"_"+BasicMotivation.logPeriodConf+":="+logPeriod};
 		
 		NodeGroup g = new NodeGroup("ReceiverFullReward", true);
 		g.addNode(command, "ReceiverFullReward", "java");

@@ -16,17 +16,17 @@ public class MotivationSourceTest{
 
 	public class MotivationSourceTestSimulation extends AbstractSimulator{
 
-		public static final int log = 100; 
+		public static final int log = 1; 
 
 		@Override
 		public void defineNetwork() {
 
 			try {
 				
-				NeuralModule ms = NodeBuilder.buildBasicMotivationSource("motSource", 2, 0.1f, 10, true);
+				NeuralModule ms = NodeBuilder.buildBasicMotivationSource("motSource", 1, 0.1f, log, true);
 				this.nodes.add(ms);
 
-				NeuralModule mr = NodeBuilder.buildBasicMotivationReceiver("motReceiver", true);
+				NeuralModule mr = NodeBuilder.buildBasicMotivationReceiver("motReceiver", log, true);
 				this.nodes.add(mr);
 
 				System.out.println("origiin null? "+(ms.getOrigin(BasicMotivation.topicDataOut)==null));
@@ -65,7 +65,10 @@ public class MotivationSourceTest{
 		System.out.println("loading nodes..");
 		
 		sim.defineNetwork();
+		System.out.println("starting the simulation now");
 		
+		sim.run(0, 100);
 		System.out.println("all done, simulaiton here.. :-)");
+		sim.cleanup();
 	}
 }

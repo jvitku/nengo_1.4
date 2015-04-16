@@ -57,7 +57,7 @@ public abstract class AbstractSimulator implements Simulator {
 	}
 
 	@Override
-	public void simulate(float from, float to) {
+	public void run(float from, float to) {
 
 		if(!this.awaitAllStarted())
 			return;
@@ -65,7 +65,7 @@ public abstract class AbstractSimulator implements Simulator {
 		
 		t = from;
 		
-		while(t<to){
+		while(t<=to){
 			for(int i=0; i<connections.size(); i++){
 				connections.get(i).transferData();
 			}
@@ -86,7 +86,7 @@ public abstract class AbstractSimulator implements Simulator {
 		int slept;
 		for(int i=0; i<nodes.size(); i++){
 			slept = 0;
-			while(nodes.get(i).isReady()){
+			while(!nodes.get(i).isReady()){
 				try {
 					Thread.sleep(sleeptime);
 					if(sleeptime*slept++ > maxSleepCycles){
@@ -118,6 +118,13 @@ public abstract class AbstractSimulator implements Simulator {
 	@Override
 	public abstract void defineNetwork();
 
+	@Override
+	public void cleanup(){
+		for(int i=0; i<nodes.size(); i++){
+			nodes.get(i).notifyAboutDeletion();
+		}
+	}
+	
 	@Override
 	public void setLogToFile(boolean file) {
 		// TODO :(

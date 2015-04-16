@@ -6,11 +6,13 @@ public interface Simulator extends Resettable{
 	
 	public void setDt(float step);
 	
-	public void simulate(float startTime, float endTime);
+	public void run(float startTime, float endTime);
 	
 	public void defineNetwork();
 
 	public void setLogToFile(boolean file);
 
 	public boolean isRunning();
+	
+	public void cleanup();
 }
