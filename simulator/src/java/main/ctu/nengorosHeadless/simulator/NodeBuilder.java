@@ -1,6 +1,7 @@
 package ctu.nengorosHeadless.simulator;
 
 import org.hanns.physiology.statespace.ros.BasicMotivation;
+import org.hanns.physiology.statespace.ros.testnodes.MotivationReceiver;
 
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.exceptions.ConnectionException;
@@ -44,6 +45,13 @@ public class NodeBuilder {
 		System.out.println("topicDataIn is; "+BasicMotivation.topicDataIn);
 		module.createDecoder(BasicMotivation.topicDataIn, "float", 1);	// one reward sent           	
 		module.createEncoder(BasicMotivation.topicDataOut, "float", 2); // reward and motivation received
+		
+		//module.
+		
+		//((MotivationReceiver)module).setAutoResponse(true);
+		
+		//MotivationReceiver mr;
+		
 		return module;
 	}
 

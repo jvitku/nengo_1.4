@@ -150,9 +150,10 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 	public Term getTermination(String name) throws StructuralException {
 		if ( !myEncoders.containsKey(name) ) {
 		//if ( !myTerminations.containsKey(name) ) {
-			throw new StructuralException("There is no Termination/Encoder named " + name);
+			throw new StructuralException("There is no Termination named " + name);
 		}
-		return (Term)myEncoders.get(name);
+		//return (Term)myOrigins.get(name);
+		return (Term)this.myEncoders.get(name);
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package ctu.nengorosHeadless.simulator.test;
 import org.hanns.physiology.statespace.ros.BasicMotivation;
 
 import ca.nengo.model.StructuralException;
+
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
@@ -12,7 +13,6 @@ import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractSimulator;
 
 public class MotivationSourceTest{
-
 
 	public class MotivationSourceTestSimulation extends AbstractSimulator{
 
@@ -30,18 +30,31 @@ public class MotivationSourceTest{
 				this.nodes.add(mr);
 
 				
+<<<<<<< HEAD
 				Connection c = new BasicConnection(
 						ms.getOrigin(BasicMotivation.topicDataOut),
 						mr.getTermination(BasicMotivation.topicDataIn));
+=======
+				System.out.println("origiin null? "+(ms.getOrigin(BasicMotivation.topicDataOut)==null));
+				System.out.println("term null? "+(mr.getTermination(BasicMotivation.topicDataOut)==null));
+				Connection c;
+					c = new BasicConnection(
+							ms.getOrigin(BasicMotivation.topicDataOut),
+							mr.getTermination(BasicMotivation.topicDataOut));
+>>>>>>> ef20d07f6030192bf68041eaa90ecbcc3f21e1ef
 
 				this.connections.add(c);
 
 				Connection cc = new BasicConnection(
-						mr.getOrigin(BasicMotivation.topicDataOut),
+						mr.getOrigin(BasicMotivation.topicDataIn),
 						ms.getTermination(BasicMotivation.topicDataIn));
 
 				this.connections.add(cc);
+<<<<<<< HEAD
 				
+=======
+
+>>>>>>> ef20d07f6030192bf68041eaa90ecbcc3f21e1ef
 
 			} catch (ConnectionException e) {
 				e.printStackTrace();
