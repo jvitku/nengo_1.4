@@ -11,9 +11,10 @@ import ctu.nengorosHeadless.network.modules.io.Connection;
 import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractSimulator;
 
-public class MotivationSourceTest{
+public class QLambdaTest{
 
-	public class MotivationSourceTestSimulation extends AbstractSimulator{
+
+	public class QLambdaTestSim extends AbstractSimulator{
 
 		public static final int log = 1; 
 
@@ -25,7 +26,8 @@ public class MotivationSourceTest{
 				NeuralModule ms = NodeBuilder.buildBasicMotivationSource("motSource", 1, 0.1f, log, true);
 				this.nodes.add(ms);
 
-				NeuralModule mr = NodeBuilder.buildBasicMotivationReceiver("motReceiver", log, true);
+				//NeuralModule mr = NodeBuilder.buildBasicMotivationReceiver("motReceiver", log, true);
+				NeuralModule mr = NodeBuilder.qlambdaASM("qLambda", 2, 4, 10, log, 1, 3, true);
 				this.nodes.add(mr);
 
 				Connection c = this.connect(
@@ -51,20 +53,19 @@ public class MotivationSourceTest{
 		}
 	}
 
-
 	public static void main(String[] args) {
-		MotivationSourceTest t = new MotivationSourceTest();
+		QLambdaTest t = new QLambdaTest();
 
 		System.out.println("instantiating the simulator");
 
-		MotivationSourceTestSimulation sim = t.new MotivationSourceTestSimulation();
+		QLambdaTestSim sim = t.new QLambdaTestSim();
 
 		System.out.println("loading nodes..");
 
 		sim.defineNetwork();
 		System.out.println("starting the simulation now");
 
-		sim.run(0, 100);
+		sim.run(0, 10);
 		System.out.println("all done, reset, waiting");
 		sim.reset(false);
 		try {
@@ -76,5 +77,5 @@ public class MotivationSourceTest{
 
 		sim.cleanup();
 	}
-}
 
+}

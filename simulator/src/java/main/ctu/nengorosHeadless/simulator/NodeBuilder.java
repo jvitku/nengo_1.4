@@ -1,6 +1,7 @@
 package ctu.nengorosHeadless.simulator;
 
 import org.hanns.physiology.statespace.ros.BasicMotivation;
+import org.hanns.rl.discrete.ros.srp.QLambda;
 
 import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.exceptions.ConnectionException;
@@ -46,12 +47,49 @@ public class NodeBuilder {
 		module.createDecoder(BasicMotivation.topicDataIn, "float", 1);	// one reward sent           	
 		module.createEncoder(BasicMotivation.topicDataOut, "float", 2); // reward and motivation received
 		
-		//module.
+		return module;
+	}
+	
+	
+	 public static NeuralModule qlambdaASM(String name, int noStateVars, int noActions, int noValues, int logPeriod, int maxDelay,
+			 int prospLen, boolean synchronous) throws ConnectionException, StartupDelayException{
+	
+		 String className="org.hanns.rl.discrete.ros.srp.config.QlambdaCoverageReward";
+	 String[] command = new String[]{className,
+			 "_"+QLambda.noInputsConf+":="+ noStateVars,
+			 "_"+QLambda.noOutputsConf+":="+noActions,
+			 "_"+QLambda.sampleCountConf+":="+noValues,
+			 "_"+QLambda.logPeriodConf+":="+logPeriod,
+			 "_"+QLambda.filterConf+":="+maxDelay};
+	//public static NeuralModule buildBasicMotivationReceiver(String name, int logPeriod, boolean synchronous) throws ConnectionException, StartupDelayException{
 		
-		//((MotivationReceiver)module).setAutoResponse(true);
+		//String className = "org.hanns.physiology.statespace.ros.testnodes.MotivationReceiverAutoStart";
+		//String[] command = new String[]{className, "_"+BasicMotivation.logPeriodConf+":="+logPeriod};
 		
-		//MotivationReceiver mr;
+		NodeGroup g = new NodeGroup("QLambdaASM", true);
+		g.addNode(command, "QLambdaASM", "java");
+		System.out.println("------ launching the node named: "+name+"QLambdaASM");
+		NeuralModule module = new DefaultNeuralModule(name+"_QLambdaASM", g, synchronous);
+
+		/*
+		System.out.println("topicDataIn is; "+BasicMotivation.topicDataIn);
+		module.createDecoder(BasicMotivation.topicDataIn, "float", 1);	// one reward sent           	
+		module.createEncoder(BasicMotivation.topicDataOut, "float", 2); // reward and motivation received
+		*/
 		
+		// create config IO
+		module.createConfigEncoder(QLambda.topicAlpha,"float",(float)QLambda.DEF_ALPHA); 	// alpha config input, def. value is DEF_ALPHA
+		module.createConfigEncoder(QLambda.topicGamma,"float",(float)QLambda.DEF_GAMMA);
+		module.createConfigEncoder(QLambda.topicLambda,"float",(float)QLambda.DEF_LAMBDA);
+		module.createEncoder(QLambda.topicImportance,"float",1);//					# default value is 0
+
+		// QLambdaCoverageReward classname => float[]{prosperity, coverage, reward/step}
+		module.createDecoder(QLambda.topicProsperity,"float", prospLen);			
+
+		// create data IO
+		module.createDecoder(QLambda.topicDataOut, "float", noActions);  	//# decode actions
+		module.createEncoder(QLambda.topicDataIn, "float", noStateVars+1); 	//# encode states (first is reward)
+
 		return module;
 	}
 

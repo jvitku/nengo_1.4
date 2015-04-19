@@ -8,7 +8,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'application'
-mainClassName       = 'ctu.nengorosHeadless.simulator.test.MotivationSourceTest'
+mainClassName       = 'ctu.nengorosHeadless.simulator.test.QLambdaTest'
 ////////////////
 
 // Gradle uses different default folders for source files => remap them
@@ -52,7 +52,11 @@ dependencies {
 	// these are used by the corresponding jython scripts which use rl or physiology
 	compile 'ctu.hanns.physiology:statespace:0.0.2-SNAPSHOT'
 	runtime 'ctu.hanns.physiology:statespace:0.0.2-SNAPSHOT'
-	runtime 'ctu.hanns.rl:sarsa:0.0.5-SNAPSHOT'
+	//runtime 'ctu.hanns.rl:sarsa:0.0.5-SNAPSHOT'
+	compile 'ctu.hanns.rl:smdp:0.0.5-SNAPSHOT'
+	testCompile 'ctu.hanns.rl:smdp:0.0.5-SNAPSHOT'
+	runtime 'ctu.hanns.rl:smdp:0.0.5-SNAPSHOT'
+
 
     //compile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
     //testCompile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
