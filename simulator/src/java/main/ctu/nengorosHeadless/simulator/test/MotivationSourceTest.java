@@ -22,10 +22,10 @@ public class MotivationSourceTest{
 
 			try {
 
-				NeuralModule ms = NodeBuilder.buildBasicMotivationSource("motSource", 1, 0.1f, log);
+				NeuralModule ms = NodeBuilder.basicMotivationSource("motSource", 1, 0.1f, log);
 				this.nodes.add(ms);
 
-				NeuralModule mr = NodeBuilder.buildBasicMotivationReceiver("motReceiver", log);
+				NeuralModule mr = NodeBuilder.basicMotivationReceiver("motReceiver", log);
 				this.nodes.add(mr);
 
 				Connection c = this.connect(

@@ -13,7 +13,7 @@ public class NodeBuilder {
 
 	public static final boolean SYNC= true;
 
-	public static NeuralModule buildBasicMotivationSource(String name, int noInputs, float decay, int logPeriod)
+	public static NeuralModule basicMotivationSource(String name, int noInputs, float decay, int logPeriod)
 			throws ConnectionException, StartupDelayException{
 
 		String className = "org.hanns.physiology.statespace.ros.BasicMotivation";
@@ -35,7 +35,7 @@ public class NodeBuilder {
 		return module;
 	}
 
-	public static NeuralModule buildBasicMotivationReceiver(String name, int logPeriod) throws ConnectionException, StartupDelayException{
+	public static NeuralModule basicMotivationReceiver(String name, int logPeriod) throws ConnectionException, StartupDelayException{
 
 		String className = "org.hanns.physiology.statespace.ros.testnodes.MotivationReceiverAutoStart";
 		String[] command = new String[]{className,
@@ -85,19 +85,30 @@ public class NodeBuilder {
 	}
 
 	public static NeuralModule gridWorld(String name, int logPeriod, boolean logToFile,
-			int[] size, int noActions, int[] agentPos) throws ConnectionException, StartupDelayException{
+			int[] size, int noActions, int[] agentPos, int[] obstacleCoords) throws ConnectionException, StartupDelayException{
+		
+		String coords = buildObstacles(obstacleCoords);
+		String className = "org.hanns.environments.discrete.ros.GridWorldNode";
+		
 		String[] command = new String[]{
-				"_logToFile:="+logToFile,//		Enables logging into file
-				"_logPeriod:="+logPeriod,// How often to log?
-				"_randomize:="+false,//		Should allow RANDOMIZED reset from Nengo?
-				"_size:=["+size[0]+", "+size[1]+"]",//		List of two integers determining X, Y size of the map
-				"_noActions:="+noActions,	//	Number of actions allowed by the agent (1ofN coded)
-				"_agentPos:=["+agentPos[0]+", "+agentPos[1]+"]"};		//Two integers determining X, Y starting position of the agent
-		//"_obstacles:="+[2, 5]};		//List (even no.) of coordinates (X1,Y1,X2,Y2..) of obstacles
+				className,
+				"_logToFile:="+logToFile,			// Enables logging into file
+				"_logPeriod:="+logPeriod,			// How often to log?
+				"_randomize:="+false,				// Should allow RANDOMIZED reset from Nengo?
+				"_size:=["+size[0]+", "+size[1]+"]",// List of two integers determining X, Y size of the map
+				"_noActions:="+noActions,			// Number of actions allowed by the agent (1ofN coded)
+				"_agentPos:=["+agentPos[0]+", "+agentPos[1]+"]", // Two integers determining X, Y starting position of the agent
+				"_obstacles:="+coords};				// List (even no.) of coordinates (X1,Y1,X2,Y2..) of obstacles
 
-		//noActions = 4;		# hardcoded
-		//noStateVars = 2;
+		// noActions = 4;		# hardcoded
+		// noStateVars = 2;
 
+		System.out.println("Command is as follows:");
+		for(int i=0; i<command.length; i++){
+			System.out.print(command[i]+" ");
+		}
+		System.out.println("");
+		
 		NodeGroup g = new NodeGroup("GridWorld", true);
 		g.addNode(command, "GridWorld", "java");
 		NeuralModule module = new DefaultNeuralModule(name+"_GridWorld", g, SYNC);
@@ -106,6 +117,21 @@ public class NodeBuilder {
 		module.createDecoder(QLambda.topicDataIn, "float", 2+1); 	//# encode states (first is reward)
 		
 		return module;
+	}
+	
+	private static String buildObstacles(int[] coords){
+		if(coords.length%2 != 0){
+			System.err.println("Warning: list of obstacle coords should have the format (X1,Y1,X2,Y2..)"+
+					" but this has not even no. of numbers!");
+		}
+		String out = "[";
+		for(int i=0; i<coords.length; i++){
+			out+=coords[i];
+			if(i<coords.length-1){
+				out+=", ";
+			}
+		}
+		return out+"]";
 	}
 
 }
