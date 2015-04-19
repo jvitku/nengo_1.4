@@ -97,7 +97,7 @@ public abstract class AbstractSimulator implements Simulator {
 					Thread.sleep(sleeptime);
 					if(sleeptime*slept++ > maxSleepCycles){
 						System.err.println("ERROR: waited for the node named "+nodes.get(i).getFullName()
-								+"for more than "+sleeptime*slept+"ms, ignoring this step!");
+								+" for more than "+sleeptime*slept+"ms, ignoring this step!");
 						break;
 					}
 				} catch (InterruptedException e) {

@@ -1,6 +1,7 @@
 package ctu.nengorosHeadless.simulator.test;
 
 import org.hanns.physiology.statespace.ros.BasicMotivation;
+import org.hanns.rl.discrete.ros.srp.QLambda;
 
 import ca.nengo.model.StructuralException;
 import ctu.nengoros.exceptions.ConnectionException;
@@ -13,7 +14,6 @@ import ctu.nengorosHeadless.simulator.impl.AbstractSimulator;
 
 public class QLambdaTest{
 
-
 	public class QLambdaTestSim extends AbstractSimulator{
 
 		public static final int log = 1; 
@@ -23,22 +23,23 @@ public class QLambdaTest{
 
 			try {
 
-				NeuralModule ms = NodeBuilder.buildBasicMotivationSource("motSource", 1, 0.1f, log, true);
+				NeuralModule ms = NodeBuilder.buildBasicMotivationSource("motSource", 1, 0.1f, log);
 				this.nodes.add(ms);
 
 				//NeuralModule mr = NodeBuilder.buildBasicMotivationReceiver("motReceiver", log, true);
-				NeuralModule mr = NodeBuilder.qlambdaASM("qLambda", 2, 4, 10, log, 1, 3, true);
-				this.nodes.add(mr);
+				NeuralModule ql = NodeBuilder.qlambdaASM("qLambda", 2, 4, 10, log, 1, 3);
+				this.nodes.add(ql);
 
+				// motivation ~> importance
 				Connection c = this.connect(
 						ms.getOrigin(BasicMotivation.topicDataOut),
-						mr.getTermination(BasicMotivation.topicDataOut));
+						ql.getTermination(QLambda.topicImportance));
 
 				float[][] w = c.getWeights();
 				BasicWeights.pseudoEye(w,1);
 
 				Connection cd = this.connect(
-						mr.getOrigin(BasicMotivation.topicDataIn),
+						ql.getOrigin(BasicMotivation.topicDataIn),
 						ms.getTermination(BasicMotivation.topicDataIn));
 				w = cd.getWeights();
 				BasicWeights.pseudoEye(w,1);
