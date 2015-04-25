@@ -93,7 +93,7 @@ public class QLambdaTest{
 		System.out.println("all done, reset, waiting");
 		sim.reset(false);
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(200000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
