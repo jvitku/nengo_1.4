@@ -49,14 +49,14 @@ public class QLambdaTest{
 				// actions ~> world
 				Connection cd = this.connect(
 						ql.getOrigin(QLambda.topicDataOut),
-						gw.getTermination(GridWorldNode.topicDataIn));
+						gw.getTermination(QLambda.topicDataOut));
 				w = cd.getWeights();
 				BasicWeights.pseudoEye(w,1);
 				
 				// world ~> qlearning
 				Connection cdd = this.connect(
-						gw.getOrigin(QLambda.topicDataOut),
-						ql.getTermination(QLambda.topicDataOut));
+						gw.getOrigin(QLambda.topicDataIn),
+						ql.getTermination(QLambda.topicDataIn));
 				w = cdd.getWeights();
 				BasicWeights.pseudoEye(w,1);
 				/*
