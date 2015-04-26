@@ -36,13 +36,14 @@ public class QLambdaTest{
 				int[] obstacles = new int[]{1,1,2,2,3,3,5,5,6,6,7,7,8,8};
 				NeuralModule gw = NodeBuilder.gridWorld("world", log, file, size, 4, pos, obstacles);
 				this.nodes.add(gw);
-				
+				float[][] w;
+
 				// motivation ~> importance
 				Connection c = this.connect(
 						ms.getOrigin(BasicMotivation.topicDataOut),
 						ql.getTermination(QLambda.topicImportance));
 
-				float[][] w = c.getWeights();
+				w = c.getWeights();
 				BasicWeights.pseudoEye(w,1);
 
 				// actions ~> world
