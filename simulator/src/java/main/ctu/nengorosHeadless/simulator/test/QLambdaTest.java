@@ -1,6 +1,5 @@
 package ctu.nengorosHeadless.simulator.test;
 
-import org.hanns.environments.discrete.ros.GridWorldNode;
 import org.hanns.physiology.statespace.ros.BasicMotivation;
 import org.hanns.rl.discrete.ros.srp.QLambda;
 
