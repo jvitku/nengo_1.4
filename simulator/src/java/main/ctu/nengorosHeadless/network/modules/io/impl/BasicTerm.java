@@ -48,6 +48,7 @@ public abstract class BasicTerm extends SyncedUnit implements Term{
 
 	@Override
 	public void reset(boolean randomize) {
+		System.out.println("ok resetting, my parent is: ");
 		if(randomize){
 			Random r = new Random();
 			for(int i=0; i<size; i++){

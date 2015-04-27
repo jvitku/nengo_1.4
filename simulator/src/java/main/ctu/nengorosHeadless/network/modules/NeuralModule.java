@@ -31,9 +31,9 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 	private volatile boolean isStarted = false;
 	public static final boolean DEF_RESETNODES = true;
 	private boolean shouldResetRosNodes = DEF_RESETNODES;
-	
+
 	protected StartupManager startup = new BasicStartupManager(this);
-	
+
 	public NeuralModule(String name, NodeGroup group, boolean synchronous) throws ConnectionException, StartupDelayException{
 
 		super(synchronous,name);	// choose whether to be synchronous or not
@@ -62,7 +62,7 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 
 		this.myOrigins = new HashMap<String, Orig>(5);
 		this.orderedOrigins = new LinkedList <Orig> ();
-		
+
 		this.myEncoders = new HashMap<String,Encoder>(5);
 		this.orderedEncoders = new LinkedList<Encoder>();
 
@@ -78,18 +78,18 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 		//this.runAllTerminations(startTime, endTime);	// run all terminations to collect input values
 
 		super.discardChildsReady(); 	// wait for all registered synchronous decoders to receive message
-		
+
 		this.runAllEncoders(startTime, endTime);	// encode data on registered Terminations and send to ROS
-		
-		this.resetAllDecoders();	// clear the received values
+
+		this.resetAllEncoders();	// clear the received values
 	}
-	
-	private void resetAllDecoders(){
-		for(int i=0; i<this.orderedOrigins.size(); i++){
-			orderedOrigins.get(i).reset(false);
+
+	private void resetAllEncoders(){
+		for(int i=0; i<this.orderedEncoders.size(); i++){
+			orderedEncoders.get(i).reset(false);
 		}
 	}
-	
+
 	private void runAllEncoders(float startTime, float endTime) throws SimulationException{
 		Encoder e;
 		for(int i=0; i<orderedEncoders.size(); i++){
@@ -108,7 +108,7 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 		myEncoders.put(enc.getName(), enc);
 		orderedEncoders.add(enc);
 	}
-	
+
 	@Override
 	public void addOrigin(Orig o) throws StructuralException{
 		if(this.myOrigins.containsKey(o.getName())){
@@ -118,7 +118,7 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 		myOrigins.put(o.getName(), o);
 		orderedOrigins.add(o);
 	}
-	
+
 	@Override
 	public Orig getOrigin(String name) throws StructuralException {
 		if ( !myOrigins.containsKey(name) ) {
@@ -143,7 +143,7 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 
 	@Override
 	public void reset(boolean randomize) {
-		
+
 		// reset modem (potentially reset/restart ROS nodes) 
 		if(this.shouldResetRosNodes)
 			mc.reset(randomize);
