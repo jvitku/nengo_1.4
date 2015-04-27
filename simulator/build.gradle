@@ -60,7 +60,10 @@ dependencies {
 	runtime 'ctu.hanns.environments:gridworld:0.0.5-SNAPSHOT'
 	compile 'ctu.hanns.environments:gridworld:0.0.5-SNAPSHOT'
 	testCompile 'ctu.hanns.environments:gridworld:0.0.5-SNAPSHOT'
-	
+
+	compile project(':environments:statesactions')
+	runtime project(':environments:statesactions')
+    testCompile project(':environments:statesactions')	
 
     //compile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
     //testCompile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
