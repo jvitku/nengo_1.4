@@ -18,15 +18,16 @@ public abstract class AbstractSimulator implements Simulator {
 	protected float dt;	// in seconds
 	public static float DEF_DT = 1.0f;
 	private boolean running = false;
-	
-	public static final int sleeptime = 10;	// how long to sleep between waiting for nodes to be ready
-	public static final int maxSleepCycles = 200; 	// how many times to sleep
+
+	public static final int sleepTimeNs= 100;
+	public static final int sleepInfoPeriod = 200;	// how often to print to console
+	public static final long maxSleepTime = 100000; // [ns/10]
 
 	protected ArrayList<HeadlessNode> nodes;
 	protected ArrayList<Connection> connections; 
 
 	public boolean randomize = false;
-	
+
 	public AbstractSimulator(){
 		this.t =0; 
 		this.running = false;
@@ -65,9 +66,9 @@ public abstract class AbstractSimulator implements Simulator {
 		if(!this.awaitAllStarted())
 			return;
 		this.reset(randomize);
-		
+
 		t = from;
-		
+
 		while(t<=to){
 			for(int i=0; i<connections.size(); i++){
 				connections.get(i).transferData();
@@ -84,20 +85,25 @@ public abstract class AbstractSimulator implements Simulator {
 			t += dt;
 		}
 	}
-	
+
 	private void awaitAllReady(){
 		int slept;
+		int poc = 0;
 		for(int i=0; i<nodes.size(); i++){
 			slept = 0;
 			while(!nodes.get(i).isReady()){
 				try {
-					if(slept>=3){
-						System.out.println("waiting for the node named: "+nodes.get(i).getFullName());
+					if(poc % sleepInfoPeriod == 0){
+						System.out.println("waiting for the node named: "+nodes.get(i).getFullName()+" for: "+slept/100+" ms");
 					}
-					Thread.sleep(sleeptime);
-					if(sleeptime*slept++ > maxSleepCycles){
+					Thread.sleep(0, sleepTimeNs);
+
+					slept += sleepTimeNs;
+					poc++;
+
+					if(slept > maxSleepTime){
 						System.err.println("ERROR: waited for the node named "+nodes.get(i).getFullName()
-								+" for more than "+sleeptime*slept+"ms, ignoring this step!");
+								+" for more than "+maxSleepTime/100+"ms, ignoring this step!");
 						break;
 					}
 				} catch (InterruptedException e) {
@@ -106,7 +112,7 @@ public abstract class AbstractSimulator implements Simulator {
 			}
 		}
 	}
-	
+
 	private boolean awaitAllStarted(){
 		for(int i=0; i<nodes.size(); i++){
 			try {
@@ -120,7 +126,7 @@ public abstract class AbstractSimulator implements Simulator {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public abstract void defineNetwork();
 
@@ -131,7 +137,7 @@ public abstract class AbstractSimulator implements Simulator {
 		}
 		RosUtils.utilsShallStop();
 	}
-	
+
 	@Override
 	public Connection connect(Orig o, Term t){
 		if(o==null){
@@ -146,7 +152,7 @@ public abstract class AbstractSimulator implements Simulator {
 		this.connections.add(c);
 		return c;
 	}
-	
+
 	@Override
 	public void setLogToFile(boolean file) {
 		// TODO :(

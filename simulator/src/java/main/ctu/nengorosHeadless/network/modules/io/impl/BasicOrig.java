@@ -7,6 +7,12 @@ import ca.nengo.model.SimulationException;
 import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
 import ctu.nengorosHeadless.network.modules.io.Orig;
 
+/**
+ * Output of the NeuralModule, synchronization is done in the child BasicDec decoder.
+ *  
+ * @author Jaroslav Vitku
+ *
+ */
 public abstract class BasicOrig extends SyncedUnit implements Orig{
 
 	public static final float DEF_VAL = 0;

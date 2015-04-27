@@ -5,7 +5,7 @@ import java.util.Random;
 import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
 import ctu.nengorosHeadless.network.modules.io.Term;
 
-public abstract class BasicTerm extends SyncedUnit implements Term{
+public abstract class BasicTerm /*extends SyncedUnit*/ implements Term{
 
 	public static final float DEF_VAL = 0;
 	
@@ -13,9 +13,11 @@ public abstract class BasicTerm extends SyncedUnit implements Term{
 	
 	private final int size;
 	private final float[] values;
+	private final String name;
 	
 	public BasicTerm(int size, String name){
-		super.setFullName(name);
+		//super.setFullName(name);
+		this.name = name;
 		
 		if(size<=0){
 			System.err.println("Cannot set zero size of size!");
@@ -27,8 +29,8 @@ public abstract class BasicTerm extends SyncedUnit implements Term{
 	}
 
 	public BasicTerm(int size, String name, float defVal){
-		super.setFullName(name);
-		
+		//super.setFullName(name);
+		this.name = name;
 		if(size != 1){
 			System.err.println("currently, default value is supported only on Terminations of size 1");
 		}
@@ -48,7 +50,6 @@ public abstract class BasicTerm extends SyncedUnit implements Term{
 
 	@Override
 	public void reset(boolean randomize) {
-		System.out.println("ok resetting, my parent is: ");
 		if(randomize){
 			Random r = new Random();
 			for(int i=0; i<size; i++){
@@ -70,9 +71,13 @@ public abstract class BasicTerm extends SyncedUnit implements Term{
 		values[index] += value; 
 	}
 	
+	@Override 
+	public String getName(){ return this.name; }
+	
+	/*
 	@Override
 	public String getName(){ return super.getFullName(); }
-	
+	*/
 	@Override
 	public float[] getValues() { return this.values; }
 }

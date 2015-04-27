@@ -69,8 +69,8 @@ public class BasicEnc extends BasicTerm implements Encoder {
 			myRosNode = modem.getConnectedNode();
 		} catch (ConnectionException e) {
 			String mess = "my modem was not connected. Probably ROS communication error!!";
-			System.err.println(super.getFullName()+" "+mess);
-			throw new ConnectionException(super.getFullName()+" "+mess, e);
+			System.err.println(super.getName()+" "+mess);
+			throw new ConnectionException(super.getName()+" "+mess, e);
 		}
 
 		this.ros = ros;	// get my ROS backend

@@ -1,5 +1,7 @@
 package ctu.nengorosHeadless.simulator.test;
 
+import org.hanns.environments.discrete.ros.GridWorldNode;
+import org.hanns.environments.discrete.world.impl.GridWorld;
 import org.hanns.physiology.statespace.ros.BasicMotivation;
 import org.hanns.rl.discrete.ros.srp.QLambda;
 
@@ -24,49 +26,52 @@ public class QLambdaTest{
 
 			try {
 
+				// Motivation source
 				NeuralModule ms = NodeBuilder.basicMotivationSource("motSource", 1, 0.1f, log);
 				this.nodes.add(ms);
 
-				//NeuralModule mr = NodeBuilder.buildBasicMotivationReceiver("motReceiver", log, true);
+				// Q-Learning
 				NeuralModule ql = NodeBuilder.qlambdaASM("qLambda", 2, 4, 10, log, 1, 3);
 				this.nodes.add(ql);
 
+				// GridWorld
 				int[] size = new int[]{10,10};
 				int[] pos = new int[]{4,4};
 				int[] obstacles = new int[]{1,1,2,2,3,3,5,5,6,6,7,7,8,8};
 				NeuralModule gw = NodeBuilder.gridWorld("world", log, file, size, 4, pos, obstacles);
 				this.nodes.add(gw);
+				
 				float[][] w;
 
-				// motivation ~> importance
+				// motivation [R+mot] ~> importance [i] 
 				Connection c = this.connect(
 						ms.getOrigin(BasicMotivation.topicDataOut),
 						ql.getTermination(QLambda.topicImportance));
 
 				w = c.getWeights();
-				BasicWeights.pseudoEye(w,1);
+				w[1][0] = 1;
 
-				// actions ~> world
+				// Q-Learing [actions] ~> world [actions]
 				Connection cd = this.connect(
 						ql.getOrigin(QLambda.topicDataOut),
-						gw.getTermination(QLambda.topicDataOut));
+						gw.getTermination(GridWorldNode.topicDataIn));
 				w = cd.getWeights();
 				BasicWeights.pseudoEye(w,1);
 				
-				// world ~> qlearning
+				// world [r, state] ~> Q-learning [state]
 				Connection cdd = this.connect(
-						gw.getOrigin(QLambda.topicDataIn),
+						gw.getOrigin(GridWorldNode.topicDataOut),
 						ql.getTermination(QLambda.topicDataIn));
 				w = cdd.getWeights();
 				BasicWeights.pseudoEye(w,1);
-				/*
-				// world ~> motivation
+				
+				// world [r,state] ~> motivation [r]
 				Connection cddd = this.connect(
-						ql.getOrigin(GridWorldNode.topicDataOut),
-						gw.getTermination(QLambda.topicDataIn));
+						gw.getOrigin(GridWorldNode.topicDataOut),
+						ms.getTermination(BasicMotivation.topicDataIn));
 				w = cddd.getWeights();
 				BasicWeights.pseudoEye(w,1);
-*/
+
 			} catch (ConnectionException e) {
 				e.printStackTrace();
 			} catch (StartupDelayException e) {

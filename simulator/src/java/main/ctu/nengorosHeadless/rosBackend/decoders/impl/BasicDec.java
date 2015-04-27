@@ -13,6 +13,7 @@ import ctu.nengoros.exceptions.MessageFormatException;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
+import ctu.nengoros.util.SL;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
 import ctu.nengorosHeadless.network.modules.io.impl.BasicOrig;
 import ctu.nengorosHeadless.rosBackend.decoders.Decoder;
@@ -89,6 +90,7 @@ public class BasicDec extends BasicOrig implements Decoder {
 	@Override
 	public void onNewRosMessage(Message rosMessage) {
 		this.setValues(ros.decodeMessage(rosMessage));
+		System.out.println(this.myNode.getFullName()+" <My Name "+super.getFullName()+" and reeived: "+SL.toStr(this.getValues()));
 		super.setReady(true);	// message received => I am ready
 	}
 
@@ -133,8 +135,11 @@ public class BasicDec extends BasicOrig implements Decoder {
 	 */
 	public NeuralModule getNode() { return myNode; }
 
+	@Override
 	public void reset(boolean randomize) {
-		this.values = new float[super.getSize()];
+		super.reset(randomize);
+		//this.values = new float[super.getSize()];
+		super.setReady(true);
 	}
 
 

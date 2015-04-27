@@ -1,5 +1,6 @@
 package ctu.nengorosHeadless.simulator;
 
+import org.hanns.environments.discrete.ros.GridWorldNode;
 import org.hanns.physiology.statespace.ros.BasicMotivation;
 import org.hanns.rl.discrete.ros.srp.QLambda;
 
@@ -113,8 +114,8 @@ public class NodeBuilder {
 		g.addNode(command, "GridWorld", "java");
 		NeuralModule module = new DefaultNeuralModule(name+"_GridWorld", g, SYNC);
 
-		module.createEncoder(QLambda.topicDataOut, "float", noActions);  	//# decode actions
-		module.createDecoder(QLambda.topicDataIn, "float", 2+1); 	//# encode states (first is reward)
+		module.createEncoder(GridWorldNode.topicDataIn, "float", noActions);  	//# decode actions
+		module.createDecoder(GridWorldNode.topicDataOut, "float", 1+2); 	//# encode states (first is reward)
 		
 		return module;
 	}
