@@ -162,10 +162,10 @@ public class MultiplierNode extends AbstractConfigurableHannsNode{
 		 */
 		@Override
 		public void publishProsperity(){
-
+/*
 			float[] data;
 			std_msgs.Float32MultiArray fl = prospPublisher.newMessage();
-/*
+
 			if(o.getChilds() == null){
 				data = new float[]{o.getProsperity()};
 			}else{

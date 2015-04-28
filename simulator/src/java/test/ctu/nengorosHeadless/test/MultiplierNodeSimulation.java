@@ -1,45 +1,46 @@
-package ctu.nengorosHeadless.simulator.test;
+package ctu.nengorosHeadless.test;
 
+import static org.junit.Assert.*;
 
 import java.util.Random;
 
+import org.junit.Test;
+
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
-import ctu.nengoros.comm.nodeFactory.NodeGroup;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengoros.util.SL;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
-import ctu.nengorosHeadless.network.modules.impl.DefaultNeuralModule;
+import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractSimulator;
 import ctu.nengorosHeadless.simulator.test.nodes.MultiplierNode;
 
 public class MultiplierNodeSimulation {
 
+	
+	@Test
+	public void synchronizedCommunicationTest(){
+		MultiplierNodeSimulation t = new MultiplierNodeSimulation();
+
+		System.out.println("instantiating the simulator");
+
+		MultiplierNodeSimulationX sim = t.new MultiplierNodeSimulationX();
+
+		System.out.println("loading nodes..");
+
+		sim.defineNetwork();
+		System.out.println("starting the simulation now");
+
+		sim.run(0, 100);
+		
+		System.out.println("ending the simulation");
+		sim.cleanup();
+	}
+	
 	public static final boolean SYNC= true;
 	public static final float multiplyBy = 3;
 	public static final int NOINPUTS = 3;
-
-	public static NeuralModule multiplierNode(String name, int noInputs, int logPeriod)
-			throws ConnectionException, StartupDelayException{
-
-		String className = "ctu.nengorosHeadless.simulator.test.nodes.MultiplierNode";
-		String[] command = new String[]{className, "_"+MultiplierNode.noInputsConf+ ":=" + noInputs, 
-				"_"+MultiplierNode.logPeriodConf+":="+logPeriod};
-
-		NodeGroup g = new NodeGroup("MultiplierGroup", true);
-		g.addNode(command, "MultiplierNode", "java");
-		NeuralModule module = new DefaultNeuralModule(name+"_Multiplier", g, SYNC);
-
-		// connect the decay parameter to the Nengoros network (changed online)
-		module.createConfigEncoder(MultiplierNode.topicMultiplier,"float", multiplyBy); 			
-
-		module.createDecoder(MultiplierNode.topicDataOut, "float", noInputs);       
-		module.createEncoder(MultiplierNode.topicDataIn, "float", noInputs); 		
-
-		//module.createDecoder(MultiplierNode.topicProsperity,"float", 1);			//# float[]{prosperity}  = MSD from the limbo area
-		return module;
-	}
 
 	public class MultiplierNodeSimulationX extends AbstractSimulator{
 
@@ -55,7 +56,7 @@ public class MultiplierNodeSimulation {
 
 			try {
 
-				ms = multiplierNode("mul", NOINPUTS, log);
+				ms = NodeBuilder.multiplierNode("mul", NOINPUTS, log, multiplyBy);
 				this.nodes.add(ms);
 				/*
 				Connection c = this.connect(
@@ -101,16 +102,23 @@ public class MultiplierNodeSimulation {
 					t += dt;
 
 					result = ms.getOrigin(MultiplierNode.topicDataOut).getValues();
-					System.out.println("//// received this value "+ SL.toStr(result));
+					System.out.println(" received this value "+ SL.toStr(result));
 
+					if(step>0){
+						assertTrue(expected(result, expected));
+					}
+					
+					/*
 					if(!expected(result, expected) && step++>0){
+						
 						System.err.println("fasdfadsfads \n\n\n error ");
+						
 						try {
 							Thread.sleep(10000);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-					}
+					}*/
 
 				} catch (StructuralException e) {
 					e.printStackTrace();
@@ -149,7 +157,6 @@ public class MultiplierNodeSimulation {
 			return true;
 		}
 	}
-
 
 	public static void main(String[] args) {
 		MultiplierNodeSimulation t = new MultiplierNodeSimulation();

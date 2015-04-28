@@ -9,11 +9,34 @@ import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
 import ctu.nengorosHeadless.network.modules.impl.DefaultNeuralModule;
+import ctu.nengorosHeadless.simulator.test.nodes.MultiplierNode;
 
 public class NodeBuilder {
 
 	public static final boolean SYNC= true;
 
+	public static NeuralModule multiplierNode(String name, int noInputs, int logPeriod, float multiplyBy)
+			throws ConnectionException, StartupDelayException{
+
+		String className = "ctu.nengorosHeadless.simulator.test.nodes.MultiplierNode";
+		String[] command = new String[]{className, "_"+MultiplierNode.noInputsConf+ ":=" + noInputs, 
+				"_"+MultiplierNode.logPeriodConf+":="+logPeriod};
+
+		NodeGroup g = new NodeGroup("MultiplierGroup", true);
+		g.addNode(command, "MultiplierNode", "java");
+		NeuralModule module = new DefaultNeuralModule(name+"_Multiplier", g, SYNC);
+
+		// connect the decay parameter to the Nengoros network (changed online)
+		module.createConfigEncoder(MultiplierNode.topicMultiplier,"float", multiplyBy); 			
+
+		module.createDecoder(MultiplierNode.topicDataOut, "float", noInputs);       
+		module.createEncoder(MultiplierNode.topicDataIn, "float", noInputs); 		
+
+		//module.createDecoder(MultiplierNode.topicProsperity,"float", 1);			//# float[]{prosperity}  = MSD from the limbo area
+		return module;
+	}
+
+	
 	public static NeuralModule basicMotivationSource(String name, int noInputs, float decay, int logPeriod)
 			throws ConnectionException, StartupDelayException{
 
