@@ -2,7 +2,7 @@ package ctu.nengorosHeadless.network.modules.io.impl;
 
 import java.util.Random;
 
-import ctu.nengoros.network.node.synchedStart.impl.SyncedUnit;
+import ca.nengo.model.SimulationException;
 import ctu.nengorosHeadless.network.modules.io.Term;
 
 public abstract class BasicTerm /*extends SyncedUnit*/ implements Term{
@@ -70,6 +70,17 @@ public abstract class BasicTerm /*extends SyncedUnit*/ implements Term{
 		}
 		values[index] += value; 
 	}
+	
+	@Override
+	public void setValues(float[] values) throws SimulationException{
+		if(values.length != this.values.length){
+			throw new SimulationException(this.getName()+" incorrect length of array");
+		}
+		for(int i=0; i<values.length; i++){
+			this.values[i] = values[i];
+		}
+	}
+
 	
 	@Override 
 	public String getName(){ return this.name; }

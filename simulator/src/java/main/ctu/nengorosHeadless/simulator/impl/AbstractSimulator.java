@@ -61,29 +61,42 @@ public abstract class AbstractSimulator implements Simulator {
 	}
 
 	@Override
-	public void run(float from, float to) {
-
+	public void prepareForSimulaiton(){
 		if(!this.awaitAllStarted())
 			return;
 		this.reset(randomize);
+	}
+	
+	@Override
+	public void run(float from, float to) {
+
+		this.prepareForSimulaiton();
 
 		t = from;
 
 		while(t<=to){
-			for(int i=0; i<connections.size(); i++){
-				connections.get(i).transferData();
-			}
-			for(int i=0; i<nodes.size(); i++){
-				try {
-					nodes.get(i).run(t, t+dt);
-				} catch (SimulationException e) {
-					System.err.println("ERROR: Node named: "+nodes.get(i).getFullName() + "thrown simulatino exception!");
-					e.printStackTrace();
-				}
-			}
-			this.awaitAllReady();
+			this.makeStep();
 			t += dt;
 		}
+	}
+	
+	public void makeStep(){
+		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx step no "+t+" stert");
+		for(int i=0; i<connections.size(); i++){
+			connections.get(i).transferData();
+		}
+		for(int i=0; i<nodes.size(); i++){
+			try {
+				// run all Origins/Encoders encode message and send to own modem
+				nodes.get(i).run(t, t+dt);
+			} catch (SimulationException e) {
+				System.err.println("ERROR: Node named: "+nodes.get(i).getFullName() + "thrown simulatino exception!");
+				e.printStackTrace();
+			}
+		}
+		// wait for all responses
+		this.awaitAllReady();
+		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx step no "+t+" end");
 	}
 
 	private void awaitAllReady(){
@@ -93,7 +106,7 @@ public abstract class AbstractSimulator implements Simulator {
 			slept = 0;
 			while(!nodes.get(i).isReady()){
 				try {
-					if(poc % sleepInfoPeriod == 0){
+					if(poc>1 && poc % sleepInfoPeriod == 0){
 						System.out.println("waiting for the node named: "+nodes.get(i).getFullName()+" for: "+slept/100+" ms");
 					}
 					Thread.sleep(0, sleepTimeNs);

@@ -96,7 +96,7 @@ public class FloatBackend extends OnNewRosMessageSource implements Backend{
 			return;
 		}
 		rosMessage = publisher.newMessage();
-		rosMessage.setData(data);
+		rosMessage.setData(data.clone());
         publisher.publish(rosMessage);
 	}
 

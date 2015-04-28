@@ -1,6 +1,7 @@
 package ctu.nengorosHeadless.network.modules.io;
 
 import ca.nengo.model.Resettable;
+import ca.nengo.model.SimulationException;
 
 /**
  * Compared to the NengoROS, the Term here only serves as encoder and sender of information.
@@ -23,6 +24,14 @@ public interface Term extends Resettable {
 	 * @param index index of value in the Term's array
 	 */
 	public void sendValue(float value, int index);
+	
+	/**
+	 * Manually set values of the termination (in the simulator).
+	 * 
+	 * @param values array of new values, ignored if the array has incorrect length.
+	 * @throws SimulationException 
+	 */
+	public void setValues(float[] values) throws SimulationException;
 	
 	public int getSize();
 	

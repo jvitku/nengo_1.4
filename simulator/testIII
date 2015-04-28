@@ -45,4 +45,4 @@ ROSJAVA=$RJ/rosjava/$CL/:$RJ/apache_xmlrpc_client/$CL/:$RJ/apache_xmlrpc_common/
 
 #java -cp $CL:$ROSJAVA:$JAR org.ros.RosRun "org.hanns.physiology.statespace.ros.BasicMotivation" $1 $2 $3 $4 $5
 
-java -cp $CL:$JAR "ctu.nengorosHeadless.simulator.test.OneNodeTest" $1 $2 $3 $4 $5
+java -cp $CL:$JAR "ctu.nengorosHeadless.simulator.test.MultiplierNodeSimulation" $1 $2 $3 $4 $5

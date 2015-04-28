@@ -9,7 +9,17 @@ public interface Simulator extends Resettable{
 	
 	public void setDt(float step);
 	
+	/**
+	 * Call before run method (waits for all nodes ready, then rests them) 
+	 */
+	public void prepareForSimulaiton();
+	
 	public void run(float startTime, float endTime);
+	
+	/**
+	 * Called by the run method
+	 */
+	public void makeStep();
 	
 	public void defineNetwork();
 	

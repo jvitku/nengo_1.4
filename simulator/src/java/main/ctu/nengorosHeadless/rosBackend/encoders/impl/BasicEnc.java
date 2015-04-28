@@ -8,6 +8,7 @@ import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.comm.rosBackend.backend.Backend;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
+import ctu.nengoros.util.SL;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
 import ctu.nengorosHeadless.network.modules.io.impl.BasicTerm;
 import ctu.nengorosHeadless.rosBackend.encoders.Encoder;
@@ -80,6 +81,8 @@ public class BasicEnc extends BasicTerm implements Encoder {
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {
 
+		System.out.println("OK I am "+this.getName()+" and publishing this: "+SL.toStr(super.getValues()));
+		
 		// publish as a ROS message with the last data sample available
 		ros.publish(super.getValues());
 	}

@@ -32,7 +32,8 @@ public class NodeBuilder {
 		module.createDecoder(BasicMotivation.topicDataOut, "float", 2);           	//# decode float[]{reward,BasicMotivation}
 		module.createEncoder(BasicMotivation.topicDataIn, "float", noInputs); 		//# encode input data (sum rewards here)
 
-		module.createDecoder(BasicMotivation.topicProsperity,"float", 1);			//# float[]{prosperity}  = MSD from the limbo area
+		// TODO
+		//module.createDecoder(BasicMotivation.topicProsperity,"float", 1);			//# float[]{prosperity}  = MSD from the limbo area
 		return module;
 	}
 
@@ -76,7 +77,8 @@ public class NodeBuilder {
 		module.createEncoder(QLambda.topicImportance,"float",1);//					# default value is 0
 
 		// QLambdaCoverageReward classname => float[]{prosperity, coverage, reward/step}
-		module.createDecoder(QLambda.topicProsperity,"float", prospLen);			
+		// TODO
+		//module.createDecoder(QLambda.topicProsperity,"float", prospLen);			
 
 		// create data IO
 		module.createDecoder(QLambda.topicDataOut, "float", noActions);  	//# decode actions
