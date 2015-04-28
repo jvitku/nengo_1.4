@@ -101,8 +101,6 @@ public class MultiplierNodeSimulation {
 	}
 
 
-
-
 	public class MultiplierNodeSimulationZ extends MultiplierNodeSimulationY{
 
 		public static final float WEIGHT = 0.5f;
@@ -111,7 +109,6 @@ public class MultiplierNodeSimulation {
 		public void defineNetwork() {
 
 			try {
-
 				ms = NodeBuilder.multiplierNode("mul", NOINPUTS, log, multiplyBy);
 				this.nodes.add(ms);
 

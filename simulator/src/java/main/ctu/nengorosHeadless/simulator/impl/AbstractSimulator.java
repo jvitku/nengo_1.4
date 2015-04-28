@@ -21,7 +21,7 @@ public abstract class AbstractSimulator implements Simulator {
 
 	public static final int sleepTimeNs= 100;
 	public static final int sleepInfoPeriod = 200;	// how often to print to console
-	public static final long maxSleepTime = 100000; // [ns/10]
+	public static final long maxSleepTime = 50000;  // [ns/10], 50000 = 0.5s
 
 	protected ArrayList<HeadlessNode> nodes;
 	protected ArrayList<Connection> connections; 
@@ -36,8 +36,6 @@ public abstract class AbstractSimulator implements Simulator {
 		this.nodes = new ArrayList<HeadlessNode>();
 		this.connections = new ArrayList<Connection>();
 	}
-
-	@Override
 	public boolean isRunning(){ return this.running; }
 
 	@Override
@@ -70,6 +68,7 @@ public abstract class AbstractSimulator implements Simulator {
 	@Override
 	public void run(float from, float to) {
 
+		this.running = true;
 		this.prepareForSimulaiton();
 
 		t = from;
@@ -78,6 +77,7 @@ public abstract class AbstractSimulator implements Simulator {
 			this.makeStep();
 			t += dt;
 		}
+		this.running = false;
 	}
 	
 	public void makeStep(){
