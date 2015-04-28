@@ -19,6 +19,14 @@ import ctu.nengorosHeadless.simulator.test.nodes.MultiplierNode;
 public class MultiplierNodeSimulation {
 
 	
+	/**
+	 * Run the simulation with the multiplier node:
+	 * -generate random vectors
+	 * -send data to be multiplied by selected value
+	 * -check results
+	 * 
+	 * If this test passes, the communication is synchronized and correct
+	 */
 	@Test
 	public void synchronizedCommunicationTest(){
 		MultiplierNodeSimulation t = new MultiplierNodeSimulation();
