@@ -37,7 +37,9 @@ public class QLambdaTest{
 				int[] size = new int[]{10,10};
 				int[] pos = new int[]{4,4};
 				int[] obstacles = new int[]{1,1,2,2,3,3,5,5,6,6,7,7,8,8};
-				NeuralModule gw = NodeBuilder.gridWorld("world", log, file, size, 4, pos, obstacles);
+				int[] rewards = new int[]{7,6,0,1,9,0,0,1};
+				
+				NeuralModule gw = NodeBuilder.gridWorld("world", log, file, size, 4, pos, obstacles, rewards);
 				this.nodes.add(gw);
 				
 				float[][] w;

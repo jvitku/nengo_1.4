@@ -47,12 +47,23 @@ Changelog
 
 #### TODO:
 
-	map definition is wrong
-	reward scale should be setup well
+* prosperity reading
+
+* fitness evaluation
+
+* layers
+
+* weights serialization
+
+* multiple models at once
+
+* reward scale should be setup well
 	
 #### Changelog:
 
-* `QLambdaTest` now has correct connection weights and the QLambda node learns! 
+* map definition in the `GridWorld` node is correct now!
+
+* `QLambdaTest` now has correct connection weights and the QLambda node learns!
 
 * created the nengorosHeadless package with new simulator
 
