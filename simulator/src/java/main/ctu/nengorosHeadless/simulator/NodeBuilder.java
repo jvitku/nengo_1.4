@@ -32,7 +32,7 @@ public class NodeBuilder {
 		module.createDecoder(MultiplierNode.topicDataOut, "float", noInputs);       
 		module.createEncoder(MultiplierNode.topicDataIn, "float", noInputs); 		
 
-		//module.createDecoder(MultiplierNode.topicProsperity,"float", 1);			//# float[]{prosperity}  = MSD from the limbo area
+		module.createDecoder(MultiplierNode.topicProsperity,"float", 1);			//# float[]{prosperity}  = MSD from the limbo area
 		return module;
 	}
 	
@@ -54,8 +54,7 @@ public class NodeBuilder {
 		module.createDecoder(BasicMotivation.topicDataOut, "float", 2);           	//# decode float[]{reward,BasicMotivation}
 		module.createEncoder(BasicMotivation.topicDataIn, "float", noInputs); 		//# encode input data (sum rewards here)
 
-		// TODO
-		//module.createDecoder(BasicMotivation.topicProsperity,"float", 1);			//# float[]{prosperity}  = MSD from the limbo area
+		module.createDecoder(BasicMotivation.topicProsperity,"float", 1);			//# float[]{prosperity}  = MSD from the limbo area
 		return module;
 	}
 
@@ -99,8 +98,7 @@ public class NodeBuilder {
 		module.createEncoder(QLambda.topicImportance,"float",1);//					# default value is 0
 
 		// QLambdaCoverageReward classname => float[]{prosperity, coverage, reward/step}
-		// TODO
-		//module.createDecoder(QLambda.topicProsperity,"float", prospLen);			
+		module.createDecoder(QLambda.topicProsperity,"float", prospLen);			
 
 		// create data IO
 		module.createDecoder(QLambda.topicDataOut, "float", noActions);  	//# decode actions
@@ -127,10 +125,6 @@ public class NodeBuilder {
 				"_obstacles:="+coords,				// List (even no.) of coordinates (X1,Y1,X2,Y2..) of obstacles
 				"_rewards:="+Rcoords};				// List (even no.) of coordinates (X1,Y1,X2,Y2..) of obstacles
 
-
-		// noActions = 4;		# hardcoded
-		// noStateVars = 2;
-
 		System.out.println("Command is as follows:");
 		for(int i=0; i<command.length; i++){
 			System.out.print(command[i]+" ");
@@ -142,7 +136,7 @@ public class NodeBuilder {
 		NeuralModule module = new DefaultNeuralModule(name+"_GridWorld", g, SYNC);
 
 		module.createEncoder(GridWorldNode.topicDataOut, "float", noActions);  	//# decode actions
-		module.createDecoder(GridWorldNode.topicDataIn, "float", 1+2); 	//# encode states (first is reward)
+		module.createDecoder(GridWorldNode.topicDataIn, "float", 1+2); 			//# encode states (first is reward)
 		
 		return module;
 	}

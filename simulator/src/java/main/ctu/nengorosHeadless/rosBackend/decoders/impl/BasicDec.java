@@ -90,7 +90,6 @@ public class BasicDec extends BasicOrig implements Decoder {
 	@Override
 	public void onNewRosMessage(Message rosMessage) {
 		this.setValues(ros.decodeMessage(rosMessage));
-		System.out.println(this.myNode.getFullName()+" <My Name "+super.getFullName()+" and reeived: "+SL.toStr(this.getValues()));
 		super.setReady(true);	// message received => I am ready
 	}
 

@@ -51,7 +51,6 @@ public class QLambdaTest{
 				w = cddd.getWeights();
 				w[0][0] = 1;			// connect only reward to the source
 				
-				
 				// motivation [R+mot] ~> importance [i] 
 				Connection c = this.connect(
 						ms.getOrigin(BasicMotivation.topicDataOut),
@@ -73,8 +72,6 @@ public class QLambdaTest{
 						ql.getTermination(QLambda.topicDataIn));
 				w = cdd.getWeights();
 				BasicWeights.pseudoEye(w,1);	// also one to one connections [r,x,y]
-				
-				
 
 			} catch (ConnectionException e) {
 				e.printStackTrace();
@@ -110,5 +107,5 @@ public class QLambdaTest{
 
 		sim.cleanup();
 	}
-
 }
+
