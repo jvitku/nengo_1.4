@@ -53,20 +53,20 @@ public class QLambdaTest{
 				// Q-Learing [actions] ~> world [actions]
 				Connection cd = this.connect(
 						ql.getOrigin(QLambda.topicDataOut),
-						gw.getTermination(GridWorldNode.topicDataIn));
+						gw.getTermination(GridWorldNode.topicDataOut));
 				w = cd.getWeights();
 				BasicWeights.pseudoEye(w,1);
 				
 				// world [r, state] ~> Q-learning [state]
 				Connection cdd = this.connect(
-						gw.getOrigin(GridWorldNode.topicDataOut),
+						gw.getOrigin(GridWorldNode.topicDataIn),
 						ql.getTermination(QLambda.topicDataIn));
 				w = cdd.getWeights();
 				BasicWeights.pseudoEye(w,1);
 				
 				// world [r,state] ~> motivation [r]
 				Connection cddd = this.connect(
-						gw.getOrigin(GridWorldNode.topicDataOut),
+						gw.getOrigin(GridWorldNode.topicDataIn),
 						ms.getTermination(BasicMotivation.topicDataIn));
 				w = cddd.getWeights();
 				BasicWeights.pseudoEye(w,1);
@@ -80,7 +80,7 @@ public class QLambdaTest{
 			}
 		}
 	}
-
+	
 	public static void main(String[] args) {
 		QLambdaTest t = new QLambdaTest();
 
@@ -93,7 +93,7 @@ public class QLambdaTest{
 		sim.defineNetwork();
 		System.out.println("starting the simulation now");
 
-		sim.run(0, 10);
+		sim.run(0, 10000);
 		System.out.println("all done, reset, waiting");
 		sim.reset(false);
 		try {

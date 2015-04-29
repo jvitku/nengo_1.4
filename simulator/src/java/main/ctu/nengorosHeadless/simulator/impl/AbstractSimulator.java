@@ -81,7 +81,7 @@ public abstract class AbstractSimulator implements Simulator {
 	}
 	
 	public void makeStep(){
-		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx step no "+t+" stert");
+		//System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx step no "+t+" stert");
 		for(int i=0; i<connections.size(); i++){
 			connections.get(i).transferData();
 		}
@@ -96,7 +96,7 @@ public abstract class AbstractSimulator implements Simulator {
 		}
 		// wait for all responses
 		this.awaitAllReady();
-		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx step no "+t+" end");
+		//System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx step no "+t+" end");
 	}
 
 	private void awaitAllReady(){

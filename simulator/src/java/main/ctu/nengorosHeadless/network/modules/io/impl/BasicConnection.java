@@ -26,7 +26,7 @@ public class BasicConnection implements Connection {
 			val=0;
 			
 			for(int j=0; j<source.getSize(); j++){
-				System.out.println("transfering by weught "+weights[j][i]+" "+source.getValues()[j]);
+				//System.out.println("transfering by weught "+weights[j][i]+" "+source.getValues()[j]);
 				val += source.getValues()[j] * weights[j][i];
 			}
 			target.sendValue(val, i);

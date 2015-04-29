@@ -43,6 +43,21 @@ In order to install just standalone version of Nengoros, you can use the script 
 Changelog
 --------------
 
+### feature-ea branch
+
+* TODO QLambda test:
+
+	map definition is wrong
+	reward scale should be setup well
+	weights are wrong, learning does something, but not optimal
+	
+
+* created the nengorosHeadless package with new simulator
+
+* created NodeBuilder for running old nodes in java
+
+
+### something older
 
 * Outdated warning about launching java nodes without parameters deleted
 

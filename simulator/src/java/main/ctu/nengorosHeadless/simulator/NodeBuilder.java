@@ -35,7 +35,6 @@ public class NodeBuilder {
 		//module.createDecoder(MultiplierNode.topicProsperity,"float", 1);			//# float[]{prosperity}  = MSD from the limbo area
 		return module;
 	}
-
 	
 	public static NeuralModule basicMotivationSource(String name, int noInputs, float decay, int logPeriod)
 			throws ConnectionException, StartupDelayException{
@@ -50,7 +49,7 @@ public class NodeBuilder {
 		NeuralModule module = new DefaultNeuralModule(name+"_BasicMotivation", g, SYNC);
 
 		// connect the decay parameter to the Nengoros network (changed online)
-		module.createConfigEncoder(BasicMotivation.topicDecay,"float", 1); 			//# decay config (unconneced=BasicMotivation.DEF_DECAY)
+		module.createConfigEncoder(BasicMotivation.topicDecay,"float", decay); 			//# decay config (unconneced=BasicMotivation.DEF_DECAY)
 
 		module.createDecoder(BasicMotivation.topicDataOut, "float", 2);           	//# decode float[]{reward,BasicMotivation}
 		module.createEncoder(BasicMotivation.topicDataIn, "float", noInputs); 		//# encode input data (sum rewards here)
@@ -78,8 +77,8 @@ public class NodeBuilder {
 	}
 
 
-	public static NeuralModule qlambdaASM(String name, int noStateVars, int noActions, int noValues, int logPeriod, int maxDelay,
-			int prospLen) throws ConnectionException, StartupDelayException{
+	public static NeuralModule qlambdaASM(String name, int noStateVars, int noActions, int noValues, int logPeriod,
+			int maxDelay, int prospLen) throws ConnectionException, StartupDelayException{
 
 		String className="org.hanns.rl.discrete.ros.srp.config.QlambdaCoverageReward";
 		String[] command = new String[]{className,
@@ -139,8 +138,8 @@ public class NodeBuilder {
 		g.addNode(command, "GridWorld", "java");
 		NeuralModule module = new DefaultNeuralModule(name+"_GridWorld", g, SYNC);
 
-		module.createEncoder(GridWorldNode.topicDataIn, "float", noActions);  	//# decode actions
-		module.createDecoder(GridWorldNode.topicDataOut, "float", 1+2); 	//# encode states (first is reward)
+		module.createEncoder(GridWorldNode.topicDataOut, "float", noActions);  	//# decode actions
+		module.createDecoder(GridWorldNode.topicDataIn, "float", 1+2); 	//# encode states (first is reward)
 		
 		return module;
 	}
