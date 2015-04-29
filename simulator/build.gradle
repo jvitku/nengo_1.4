@@ -61,9 +61,14 @@ dependencies {
 	compile 'ctu.hanns.environments:gridworld:0.0.5-SNAPSHOT'
 	testCompile 'ctu.hanns.environments:gridworld:0.0.5-SNAPSHOT'
 
-	compile project(':environments:statesactions')
-	runtime project(':environments:statesactions')
-    testCompile project(':environments:statesactions')	
+    compile 'ctu.hanns.environments:statesactions:0.0.5-SNAPSHOT'
+	runtime 'ctu.hanns.environments:statesactions:0.0.5-SNAPSHOT'
+    testCompile 'ctu.hanns.environments:statesactions:0.0.5-SNAPSHOT'
+
+
+	//compile project('ctu.hanns.environments:statesactions:0.0.5-SNAPSHOT')
+	//runtime project('ctu.hanns.environments:statesactions:0.0.5-SNAPSHOT')
+    //testCompile project('ctu.hanns.environments:statesactions:0.0.5-SNAPSHOT')	
 
     //compile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
     //testCompile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
