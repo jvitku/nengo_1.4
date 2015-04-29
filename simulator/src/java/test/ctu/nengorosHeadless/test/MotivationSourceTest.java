@@ -1,7 +1,9 @@
-package ctu.nengorosHeadless.simulator.test;
+package ctu.nengorosHeadless.test;
 
 import org.hanns.physiology.statespace.ros.BasicMotivation;
+import org.junit.Test;
 
+import static org.junit.Assert.*;
 import ca.nengo.model.StructuralException;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.model.transformMultiTermination.impl.BasicWeights;
@@ -13,13 +15,37 @@ import ctu.nengorosHeadless.simulator.impl.AbstractSimulator;
 
 public class MotivationSourceTest{
 
+	/**
+	 * Runs the motivation source and motivation receiver. 
+	 * Each 5 steps the reward is sent, this results in decreasing the motivation.
+	 * 
+	 */
+	@Test
+	public void motivationAndReceiverTest() {
+		MotivationSourceTest t = new MotivationSourceTest();
+
+		System.out.println("instantiating the simulator");
+
+		MotivationSourceTestSimulation sim = t.new MotivationSourceTestSimulation();
+
+		System.out.println("loading nodes..");
+		sim.defineNetwork();
+		System.out.println("starting the simulation now");
+
+		sim.run(0, 100);
+		System.out.println("all done, reset, waiting");
+		sim.reset(false);
+		System.out.println("ending the simulation");
+
+		sim.cleanup();
+	}
+	
 	public class MotivationSourceTestSimulation extends AbstractSimulator{
 
 		public static final int log = 1; 
 
 		@Override
 		public void defineNetwork() {
-
 			try {
 
 				NeuralModule ms = NodeBuilder.basicMotivationSource("motSource", 1, 0.1f, log);
@@ -43,10 +69,13 @@ public class MotivationSourceTest{
 
 			} catch (ConnectionException e) {
 				e.printStackTrace();
+				fail();
 			} catch (StartupDelayException e) {
 				e.printStackTrace();
+				fail();
 			} catch (StructuralException e) {
 				e.printStackTrace();
+				fail();
 			}
 		}
 	}

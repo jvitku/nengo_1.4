@@ -1,8 +1,12 @@
-package ctu.nengorosHeadless.simulator.test;
+package ctu.nengorosHeadless.test;
+
+
+import static org.junit.Assert.*;
 
 import org.hanns.environments.discrete.ros.GridWorldNode;
 import org.hanns.physiology.statespace.ros.BasicMotivation;
 import org.hanns.rl.discrete.ros.srp.QLambda;
+import org.junit.Test;
 
 import ca.nengo.model.StructuralException;
 import ctu.nengoros.exceptions.ConnectionException;
@@ -14,6 +18,29 @@ import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractSimulator;
 
 public class QLambdaTest{
+
+	@Test
+	public void QLambdaTestRun() {
+		QLambdaTest t = new QLambdaTest();
+
+		System.out.println("instantiating the simulator");
+
+		QLambdaTestSim sim = t.new QLambdaTestSim();
+
+		System.out.println("loading nodes..");
+
+		sim.defineNetwork();
+		System.out.println("starting the simulation now");
+
+		sim.run(0, 100);
+		System.out.println("all done, reset, waiting");
+		sim.reset(false);
+
+		System.out.println("ending the simulation");
+
+		sim.cleanup();
+	}
+
 
 	public class QLambdaTestSim extends AbstractSimulator{
 
@@ -38,10 +65,10 @@ public class QLambdaTest{
 				int[] pos = new int[]{4,4};
 				int[] obstacles = new int[]{1,1,2,2,3,3,5,5,6,6,7,7,8,8};
 				int[] rewards = new int[]{7,6,0,1,9,0,0,1};
-				
+
 				NeuralModule gw = NodeBuilder.gridWorld("world", log, file, size, 4, pos, obstacles, rewards);
 				this.nodes.add(gw);
-				
+
 				float[][] w;
 
 				// world [r,state] ~> motivation [r]
@@ -50,7 +77,7 @@ public class QLambdaTest{
 						ms.getTermination(BasicMotivation.topicDataIn));
 				w = cddd.getWeights();
 				w[0][0] = 1;			// connect only reward to the source
-				
+
 				// motivation [R+mot] ~> importance [i] 
 				Connection c = this.connect(
 						ms.getOrigin(BasicMotivation.topicDataOut),
@@ -58,14 +85,14 @@ public class QLambdaTest{
 
 				w = c.getWeights();
 				w[0][0] = 1;			// connect only motivation (not reward) to the importance
-				
+
 				// Q-Learning [actions] ~> world [actions]
 				Connection cd = this.connect(
 						ql.getOrigin(QLambda.topicDataOut),
 						gw.getTermination(GridWorldNode.topicDataOut));
 				w = cd.getWeights();
 				BasicWeights.pseudoEye(w,1);	// one to one connections
-				
+
 				// world [r, state] ~> Q-learning [state]
 				Connection cdd = this.connect(
 						gw.getOrigin(GridWorldNode.topicDataIn),
@@ -75,14 +102,22 @@ public class QLambdaTest{
 
 			} catch (ConnectionException e) {
 				e.printStackTrace();
+				fail();
 			} catch (StartupDelayException e) {
 				e.printStackTrace();
+				fail();
 			} catch (StructuralException e) {
 				e.printStackTrace();
+				fail();
 			}
 		}
 	}
-	
+
+	/**
+	 * Runs the simulation normally, without testing.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		QLambdaTest t = new QLambdaTest();
 

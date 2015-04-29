@@ -98,7 +98,8 @@ public class NodeBuilder {
 		module.createEncoder(QLambda.topicImportance,"float",1);//					# default value is 0
 
 		// QLambdaCoverageReward classname => float[]{prosperity, coverage, reward/step}
-		module.createDecoder(QLambda.topicProsperity,"float", prospLen);			
+		// TODO
+		//module.createDecoder(QLambda.topicProsperity,"float", prospLen);			
 
 		// create data IO
 		module.createDecoder(QLambda.topicDataOut, "float", noActions);  	//# decode actions

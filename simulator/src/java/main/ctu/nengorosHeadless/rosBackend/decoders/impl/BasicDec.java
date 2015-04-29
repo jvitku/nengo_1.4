@@ -13,7 +13,6 @@ import ctu.nengoros.exceptions.MessageFormatException;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
-import ctu.nengoros.util.SL;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
 import ctu.nengorosHeadless.network.modules.io.impl.BasicOrig;
 import ctu.nengorosHeadless.rosBackend.decoders.Decoder;

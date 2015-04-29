@@ -1,6 +1,7 @@
-package ctu.nengorosHeadless.simulator.test;
+package ctu.nengorosHeadless.test;
 
 import org.hanns.physiology.statespace.ros.BasicMotivation;
+import org.junit.Test;
 
 import ca.nengo.model.StructuralException;
 import ctu.nengoros.exceptions.ConnectionException;
@@ -10,10 +11,35 @@ import ctu.nengorosHeadless.network.modules.io.Connection;
 import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractSimulator;
 
+import static org.junit.Assert.*;
+
 public class OneNodeTest{
 
-	public class OneNodeTestSimulation extends AbstractSimulator{
+	/**
+	 * Launches one node, connects its output to the input, runs the simulation.
+	 */
+	@Test
+	public void oneNodeExample() {
+		OneNodeTest t = new OneNodeTest();
 
+		System.out.println("instantiating the simulator");
+
+		OneNodeTestSimulation sim = t.new OneNodeTestSimulation();
+
+		System.out.println("loading nodes..");
+
+		sim.defineNetwork();
+		System.out.println("starting the simulation now");
+
+		sim.run(0, 100);
+		System.out.println("all done, reset, waiting");
+		sim.reset(false);
+		System.out.println("ending the simulation");
+		sim.cleanup();
+	}
+	
+	public class OneNodeTestSimulation extends AbstractSimulator{
+		
 		public static final int log = 1; 
 		
 		/**
@@ -23,7 +49,6 @@ public class OneNodeTest{
 		public void defineNetwork() {
 
 			try {
-
 				NeuralModule ms = NodeBuilder.basicMotivationSource("motSource", 1, 0.1f, log);
 				this.nodes.add(ms);
 
@@ -39,10 +64,13 @@ public class OneNodeTest{
 
 			} catch (ConnectionException e) {
 				e.printStackTrace();
+				fail();
 			} catch (StartupDelayException e) {
 				e.printStackTrace();
+				fail();
 			} catch (StructuralException e) {
 				e.printStackTrace();
+				fail();
 			}
 		}
 	}
