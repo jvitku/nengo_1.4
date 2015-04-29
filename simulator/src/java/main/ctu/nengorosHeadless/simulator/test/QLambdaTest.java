@@ -42,34 +42,37 @@ public class QLambdaTest{
 				
 				float[][] w;
 
+				// world [r,state] ~> motivation [r]
+				Connection cddd = this.connect(
+						gw.getOrigin(GridWorldNode.topicDataIn),
+						ms.getTermination(BasicMotivation.topicDataIn));
+				w = cddd.getWeights();
+				w[0][0] = 1;			// connect only reward to the source
+				
+				
 				// motivation [R+mot] ~> importance [i] 
 				Connection c = this.connect(
 						ms.getOrigin(BasicMotivation.topicDataOut),
 						ql.getTermination(QLambda.topicImportance));
 
 				w = c.getWeights();
-				w[1][0] = 1;
-
-				// Q-Learing [actions] ~> world [actions]
+				w[0][0] = 1;			// connect only motivation (not reward) to the importance
+				
+				// Q-Learning [actions] ~> world [actions]
 				Connection cd = this.connect(
 						ql.getOrigin(QLambda.topicDataOut),
 						gw.getTermination(GridWorldNode.topicDataOut));
 				w = cd.getWeights();
-				BasicWeights.pseudoEye(w,1);
+				BasicWeights.pseudoEye(w,1);	// one to one connections
 				
 				// world [r, state] ~> Q-learning [state]
 				Connection cdd = this.connect(
 						gw.getOrigin(GridWorldNode.topicDataIn),
 						ql.getTermination(QLambda.topicDataIn));
 				w = cdd.getWeights();
-				BasicWeights.pseudoEye(w,1);
+				BasicWeights.pseudoEye(w,1);	// also one to one connections [r,x,y]
 				
-				// world [r,state] ~> motivation [r]
-				Connection cddd = this.connect(
-						gw.getOrigin(GridWorldNode.topicDataIn),
-						ms.getTermination(BasicMotivation.topicDataIn));
-				w = cddd.getWeights();
-				BasicWeights.pseudoEye(w,1);
+				
 
 			} catch (ConnectionException e) {
 				e.printStackTrace();

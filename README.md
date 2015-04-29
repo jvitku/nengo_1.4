@@ -45,12 +45,14 @@ Changelog
 
 ### feature-ea branch
 
-* TODO QLambda test:
+#### TODO:
 
 	map definition is wrong
 	reward scale should be setup well
-	weights are wrong, learning does something, but not optimal
 	
+#### Changelog:
+
+* `QLambdaTest` now has correct connection weights and the QLambda node learns! 
 
 * created the nengorosHeadless package with new simulator
 
