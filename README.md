@@ -57,6 +57,7 @@ Changelog
 
 * multiple models at once
 
+* QLambda prosperity publishing works only each second step
 
 * reward scale should be setup well
 	
