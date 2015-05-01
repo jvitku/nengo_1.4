@@ -63,6 +63,8 @@ Changelog
 	
 #### Changelog:
 
+* adding interlayer connections now
+
 * map definition in the `GridWorld` node is correct now!
 
 * `QLambdaTest` now has correct connection weights and the QLambda node learns!
