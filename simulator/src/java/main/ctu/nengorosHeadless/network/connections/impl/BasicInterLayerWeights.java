@@ -177,5 +177,20 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 			}
 		}
 	}
+	
+	@Override
+	public void setVector(Float[] vector) throws StructuralException {
+
+		if(vector.length != weights.length * weights[0].length){
+			throw new StructuralException("will not setVector, incorrect length of the vector!");
+		}
+		int pos = 0;
+		for(int i=0; i<weights.length; i++){
+			for(int j=0; j<weights[0].length; j++){
+				
+				weights[i][j] = vector[pos++];
+			}
+		}
+	}
 }
 

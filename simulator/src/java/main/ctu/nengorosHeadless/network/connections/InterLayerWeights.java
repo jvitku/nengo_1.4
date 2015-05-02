@@ -65,5 +65,6 @@ public interface InterLayerWeights {
 	 * @param weights
 	 */
 	public void setVector(float[] weights) throws StructuralException;
+	public void setVector(Float[] weights) throws StructuralException;
 	
 }

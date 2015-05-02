@@ -5,9 +5,9 @@ import ctu.nengorosHeadless.network.connections.InterLayerWeights;
 public interface EASimulator extends Simulator{
 	
 	/**
-	 * @return an array of size N of fitness values. For each of N models there is one value. 
+	 * @return a fitness value of one individual (TODO multithreaded) 
 	 */
-	public float[] getFitnessVals();
+	public float getFitnessVal();
 
 	
 	/**

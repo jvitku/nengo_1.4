@@ -57,6 +57,8 @@ Changelog
 	
 #### Changelog:
 
+* BasicEA works at single-threaded example
+
 * Fitness evaluation for the MotivationSource model
 
 * added interlayer connections (tested) and their serialization, TODO show it in the EA
