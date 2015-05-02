@@ -23,18 +23,18 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 	@Override
 	public IOGroup[] addConnection(int inputDim, int outputDim) {
 
-		int inputStart= this.getNoOfInputUnits()-1;
-		int outputStart = this.getNoOfOutputUnits()-1;
-		
+		int inputStart= this.getNoOfInputUnits();
+		int outputStart = this.getNoOfOutputUnits();
+
 		IOGroup input = new IOGroup(inputStart, inputDim, inputs.size());
 		IOGroup output = new IOGroup(outputStart, outputDim, outputs.size());
 
 		inputs.add(input);
 		outputs.add(output);
-		
+
 		return new IOGroup[]{input, output};
 	}
-	
+
 	@Override
 	public ArrayList<IOGroup> getInputs() { return inputs; }
 
@@ -60,7 +60,7 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 	}
 
 	@Override
-	public void setWeightsBetween(int inputInd, int outputInd, float[][] weights) throws StructuralException{
+	public void setWeightsBetween(int inputInd, int outputInd, float[][] w) throws StructuralException{
 		if(!this.designFinished){
 			throw new StructuralException("Design is not finished");
 		}
@@ -70,12 +70,12 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 		if(outputInd <0|| outputInd>=outputs.size()){
 			throw new StructuralException("Output index out of range");
 		}
-		if(weights.length != inputs.get(inputInd).getNoUnits()){
+		if(w.length != inputs.get(inputInd).getNoUnits()){
 			throw new StructuralException("Incorrect input dimension of weight matrix, expected: "
 					+inputs.get(inputInd).getNoUnits());
 		}
-		if(weights[0].length != outputs.get(outputInd).getNoUnits()){
-			 throw new StructuralException("Incorrect output dimension of weight matrix, expected: "
+		if(w[0].length != outputs.get(outputInd).getNoUnits()){
+			throw new StructuralException("Incorrect output dimension of weight matrix, expected: "
 					+outputs.get(inputInd).getNoUnits());
 		}
 		IOGroup input = inputs.get(inputInd);
@@ -84,9 +84,17 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 		int inputPos = 0, outputPos = 0;
 
 		// copy the values into sub-matrix of global interlayer weights
-		for(int i=input.getStartingIndex(); i<input.getNoUnits(); i++){
-			for(int j=output.getStartingIndex(); j<output.getNoUnits(); j++){
-				this.weights[i][j] = weights[inputPos][outputPos];
+		for(int i=input.getStartingIndex(); i<input.getNoUnits()+input.getStartingIndex(); i++){
+			outputPos = 0;
+
+			for(int j=output.getStartingIndex(); j<output.getNoUnits()+output.getStartingIndex(); j++){
+
+				/*
+				if(w[inputPos][outputPos] != 0){
+					System.err.println("setting weight "+inputPos+" "+outputPos+
+							" ij "+ i+" "+j+" to "+w[inputPos][outputPos]);
+				}*/
+				this.weights[i][j] = w[inputPos][outputPos];
 				outputPos++;
 			}
 			inputPos++;
@@ -99,10 +107,10 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 			throw new  StructuralException("Design is not finished");
 		}
 		if(inputInd <0|| inputInd>=inputs.size()){
-			 throw new StructuralException("Input index out of range");
+			throw new StructuralException("Input index out of range");
 		}
 		if(outputInd <0|| outputInd>=outputs.size()){
-			 throw new StructuralException("Output index out of range");
+			throw new StructuralException("Output index out of range");
 		}
 
 		IOGroup input = inputs.get(inputInd);
@@ -112,8 +120,11 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 		int inputPos = 0, outputPos = 0;
 
 		// copy the values from the sub-matrix of global interlayer weights
-		for(int i=input.getStartingIndex(); i<input.getNoUnits(); i++){
-			for(int j=output.getStartingIndex(); j<output.getNoUnits(); j++){
+		for(int i=input.getStartingIndex(); i<input.getNoUnits()+input.getStartingIndex(); i++){
+			outputPos = 0;
+
+			for(int j=output.getStartingIndex(); j<output.getNoUnits()+output.getStartingIndex(); j++){
+				//System.out.println("indexing the w: "+inputPos+" "+outputPos+" "+i+" "+j);
 				w[inputPos][outputPos] = this.weights[i][j];
 				outputPos++;
 			}
@@ -134,15 +145,37 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 	@Override
 	public void designFinished() {
 		this.designFinished = true;
+
 		this.weights = new float[this.getNoOfInputUnits()][this.getNoOfOutputUnits()];
+		//System.err.println("weight matrix is: "+weights.length+" "+weights[0].length);
 	}
 
+	@Override
+	public float[] getVector() {
+		float[] out = new float[weights.length * weights[0].length];
+		
+		for(int i=0; i<weights.length; i++){
+			for(int j=0; j<weights[0].length; j++){
+				
+				out[i*weights[0].length+j] = weights[i][j];
+			}
+		}
+		return out;
+	}
 
+	@Override
+	public void setVector(float[] vector) throws StructuralException {
+
+		if(vector.length != weights.length * weights[0].length){
+			throw new StructuralException("will not setVector, incorrect length of the vector!");
+		}
+		int pos = 0;
+		for(int i=0; i<weights.length; i++){
+			for(int j=0; j<weights[0].length; j++){
+				
+				weights[i][j] = vector[pos++];
+			}
+		}
+	}
 }
-
-
-
-
-
-
 

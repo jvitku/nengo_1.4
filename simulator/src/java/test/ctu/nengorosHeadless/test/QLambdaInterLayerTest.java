@@ -25,15 +25,18 @@ public class QLambdaInterLayerTest{
 
 		System.out.println("instantiating the simulator");
 
-		QLambdaTestSim sim = t.new QLambdaTestSim(1);	// one interlayer
+		QLambdaTestSim sim = t.new QLambdaTestSim();	
 
 		System.out.println("loading nodes..");
 
 		sim.defineNetwork();
 		System.out.println("starting the simulation now");
 
-		sim.run(0, 100);
+		sim.run(0, 1000);
 		System.out.println("all done, reset, waiting");
+		
+		//sim.ms.getOrigin(name)
+		
 		sim.reset(false);
 
 		System.out.println("ending the simulation");
@@ -44,24 +47,27 @@ public class QLambdaInterLayerTest{
 
 	public class QLambdaTestSim extends AbstractLayeredSimulator{
 
-		public QLambdaTestSim(int noInterlayerConnections) {
-			super(noInterlayerConnections);
+		// no interlayers
+		public QLambdaTestSim() {
+			super(3);
 		}
 
-		public static final int log = 1; 
+		public static final int log = 100; 
 		public static final boolean file = false;
 
+		public NeuralModule ms, ql, gw;
+		
 		@Override
 		public void defineNetwork() {
 
 			try {
 
 				// Motivation source
-				NeuralModule ms = NodeBuilder.basicMotivationSource("motSource", 1, 0.1f, log);
+				ms = NodeBuilder.basicMotivationSource("motSource", 1, 0.1f, log);
 				this.nodes.add(ms);
 
 				// Q-Learning
-				NeuralModule ql = NodeBuilder.qlambdaASM("qLambda", 2, 4, 10, log, 1, 3);
+				ql = NodeBuilder.qlambdaASM("qLambda", 2, 4, 10, log, 1, 3);
 				this.nodes.add(ql);
 
 				// GridWorld
@@ -70,39 +76,60 @@ public class QLambdaInterLayerTest{
 				int[] obstacles = new int[]{1,1,2,2,3,3,5,5,6,6,7,7,8,8};
 				int[] rewards = new int[]{7,6,0,1,9,0,0,1};
 
-				NeuralModule gw = NodeBuilder.gridWorld("world", log, file, size, 4, pos, obstacles, rewards);
+				gw = NodeBuilder.gridWorld("world", log, file, size, 4, pos, obstacles, rewards);
 				this.nodes.add(gw);
 
-				float[][] w;
+				//float[][] w;
 
 				// world [r,state] ~> motivation [r]
 				Connection cddd = this.connect(
 						gw.getOrigin(GridWorldNode.topicDataIn),
 						ms.getTermination(BasicMotivation.topicDataIn), 0);
-				w = cddd.getWeights();
-				w[0][0] = 1;			// connect only reward to the source
+				//w = cddd.getWeights();
+				//w[0][0] = 1;			// connect only reward to the source
 
 				// motivation [R+mot] ~> importance [i] 
 				Connection c = this.connect(
 						ms.getOrigin(BasicMotivation.topicDataOut),
-						ql.getTermination(QLambda.topicImportance), 0);
+						ql.getTermination(QLambda.topicImportance), 1);
 
-				w = c.getWeights();
-				w[0][0] = 1;			// connect only motivation (not reward) to the importance
+				//w = c.getWeights();
+				//w[0][0] = 1;			// connect only motivation (not reward) to the importance
 
 				// Q-Learning [actions] ~> world [actions]
 				Connection cd = this.connect(
 						ql.getOrigin(QLambda.topicDataOut),
-						gw.getTermination(GridWorldNode.topicDataOut), 0);
-				w = cd.getWeights();
-				BasicWeights.pseudoEye(w,1);	// one to one connections
+						gw.getTermination(GridWorldNode.topicDataOut), 2);
+				//w = cd.getWeights();
+				//BasicWeights.pseudoEye(w,1);	// one to one connections
 
 				// world [r, state] ~> Q-learning [state]
 				Connection cdd = this.connect(
 						gw.getOrigin(GridWorldNode.topicDataIn),
 						ql.getTermination(QLambda.topicDataIn), 0);
+				//w = cdd.getWeights();
+				//BasicWeights.pseudoEye(w,1);	// also one to one connections [r,x,y]
+
+				////////////////////
+				this.designFinished();
+				float[][] w;
+				
+				w = cddd.getWeights();
+				w[0][0] = 1;
+				cddd.setWeights(w);
+				
+				w = c.getWeights();
+				w[0][0] = 1;
+				c.setWeights(w);
+				
+				w = cd.getWeights();
+				BasicWeights.pseudoEye(w, 1);
+				cd.setWeights(w);
+				
 				w = cdd.getWeights();
-				BasicWeights.pseudoEye(w,1);	// also one to one connections [r,x,y]
+				BasicWeights.pseudoEye(w, 1);
+				cdd.setWeights(w);
+				
 
 			} catch (ConnectionException e) {
 				e.printStackTrace();
@@ -127,7 +154,7 @@ public class QLambdaInterLayerTest{
 
 		System.out.println("instantiating the simulator");
 
-		QLambdaTestSim sim = t.new QLambdaTestSim(1);
+		QLambdaTestSim sim = t.new QLambdaTestSim();
 
 		System.out.println("loading nodes..");
 

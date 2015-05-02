@@ -31,7 +31,7 @@ public class BasicStandaloneConnection extends BasicConnection implements Standa
 		for(int i=0; i<weights.length; i++){
 			for(int j=0; j<weights[0].length; j++){
 
-				out[i*weights.length+j] = weights[i][j];
+				out[i*weights[0].length+j] = weights[i][j];
 			}
 		}
 		return out;
@@ -42,7 +42,7 @@ public class BasicStandaloneConnection extends BasicConnection implements Standa
 		for(int i=0; i<this.weights.length; i++){
 			for(int j=0; j<this.weights[0].length; j++){
 
-				this.weights[i][j] = weights[i*this.weights.length+j];
+				this.weights[i][j] = weights[i*this.weights[0].length+j];
 			}
 		}		
 	}

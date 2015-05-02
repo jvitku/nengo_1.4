@@ -51,10 +51,6 @@ Changelog
 
 * fitness evaluation
 
-* layers
-
-* weights serialization
-
 * multiple models at once
 
 * QLambda prosperity publishing works only each second step
@@ -63,7 +59,8 @@ Changelog
 	
 #### Changelog:
 
-* adding interlayer connections now, some refactoring of Connection
+* added interlayer connections (tested) and their serialization, TODO show it in the EA
+
 
 * map definition in the `GridWorld` node is correct now!
 

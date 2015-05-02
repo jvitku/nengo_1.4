@@ -20,6 +20,9 @@ public abstract class AbstractLayeredSimulator extends AbstractSimulator {
 		super();
 		
 		interlayers = new BasicInterLayerWeights[noInterlayerConnections];
+		for(int i=0; i<interlayers.length; i++){
+			interlayers[i] = new BasicInterLayerWeights();
+		}
 	}
 	
 	public void makeStep(){
@@ -66,5 +69,11 @@ public abstract class AbstractLayeredSimulator extends AbstractSimulator {
 		// TODO :(
 	}
 
+	public void designFinished(){
+		for(int i=0; i<this.interlayers.length; i++){
+			this.interlayers[i].designFinished();
+		}
+	}
+	
 }
 

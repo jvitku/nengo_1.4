@@ -54,4 +54,16 @@ public interface InterLayerWeights {
 	 */
 	public void setWeightsBetween(int inputInd, int outputInd, float[][] weights) throws StructuralException;
 	
+	/**
+	 * Get flattened vector of weights of this layer (for use in the simple EA)
+	 * @return
+	 */
+	public float[] getVector();
+	
+	/**
+	 * Set flattened vector of weights for this layer (basic EA)
+	 * @param weights
+	 */
+	public void setVector(float[] weights) throws StructuralException;
+	
 }

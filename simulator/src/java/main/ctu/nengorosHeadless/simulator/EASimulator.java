@@ -12,7 +12,7 @@ public interface EASimulator extends Simulator{
 	 * 
 	 * @return
 	 */
-	public float[][] getWeights();
+	//public float[][] getWeights();
 
 	/**
 	 * 
@@ -20,7 +20,7 @@ public interface EASimulator extends Simulator{
 	 * 
 	 * @throws StructuralException thrown due to incorrect size of array
 	 */
-	public void setWeights(float[][] weights) throws StructuralException;
+	//public void setWeights(float[][] weights) throws StructuralException;
 
 	/**
 	 * @return an array of size N of fitness values. For each of N models there is one value. 
