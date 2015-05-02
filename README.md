@@ -47,11 +47,9 @@ Changelog
 
 #### TODO:
 
-* prosperity reading
+* multi thread execution of multiple models in one simulator
 
-* fitness evaluation
-
-* multiple models at once
+#### TODO less important:
 
 * QLambda prosperity publishing works only each second step
 
@@ -59,8 +57,9 @@ Changelog
 	
 #### Changelog:
 
-* added interlayer connections (tested) and their serialization, TODO show it in the EA
+* Fitness evaluation for the MotivationSource model
 
+* added interlayer connections (tested) and their serialization, TODO show it in the EA
 
 * map definition in the `GridWorld` node is correct now!
 
