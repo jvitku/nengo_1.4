@@ -15,17 +15,17 @@ import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengorosHeadless.network.connections.Connection;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
 import ctu.nengorosHeadless.simulator.NodeBuilder;
-import ctu.nengorosHeadless.simulator.impl.AbstractSimulator;
+import ctu.nengorosHeadless.simulator.impl.AbstractLayeredSimulator;
 
-public class QLambdaTest{
+public class QLambdaInterLayerTest{
 
 	@Test
 	public void QLambdaTestRun() {
-		QLambdaTest t = new QLambdaTest();
+		QLambdaInterLayerTest t = new QLambdaInterLayerTest();
 
 		System.out.println("instantiating the simulator");
 
-		QLambdaTestSim sim = t.new QLambdaTestSim();
+		QLambdaTestSim sim = t.new QLambdaTestSim(1);	// one interlayer
 
 		System.out.println("loading nodes..");
 
@@ -42,7 +42,11 @@ public class QLambdaTest{
 	}
 
 
-	public class QLambdaTestSim extends AbstractSimulator{
+	public class QLambdaTestSim extends AbstractLayeredSimulator{
+
+		public QLambdaTestSim(int noInterlayerConnections) {
+			super(noInterlayerConnections);
+		}
 
 		public static final int log = 1; 
 		public static final boolean file = false;
@@ -119,11 +123,11 @@ public class QLambdaTest{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		QLambdaTest t = new QLambdaTest();
+		QLambdaInterLayerTest t = new QLambdaInterLayerTest();
 
 		System.out.println("instantiating the simulator");
 
-		QLambdaTestSim sim = t.new QLambdaTestSim();
+		QLambdaTestSim sim = t.new QLambdaTestSim(1);
 
 		System.out.println("loading nodes..");
 

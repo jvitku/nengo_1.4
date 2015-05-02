@@ -63,7 +63,7 @@ Changelog
 	
 #### Changelog:
 
-* adding interlayer connections now
+* adding interlayer connections now, some refactoring of Connection
 
 * map definition in the `GridWorld` node is correct now!
 

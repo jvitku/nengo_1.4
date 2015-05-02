@@ -1,9 +1,10 @@
 package ctu.nengorosHeadless.simulator;
 
-import ctu.nengorosHeadless.network.modules.io.Connection;
+import ctu.nengorosHeadless.network.connections.Connection;
 import ctu.nengorosHeadless.network.modules.io.Orig;
 import ctu.nengorosHeadless.network.modules.io.Term;
 import ca.nengo.model.Resettable;
+import ca.nengo.model.StructuralException;
 
 public interface Simulator extends Resettable{
 	
@@ -42,9 +43,11 @@ public interface Simulator extends Resettable{
 	 * Connects two nodes, registers new weights
 	 * @param o Origin ~ source connection
 	 * @param t Target ~ target connection (given by the owning node's topic name)
+	 * @param interLayerNo index of interlayer where the connection belongs to (may be ignored)
 	 * @return newly registered connection
+	 * @throws StructuralException if some error occured
 	 */
-	public Connection connect(Orig o, Term t);
+	public Connection connect(Orig o, Term t, int interLayerNo) throws StructuralException;
 
 	/**
 	 * TODO

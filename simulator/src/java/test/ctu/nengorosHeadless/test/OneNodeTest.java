@@ -6,8 +6,8 @@ import org.junit.Test;
 import ca.nengo.model.StructuralException;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
+import ctu.nengorosHeadless.network.connections.Connection;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
-import ctu.nengorosHeadless.network.modules.io.Connection;
 import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractSimulator;
 
@@ -54,7 +54,7 @@ public class OneNodeTest{
 
 				Connection c = this.connect(
 						ms.getOrigin(BasicMotivation.topicDataOut),
-						ms.getTermination(BasicMotivation.topicDataIn));
+						ms.getTermination(BasicMotivation.topicDataIn), 0);
 
 				float[][] w = c.getWeights();
 				//BasicWeights.pseudoEye(w,0);	// motivation goes up as no reward comes 

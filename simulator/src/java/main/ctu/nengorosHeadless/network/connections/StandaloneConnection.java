@@ -1,28 +1,9 @@
-package ctu.nengorosHeadless.network.modules.io;
+package ctu.nengorosHeadless.network.connections;
 
 import ca.nengo.model.StructuralException;
 
-/**
- * Connects Origins and Terminations by weighted connection.
- * 
- * @author Jaroslav Vitku
- *
- */
-public interface Connection{
+public interface StandaloneConnection extends Connection{
 
-	/**
-	 * Called each simulation step
-	 */
-	public void transferData();
-	
-	/**
-	 * getWeights and alter them
-	 * 
-	 * @return 2D array of weights of size [Orig.getSize(), Term.getSize()]
-	 */
-	public float[][] getWeights();
-	
-	
 	/**
 	 * Stack connection matrix into single vector of weights
 	 *  
@@ -37,5 +18,6 @@ public interface Connection{
 	 * @throws StructuralException if the vector has incorrect length
 	 */
 	public void setVector(float[] weights) throws StructuralException;
-	
+
+
 }

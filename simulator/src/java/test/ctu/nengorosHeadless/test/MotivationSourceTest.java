@@ -8,8 +8,8 @@ import ca.nengo.model.StructuralException;
 import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.model.transformMultiTermination.impl.BasicWeights;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
+import ctu.nengorosHeadless.network.connections.Connection;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
-import ctu.nengorosHeadless.network.modules.io.Connection;
 import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractSimulator;
 
@@ -56,14 +56,14 @@ public class MotivationSourceTest{
 
 				Connection c = this.connect(
 						ms.getOrigin(BasicMotivation.topicDataOut),
-						mr.getTermination(BasicMotivation.topicDataOut));
+						mr.getTermination(BasicMotivation.topicDataOut), 0);
 
 				float[][] w = c.getWeights();
 				BasicWeights.pseudoEye(w,1);
 
 				Connection cd = this.connect(
 						mr.getOrigin(BasicMotivation.topicDataIn),
-						ms.getTermination(BasicMotivation.topicDataIn));
+						ms.getTermination(BasicMotivation.topicDataIn), 0);
 				w = cd.getWeights();
 				BasicWeights.pseudoEye(w,1);
 

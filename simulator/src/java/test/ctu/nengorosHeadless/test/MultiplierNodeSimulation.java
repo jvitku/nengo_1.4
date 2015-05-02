@@ -12,8 +12,8 @@ import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.model.transformMultiTermination.impl.BasicWeights;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengoros.util.SL;
+import ctu.nengorosHeadless.network.connections.Connection;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
-import ctu.nengorosHeadless.network.modules.io.Connection;
 import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractSimulator;
 import ctu.nengorosHeadless.simulator.test.nodes.MultiplierNode;
@@ -117,7 +117,7 @@ public class MultiplierNodeSimulation {
 
 				Connection c = this.connect(
 						ms.getOrigin(MultiplierNode.topicDataOut),
-						ms2.getTermination(MultiplierNode.topicDataIn));
+						ms2.getTermination(MultiplierNode.topicDataIn),0);
 
 				float[][] w = c.getWeights();
 
@@ -206,7 +206,7 @@ public class MultiplierNodeSimulation {
 
 				Connection c = this.connect(
 						ms.getOrigin(MultiplierNode.topicDataOut),
-						ms2.getTermination(MultiplierNode.topicDataIn));
+						ms2.getTermination(MultiplierNode.topicDataIn), 0);
 
 				float[][] w = c.getWeights();
 				BasicWeights.pseudoEye(w,1);	// should just pass the data further	 

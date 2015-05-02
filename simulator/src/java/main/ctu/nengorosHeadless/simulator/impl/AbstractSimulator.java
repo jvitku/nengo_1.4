@@ -3,13 +3,14 @@ package ctu.nengorosHeadless.simulator.impl;
 import java.util.ArrayList;
 
 import ca.nengo.model.SimulationException;
+import ca.nengo.model.StructuralException;
 import ctu.nengoros.comm.rosutils.RosUtils;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
+import ctu.nengorosHeadless.network.connections.Connection;
+import ctu.nengorosHeadless.network.connections.impl.BasicStandaloneConnection;
 import ctu.nengorosHeadless.network.modules.HeadlessNode;
-import ctu.nengorosHeadless.network.modules.io.Connection;
 import ctu.nengorosHeadless.network.modules.io.Orig;
 import ctu.nengorosHeadless.network.modules.io.Term;
-import ctu.nengorosHeadless.network.modules.io.impl.BasicConnection;
 import ctu.nengorosHeadless.simulator.Simulator;
 
 public abstract class AbstractSimulator implements Simulator {
@@ -17,7 +18,7 @@ public abstract class AbstractSimulator implements Simulator {
 	protected float t;
 	protected float dt;	// in seconds
 	public static float DEF_DT = 1.0f;
-	private boolean running = false;
+	protected boolean running = false;
 
 	public static final int sleepTimeNs= 100;
 	public static final int sleepInfoPeriod = 200;	// how often to print to console
@@ -36,6 +37,7 @@ public abstract class AbstractSimulator implements Simulator {
 		this.nodes = new ArrayList<HeadlessNode>();
 		this.connections = new ArrayList<Connection>();
 	}
+	
 	public boolean isRunning(){ return this.running; }
 
 	@Override
@@ -99,7 +101,7 @@ public abstract class AbstractSimulator implements Simulator {
 		//System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx step no "+t+" end");
 	}
 
-	private void awaitAllReady(){
+	protected void awaitAllReady(){
 		int slept;
 		int poc = 0;
 		for(int i=0; i<nodes.size(); i++){
@@ -126,7 +128,7 @@ public abstract class AbstractSimulator implements Simulator {
 		}
 	}
 
-	private boolean awaitAllStarted(){
+	protected boolean awaitAllStarted(){
 		for(int i=0; i<nodes.size(); i++){
 			try {
 				nodes.get(i).getStartupManager().awaitStarted();
@@ -152,16 +154,14 @@ public abstract class AbstractSimulator implements Simulator {
 	}
 
 	@Override
-	public Connection connect(Orig o, Term t){
+	public Connection connect(Orig o, Term t, int interLayerNo) throws StructuralException{
 		if(o==null){
-			System.err.println("Orig o is null, ignoring this connection!");
-			return null;
+			throw new StructuralException("Orig o is null, ignoring this connection!");
 		}
 		if(t==null){
-			System.err.println("Term t is null, ignoring this connection!");
-			return null;
+			throw new StructuralException("Term t is null, ignoring this connection!");
 		}
-		Connection c = new BasicConnection(o,t);
+		Connection c = new BasicStandaloneConnection(o,t);
 		this.connections.add(c);
 		return c;
 	}
