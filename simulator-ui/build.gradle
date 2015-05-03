@@ -37,7 +37,7 @@ mainClassName = 'ca.nengo.ui.NengoLauncher'
 dependencies {
 
 	//compile project(':vivae:vivaesimulator')
-	compile project(':vivae:vivaeplugin')
+	//compile project(':vivae:vivaeplugin')
     compile project(':nengo:simulator')
     compile project(':jroscore')
 	//compile 'ctu.nengoros:jroscore:0.0.1-SNAPSHOT'	
@@ -52,8 +52,9 @@ dependencies {
 	//compile project(':logic:gates')
 	//compile project(':demonodes:basic')
 	
-	compile 'ctu.nengoros.simulators:vivae:0.0.4-SNAPSHOT' 
-	compile 'ctu.nengoros.simulators:vivae:0.0.4-SNAPSHOT' 
+	// TODO the vivae does now compile under ubuntu..
+	//compile 'ctu.nengoros.simulators:vivae:0.0.4-SNAPSHOT' 
+	//compile 'ctu.nengoros.simulators:vivae:0.0.4-SNAPSHOT' 
 	
     //compile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
     //testCompile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
