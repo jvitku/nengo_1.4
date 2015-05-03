@@ -51,8 +51,9 @@ dependencies {
 	// in fact, it is better for now to add the projects as a sub-projects of nengoros, so:  (TODO: online maven repository)
 	//compile project(':logic:gates')
 	//compile project(':demonodes:basic')
-	compile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
-	compile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
+	
+	compile 'ctu.nengoros.simulators:vivae:0.0.4-SNAPSHOT' 
+	compile 'ctu.nengoros.simulators:vivae:0.0.4-SNAPSHOT' 
 	
     //compile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
     //testCompile 'ctu.nengoros.simulators:vivae:0.0.0-SNAPSHOT' 
