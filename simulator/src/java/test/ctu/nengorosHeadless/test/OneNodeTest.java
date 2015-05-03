@@ -60,7 +60,8 @@ public class OneNodeTest{
 				//BasicWeights.pseudoEye(w,0);	// motivation goes up as no reward comes 
 				w[1][0] = 2;
 				w[0][0] = 12;
-				
+
+				this.networkDefined = true;
 
 			} catch (ConnectionException e) {
 				e.printStackTrace();

@@ -28,6 +28,8 @@ public abstract class AbstractSimulator implements Simulator {
 	protected ArrayList<Connection> connections; 
 
 	public boolean randomize = false;
+	
+	protected boolean networkDefined = false;
 
 	public AbstractSimulator(){
 		this.t =0; 
@@ -37,6 +39,8 @@ public abstract class AbstractSimulator implements Simulator {
 		this.nodes = new ArrayList<HeadlessNode>();
 		this.connections = new ArrayList<Connection>();
 	}
+	
+	public boolean networkDefined(){ return this.networkDefined; }
 	
 	public boolean isRunning(){ return this.running; }
 

@@ -100,6 +100,9 @@ public class QLambdaTest{
 				w = cdd.getWeights();
 				BasicWeights.pseudoEye(w,1);	// also one to one connections [r,x,y]
 
+				this.networkDefined = true;
+
+				
 			} catch (ConnectionException e) {
 				e.printStackTrace();
 				fail();

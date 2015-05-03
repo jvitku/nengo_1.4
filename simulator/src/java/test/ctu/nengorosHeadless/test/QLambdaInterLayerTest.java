@@ -130,6 +130,7 @@ public class QLambdaInterLayerTest{
 				BasicWeights.pseudoEye(w, 1);
 				cdd.setWeights(w);
 				
+				this.networkDefined = true;
 
 			} catch (ConnectionException e) {
 				e.printStackTrace();

@@ -167,7 +167,8 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 	public void setVector(float[] vector) throws StructuralException {
 
 		if(vector.length != weights.length * weights[0].length){
-			throw new StructuralException("will not setVector, incorrect length of the vector!");
+			throw new StructuralException("will not setVector, incorrect length of the vector!"
+					+ "expected: "+(weights.length * weights[0].length)+" given: "+vector.length);
 		}
 		int pos = 0;
 		for(int i=0; i<weights.length; i++){
@@ -182,7 +183,8 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 	public void setVector(Float[] vector) throws StructuralException {
 
 		if(vector.length != weights.length * weights[0].length){
-			throw new StructuralException("will not setVector, incorrect length of the vector!");
+			throw new StructuralException("will not setVector, incorrect length of the vector!"
+					+ "expected: "+(weights.length * weights[0].length)+" given: "+vector.length);
 		}
 		int pos = 0;
 		for(int i=0; i<weights.length; i++){

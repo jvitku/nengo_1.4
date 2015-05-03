@@ -61,4 +61,10 @@ public interface Simulator extends Resettable{
 	 * Call this after the simulation, kills all nodes, shuts down the core.
 	 */
 	public void cleanup();
+	
+	/**
+	 * The network already defined?
+	 * @return
+	 */
+	public boolean networkDefined();
 }

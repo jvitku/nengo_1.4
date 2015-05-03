@@ -47,15 +47,18 @@ Changelog
 
 #### TODO:
 
-* multi thread execution of multiple models in one simulator
+* logging fitness and genomes into file
 
 #### TODO less important:
+
 
 * QLambda prosperity publishing works only each second step
 
 * reward scale should be setup well
 	
 #### Changelog:
+
+* The `Basicea` now supports multithread simulation and multithread evolution. Basically, multiple instances of `AbstractMultiThreadSimulator` can be ran. Only the `roscore` has to be run in advance. 
 
 * BasicEA works at single-threaded example
 
