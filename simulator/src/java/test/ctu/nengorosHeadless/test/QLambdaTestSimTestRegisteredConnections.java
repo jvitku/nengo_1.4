@@ -18,12 +18,12 @@ import ctu.nengorosHeadless.simulator.EASimulator;
 import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractLayeredSimulator;
 
-public class QLambdaTestSimTest {
+public class QLambdaTestSimTestRegisteredConnections {
 
 	@Ignore
 	@Test
 	public void QLambdaTestRun() {
-		QLambdaTestSimTest t = new QLambdaTestSimTest();
+		QLambdaTestSimTestRegisteredConnections t = new QLambdaTestSimTestRegisteredConnections();
 
 		System.out.println("instantiating the simulator");
 
@@ -49,7 +49,7 @@ public class QLambdaTestSimTest {
 	 */
 	@Test
 	public void QLambdaTestRunFullConnections() {
-		QLambdaTestSimTest t = new QLambdaTestSimTest();
+		QLambdaTestSimTestRegisteredConnections t = new QLambdaTestSimTestRegisteredConnections();
 
 		System.out.println("instantiating the simulator");
 
@@ -241,12 +241,7 @@ public class QLambdaTestSimTest {
 			}
 			
 			float[][] w;
-
-			// world [r,state] ~> motivation [r] 						(3x1) interlayer 2 - do not change
-			w = cddd.getWeights();
-			w[0][0] = 1;			// connect only reward to the source
-			cddd.setWeights(w);
-
+			
 			// fully connect the interlayer 0
 			this.makeFullConnections(0);
 			
@@ -273,10 +268,21 @@ public class QLambdaTestSimTest {
 					gw.getOrigin(GridWorldNode.topicDataIn),
 					ql.getTermination(QLambda.topicDataIn), w);
 			
-			// Q-Learning [actions] ~> world [actions]					(4x4) interlayer 1 - can be changed too
-			w = cd.getWeights();
-			BasicWeights.pseudoEye(w, 1);	// one to one connections
-			cd.setWeights(w);
+
+		}
+		
+		protected int[] pos;
+		protected int[] size;
+		protected int noValues;		// world dimensions
+		protected int[] obstacles;	// list of obstacles in the world
+		protected int[] rewards;	// list of rewards in the world
+		
+		public void defineMap(){
+			this.noValues = 10;
+			size = new int[]{noValues,noValues};
+			pos = new int[]{6,6};
+			obstacles = new int[]{1,1,2,2,7,7};
+			rewards = new int[]{7,6,0,1,5,5,0,1};
 		}
 		
 		private Connection cddd, cd; 
@@ -285,21 +291,17 @@ public class QLambdaTestSimTest {
 		public void defineNetwork() {
 
 			try {
-
 				// Motivation source
 				ms = NodeBuilder.basicMotivationSource("motSource", 1, 0.1f, log);
 				this.nodes.add(ms);
 
+				this.defineMap();
+				
 				// Q-Learning
-				ql = NodeBuilder.qlambdaASM("qLambda", 2, 4, 10, log, 1, 3);
+				ql = NodeBuilder.qlambdaASM("qLambda", 2, 4, this.noValues, log, 1, 3);
 				this.nodes.add(ql);
-
+				
 				// GridWorld
-				int[] size = new int[]{10,10};
-				int[] pos = new int[]{6,6};
-				int[] obstacles = new int[]{1,1,2,2,7,7};
-				int[] rewards = new int[]{7,6,0,1,5,5,0,1};
-
 				gw = NodeBuilder.gridWorld("world", log, file, size, 4, pos, obstacles, rewards);
 				this.nodes.add(gw);
 
@@ -325,6 +327,18 @@ public class QLambdaTestSimTest {
 				this.designFinished();
 				this.networkDefined = true;
 
+				float[][] w;
+
+				// world [r,state] ~> motivation [r] 						(3x1) interlayer 2 - do not change
+				w = cddd.getWeights();
+				w[0][0] = 1;			// connect only reward to the source
+				cddd.setWeights(w);
+
+				// Q-Learning [actions] ~> world [actions]					(4x4) interlayer 1 - can be changed too
+				w = cd.getWeights();
+				BasicWeights.pseudoEye(w, 1);	// one to one connections
+				cd.setWeights(w);
+				
 			} catch (ConnectionException e) {
 				e.printStackTrace();
 				fail();
