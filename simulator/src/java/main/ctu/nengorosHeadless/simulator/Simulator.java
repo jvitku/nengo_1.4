@@ -67,6 +67,4 @@ public interface Simulator extends Resettable{
 	 * @return
 	 */
 	public boolean networkDefined();
-
-	void makeFullConnections(int interLayerNo) throws StructuralException;
 }

@@ -13,6 +13,7 @@ import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.model.transformMultiTermination.impl.BasicWeights;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengorosHeadless.network.connections.Connection;
+import ctu.nengorosHeadless.network.connections.InterLayerWeights;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
 import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractLayeredSimulator;
@@ -143,6 +144,11 @@ public class QLambdaInterLayerTest{
 				fail();
 			}
 		}
+
+
+		@Override
+		public float getFitnessVal() { return -1; }
+
 	}
 
 	/**

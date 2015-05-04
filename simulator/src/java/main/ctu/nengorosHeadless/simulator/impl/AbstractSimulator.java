@@ -174,5 +174,5 @@ public abstract class AbstractSimulator implements Simulator {
 	public void setLogToFile(boolean file) {
 		// TODO :(
 	}
-
+	
 }

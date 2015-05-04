@@ -78,6 +78,7 @@ public class MotivationSourceTest{
 				fail();
 			}
 		}
+
 	}
 
 	public static void main(String[] args) {

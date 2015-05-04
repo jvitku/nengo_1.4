@@ -9,8 +9,9 @@ import ctu.nengorosHeadless.network.connections.impl.BasicInterLayerWeights;
 import ctu.nengorosHeadless.network.connections.impl.ReferencedInterlayerConnection;
 import ctu.nengorosHeadless.network.modules.io.Orig;
 import ctu.nengorosHeadless.network.modules.io.Term;
+import ctu.nengorosHeadless.simulator.EALayeredSimulator;
 
-public abstract class AbstractLayeredSimulator extends AbstractSimulator {
+public abstract class AbstractLayeredSimulator extends AbstractSimulator implements EALayeredSimulator{
 
 	protected InterLayerWeights[] interlayers;
 	
@@ -24,6 +25,8 @@ public abstract class AbstractLayeredSimulator extends AbstractSimulator {
 			interlayers[i] = new BasicInterLayerWeights();
 		}
 	}
+	
+	
 	
 	public void makeStep(){
 		//System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx step no "+t+" stert");
