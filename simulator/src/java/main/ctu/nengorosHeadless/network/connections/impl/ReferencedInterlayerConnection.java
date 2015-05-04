@@ -19,7 +19,7 @@ public class ReferencedInterlayerConnection extends BasicConnection implements I
 		// IOGroup[] out = this.interLayer.addConnection(source.getSize(), target.getSize());
 
 		this.sourceGroup = this.interLayer.getOrigin(source.getUniqueName());
-		this.targetGroup = this.interLayer.getTrmination(source.getUniqueName());
+		this.targetGroup = this.interLayer.getTermination(target.getUniqueName());
 
 		/*
 		this.sourceGroup = out[0];

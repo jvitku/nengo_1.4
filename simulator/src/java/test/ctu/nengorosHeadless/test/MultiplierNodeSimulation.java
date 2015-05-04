@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Random;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ca.nengo.model.SimulationException;
@@ -33,6 +34,7 @@ public class MultiplierNodeSimulation {
 	 * 
 	 * If this test passes, the communication is synchronized and correct
 	 */
+	//@Ignore
 	@Test
 	public void synchronizedCommunicationTest(){
 		MultiplierNodeSimulation t = new MultiplierNodeSimulation();
@@ -59,6 +61,7 @@ public class MultiplierNodeSimulation {
 	 * 
 	 * The weighted connection is used for transferring the data (eye matrix).
 	 */
+	@Ignore
 	@Test
 	public void simulatorCommunicationTest(){
 		MultiplierNodeSimulation t = new MultiplierNodeSimulation();
@@ -81,6 +84,7 @@ public class MultiplierNodeSimulation {
 	/**
 	 * The same as the simulatorCommunicationTest, but this uses weight w=0.5 between the nodes.
 	 */
+	@Ignore
 	@Test
 	public void simulatorWeightedCommunicationTest(){
 		MultiplierNodeSimulation t = new MultiplierNodeSimulation();

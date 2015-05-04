@@ -1,5 +1,6 @@
 package ctu.nengorosHeadless.simulator;
 
+import ctu.nengorosHeadless.network.connections.Connection;
 import ctu.nengorosHeadless.network.connections.InterLayerWeights;
 import ctu.nengorosHeadless.network.modules.io.Orig;
 import ctu.nengorosHeadless.network.modules.io.Term;
@@ -23,10 +24,27 @@ public interface EALayeredSimulator extends EASimulator{
 	 * @param no number of interlayer in the model (starting with 0)
 	 * @return
 	 */
-	//public InterLayerWeights getInterLayerNo(int no);
+	public InterLayerWeights getInterLayerNo(int no);
 	
-	
+	/**
+	 * Register origin on the interlayer, so that it can have weighted connections to all
+	 * other terminations in the interlayer. The data are passed only if makeFullConnections()
+	 * is called, or the connectRegistered() is called. 
+	 * @param o
+	 * @param interLayerNo
+	 * @throws StructuralException
+	 */
 	public void registerOrigin(Orig o, int interLayerNo) throws StructuralException;
 	public void registerTermination(Term t, int interLayerNo) throws StructuralException;
+
+	/**
+	 * Connect already registered termination and origin on a given interlayer. 
+	 * @param o
+	 * @param t
+	 * @param interLayerNo
+	 * @return
+	 * @throws StructuralException
+	 */
+	public Connection connectRegistered(Orig o, Term t, int interLayerNo) throws StructuralException;
 	
 }

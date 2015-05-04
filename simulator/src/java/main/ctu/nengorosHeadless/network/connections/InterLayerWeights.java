@@ -77,7 +77,7 @@ public interface InterLayerWeights {
 	public IOGroup addOrigin(Orig o);
 	public IOGroup addTermination(Term t);
 	public IOGroup getOrigin(String uniqueName) throws StructuralException;
-	public IOGroup getTrmination(String uniqueName) throws StructuralException;
+	public IOGroup getTermination(String uniqueName) throws StructuralException;
 	
 	public Connection[] makeFullConnections() throws StructuralException;
 }

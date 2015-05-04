@@ -5,6 +5,7 @@ import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ctu.nengorosHeadless.network.connections.Connection;
 import ctu.nengorosHeadless.network.connections.InterLayerWeights;
+import ctu.nengorosHeadless.network.connections.impl.BasicInterLayerConnection;
 import ctu.nengorosHeadless.network.connections.impl.BasicInterLayerWeights;
 import ctu.nengorosHeadless.network.connections.impl.ReferencedInterlayerConnection;
 import ctu.nengorosHeadless.network.modules.io.Orig;
@@ -25,8 +26,6 @@ public abstract class AbstractLayeredSimulator extends AbstractSimulator impleme
 			interlayers[i] = new BasicInterLayerWeights();
 		}
 	}
-	
-	
 	
 	public void makeStep(){
 		//System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx step no "+t+" stert");
@@ -50,7 +49,6 @@ public abstract class AbstractLayeredSimulator extends AbstractSimulator impleme
 	@Override
 	public abstract void defineNetwork();
 
-	/*
 	
 	@Override
 	public Connection connect(Orig o, Term t, int interLayerNo) throws StructuralException{
@@ -67,10 +65,10 @@ public abstract class AbstractLayeredSimulator extends AbstractSimulator impleme
 		Connection c = new BasicInterLayerConnection(o,t, interlayers[interLayerNo]); 
 		this.connections.add(c);
 		return c;
-	}*/
+	}
 
 	@Override
-	public Connection connect(Orig o, Term t, int interLayerNo) throws StructuralException{
+	public Connection connectRegistered(Orig o, Term t, int interLayerNo) throws StructuralException{
 		if(o==null){
 			throw new StructuralException("Orig o is null, ignoring this connection!");
 		}
@@ -129,6 +127,21 @@ public abstract class AbstractLayeredSimulator extends AbstractSimulator impleme
 			throw new StructuralException("index of interLayer is out of range, max is: "+(this.interlayers.length-1));
 		}
 		this.interlayers[interLayerNo].addTermination(t);
+	}
+	
+
+	/**
+	 * Use either only interlayer 0 or both, 0 and 1.
+	 * The InterLayer connects the motivation source to the reward, do not use it 
+	 * (changes the fitness definition).
+	 */
+	@Override
+	public InterLayerWeights getInterLayerNo(int no) {
+		if(no<0 || no>this.interlayers.length){
+			System.err.println("Incorrect no. of interlayer");
+			return null;
+		}
+		return interlayers[no];
 	}
 	
 }

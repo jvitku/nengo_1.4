@@ -36,6 +36,7 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 		int outputStart= this.getNoOfOutputUnits();
 		IOGroup output = new IOGroup(outputStart, t.getSize(), outputs.size(), t);
 
+		System.out.println("adding termination: "+t.getUniqueName());
 		outputs.add(output);
 		return output;
 	}
@@ -51,7 +52,7 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 	}
 	
 	@Override
-	public IOGroup getTrmination(String uniqueName) throws StructuralException{
+	public IOGroup getTermination(String uniqueName) throws StructuralException{
 		for(int i=0; i<outputs.size(); i++){
 			if(outputs.get(i).getUniqueName().equalsIgnoreCase(uniqueName)){
 				return outputs.get(i);
@@ -104,7 +105,7 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 	@Override
 	public void setWeightsBetween(Orig o, Term t, float[][] w) throws StructuralException{
 		IOGroup input = this.getOrigin(o.getUniqueName());
-		IOGroup output = this.getTrmination(t.getUniqueName());
+		IOGroup output = this.getTermination(t.getUniqueName());
 		
 		this.setWeightsBetween(input.getMyIndex(), output.getMyIndex(), w);
 	}
@@ -112,7 +113,7 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 	@Override
 	public float[][] getWeightsBetween(Orig o, Term t) throws StructuralException{
 		IOGroup input = this.getOrigin(o.getUniqueName());
-		IOGroup output = this.getTrmination(t.getUniqueName());
+		IOGroup output = this.getTermination(t.getUniqueName());
 		
 		return this.getWeightsBetween(input.getMyIndex(), output.getMyIndex());
 	}

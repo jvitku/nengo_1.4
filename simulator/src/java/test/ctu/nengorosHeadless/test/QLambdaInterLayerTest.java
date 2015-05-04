@@ -13,7 +13,6 @@ import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.model.transformMultiTermination.impl.BasicWeights;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengorosHeadless.network.connections.Connection;
-import ctu.nengorosHeadless.network.connections.InterLayerWeights;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
 import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractLayeredSimulator;
@@ -44,6 +43,7 @@ public class QLambdaInterLayerTest{
 
 		sim.cleanup();
 	}
+
 
 
 	public class QLambdaTestSim extends AbstractLayeredSimulator{
@@ -82,13 +82,22 @@ public class QLambdaInterLayerTest{
 
 				//float[][] w;
 
+				/*
+				this.registerOrigin(gw.getOrigin(GridWorldNode.topicDataIn), 0);
+				this.registerTermination(ms.getTermination(BasicMotivation.topicDataIn), 0);
+				*/
 				// world [r,state] ~> motivation [r]
 				Connection cddd = this.connect(
 						gw.getOrigin(GridWorldNode.topicDataIn),
 						ms.getTermination(BasicMotivation.topicDataIn), 0);
+				
 				//w = cddd.getWeights();
 				//w[0][0] = 1;			// connect only reward to the source
 
+				/*
+				this.registerOrigin(ms.getOrigin(BasicMotivation.topicDataOut), 1);
+				this.registerTermination(ql.getTermination(QLambda.topicImportance), 1);
+				*/
 				// motivation [R+mot] ~> importance [i] 
 				Connection c = this.connect(
 						ms.getOrigin(BasicMotivation.topicDataOut),
@@ -97,13 +106,17 @@ public class QLambdaInterLayerTest{
 				//w = c.getWeights();
 				//w[0][0] = 1;			// connect only motivation (not reward) to the importance
 
+				/*
+				this.registerOrigin(ql.getOrigin(QLambda.topicDataOut), 2);
+				this.registerTermination(gw.getTermination(GridWorldNode.topicDataOut), 2);
+				*/
 				// Q-Learning [actions] ~> world [actions]
 				Connection cd = this.connect(
 						ql.getOrigin(QLambda.topicDataOut),
 						gw.getTermination(GridWorldNode.topicDataOut), 2);
 				//w = cd.getWeights();
 				//BasicWeights.pseudoEye(w,1);	// one to one connections
-
+				
 				// world [r, state] ~> Q-learning [state]
 				Connection cdd = this.connect(
 						gw.getOrigin(GridWorldNode.topicDataIn),
