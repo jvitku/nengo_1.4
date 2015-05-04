@@ -3,19 +3,20 @@ package ctu.nengorosHeadless.network.connections;
 import java.util.ArrayList;
 
 import ca.nengo.model.StructuralException;
-
 import ctu.nengorosHeadless.network.connections.impl.IOGroup;
+import ctu.nengorosHeadless.network.modules.io.Orig;
+import ctu.nengorosHeadless.network.modules.io.Term;
 
 public interface InterLayerWeights {
-	
+
 	public ArrayList<IOGroup> getInputs();
-	
+
 	public int getNoOfInputUnits();
-	
+
 	public ArrayList<IOGroup> getOutputs();
-	
+
 	public int getNoOfOutputUnits();
-	
+
 	/**
 	 * Adds new connection and returns two IOGroups, one for input and one for output.
 	 * @param inputDim length of input vector (Origin)
@@ -23,17 +24,17 @@ public interface InterLayerWeights {
 	 * @return two IOGroups, one for input one for output
 	 */
 	public IOGroup[] addConnection(int inputDim, int outputDim);
-	
-	
+
+
 	/**
 	 * Size of getNoOfInputUnits() * getNoOfOutputUnits()
 	 * 
 	 * @return weight matrix representing full interlayer connections 
 	 */
 	public float[][] getWeightMatrix();
-	
+
 	public void designFinished();
-	
+
 	/**
 	 * Reads weights between two IOGroups (Origin & Termination)
 	 * 
@@ -53,18 +54,30 @@ public interface InterLayerWeights {
 	 * @throws StructuralException if at least one of the indexes of IOGroups is not found or the weights matrix has incorrect dims.
 	 */
 	public void setWeightsBetween(int inputInd, int outputInd, float[][] weights) throws StructuralException;
-	
+
 	/**
 	 * Get flattened vector of weights of this layer (for use in the simple EA)
 	 * @return
 	 */
 	public float[] getVector();
-	
+
 	/**
 	 * Set flattened vector of weights for this layer (basic EA)
 	 * @param weights
 	 */
 	public void setVector(float[] weights) throws StructuralException;
 	public void setVector(Float[] weights) throws StructuralException;
+
+
+
+	public void setWeightsBetween(Orig o, Term t, float[][] w) throws StructuralException;
+
+	public float[][] getWeightsBetween(Orig o, Term t) throws StructuralException;
+
+	public IOGroup addOrigin(Orig o);
+	public IOGroup addTermination(Term t);
+	public IOGroup getOrigin(String uniqueName) throws StructuralException;
+	public IOGroup getTrmination(String uniqueName) throws StructuralException;
 	
+	public Connection[] makeFullConnections() throws StructuralException;
 }

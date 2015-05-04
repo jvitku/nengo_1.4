@@ -3,8 +3,10 @@ package ctu.nengorosHeadless.network.connections.impl;
 import java.util.ArrayList;
 
 import ca.nengo.model.StructuralException;
-
+import ctu.nengorosHeadless.network.connections.Connection;
 import ctu.nengorosHeadless.network.connections.InterLayerWeights;
+import ctu.nengorosHeadless.network.modules.io.Orig;
+import ctu.nengorosHeadless.network.modules.io.Term;
 
 public class BasicInterLayerWeights implements InterLayerWeights{
 
@@ -20,6 +22,46 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 		this.designFinished = false;
 	}
 
+	@Override
+	public IOGroup addOrigin(Orig o){
+		int inputStart= this.getNoOfInputUnits();
+		IOGroup input = new IOGroup(inputStart, o.getSize(), inputs.size(), o);
+
+		inputs.add(input);
+		return input;
+	}
+	
+	@Override
+	public IOGroup addTermination(Term t){
+		int outputStart= this.getNoOfOutputUnits();
+		IOGroup output = new IOGroup(outputStart, t.getSize(), outputs.size(), t);
+
+		outputs.add(output);
+		return output;
+	}
+	
+	@Override
+	public IOGroup getOrigin(String uniqueName) throws StructuralException{
+		for(int i=0; i<inputs.size(); i++){
+			if(inputs.get(i).getUniqueName().equalsIgnoreCase(uniqueName)){
+				return inputs.get(i);
+			}
+		}
+		throw new StructuralException("Origin named: "+uniqueName+" not registered!");
+	}
+	
+	@Override
+	public IOGroup getTrmination(String uniqueName) throws StructuralException{
+		for(int i=0; i<outputs.size(); i++){
+			if(outputs.get(i).getUniqueName().equalsIgnoreCase(uniqueName)){
+				return outputs.get(i);
+			}
+		}
+		throw new StructuralException("Termination named: "+uniqueName+" not registered!");
+	}
+	
+	
+	// TODO remove this?
 	@Override
 	public IOGroup[] addConnection(int inputDim, int outputDim) {
 
@@ -58,6 +100,23 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 		}
 		return poc;
 	}
+	
+	@Override
+	public void setWeightsBetween(Orig o, Term t, float[][] w) throws StructuralException{
+		IOGroup input = this.getOrigin(o.getUniqueName());
+		IOGroup output = this.getTrmination(t.getUniqueName());
+		
+		this.setWeightsBetween(input.getMyIndex(), output.getMyIndex(), w);
+	}
+	
+	@Override
+	public float[][] getWeightsBetween(Orig o, Term t) throws StructuralException{
+		IOGroup input = this.getOrigin(o.getUniqueName());
+		IOGroup output = this.getTrmination(t.getUniqueName());
+		
+		return this.getWeightsBetween(input.getMyIndex(), output.getMyIndex());
+	}
+	
 
 	@Override
 	public void setWeightsBetween(int inputInd, int outputInd, float[][] w) throws StructuralException{
@@ -193,6 +252,28 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 				weights[i][j] = vector[pos++];
 			}
 		}
+	}
+
+	@Override
+	public Connection[] makeFullConnections() throws StructuralException{
+		if(!this.designFinished){
+			throw new StructuralException("Design is not finished");
+		}
+		Connection[] out = new Connection[inputs.size()*outputs.size()];
+		Orig o; 
+		Term t;
+		
+		int pos = 0;
+		for(int i=0; i<inputs.size(); i++){
+			o = (Orig)inputs.get(i).myIO;
+			
+			for(int j=0; j<outputs.size(); j++){
+				t = (Term)outputs.get(j).myIO;
+				
+				out[pos++] = new ReferencedInterlayerConnection(o,t,this);
+			}
+		}
+		return out;
 	}
 }
 

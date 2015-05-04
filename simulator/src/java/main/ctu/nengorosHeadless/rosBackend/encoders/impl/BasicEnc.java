@@ -89,4 +89,6 @@ public class BasicEnc extends BasicTerm implements Encoder {
 	@Override
 	public NeuralModule getParent() { return parent; }
 
+	@Override 
+	public String getUniqueName(){ return parent.getFullName()+"/"+this.getName(); }
 }

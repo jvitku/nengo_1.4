@@ -1,6 +1,9 @@
 package ctu.nengorosHeadless.simulator;
 
+import ca.nengo.model.StructuralException;
 import ctu.nengorosHeadless.network.connections.InterLayerWeights;
+import ctu.nengorosHeadless.network.modules.io.Orig;
+import ctu.nengorosHeadless.network.modules.io.Term;
 
 public interface EASimulator extends Simulator{
 	
@@ -18,4 +21,16 @@ public interface EASimulator extends Simulator{
 	 * @return
 	 */
 	public InterLayerWeights getInterLayerNo(int no);
+	
+	
+	public void registerOrigin(Orig o, int interLayerNo) throws StructuralException;
+	public void registerTermination(Term t, int interLayerNo) throws StructuralException;
+	
+	/**
+	 * Fully connect everything in one interlayer, store the array of connections in the simulator
+	 * 
+	 * @param interLayerNo
+	 */
+	public void makeFullConnections(int interLayerNo);
+
 }

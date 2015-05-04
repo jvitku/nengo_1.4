@@ -10,13 +10,8 @@ import ca.nengo.model.SimulationException;
  * @author Jaroslav Vitku
  *
  */
-public interface Term extends Resettable {
+public interface Term extends Resettable, IO {
 
-	/**
-	 * @return name which corresponds to the owned ROS topic
-	 */
-	public String getName();
-	
 	/**
 	 * By default, sums all values sent here (e.g. from multiple origins).
 	 * 
@@ -33,7 +28,6 @@ public interface Term extends Resettable {
 	 */
 	public void setValues(float[] values) throws SimulationException;
 	
-	public int getSize();
 	
 	/**
 	 * @return vector of float values collected on inputs

@@ -1,5 +1,7 @@
 package ctu.nengorosHeadless.network.connections.impl;
 
+import ctu.nengorosHeadless.network.modules.io.IO;
+
 /**
  * Each IOGroup can represent either Termination (input) or Origin (output) of a Neural Module.
  * 
@@ -18,15 +20,33 @@ public class IOGroup {
 	
 	private final int myIndex;
 	//private final int[] indexes;
+	
+	public final IO myIO;
 
-	public IOGroup(int startingIndex, int noUnits, int myIndex){
+	public IOGroup(int startingIndex, int noUnits, int myIndex, IO myIO){
+		
+		this.myIO = myIO;
 		this.noUnits = noUnits;
+		
 		this.startingIndex = startingIndex;
 		this.myIndex = myIndex;
 		//this.noUnits = indexes.length; 
 		//this.indexes = indexes;
 	}
-
+	
+	public String getUniqueName(){ return myIO.getUniqueName(); }
+	
+	// TODO delete this
+	public IOGroup(int startingIndex, int noUnits, int myIndex){
+		this.noUnits = noUnits;
+		this.myIO = null;	
+		
+		this.startingIndex = startingIndex;
+		this.myIndex = myIndex;
+		//this.noUnits = indexes.length; 
+		//this.indexes = indexes;
+	}
+	
 	public int getStartingIndex(){
 		return this.startingIndex;
 	}

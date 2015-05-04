@@ -5,8 +5,8 @@ import ca.nengo.model.SimulationException;
 import ca.nengo.model.StructuralException;
 import ctu.nengorosHeadless.network.connections.Connection;
 import ctu.nengorosHeadless.network.connections.InterLayerWeights;
-import ctu.nengorosHeadless.network.connections.impl.BasicInterLayerConnection;
 import ctu.nengorosHeadless.network.connections.impl.BasicInterLayerWeights;
+import ctu.nengorosHeadless.network.connections.impl.ReferencedInterlayerConnection;
 import ctu.nengorosHeadless.network.modules.io.Orig;
 import ctu.nengorosHeadless.network.modules.io.Term;
 
@@ -47,6 +47,8 @@ public abstract class AbstractLayeredSimulator extends AbstractSimulator {
 	@Override
 	public abstract void defineNetwork();
 
+	/*
+	
 	@Override
 	public Connection connect(Orig o, Term t, int interLayerNo) throws StructuralException{
 		if(o==null){
@@ -62,8 +64,39 @@ public abstract class AbstractLayeredSimulator extends AbstractSimulator {
 		Connection c = new BasicInterLayerConnection(o,t, interlayers[interLayerNo]); 
 		this.connections.add(c);
 		return c;
-	}
+	}*/
 
+	@Override
+	public Connection connect(Orig o, Term t, int interLayerNo) throws StructuralException{
+		if(o==null){
+			throw new StructuralException("Orig o is null, ignoring this connection!");
+		}
+		if(t==null){
+			throw new StructuralException("Term t is null, ignoring this connection!");
+		}
+		if(interLayerNo < 0 || interLayerNo >= this.interlayers.length){
+			throw new StructuralException("index of interLayer is out of range, max is: "+(this.interlayers.length-1));
+		}
+		
+		Connection c = new ReferencedInterlayerConnection(o,t, interlayers[interLayerNo]);
+		this.connections.add(c);
+		return c;
+	}
+	
+	@Override
+	public void makeFullConnections(int interLayerNo) throws StructuralException{
+		if(interLayerNo < 0 || interLayerNo >= this.interlayers.length){
+			throw new StructuralException("index of interLayer is out of range, max is: "+(this.interlayers.length-1));
+		}
+		// build full connections in a given interLayer
+		Connection[] newOnes = this.interlayers[interLayerNo].makeFullConnections();
+		
+		// register them all to the other ones
+		for(int i=0; i<newOnes.length; i++){
+			this.connections.add(newOnes[i]);
+		}
+	}
+	
 	@Override
 	public void setLogToFile(boolean file) {
 		// TODO :(
@@ -73,6 +106,26 @@ public abstract class AbstractLayeredSimulator extends AbstractSimulator {
 		for(int i=0; i<this.interlayers.length; i++){
 			this.interlayers[i].designFinished();
 		}
+	}
+
+	public void registerOrigin(Orig o, int interLayerNo) throws StructuralException{
+		if(o==null){
+			throw new StructuralException("Orig o is null, ignoring this connection!");
+		}
+		if(interLayerNo < 0 || interLayerNo >= this.interlayers.length){
+			throw new StructuralException("index of interLayer is out of range, max is: "+(this.interlayers.length-1));
+		}
+		this.interlayers[interLayerNo].addOrigin(o);
+	}
+	
+	public void registerTermination(Term t, int interLayerNo) throws StructuralException{
+		if(t==null){
+			throw new StructuralException("Term t is null, ignoring this connection!");
+		}
+		if(interLayerNo < 0 || interLayerNo >= this.interlayers.length){
+			throw new StructuralException("index of interLayer is out of range, max is: "+(this.interlayers.length-1));
+		}
+		this.interlayers[interLayerNo].addTermination(t);
 	}
 	
 }

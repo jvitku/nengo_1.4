@@ -150,5 +150,8 @@ public class BasicDec extends BasicOrig implements Decoder {
 
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {}
+	
+	@Override 
+	public String getUniqueName(){ return myNode.getFullName()+"/"+this.getName(); }
 
 }

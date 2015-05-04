@@ -3,13 +3,7 @@ package ctu.nengorosHeadless.network.modules.io;
 import ca.nengo.model.Resettable;
 import ca.nengo.model.SimulationException;
 
-public interface Orig extends Resettable{
-
-	/**
-	 * Should correspond to the owned ROS topic.
-	 * @return name of this origin
-	 */
-	public String getName();
+public interface Orig extends Resettable, IO{
 	
 	/**
 	 * Values that are sent through the network.
@@ -18,8 +12,6 @@ public interface Orig extends Resettable{
 	 */
 	public float[] getValues();
 
-	public int getSize();
-	
 	/**
 	 * For the ROS stuff, this does nothing. For the custom nodes (as inputs) this implements its function
 	 * . 
