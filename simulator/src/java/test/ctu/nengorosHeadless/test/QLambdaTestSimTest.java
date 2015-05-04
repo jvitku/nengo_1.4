@@ -44,7 +44,6 @@ public class QLambdaTestSimTest {
 		sim.cleanup();
 	}
 	
-	
 	/**
 	 * Has to do the same as above, but this uses fully connected InterLayer 0
 	 */
