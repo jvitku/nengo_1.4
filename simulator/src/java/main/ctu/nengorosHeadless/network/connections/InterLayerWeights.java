@@ -80,4 +80,7 @@ public interface InterLayerWeights {
 	public IOGroup getTermination(String uniqueName) throws StructuralException;
 	
 	public Connection[] makeFullConnections() throws StructuralException;
+	
+	public void printMatrix(float[][] w);
+	
 }

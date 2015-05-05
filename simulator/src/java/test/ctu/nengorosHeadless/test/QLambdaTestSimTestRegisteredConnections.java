@@ -163,7 +163,7 @@ public class QLambdaTestSimTestRegisteredConnections {
 						ms.getOrigin(BasicMotivation.topicDataOut),
 						ql.getTermination(QLambda.topicImportance), 0);
 				w = c.getWeights();
-				w[0][0] = 1;			// connect only motivation (not reward) to the importance
+				w[1][0] = 1;			// connect only motivation (not reward) to the importance
 				c.setWeights(w);
 
 				Connection cdd = this.connectRegistered(

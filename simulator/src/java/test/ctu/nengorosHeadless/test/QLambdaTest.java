@@ -84,7 +84,7 @@ public class QLambdaTest{
 						ql.getTermination(QLambda.topicImportance), 0);
 
 				w = c.getWeights();
-				w[0][0] = 1;			// connect only motivation (not reward) to the importance
+				w[1][0] = 1;			// connect only motivation (not reward) to the importance
 
 				// Q-Learning [actions] ~> world [actions]
 				Connection cd = this.connect(

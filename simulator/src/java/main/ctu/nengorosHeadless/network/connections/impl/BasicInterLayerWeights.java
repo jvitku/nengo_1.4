@@ -276,5 +276,19 @@ public class BasicInterLayerWeights implements InterLayerWeights{
 		}
 		return out;
 	}
+	
+	public void printMatrix(float[][] w){
+		String row;
+		System.out.println("------- printing matrix");
+		for(int i=0; i<w.length; i++){
+			row = "";
+			for(int j=0; j<w[0].length; j++){
+				row+=" "+w[i][j];
+			}
+			System.out.println(row);
+		}
+		System.out.println("------- printing matrix end");
+		
+	}
 }
 

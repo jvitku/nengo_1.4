@@ -104,7 +104,7 @@ public class QLambdaInterLayerTest{
 						ql.getTermination(QLambda.topicImportance), 1);
 
 				//w = c.getWeights();
-				//w[0][0] = 1;			// connect only motivation (not reward) to the importance
+				//w[1][0] = 1;			// connect only motivation (not reward) to the importance
 
 				/*
 				this.registerOrigin(ql.getOrigin(QLambda.topicDataOut), 2);
@@ -133,7 +133,7 @@ public class QLambdaInterLayerTest{
 				cddd.setWeights(w);
 				
 				w = c.getWeights();
-				w[0][0] = 1;
+				w[1][0] = 1;
 				c.setWeights(w);
 				
 				w = cd.getWeights();
