@@ -47,7 +47,6 @@ Changelog
 
 #### TODO:
 
-* logging fitness and genomes into file
 
 #### TODO less important:
 
@@ -57,6 +56,8 @@ Changelog
 * reward scale should be setup well
 	
 #### Changelog:
+
+* NodeBuilder contains gates now
 
 * The `Basicea` now supports multithread simulation and multithread evolution. Basically, multiple instances of `AbstractMultiThreadSimulator` can be ran. Only the `roscore` has to be run in advance. 
 

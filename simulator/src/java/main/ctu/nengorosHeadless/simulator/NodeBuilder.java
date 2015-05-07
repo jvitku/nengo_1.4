@@ -1,6 +1,9 @@
 package ctu.nengorosHeadless.simulator;
 
 import org.hanns.environments.discrete.ros.GridWorldNode;
+import org.hanns.logic.crisp.gates.impl.AND;
+import org.hanns.logic.crisp.gates.impl.NAND;
+import org.hanns.logic.crisp.gates.impl.OR;
 import org.hanns.physiology.statespace.ros.BasicMotivation;
 import org.hanns.rl.discrete.ros.srp.QLambda;
 
@@ -15,6 +18,54 @@ public class NodeBuilder {
 
 	public static final boolean SYNC= true;
 
+	public static NeuralModule orGate(String name)
+			throws ConnectionException, StartupDelayException{
+
+		String className = "org.hanns.logic.crisp.gates.impl.OR";
+		String[] command = new String[]{className};
+
+		NodeGroup g = new NodeGroup("OR", true);
+		g.addNode(command, "OR", "java");
+		NeuralModule module = new DefaultNeuralModule(name+"_gate", g, SYNC);
+
+		module.createDecoder(OR.outAT, "float", 1);	       
+		module.createEncoder(OR.inAT, "float", 1); 		// separate inputs	
+		module.createEncoder(OR.inBT, "float", 1);
+		return module;
+	}
+	
+	public static NeuralModule andGate(String name)
+			throws ConnectionException, StartupDelayException{
+
+		String className = "org.hanns.logic.crisp.gates.impl.AND";
+		String[] command = new String[]{className};
+
+		NodeGroup g = new NodeGroup("AND", true);
+		g.addNode(command, "AND", "java");
+		NeuralModule module = new DefaultNeuralModule(name+"_gate", g, SYNC);
+
+		module.createDecoder(AND.outAT, "float", 1);	       
+		module.createEncoder(AND.inAT, "float", 1); 		// separate inputs	
+		module.createEncoder(AND.inBT, "float", 1);
+		return module;
+	}
+	
+	public static NeuralModule nandGate(String name)
+			throws ConnectionException, StartupDelayException{
+
+		String className = "org.hanns.logic.crisp.gates.impl.NAND";
+		String[] command = new String[]{className};
+
+		NodeGroup g = new NodeGroup("NAND", true);
+		g.addNode(command, "NAND", "java");
+		NeuralModule module = new DefaultNeuralModule(name+"_gate", g, SYNC);
+
+		module.createDecoder(NAND.outAT, "float", 1);	       
+		module.createEncoder(NAND.inAT, "float", 1); 		// separate inputs	
+		module.createEncoder(NAND.inBT, "float", 1);
+		return module;
+	}
+	
 	public static NeuralModule multiplierNode(String name, int noInputs, int logPeriod, float multiplyBy)
 			throws ConnectionException, StartupDelayException{
 

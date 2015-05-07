@@ -65,6 +65,11 @@ dependencies {
 	runtime 'ctu.hanns.environments:statesactions:0.0.5-SNAPSHOT'
     testCompile 'ctu.hanns.environments:statesactions:0.0.5-SNAPSHOT'
 
+	// TODO unify this to ctu.hanns..
+	compile 'org.hanns.logic:gates:0.0.4-SNAPSHOT'
+	testCompile 'org.hanns.logic:gates:0.0.4-SNAPSHOT'
+	runtime 'org.hanns.logic:gates:0.0.4-SNAPSHOT'
+
 
 	//compile project('ctu.hanns.environments:statesactions:0.0.5-SNAPSHOT')
 	//runtime project('ctu.hanns.environments:statesactions:0.0.5-SNAPSHOT')
