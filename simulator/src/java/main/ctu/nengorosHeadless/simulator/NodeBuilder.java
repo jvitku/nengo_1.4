@@ -4,6 +4,7 @@ import org.hanns.environments.discrete.ros.GridWorldNode;
 import org.hanns.logic.crisp.gates.impl.AND;
 import org.hanns.logic.crisp.gates.impl.NAND;
 import org.hanns.logic.crisp.gates.impl.OR;
+import org.hanns.logic.utils.evaluators.ros.MSENode;
 import org.hanns.physiology.statespace.ros.BasicMotivation;
 import org.hanns.rl.discrete.ros.srp.QLambda;
 
@@ -18,6 +19,24 @@ public class NodeBuilder {
 
 	public static final boolean SYNC= true;
 
+	public static NeuralModule mseNode(String name, int noInputs, int logPeriod)
+			throws ConnectionException, StartupDelayException{
+
+		String className = "org.hanns.logic.utils.evaluators.ros.MSENode";
+		String[] command = new String[]{className, "_"+MSENode.noInputsConf+ ":=" + noInputs, 
+				"_"+MSENode.logPeriodConf+":="+logPeriod};
+
+		NodeGroup g = new NodeGroup("MSE", true);
+		g.addNode(command, "MSE", "java");
+		NeuralModule module = new DefaultNeuralModule(name+"_MSE", g, SYNC);
+
+		module.createDecoder(MSENode.topicProsperity, "float", 1);	// read the prosperity here       
+		module.createEncoder(MSENode.topicDataIn, "float", noInputs); 		
+		module.createEncoder(MSENode.topicDataInSupervised, "float", noInputs); 		
+
+		return module;
+	}
+	
 	public static NeuralModule orGate(String name)
 			throws ConnectionException, StartupDelayException{
 
