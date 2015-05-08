@@ -1,6 +1,9 @@
 package ctu.nengorosHeadless.simulator;
 
+import java.util.ArrayList;
+
 import ctu.nengorosHeadless.network.connections.Connection;
+import ctu.nengorosHeadless.network.modules.HeadlessNode;
 import ctu.nengorosHeadless.network.modules.io.Orig;
 import ctu.nengorosHeadless.network.modules.io.Term;
 import ca.nengo.model.Resettable;
@@ -67,4 +70,17 @@ public interface Simulator extends Resettable{
 	 * @return
 	 */
 	public boolean networkDefined();
+	
+
+	/**
+	 * Get list of nodes in the simulator
+	 * @return
+	 */
+	public ArrayList<HeadlessNode> getNodes();
+	
+	/**
+	 * Get connections used by the simulator
+	 * @return
+	 */
+	public ArrayList<Connection> getConnections();
 }

@@ -57,6 +57,8 @@ Changelog
 	
 #### Changelog:
 
+* Added InterLayerBuilder, which greatly simplifies design of new models.
+
 * NodeBuilder contains gates now
 
 * The `Basicea` now supports multithread simulation and multithread evolution. Basically, multiple instances of `AbstractMultiThreadSimulator` can be ran. Only the `roscore` has to be run in advance. 

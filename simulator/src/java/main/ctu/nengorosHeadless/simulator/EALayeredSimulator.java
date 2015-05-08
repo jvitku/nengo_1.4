@@ -46,5 +46,6 @@ public interface EALayeredSimulator extends EASimulator{
 	 * @throws StructuralException
 	 */
 	public Connection connectRegistered(Orig o, Term t, int interLayerNo) throws StructuralException;
+
 	
 }

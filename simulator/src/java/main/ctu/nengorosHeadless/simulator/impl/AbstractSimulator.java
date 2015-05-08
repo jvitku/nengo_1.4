@@ -40,6 +40,12 @@ public abstract class AbstractSimulator implements Simulator {
 		this.connections = new ArrayList<Connection>();
 	}
 	
+	@Override
+	public ArrayList<HeadlessNode> getNodes(){ return this.nodes; }
+	
+	@Override
+	public ArrayList<Connection> getConnections(){ return this.connections; }
+	
 	public boolean networkDefined(){ return this.networkDefined; }
 	
 	public boolean isRunning(){ return this.running; }
