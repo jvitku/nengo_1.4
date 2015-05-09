@@ -43,5 +43,35 @@ public class InterLayerBuilder {
 		sim.registerTermination(ms.getTermination(OR.inBT), inputLayer);
 		return ms;
 	}
+	
+	public static NeuralModule addSAND(int inputLayer, int outputLayer, EALayeredSimulator sim)
+			throws ConnectionException, StartupDelayException, StructuralException{
+		NeuralModule ms = NodeBuilder.andSGate("and");
+		sim.getNodes().add(ms);
+
+		sim.registerOrigin(ms.getOrigin(AND.outAT), outputLayer);
+		sim.registerTermination(ms.getTermination(AND.inAT), inputLayer);
+		return ms;
+	}
+	
+	public static NeuralModule addSNAND(int inputLayer, int outputLayer, EALayeredSimulator sim)
+			throws ConnectionException, StartupDelayException, StructuralException{
+		NeuralModule ms = NodeBuilder.nandSGate("nand");
+		sim.getNodes().add(ms);
+
+		sim.registerOrigin(ms.getOrigin(NAND.outAT), outputLayer);
+		sim.registerTermination(ms.getTermination(NAND.inAT), inputLayer);
+		return ms;
+	}
+
+	public static NeuralModule addSOR(int inputLayer, int outputLayer, EALayeredSimulator sim)
+			throws ConnectionException, StartupDelayException, StructuralException{
+		NeuralModule ms = NodeBuilder.orSGate("or");
+		sim.getNodes().add(ms);
+
+		sim.registerOrigin(ms.getOrigin(OR.outAT), outputLayer);
+		sim.registerTermination(ms.getTermination(OR.inAT), inputLayer);
+		return ms;
+	}
 
 }

@@ -55,11 +55,12 @@ public class NodeBuilder {
 		return out;
 	}
 
-	public static NeuralModule mseNode(String name, int noInputs, int logPeriod)
+	public static NeuralModule mseNode(String name, int noInputs, int delay, int logPeriod)
 			throws ConnectionException, StartupDelayException{
 
 		String className = "org.hanns.logic.utils.evaluators.ros.MSENode";
-		String[] command = new String[]{className, "_"+MSENode.noInputsConf+ ":=" + noInputs, 
+		String[] command = new String[]{className, "_"+MSENode.noInputsConf+ ":=" + noInputs,
+				"_"+MSENode.delayConf+":="+delay,
 				"_"+MSENode.logPeriodConf+":="+logPeriod};
 
 		NodeGroup g = new NodeGroup("MSE", true);
@@ -73,6 +74,52 @@ public class NodeBuilder {
 		return module;
 	}
 
+	public static NeuralModule orSGate(String name)
+			throws ConnectionException, StartupDelayException{
+
+		String className = "org.hanns.logic.crisp.synchronousGates.impl.OR";
+		String[] command = new String[]{className};
+
+		NodeGroup g = new NodeGroup("OR", true);
+		g.addNode(command, "OR", "java");
+		NeuralModule module = new DefaultNeuralModule(name+"_gate", g, SYNC);
+
+		module.createDecoder(OR.outAT, "float", 1);	       
+		module.createEncoder(OR.inAT, "float", 2); 		
+		//module.createEncoder(OR.inBT, "float", 1);
+		return module;
+	}
+
+	public static NeuralModule andSGate(String name)
+			throws ConnectionException, StartupDelayException{
+
+		String className = "org.hanns.logic.crisp.synchronousGates.impl.AND";
+		String[] command = new String[]{className};
+
+		NodeGroup g = new NodeGroup("AND", true);
+		g.addNode(command, "AND", "java");
+		NeuralModule module = new DefaultNeuralModule(name+"_gate", g, SYNC);
+
+		module.createDecoder(AND.outAT, "float", 1);	       
+		module.createEncoder(AND.inAT, "float", 2);	
+		return module;
+	}
+
+	public static NeuralModule nandSGate(String name)
+			throws ConnectionException, StartupDelayException{
+
+		String className = "org.hanns.logic.crisp.synchronousGates.impl.NAND";
+		String[] command = new String[]{className};
+
+		NodeGroup g = new NodeGroup("NAND", true);
+		g.addNode(command, "NAND", "java");
+		NeuralModule module = new DefaultNeuralModule(name+"_gate", g, SYNC);
+
+		module.createDecoder(NAND.outAT, "float", 1);	       
+		module.createEncoder(NAND.inAT, "float", 2); 			
+		return module;
+	}
+	
 	public static NeuralModule orGate(String name)
 			throws ConnectionException, StartupDelayException{
 
