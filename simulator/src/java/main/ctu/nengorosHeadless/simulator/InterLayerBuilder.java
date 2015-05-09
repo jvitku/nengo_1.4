@@ -13,7 +13,7 @@ public class InterLayerBuilder {
 
 	public static NeuralModule addAND(int inputLayer, int outputLayer, EALayeredSimulator sim)
 			throws ConnectionException, StartupDelayException, StructuralException{
-		NeuralModule ms = NodeBuilder.nandGate("and");
+		NeuralModule ms = NodeBuilder.andGate("and");
 		sim.getNodes().add(ms);
 
 		sim.registerOrigin(ms.getOrigin(AND.outAT), outputLayer);

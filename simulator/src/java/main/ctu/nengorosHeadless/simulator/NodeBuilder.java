@@ -20,28 +20,39 @@ public class NodeBuilder {
 
 	public static final boolean SYNC= true;
 
-	public static NeuralModule dataGeneratorNode(String name, int dataSize, int logPeriod, int[] dataSeries)
-			throws ConnectionException, StartupDelayException{
+	public static NeuralModule dataGeneratorNode(String name, int dataSize, int dataSizeSol, 
+			int[] dataSeries, int[] dataSeriesSol, int logPeriod)
+					throws ConnectionException, StartupDelayException{
+
 		String className = "org.hanns.logic.utils.evaluators.ros.DataGeneratorNode";
-		
+
 		String[] command = new String[]{className, "_"+DataGeneratorNode.noOutputsConf+ ":=" + dataSize, 
 				"_"+DataGeneratorNode.logPeriodConf+":="+logPeriod,
-				"_"+DataGeneratorNode.dataConf+":="+dataSeries};
+				"_"+DataGeneratorNode.dataConf+":="+buildString(dataSeries),
+				"_"+DataGeneratorNode.dataConfSol+":="+buildString(dataSeriesSol),
+		};
 
-		NodeGroup g = new NodeGroup("MSE", true);
-		g.addNode(command, "MSE", "java");
-		NeuralModule module = new DefaultNeuralModule(name+"_MSE", g, SYNC);
+		NodeGroup g = new NodeGroup("Generator", true);
+		g.addNode(command, "Generator", "java");
+		NeuralModule module = new DefaultNeuralModule(name+"_Generator", g, SYNC);
 
 		module.createDecoder(DataGeneratorNode.topicDataOut, "float", dataSize);
-		module.createEncoder(MSENode.topicDataIn, "float", 1); 		
-		
-		/*
-	TODO here!	
-		module.createDecoder(MSENode.topicProsperity, "float", 1);	// read the prosperity here       
-		module.createEncoder(MSENode.topicDataIn, "float", noInputs); 		
-		module.createEncoder(MSENode.topicDataInSupervised, "float", noInputs); 		
-*/
+		module.createDecoder(DataGeneratorNode.topicDataSolution, "float", dataSizeSol);
+		module.createEncoder(DataGeneratorNode.topicDataIn, "float", 1); 		
+
 		return module;
+	}
+
+	private static String buildString(int[] data){
+		String out = "";
+		for(int i=0; i<data.length; i++){
+			if(i==data.length-1){
+				out+=data[i];
+			}else{
+				out+=data[i]+",";
+			}
+		}
+		return out;
 	}
 
 	public static NeuralModule mseNode(String name, int noInputs, int logPeriod)
@@ -61,7 +72,7 @@ public class NodeBuilder {
 
 		return module;
 	}
-	
+
 	public static NeuralModule orGate(String name)
 			throws ConnectionException, StartupDelayException{
 
@@ -77,7 +88,7 @@ public class NodeBuilder {
 		module.createEncoder(OR.inBT, "float", 1);
 		return module;
 	}
-	
+
 	public static NeuralModule andGate(String name)
 			throws ConnectionException, StartupDelayException{
 
@@ -93,7 +104,7 @@ public class NodeBuilder {
 		module.createEncoder(AND.inBT, "float", 1);
 		return module;
 	}
-	
+
 	public static NeuralModule nandGate(String name)
 			throws ConnectionException, StartupDelayException{
 
@@ -109,7 +120,7 @@ public class NodeBuilder {
 		module.createEncoder(NAND.inBT, "float", 1);
 		return module;
 	}
-	
+
 	public static NeuralModule multiplierNode(String name, int noInputs, int logPeriod, float multiplyBy)
 			throws ConnectionException, StartupDelayException{
 
@@ -130,7 +141,7 @@ public class NodeBuilder {
 		module.createDecoder(MultiplierNode.topicProsperity,"float", 1);			//# float[]{prosperity}  = MSD from the limbo area
 		return module;
 	}
-	
+
 	public static NeuralModule basicMotivationSource(String name, int noInputs, float decay, int logPeriod)
 			throws ConnectionException, StartupDelayException{
 
@@ -205,11 +216,11 @@ public class NodeBuilder {
 
 	public static NeuralModule gridWorld(String name, int logPeriod, boolean logToFile,
 			int[] size, int noActions, int[] agentPos, int[] obstacleCoords, int[] rewardCoords) throws ConnectionException, StartupDelayException{
-		
+
 		String coords = buildObstacles(obstacleCoords);
 		String Rcoords = buildRewards(rewardCoords);
 		String className = "org.hanns.environments.discrete.ros.GridWorldNode";
-		
+
 		String[] command = new String[]{
 				className,
 				"_logToFile:="+logToFile,			// Enables logging into file
@@ -226,17 +237,17 @@ public class NodeBuilder {
 			System.out.print(command[i]+" ");
 		}
 		System.out.println("");
-		
+
 		NodeGroup g = new NodeGroup("GridWorld", true);
 		g.addNode(command, "GridWorld", "java");
 		NeuralModule module = new DefaultNeuralModule(name+"_GridWorld", g, SYNC);
 
 		module.createEncoder(GridWorldNode.topicDataOut, "float", noActions);  	//# decode actions
 		module.createDecoder(GridWorldNode.topicDataIn, "float", 1+2); 			//# encode states (first is reward)
-		
+
 		return module;
 	}
-	
+
 	private static String buildRewards(int[] Rcoords){
 		if(Rcoords.length%2 != 0){
 			System.err.println("Warning: list of rewards should have the format (X1,Y1,R1Type,R1Val,X2,Y2,..)"+
@@ -251,7 +262,7 @@ public class NodeBuilder {
 		}
 		return out;
 	}
-	
+
 	private static String buildObstacles(int[] coords){
 		if(coords.length%2 != 0){
 			System.err.println("Warning: list of obstacle coords should have the format (X1,Y1,X2,Y2..)"+
