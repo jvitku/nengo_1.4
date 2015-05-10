@@ -49,7 +49,9 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 
 		// try to obtain the modem (for ROS communication)
 		ModemContainer modContainer = group.getModem();
-
+		
+		System.err.println("xxxxxxxxxxxxxxxxxxxx "+modContainer.getFullName());
+		
 		if(modContainer == null){
 			String mess = super.getFullName()+" modem probably not initialized! NeuralModule not ready!";
 			System.err.println(mess);
@@ -166,5 +168,8 @@ public abstract class NeuralModule extends SyncedUnit implements HeadlessNode{
 
 	@Override
 	public abstract void createConfigEncoder(String topicName, String dataType, float defValue);
+
+	@Override
+	public ModemContainer getModemContainer(){ return this.mc; }
 
 }

@@ -1,5 +1,6 @@
 package ctu.nengorosHeadless.network.modules;
 
+import ctu.nengoros.comm.nodeFactory.modem.ModemContainer;
 import ctu.nengoros.network.node.synchedStart.SyncedUnitInterface;
 import ctu.nengoros.network.node.synchedStart.impl.StartedObject;
 import ctu.nengorosHeadless.network.modules.io.Orig;
@@ -93,4 +94,10 @@ public interface HeadlessNode extends Resettable, StartedObject, SyncedUnitInter
 	 * Also, Node does not have to react to this (as in pure Nengo version).
 	 */
 	public void notifyAboutDeletion();
+	
+	/**
+	 * Just for obtaining the full name with the namespace
+	 * @return modem container, which can access the modem
+	 */
+	public ModemContainer getModemContainer();
 }

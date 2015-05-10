@@ -41,9 +41,9 @@ public class BasicDec extends BasicOrig implements Decoder {
 	private float myTime = 0;
 
 	public Backend ros;
-	
+
 	public BasicDec(NeuralModule node, String name, String dataType, int size, ModemContainer modem, Backend ros) 
-					throws MessageFormatException, StructuralException, StartupDelayException{
+			throws MessageFormatException, StructuralException, StartupDelayException{
 		super(size, name);
 		this.init(node, name, dataType, size, modem, ros);
 	}
@@ -52,14 +52,14 @@ public class BasicDec extends BasicOrig implements Decoder {
 	 * The same, but we can choose whether the Decoder will be synchronous or not
 	 */
 	public BasicDec(NeuralModule node, String name, String dataType, int size, ModemContainer modem, Backend ros,boolean synchronous) 
-					throws MessageFormatException, StructuralException, StartupDelayException{
+			throws MessageFormatException, StructuralException, StartupDelayException{
 		super(size, name);
 		super.setSynchronous(synchronous);
 		this.init(node,name,dataType,size,modem,ros);
 	}
 
 	private void init(NeuralModule node, String name, String dataType, int size, ModemContainer modem, Backend ros) 
-					throws MessageFormatException, StructuralException, StartupDelayException{
+			throws MessageFormatException, StructuralException, StartupDelayException{
 		myNode = node;
 
 		//get modem and subscribe for events denoting the incoming ROS messages 
@@ -76,11 +76,11 @@ public class BasicDec extends BasicOrig implements Decoder {
 		// ROS stuff - subscribe to new ROS messages
 		this.ros = ros;
 		this.ros.addEventListener(this);
-		
+
 		((NeuralModule)myNode).addOrigin(this);
 		super.setReady(true);
 	}
-	
+
 
 	/**
 	 * ROS fires onNewRosMessage events, so here is my subscription:
@@ -127,7 +127,7 @@ public class BasicDec extends BasicOrig implements Decoder {
 
 	@Override
 	public String getName() { return super.getFullName(); }
-	
+
 	/**
 	 * @see ca.nengo.model.Origin#getNode()
 	 */
@@ -150,8 +150,10 @@ public class BasicDec extends BasicOrig implements Decoder {
 
 	@Override
 	public void run(float startTime, float endTime) throws SimulationException {}
-	
+
 	@Override 
-	public String getUniqueName(){ return myNode.getFullName()+"/"+this.getName(); }
+	public String getUniqueName(){ 
+		return myNode.getModemContainer().getFullName()+"/"+this.getName();
+	}
 
 }

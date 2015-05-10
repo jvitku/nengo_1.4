@@ -39,28 +39,28 @@ public class BasicEnc extends BasicTerm implements Encoder {
 	 * @see ctu.nengoros.comm.rosBackend.backend.impl
 	 */
 	public BasicEnc(NeuralModule parent, int size, String name, String dataType, ModemContainer modem, Backend ros) 
-					throws StructuralException, ConnectionException, StartupDelayException{
+			throws StructuralException, ConnectionException, StartupDelayException{
 
 		super(size, name);
 		init(parent, new int[]{size}, name, dataType, modem, ros);
 	}
-	
+
 	public BasicEnc(NeuralModule parent, String name, String dataType, ModemContainer modem, Backend ros) 
 			throws StructuralException, ConnectionException, StartupDelayException{
-		
+
 		super(ros.gedNumOfDimensions(), name);
 		init(parent, new int[]{super.getSize()}, name, dataType, modem, ros);	
 	}
-	
+
 	public BasicEnc(NeuralModule parent, String name, String dataType, ModemContainer modem, Backend ros, float defVal) 
 			throws StructuralException, ConnectionException, StartupDelayException{
-		
+
 		super(ros.gedNumOfDimensions(), name, defVal);
 		init(parent, new int[]{super.getSize()}, name, dataType, modem, ros);	
 	}
 
 	private void init(NeuralModule parent, int[] dimensionSizes, String name, String dataType, ModemContainer modem, Backend ros) 
-					throws ConnectionException, StructuralException, StartupDelayException{
+			throws ConnectionException, StructuralException, StartupDelayException{
 
 		this.parent = parent;
 
@@ -81,7 +81,7 @@ public class BasicEnc extends BasicTerm implements Encoder {
 	public void run(float startTime, float endTime) throws SimulationException {
 
 		//System.out.println("OK I am "+this.getName()+" and publishing this: "+SL.toStr(super.getValues()));
-		
+
 		// publish as a ROS message with the last data sample available
 		ros.publish(super.getValues());
 	}
@@ -90,5 +90,7 @@ public class BasicEnc extends BasicTerm implements Encoder {
 	public NeuralModule getParent() { return parent; }
 
 	@Override 
-	public String getUniqueName(){ return parent.getFullName()+"/"+this.getName(); }
+	public String getUniqueName(){ 
+		return parent.getModemContainer().getFullName()+"/"+this.getName();
+	}
 }
